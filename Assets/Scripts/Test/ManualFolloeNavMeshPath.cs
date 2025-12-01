@@ -37,9 +37,8 @@ public class ManualFolloeNavMeshPath : MonoBehaviour
         Vector3 targetPosition = agent.nextPosition;
         if (agent.isOnOffMeshLink)
         {
-            Debug.Log("on off mesh link " + agent.currentOffMeshLinkData.endPos + " " + agent.transform.position);
             targetPosition = agent.path.corners[0] + (Vector3.up * agent.baseOffset);
-            if (Vector3.Distance(transform.position, agent.path.corners[0] + (Vector3.up * agent.baseOffset)) <= (agent.stoppingDistance + 0.1))
+            if (Vector3.Distance(transform.position, agent.path.corners[0] + (Vector3.up * agent.baseOffset)) <= (agent.stoppingDistance + 0.001))
             {
                 agent.CompleteOffMeshLink();
             }
