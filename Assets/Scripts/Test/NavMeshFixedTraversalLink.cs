@@ -21,19 +21,17 @@ public class NavMeshFixedTraversalLink : MonoBehaviour
         if (agent.isOnOffMeshLink && !MoveAcrossNavMeshesStarted)
         {
             savedDestination = agent.destination;
-            savedPosition = this.transform.position + (agent.velocity * Time.deltaTime);
-            agent.CompleteOffMeshLink();
+            OffMeshLinkData data = agent.currentOffMeshLinkData;
+            Debug.Log(data.endPos);
             //agent.CompleteOffMeshLink();
-            //agent.transform.position = savedPosition;
-            //StartCoroutine(MoveAcrossNavMeshLink());
-            //MoveAcrossNavMeshesStarted = true;
+            StartCoroutine(MoveAcrossNavMeshLink());
+            MoveAcrossNavMeshesStarted = true;
         }
     }
 
 
     IEnumerator MoveAcrossNavMeshLink()
     {
-        /*
         OffMeshLinkData data = agent.currentOffMeshLinkData;
         agent.updateRotation = false;
 
@@ -55,7 +53,7 @@ public class NavMeshFixedTraversalLink : MonoBehaviour
         agent.updateRotation = true;
         agent.CompleteOffMeshLink();
         agent.destination = savedDestination;
-        MoveAcrossNavMeshesStarted = false;*/
+        MoveAcrossNavMeshesStarted = false;
         yield return null;
         MoveAcrossNavMeshesStarted = false;
     }
