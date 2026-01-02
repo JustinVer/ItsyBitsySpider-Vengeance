@@ -5,6 +5,7 @@ public class ManualFolloeNavMeshPath : MonoBehaviour
 {
     public NavMeshAgent agent;
     public Transform target;
+    public Transform cylinder;
     public float speed = 3.5f;
 
     void Start()
@@ -52,5 +53,21 @@ public class ManualFolloeNavMeshPath : MonoBehaviour
 
         // Synchronize the agent's position with the transform
         agent.nextPosition = transform.position;
+
+
+        rotateAroundCylinder();
+
+    }
+
+    private void rotateAroundCylinder()
+    {
+        Vector3 direction = transform.position - cylinder.position;
+        direction.z = 0;  // Flatten to XZ plane
+
+        // Calculate angle
+        float angle = Mathf.Atan2(direction.x, direction.y) * Mathf.Rad2Deg;
+
+        // Apply rotation (object faces outward from cylinder)
+        transform.rotation = Quaternion.Euler(0, 0, angle * -1);
     }
 }
