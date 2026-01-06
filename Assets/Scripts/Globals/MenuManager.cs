@@ -15,7 +15,6 @@ public class MenuManager : MonoBehaviour
             if (instance == null)
             {
                 instance = FindFirstObjectByType<MenuManager>();
-                DontDestroyOnLoad(instance.gameObject);
             }
             if (instance == null)
             {
@@ -67,7 +66,15 @@ public class MenuManager : MonoBehaviour
         }
 
         //Load new level
-        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(levelName, LoadSceneMode.Additive);
+        AsyncOperation asyncLoad;
+        if (levelName != gameplayScene)
+        {
+            asyncLoad = SceneManager.LoadSceneAsync(levelName, LoadSceneMode.Additive);
+        }
+        else
+        {
+            asyncLoad = SceneManager.LoadSceneAsync(levelName, LoadSceneMode.Single);
+        }
         yield return new WaitUntil(() => !asyncLoad.isDone);
         yield return loadScreen.FinishLoading();
 

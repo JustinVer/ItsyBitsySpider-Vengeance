@@ -13,8 +13,9 @@ public class HUDController : MonoBehaviour
     }
     private void OnEnable()
     {
-        playerHealth.value = 0;
-        enemiesRemaining.value = 0;
+        playerHealth.value = 1;
+        enemiesRemaining.value = 1;
+        Update();
     }
 
     private void Update()

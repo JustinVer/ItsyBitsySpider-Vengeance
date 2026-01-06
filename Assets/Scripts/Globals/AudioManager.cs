@@ -17,7 +17,7 @@ public class AudioManager : MonoBehaviour
             }
             if (instance == null)
             {
-                throw new System.Exception("NO GAME MANAGER FOUND");
+                throw new System.Exception("NO AUDIO MANAGER FOUND");
             }
             return instance;
         }
@@ -42,12 +42,19 @@ public class AudioManager : MonoBehaviour
 
     private void Awake()
     {
+        if (instance != null && instance != this)
+        {
+            Destroy(this.gameObject);
+        }
         for (int i = 0; i < numSources; i++)
         {
             createNewSource();
         }
         backgroundAudioVolume = backgroundAudioSource1.volume;
-        GameplayManager.Instance.onLevelReset += sceneReset;
+        if (GameplayManager.Instance != null)
+        {
+            GameplayManager.Instance.onLevelReset += sceneReset;
+        }
     }
 
     public AudioSource getSource()

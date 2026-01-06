@@ -17,7 +17,6 @@ public class GameplayManager : MonoBehaviour
             if (instance == null)
             {
                 instance = FindFirstObjectByType<GameplayManager>();
-                DontDestroyOnLoad(instance.gameObject);
             }
             if (instance == null)
             {
@@ -42,11 +41,11 @@ public class GameplayManager : MonoBehaviour
     public event Action onLevelReset;
 
     #region sceneManagement
-    [SerializeField] private string gameplayScene;
     [SerializeField] private LoadScreen loadScreen;
     [SerializeField] private GameOver gameOver;
     [SerializeField] private GameObject victoryScreen;
     [SerializeField] private PauseMenu pauseMenu;
+    [SerializeField] private GameObject HUD;
 
     private bool isLoading = false;
     private string currentLevelName;
@@ -57,6 +56,7 @@ public class GameplayManager : MonoBehaviour
     private void Start()
     {
         saveData = FileHandler.LoadGame();
+        HUD.SetActive(true);
     }
 
     private IEnumerator LoadLevel(string levelName)
