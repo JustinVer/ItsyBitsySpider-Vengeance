@@ -33,6 +33,8 @@ public class GameplayManager : MonoBehaviour
 
     //[SerializeField] private HumanBody player;
     [SerializeField] private PlayerInput playerInput;
+
+    [SerializeField] private const float GRAVITY_STRENGTH = 50f;
     public GameObject Player => player;
     public PlayerInput PlayerInput => playerInput;
 
@@ -123,6 +125,6 @@ public class GameplayManager : MonoBehaviour
 
     public Vector3 GetGravity(GameObject obj)
     {
-        return Vector3.down;
+        return Vector3.down * GRAVITY_STRENGTH;
     }
 }
