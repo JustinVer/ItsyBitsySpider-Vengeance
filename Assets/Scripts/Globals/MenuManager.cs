@@ -1,26 +1,25 @@
-using System;
 using System.Collections;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
 [DefaultExecutionOrder(-1000)]
-public class GameManager : MonoBehaviour
+public class MenuManager : MonoBehaviour
 {
     #region Singleton instance
-    private static GameManager instance;
+    private static MenuManager instance;
 
-    public static GameManager Instance
+    public static MenuManager Instance
     {
         get
         {
             if (instance == null)
             {
-                instance = FindFirstObjectByType<GameManager>();
+                instance = FindFirstObjectByType<MenuManager>();
+                DontDestroyOnLoad(instance.gameObject);
             }
             if (instance == null)
             {
-                Debug.LogWarning("NO GAME MANAGER FOUND");
+                Debug.LogWarning("NO MENU MANAGER FOUND");
             }
             return instance;
         }
@@ -31,35 +30,10 @@ public class GameManager : MonoBehaviour
     }
     #endregion
 
-    public event Action onLevelReset;
-
-    private void Awake()
-    {
-        if (instance == null)
-        {
-            instance = this;
-            DontDestroyOnLoad(this.gameObject);
-        }
-        else if (instance != this)
-        {
-            Destroy(this.gameObject);
-        }
-    }
-
-    //[SerializeField] private HumanBody player;
-    [SerializeField] private PlayerInput playerInput;
-    public GameObject Player => player;
-    public PlayerInput PlayerInput => playerInput;
-
-    private GameObject player;
-
     #region sceneManagement
     [SerializeField] private string gameplayScene;
     [SerializeField] private string mainMenuName;
     [SerializeField] private LoadScreen loadScreen;
-    [SerializeField] private GameOver gameOver;
-    [SerializeField] private GameObject victoryScreen;
-    [SerializeField] private PauseMenu pauseMenu;
     [SerializeField] private OptionsMenu optionsMenu;
 
     private bool isLoading = false;
@@ -82,8 +56,6 @@ public class GameManager : MonoBehaviour
             yield break;
         }
         isLoading = true;
-        pauseMenu.CanPause = false;
-        //player.transform.parent.gameObject.SetActive(false);
 
         loadScreen.gameObject.SetActive(true);
         loadScreen.StartLoading();
@@ -100,16 +72,6 @@ public class GameManager : MonoBehaviour
         yield return loadScreen.FinishLoading();
 
         currentLevelName = levelName;
-        //player.transform.parent.gameObject.SetActive(true);
-        //player.transform.position = Vector3.zero;
-        //if (levelName == mainMenuName)
-        //{
-        //    playerInput.enabled = false;
-        //}
-        //else
-        //{
-        //    playerInput.enabled = true;
-        //}
 
         //Wait one frame before saying loaded is done just to make sure everything is done loading in the scene
         yield return null;
@@ -117,12 +79,6 @@ public class GameManager : MonoBehaviour
         isLoading = false;
 
         loadScreen.gameObject.SetActive(false);
-        pauseMenu.CanPause = true;
-    }
-
-    public void ResetScene()
-    {
-        onLevelReset?.Invoke();
     }
 
     public void StartNewGame()
@@ -142,26 +98,12 @@ public class GameManager : MonoBehaviour
 
     public void LoadMainMenu()
     {
-        onLevelReset?.Invoke();
         StartCoroutine(LoadLevel(mainMenuName));
-    }
-
-    public void GameOver()
-    {
-        gameOver.gameObject.SetActive(true);
-        playerInput.enabled = false;
     }
 
     public void OptionsMenu(bool turnOn)
     {
         optionsMenu.gameObject.SetActive(turnOn);
     }
-
-    public void LevelComplete()
-    {
-
-    }
-
-
     #endregion
 }

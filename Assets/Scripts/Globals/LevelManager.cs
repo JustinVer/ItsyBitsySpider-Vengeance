@@ -40,9 +40,9 @@ public class LevelManager : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.gameObject == GameManager.Instance.Player.gameObject && (enemies.Count == 0 || !mustKillEnemies) && !completed)
+        if (other.gameObject == GameplayManager.Instance.Player.gameObject && (enemies.Count == 0 || !mustKillEnemies) && !completed)
         {
-            GameManager.Instance.LevelComplete();
+            GameplayManager.Instance.LevelComplete();
             completed = true;
         }
     }

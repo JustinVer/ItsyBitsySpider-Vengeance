@@ -27,14 +27,14 @@ public class OptionsMenu : MonoBehaviour
             audioMixer.SetFloat("BackgroundMusicVolume", PlayerPrefs.GetFloat("BackgroundMusicVolume"));
             backgroundMusicVolume.value = PlayerPrefs.GetFloat("BackgroundMusicVolume");
         }
-        GameManager.Instance.OptionsMenu(false);
+        MenuManager.Instance.OptionsMenu(false);
     }
 
 
     public void MainMenu()
     {
         PlayerPrefs.Save();
-        GameManager.Instance.OptionsMenu(false);
+        MenuManager.Instance.OptionsMenu(false);
     }
 
     public void masterVolumeSlider()

@@ -20,6 +20,6 @@ public class PauseMenu : MonoBehaviour
         isPaused = pause;
         pauseCanvas.SetActive(isPaused);
         Time.timeScale = isPaused ? 0f : 1f;
-        GameManager.Instance.PlayerInput.enabled = !isPaused;
+        GameplayManager.Instance.PlayerInput.enabled = !isPaused;
     }
 }

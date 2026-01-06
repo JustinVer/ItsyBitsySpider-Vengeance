@@ -20,17 +20,17 @@ public class MainMenu : MonoBehaviour
     }
     public void NewGame()
     {
-        GameManager.Instance.StartNewGame();
+        MenuManager.Instance.StartNewGame();
     }
 
     public void Continue()
     {
-        GameManager.Instance.ContinueGame();
+        MenuManager.Instance.ContinueGame();
     }
 
     public void Options()
     {
-        GameManager.Instance.OptionsMenu(true);
+        MenuManager.Instance.OptionsMenu(true);
     }
 
     public void EndGame()

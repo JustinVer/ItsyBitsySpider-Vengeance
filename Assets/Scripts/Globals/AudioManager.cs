@@ -47,7 +47,7 @@ public class AudioManager : MonoBehaviour
             createNewSource();
         }
         backgroundAudioVolume = backgroundAudioSource1.volume;
-        GameManager.Instance.onLevelReset += sceneReset;
+        GameplayManager.Instance.onLevelReset += sceneReset;
     }
 
     public AudioSource getSource()
@@ -161,7 +161,7 @@ public class AudioManager : MonoBehaviour
 
     private void OnDestroy()
     {
-        if (GameManager.Instance != null)
-            GameManager.Instance.onLevelReset -= sceneReset;
+        if (GameplayManager.Instance != null)
+            GameplayManager.Instance.onLevelReset -= sceneReset;
     }
 }

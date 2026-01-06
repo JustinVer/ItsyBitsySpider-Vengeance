@@ -9,7 +9,7 @@ public class HUDController : MonoBehaviour
 
     private void Start()
     {
-        GameManager.Instance.onLevelReset += SceneReset;
+        GameplayManager.Instance.onLevelReset += SceneReset;
     }
     private void OnEnable()
     {
@@ -19,7 +19,7 @@ public class HUDController : MonoBehaviour
 
     private void Update()
     {
-        if (GameManager.Instance.Player && GameManager.Instance.Player.gameObject.activeInHierarchy)
+        if (GameplayManager.Instance.Player && GameplayManager.Instance.Player.gameObject.activeInHierarchy)
         {
             //playerHealth.value = Mathf.Clamp01(GameManager.Instance.Player.CurrentHealth / GameManager.Instance.Player.Maxhealth);
         }
@@ -42,7 +42,7 @@ public class HUDController : MonoBehaviour
 
     private void OnDestroy()
     {
-        if (GameManager.Instance != null)
-            GameManager.Instance.onLevelReset -= SceneReset;
+        if (GameplayManager.Instance != null)
+            GameplayManager.Instance.onLevelReset -= SceneReset;
     }
 }

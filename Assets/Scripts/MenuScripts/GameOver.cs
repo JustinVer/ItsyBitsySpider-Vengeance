@@ -4,16 +4,16 @@ public class GameOver : MonoBehaviour
 {
     public void Start()
     {
-        GameManager.Instance.onLevelReset += sceneReset;
+        GameplayManager.Instance.onLevelReset += sceneReset;
     }
     public void PlayAgain()
     {
-        GameManager.Instance.ResetScene();
+        GameplayManager.Instance.ResetScene();
     }
 
     public void MainMenu()
     {
-        GameManager.Instance.LoadMainMenu();
+        MenuManager.Instance.LoadMainMenu();
     }
 
     public void sceneReset()
@@ -23,7 +23,7 @@ public class GameOver : MonoBehaviour
 
     private void OnDestroy()
     {
-        if (GameManager.Instance != null)
-            GameManager.Instance.onLevelReset -= sceneReset;
+        if (GameplayManager.Instance != null)
+            GameplayManager.Instance.onLevelReset -= sceneReset;
     }
 }

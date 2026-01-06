@@ -119,11 +119,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &154714709 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3428713285154445113, guid: 288252f1942e6e349b16c626f2f11415, type: 3}
-  m_PrefabInstance: {fileID: 552119736}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &181628974 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2987752522523638418, guid: 8f8f43634260b4e428e0be94268a7edb, type: 3}
@@ -394,7 +389,7 @@ GameObject:
   - component: {fileID: 412405721}
   - component: {fileID: 412405722}
   m_Layer: 0
-  m_Name: Game Manager
+  m_Name: Menu Manager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -424,16 +419,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 412405720}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c676b7a366e2f2b48aed571ef21eb1f5, type: 3}
+  m_Script: {fileID: 11500000, guid: e73096cdf09f36c41a72ebb50061d38c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerInput: {fileID: 0}
   gameplayScene: Main scene for now
   mainMenuName: MainMenu
   loadScreen: {fileID: 181628975}
-  gameOver: {fileID: 1035702288}
-  victoryScreen: {fileID: 154714709}
-  pauseMenu: {fileID: 1052554130}
   optionsMenu: {fileID: 1228492954}
 --- !u!1 &534669902
 GameObject:
@@ -904,17 +895,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3177323472549320791, guid: cb381335ae66d5f47bbd89b82b9715e8, type: 3}
   m_PrefabInstance: {fileID: 373117666}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1035702288 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1988552241140471702, guid: cb381335ae66d5f47bbd89b82b9715e8, type: 3}
-  m_PrefabInstance: {fileID: 373117666}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a76d8d6035842bf44a5f41b8d3d12269, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1052554128
 GameObject:
   m_ObjectHideFlags: 0
