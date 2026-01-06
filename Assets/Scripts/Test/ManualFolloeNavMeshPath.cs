@@ -7,6 +7,8 @@ public class ManualFolloeNavMeshPath : MonoBehaviour
     public Transform target;
     public Transform cylinder;
     public float speed = 3.5f;
+    [SerializeField] private Transform body;
+    [SerializeField] private float maxDistanceFromFollow = 0.6f;
 
     void Start()
     {
@@ -29,7 +31,7 @@ public class ManualFolloeNavMeshPath : MonoBehaviour
 
     void Update()
     {
-        if (agent.pathPending || ((agent.remainingDistance <= agent.stoppingDistance) && agent.isOnOffMeshLink))
+        if (agent.pathPending || ((agent.remainingDistance <= agent.stoppingDistance) && agent.isOnOffMeshLink) || Mathf.Abs(Vector3.Distance(this.transform.position, body.position)) > maxDistanceFromFollow)
         {
             Debug.Log(agent.pathPending + " " + (agent.remainingDistance <= agent.stoppingDistance));
             return; // Wait for the path to be calculated or stop if the destination is reached
