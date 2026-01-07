@@ -502,7 +502,10 @@ MonoBehaviour:
   acceleration: 1
   deceleration: 5
   maxSpeed: 1
-  gravityMod: 1
+  turnFactor: 5
+  jumpForce: 100
+  velCap: 100
+  gravityMod: 100
   rideheight: 1
   rideSpringStrength: 5
   rideSpringDamp: 5
@@ -837,10 +840,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6bb6d24e3d4e65a48b7f3c8bd8106703, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  acceleration: 5
-  deceleration: 8
-  maxSpeed: 6
-  gravityMod: 5
+  acceleration: 7
+  deceleration: 9
+  maxSpeed: 10
+  turnFactor: 10
+  jumpForce: 10
+  velCap: 100
+  gravityMod: 1
   rideheight: 1.5
   rideSpringStrength: 100
   rideSpringDamp: 5

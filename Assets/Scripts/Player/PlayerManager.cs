@@ -12,6 +12,10 @@ public class PlayerManager : MonoBehaviour
     void Update()
     {
         body.MovementDir = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical")).normalized;
+        if (Input.GetAxis("Jump") > 0)
+        {
+            body.Jump();
+        }
 
     }
 }
