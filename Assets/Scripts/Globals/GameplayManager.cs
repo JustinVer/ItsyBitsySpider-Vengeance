@@ -34,7 +34,7 @@ public class GameplayManager : MonoBehaviour
     //[SerializeField] private HumanBody player;
     [SerializeField] private PlayerInput playerInput;
 
-    [SerializeField] private const float GRAVITY_STRENGTH = 50f;
+    [SerializeField] private const float GRAVITY_STRENGTH = 9.8f;
     public GameObject Player => player;
     public PlayerInput PlayerInput => playerInput;
 
