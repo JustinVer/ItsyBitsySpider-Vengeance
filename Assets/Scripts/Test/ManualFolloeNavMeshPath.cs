@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -7,8 +8,9 @@ public class ManualFolloeNavMeshPath : MonoBehaviour
     public Transform target;
     public Transform cylinder;
     public float speed = 3.5f;
-    [SerializeField] private Transform body;
+    [SerializeField] private BodyFollowAgent body;
     [SerializeField] private float maxDistanceFromFollow = 0.6f;
+    private float currentMaxDistance;
 
     void Start()
     {
@@ -31,19 +33,31 @@ public class ManualFolloeNavMeshPath : MonoBehaviour
 
     void Update()
     {
-        if (agent.pathPending || ((agent.remainingDistance <= agent.stoppingDistance) && agent.isOnOffMeshLink) || Mathf.Abs(Vector3.Distance(this.transform.position, body.position)) > maxDistanceFromFollow)
+        if (agent.pathPending || ((agent.remainingDistance <= agent.stoppingDistance) && agent.isOnOffMeshLink) || Mathf.Abs(Vector3.Distance(this.transform.position, body.gameObject.transform.position)) > maxDistanceFromFollow)
         {
-            Debug.Log(agent.pathPending + " " + (agent.remainingDistance <= agent.stoppingDistance));
             return; // Wait for the path to be calculated or stop if the destination is reached
         }
 
         Vector3 targetPosition = agent.nextPosition;
         if (agent.isOnOffMeshLink)
         {
-            targetPosition = agent.path.corners[0] + (Vector3.up * agent.baseOffset);
-            if (Vector3.Distance(transform.position, agent.path.corners[0] + (Vector3.up * agent.baseOffset)) <= (agent.stoppingDistance + 0.001))
+            if (agent.currentOffMeshLinkData.owner.GameObject().tag == "JumpLink")
             {
+                body.Jump(agent.currentOffMeshLinkData.startPos, agent.currentOffMeshLinkData.endPos);
+                targetPosition = agent.path.corners[0];
+                transform.position = targetPosition;
+                agent.nextPosition = transform.position;
                 agent.CompleteOffMeshLink();
+                transform.position = targetPosition;
+                agent.nextPosition = transform.position;
+            }
+            else
+            {
+                targetPosition = agent.path.corners[0] + (Vector3.up * agent.baseOffset);
+                if (Vector3.Distance(transform.position, agent.path.corners[0] + (Vector3.up * agent.baseOffset)) <= (agent.stoppingDistance + 0.001))
+                {
+                    agent.CompleteOffMeshLink();
+                }
             }
         }
 
@@ -71,5 +85,10 @@ public class ManualFolloeNavMeshPath : MonoBehaviour
 
         // Apply rotation (object faces outward from cylinder)
         transform.rotation = Quaternion.Euler(0, 0, angle * -1);
+    }
+
+    public void endJump()
+    {
+
     }
 }
