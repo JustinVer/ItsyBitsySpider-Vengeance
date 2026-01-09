@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.Rendering;
 
 public class PlayerBody : MonoBehaviour
 {
@@ -9,6 +8,9 @@ public class PlayerBody : MonoBehaviour
 
     private bool doJump = false;
 
+    private bool doRideForce = false;
+
+    private float jumpDelay = 1;
     public Vector3 MovementDir
     {
         get { return movementDir; }
@@ -19,8 +21,6 @@ public class PlayerBody : MonoBehaviour
     [SerializeField] private float acceleration = 5f;
     [SerializeField] private float deceleration = 5f;
     [SerializeField] private float maxSpeed = 10f;
-
-    [SerializeField] private float turnFactor = 0.5f;
 
     [SerializeField] private float jumpForce = 100f;
 
@@ -58,12 +58,12 @@ public class PlayerBody : MonoBehaviour
 
     private bool canJump()
     {
-        return IsGrounded();
+        return IsGrounded() && jumpDelay < 0;
     }
 
     public void Jump()
     {
-        Debug.Log(IsGrounded());
+        //Debug.Log(IsGrounded());
         if (canJump())
         {
             doJump = true;
@@ -72,7 +72,7 @@ public class PlayerBody : MonoBehaviour
 
     private void movePlayer()
     {
-        
+
         Vector3 gravity = GameplayManager.Instance.GetGravity(gameObject);
 
         if (movementDir != Vector3.zero)
@@ -81,7 +81,7 @@ public class PlayerBody : MonoBehaviour
 
             Vector3 targetVel = rb.linearVelocity + (MovementDir * acceleration) / rb.mass * Time.fixedDeltaTime;
 
-            
+
             if (targetVel.magnitude <= maxSpeed)
             {
                 rb.AddForce(MovementDir * acceleration, ForceMode.Force);
@@ -89,8 +89,16 @@ public class PlayerBody : MonoBehaviour
                 //turning assist
                 if (IsGrounded())
                 {
-                    Vector3 forwardVel = Vector3.Project(rb.linearVelocity, movementDir);
-                    Vector3 turnForce = -(rb.linearVelocity - forwardVel) * deceleration;
+                    Vector3 turnForce = Vector3.zero;
+                    if (Vector3.Dot(movementDir, rb.linearVelocity) < -0.9)
+                    {
+                        turnForce = -rb.linearVelocity * deceleration;
+                    }
+                    else
+                    {
+                        Vector3 forwardVel = Vector3.Project(rb.linearVelocity, movementDir);
+                        turnForce = -(rb.linearVelocity - forwardVel) * deceleration;
+                    }
                     rb.AddForce(turnForce, ForceMode.Force);
                 }
 
@@ -105,31 +113,41 @@ public class PlayerBody : MonoBehaviour
                 rb.AddForce(-rb.linearVelocity * deceleration, ForceMode.Force);
             }
         }
-       
 
-       
+
+
 
         RaycastHit rayHit;
         if (Physics.Raycast(transform.position, gravity, out rayHit, maxRayDist))
         {
-            
+
             float x = rayHit.distance - rideheight;
 
             float springForce = (x * rideSpringStrength);
 
             Vector3 springVector = gravity.normalized * springForce;
+            if (x < 0 && jumpDelay < 0)
+            {
+                doRideForce = true;
+            }
 
-            rb.AddForce(springVector, ForceMode.Acceleration);
-         
+            if (doRideForce)
+            {
+                rb.AddForce(springVector, ForceMode.Acceleration);
+            }
+
         }
 
         //gravity
         rb.AddForce(gravity * gravityMod, ForceMode.Acceleration);
 
+        jumpDelay -= Time.fixedDeltaTime;
         if (doJump)
         {
             rb.AddForce(-gravity.normalized * jumpForce, ForceMode.Impulse);
             doJump = false;
+            doRideForce = false;
+            jumpDelay = 1;
         }
 
 
@@ -141,5 +159,5 @@ public class PlayerBody : MonoBehaviour
 
     }
 
-    
+
 }
