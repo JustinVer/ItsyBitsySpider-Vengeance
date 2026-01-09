@@ -5,6 +5,7 @@ public class PlayerBody : MonoBehaviour
     private Rigidbody rb;
 
     private Vector3 movementDir = Vector3.zero;
+    private Vector3 gravity = Vector3.zero;
 
     private bool doJump = false;
 
@@ -34,6 +35,8 @@ public class PlayerBody : MonoBehaviour
     [SerializeField] private float rideSpringDamp = 5f;
     [SerializeField] private float maxRayDist = 2f;
 
+    [SerializeField] private float rotationSpeed = 10f;
+
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -42,7 +45,9 @@ public class PlayerBody : MonoBehaviour
 
     private void FixedUpdate()
     {
+        gravity = GameplayManager.Instance.GetGravity(transform.position);
         movePlayer();
+        rotateBody();
     }
 
     public bool IsGrounded()
@@ -53,7 +58,7 @@ public class PlayerBody : MonoBehaviour
 
         RaycastHit rayHit;
 
-        return Physics.SphereCast(transform.position, sphereRadius, GameplayManager.Instance.GetGravity(this.transform.position), out rayHit, castDist);
+        return Physics.SphereCast(transform.position, sphereRadius, gravity, out rayHit, castDist);
 
     }
 
@@ -74,7 +79,7 @@ public class PlayerBody : MonoBehaviour
     private void movePlayer()
     {
 
-        Vector3 gravity = GameplayManager.Instance.GetGravity(transform.position);
+
 
         if (movementDir != Vector3.zero)
         {
@@ -157,6 +162,28 @@ public class PlayerBody : MonoBehaviour
         {
             rb.linearVelocity = rb.linearVelocity.normalized * velCap;
         }
+
+    }
+    //TODO fix this
+    private void rotateBody()
+    {
+
+        Quaternion targetRot = Quaternion.LookRotation(rb.linearVelocity, -gravity);
+        Vector3 flatForwardNorm = Vector3.Cross(transform.forward, -gravity);
+        Vector3 flatForward = Vector3.Cross(-gravity, flatForwardNorm);
+        float angleDif = Vector3.SignedAngle(transform.forward, flatForward, flatForwardNorm);
+
+        float max = -45;
+        float min = 45;
+        if (angleDif > max)
+        {
+            targetRot = Quaternion.AngleAxis(angleDif - max, flatForwardNorm);
+        }
+        else if (angleDif < min) { }
+        {
+            targetRot = Quaternion.AngleAxis(angleDif - min, flatForwardNorm);
+        }
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRot, rotationSpeed * Time.fixedDeltaTime);
 
     }
 
