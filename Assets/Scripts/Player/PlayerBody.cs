@@ -1,3 +1,4 @@
+using Unity.Mathematics;
 using UnityEngine;
 
 public class PlayerBody : MonoBehaviour
@@ -169,21 +170,31 @@ public class PlayerBody : MonoBehaviour
     {
 
         Quaternion targetRot = Quaternion.LookRotation(rb.linearVelocity, -gravity);
-        Vector3 flatForwardNorm = Vector3.Cross(transform.forward, -gravity);
-        Vector3 flatForward = Vector3.Cross(-gravity, flatForwardNorm);
-        float angleDif = Vector3.SignedAngle(transform.forward, flatForward, flatForwardNorm);
+        Debug.DrawLine(transform.position, transform.position + transform.forward * 2);
+        Vector3 sideAxis = Vector3.Cross(transform.forward, -gravity);
+        Debug.DrawLine(transform.position, transform.position + sideAxis.normalized * 2);
+        Vector3 forwardAxis = Vector3.Cross(-gravity, sideAxis);
+        Debug.DrawLine(transform.position, transform.position + forwardAxis.normalized * 2);
 
-        float max = -45;
-        float min = 45;
-        if (angleDif > max)
+        float pitch = Vector3.SignedAngle(targetRot * Vector3.forward, forwardAxis, sideAxis);
+
+        float max = 45;
+        float min = -45;
+        quaternion old = targetRot;
+        if (pitch > max)
         {
-            targetRot = Quaternion.AngleAxis(angleDif - max, flatForwardNorm);
+            targetRot *= Quaternion.AngleAxis(max - pitch, sideAxis);
         }
-        else if (angleDif < min) { }
+        else
+        if (pitch < min)
         {
-            targetRot = Quaternion.AngleAxis(angleDif - min, flatForwardNorm);
+            targetRot *= Quaternion.AngleAxis(min - pitch, sideAxis);
         }
-        transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRot, rotationSpeed * Time.fixedDeltaTime);
+
+        {
+            Debug.Log(old + " -> " + targetRot);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRot, rotationSpeed * Time.deltaTime);
+        }
 
     }
 
