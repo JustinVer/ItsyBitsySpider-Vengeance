@@ -10,6 +10,7 @@ public class PlayerBody : MonoBehaviour
 
     private bool doRideForce = false;
 
+    private float currentJumpDelay = 0;
     private float jumpDelay = 1;
     public Vector3 MovementDir
     {
@@ -58,7 +59,7 @@ public class PlayerBody : MonoBehaviour
 
     private bool canJump()
     {
-        return IsGrounded() && jumpDelay < 0;
+        return IsGrounded() && currentJumpDelay < 0;
     }
 
     public void Jump()
@@ -126,7 +127,7 @@ public class PlayerBody : MonoBehaviour
             float springForce = (x * rideSpringStrength);
 
             Vector3 springVector = gravity.normalized * springForce;
-            if (x < 0 && jumpDelay < 0)
+            if (x < 0 && currentJumpDelay < 0)
             {
                 doRideForce = true;
             }
@@ -141,13 +142,13 @@ public class PlayerBody : MonoBehaviour
         //gravity
         rb.AddForce(gravity * gravityMod, ForceMode.Acceleration);
 
-        jumpDelay -= Time.fixedDeltaTime;
+        currentJumpDelay -= Time.fixedDeltaTime;
         if (doJump)
         {
             rb.AddForce(-gravity.normalized * jumpForce, ForceMode.Impulse);
             doJump = false;
             doRideForce = false;
-            jumpDelay = 1;
+            currentJumpDelay = jumpDelay;
         }
 
 
