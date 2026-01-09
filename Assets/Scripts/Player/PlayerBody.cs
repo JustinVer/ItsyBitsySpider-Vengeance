@@ -73,7 +73,7 @@ public class PlayerBody : MonoBehaviour
     private void movePlayer()
     {
 
-        Vector3 gravity = GameplayManager.Instance.GetGravity(this.transform.position);
+        Vector3 gravity = GameplayManager.Instance.GetGravity(transform.position);
 
         if (movementDir != Vector3.zero)
         {

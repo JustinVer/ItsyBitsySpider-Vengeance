@@ -15,13 +15,13 @@ public class PlayerCamera : MonoBehaviour
         cam = GetComponentInChildren<Camera>();
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         targetPosition = target.transform.position + offset;
 
         float camDist = Vector3.Distance(transform.position, targetPosition);
 
-        float camMove = followSpeed * camDist * Time.deltaTime;
+        float camMove = followSpeed * camDist * Time.fixedDeltaTime;
 
         Vector3 moveStep = (targetPosition - transform.position) * Mathf.Min(camMove, camDist);
 
