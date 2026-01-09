@@ -22,7 +22,7 @@ public class BodyFollowAgent : MonoBehaviour
                 waitingForJump = false;
                 jumping = true;
                 rb.MovePosition(startPosition);
-                rb.linearVelocity = CalculateVelocityForTime(startPosition, endPosition, 5f, 0.1f, GameplayManager.Instance.GetGravity(this.gameObject));
+                rb.linearVelocity = CalculateVelocityForTime(startPosition, endPosition, 5f, 0.1f, GameplayManager.Instance.GetGravity(this.transform.position));
                 startJumpTime = Time.time;
             }
             else
@@ -44,7 +44,7 @@ public class BodyFollowAgent : MonoBehaviour
             }
             else
             {
-                rb.AddForce(GameplayManager.Instance.GetGravity(this.gameObject), ForceMode.Acceleration);
+                rb.AddForce(GameplayManager.Instance.GetGravity(this.transform.position), ForceMode.Acceleration);
             }
         }
         else
@@ -57,7 +57,7 @@ public class BodyFollowAgent : MonoBehaviour
     {
         Debug.Log("Jump: " + startPosition + " " + endPosition);
         this.startPosition = startPosition;
-        this.endPosition = endPosition - (GameplayManager.Instance.GetGravity(this.gameObject) * 0.08f);
+        this.endPosition = endPosition - (GameplayManager.Instance.GetGravity(this.transform.position) * 0.08f);
         waitingForJump = true;
     }
 

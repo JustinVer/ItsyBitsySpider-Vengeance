@@ -52,7 +52,7 @@ public class PlayerBody : MonoBehaviour
 
         RaycastHit rayHit;
 
-        return Physics.SphereCast(transform.position, sphereRadius, GameplayManager.Instance.GetGravity(gameObject), out rayHit, castDist);
+        return Physics.SphereCast(transform.position, sphereRadius, GameplayManager.Instance.GetGravity(this.transform.position), out rayHit, castDist);
 
     }
 
@@ -73,7 +73,7 @@ public class PlayerBody : MonoBehaviour
     private void movePlayer()
     {
 
-        Vector3 gravity = GameplayManager.Instance.GetGravity(gameObject);
+        Vector3 gravity = GameplayManager.Instance.GetGravity(this.transform.position);
 
         if (movementDir != Vector3.zero)
         {

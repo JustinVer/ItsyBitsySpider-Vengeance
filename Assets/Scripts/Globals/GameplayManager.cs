@@ -123,7 +123,7 @@ public class GameplayManager : MonoBehaviour
     }
     #endregion
 
-    public Vector3 GetGravity(GameObject obj)
+    public Vector3 GetGravity(Vector3 position)
     {
         return Vector3.down * GRAVITY_STRENGTH;
     }
