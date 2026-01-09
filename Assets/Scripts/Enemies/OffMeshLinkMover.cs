@@ -1,10 +1,10 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
 public enum OffMeshLinkMoveMethod
 {
-    Teleport,
     NormalSpeed,
     Parabola,
     Curve
@@ -13,67 +13,142 @@ public enum OffMeshLinkMoveMethod
 [RequireComponent(typeof(NavMeshAgent))]
 public class AgentLinkMover : MonoBehaviour
 {
-    public OffMeshLinkMoveMethod m_Method = OffMeshLinkMoveMethod.Parabola;
-    public AnimationCurve m_Curve = new AnimationCurve();
+    public OffMeshLinkMoveMethod Jump_Method = OffMeshLinkMoveMethod.Parabola;
+    public AnimationCurve Jump_Curve = new AnimationCurve();
+    public OffMeshLinkMoveMethod Connection_Method = OffMeshLinkMoveMethod.NormalSpeed;
+    public AnimationCurve Connection_Curve = new AnimationCurve();
+    public Transform cylinder;
+    private float speed;
+    private NavMeshAgent agent;
+    [SerializeField] private BodyFollowAgent body;
+    [SerializeField] private float maxDistanceMultiplier;
+    private bool inLink = false;
+    private Vector3 lastPosition;
 
-    IEnumerator Start()
+    void Start()
     {
-        NavMeshAgent agent = GetComponent<NavMeshAgent>();
+        agent = GetComponent<NavMeshAgent>();
+        speed = agent.speed;
         agent.autoTraverseOffMeshLink = false;
-        while (true)
+        agent.updateRotation = false;
+        agent.updateUpAxis = false;
+    }
+
+    private void Update()
+    {
+
+        if (DistanceStop())
         {
-            if (agent.isOnOffMeshLink)
-            {
-                if (m_Method == OffMeshLinkMoveMethod.NormalSpeed)
-                    yield return StartCoroutine(NormalSpeed(agent));
-                else if (m_Method == OffMeshLinkMoveMethod.Parabola)
-                    yield return StartCoroutine(Parabola(agent, 2.0f, 0.5f));
-                else if (m_Method == OffMeshLinkMoveMethod.Curve)
-                    yield return StartCoroutine(Curve(agent, 0.5f));
-                agent.CompleteOffMeshLink();
-            }
-            yield return null;
+            agent.speed = 0;
         }
+        else
+        {
+            agent.speed = speed;
+        }
+        rotateAroundCylinder();
+        if (agent.isOnOffMeshLink && !inLink)
+        {
+            if (agent.currentOffMeshLinkData.owner.GameObject().tag == "JumpLink")
+            {
+                if (Jump_Method == OffMeshLinkMoveMethod.NormalSpeed)
+                    StartCoroutine(NormalSpeed(agent));
+                else if (Jump_Method == OffMeshLinkMoveMethod.Parabola)
+                    StartCoroutine(Parabola(agent, 2.0f, 0.5f));
+                else if (Jump_Method == OffMeshLinkMoveMethod.Curve)
+                    StartCoroutine(Curve(agent, 0.5f, Jump_Curve));
+
+            }
+            else
+            {
+                if (Connection_Method == OffMeshLinkMoveMethod.NormalSpeed)
+                    StartCoroutine(NormalSpeed(agent));
+                else if (Connection_Method == OffMeshLinkMoveMethod.Parabola)
+                    StartCoroutine(Parabola(agent, 2.0f, 0.5f));
+                else if (Connection_Method == OffMeshLinkMoveMethod.Curve)
+                    StartCoroutine(Curve(agent, 0.5f, Connection_Curve));
+            }
+        }
+        lastPosition = agent.transform.position;
+
+    }
+
+    private bool DistanceStop()
+    {
+        return Mathf.Abs(Vector3.Distance(this.transform.position, body.gameObject.transform.position)) > maxDistance();
+    }
+
+    private float maxDistance()
+    {
+        return speed * maxDistanceMultiplier;
     }
 
     IEnumerator NormalSpeed(NavMeshAgent agent)
     {
+        inLink = true;
+        Debug.Log("Normal Movement");
         OffMeshLinkData data = agent.currentOffMeshLinkData;
-        Vector3 endPos = data.endPos + Vector3.up * agent.baseOffset;
+        Vector3 endPos = data.endPos + (-1 * GameplayManager.Instance.GetGravity(data.endPos).normalized) * agent.baseOffset;
+        bool usedLastPosition = false;
         while (agent.transform.position != endPos)
         {
             agent.transform.position = Vector3.MoveTowards(agent.transform.position, endPos, agent.speed * Time.deltaTime);
+            if (!usedLastPosition)
+            {
+                agent.transform.position = lastPosition;
+                usedLastPosition = true;
+            }
             yield return null;
         }
+        Debug.Log("End movement speed");
+        agent.CompleteOffMeshLink();
+        inLink = false;
     }
 
     IEnumerator Parabola(NavMeshAgent agent, float height, float duration)
     {
+        inLink = true;
         OffMeshLinkData data = agent.currentOffMeshLinkData;
         Vector3 startPos = agent.transform.position;
-        Vector3 endPos = data.endPos + Vector3.up * agent.baseOffset;
+        Vector3 endPos = data.endPos + (-1 * GameplayManager.Instance.GetGravity(data.endPos).normalized) * (agent.baseOffset / 2);
         float normalizedTime = 0.0f;
         while (normalizedTime < 1.0f)
         {
             float yOffset = height * 4.0f * (normalizedTime - normalizedTime * normalizedTime);
-            agent.transform.position = Vector3.Lerp(startPos, endPos, normalizedTime) + yOffset * Vector3.up;
+            agent.transform.position = Vector3.Lerp(startPos, endPos, normalizedTime) + yOffset * (-1 * GameplayManager.Instance.GetGravity(agent.transform.position).normalized);
             normalizedTime += Time.deltaTime / duration;
             yield return null;
         }
+        agent.CompleteOffMeshLink();
+        inLink = false;
     }
 
-    IEnumerator Curve(NavMeshAgent agent, float duration)
+    IEnumerator Curve(NavMeshAgent agent, float duration, AnimationCurve curve)
     {
+        inLink = true;
         OffMeshLinkData data = agent.currentOffMeshLinkData;
         Vector3 startPos = agent.transform.position;
-        Vector3 endPos = data.endPos + Vector3.up * agent.baseOffset;
+        Vector3 endPos = data.endPos + (-1 * GameplayManager.Instance.GetGravity(data.endPos).normalized) * agent.baseOffset;
         float normalizedTime = 0.0f;
         while (normalizedTime < 1.0f)
         {
-            float yOffset = m_Curve.Evaluate(normalizedTime);
-            agent.transform.position = Vector3.Lerp(startPos, endPos, normalizedTime) + yOffset * Vector3.up;
+            float yOffset = curve.Evaluate(normalizedTime);
+            agent.transform.position = Vector3.Lerp(startPos, endPos, normalizedTime) + yOffset * (-1 * GameplayManager.Instance.GetGravity(agent.transform.position).normalized);
             normalizedTime += Time.deltaTime / duration;
             yield return null;
         }
+        agent.CompleteOffMeshLink();
+        inLink = false;
+    }
+
+    private void rotateAroundCylinder()
+    {
+        Vector3 direction = transform.position - cylinder.position;
+        direction.z = 0;  // Flatten to XZ plane
+
+        // Calculate angle
+        float angle = Mathf.Atan2(direction.x, direction.y) * Mathf.Rad2Deg;
+
+        // Apply rotation (object faces outward from cylinder)
+        transform.rotation = Quaternion.Euler(0, 0, angle * -1);
     }
 }

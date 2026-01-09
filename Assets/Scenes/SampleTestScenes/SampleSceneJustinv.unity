@@ -229,8 +229,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_SerializedVersion: 1
   m_AgentTypeID: 0
-  m_StartPoint: {x: 0, y: 0, z: 0}
-  m_EndPoint: {x: 0.05, y: 0, z: 0}
+  m_StartPoint: {x: -0.1, y: 0, z: 0}
+  m_EndPoint: {x: 0.2, y: 0, z: 0}
   m_StartTransform: {fileID: 0}
   m_EndTransform: {fileID: 0}
   m_Activated: 1
@@ -497,13 +497,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0.9432227, z: -0.33216113, w: 0}
-  m_LocalPosition: {x: 152.2, y: 13.8, z: 93.93}
+  m_LocalRotation: {x: 0, y: 0.9811243, z: -0.19337817, w: 0}
+  m_LocalPosition: {x: 68.89, y: 4.2, z: 102.4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 38.8, y: 180, z: 0}
+  m_LocalEulerAnglesHint: {x: 22.3, y: 180, z: 0}
 --- !u!114 &330585547
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -594,8 +594,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_SerializedVersion: 1
   m_AgentTypeID: 0
-  m_StartPoint: {x: 0.05, y: 0, z: 0}
-  m_EndPoint: {x: 0, y: 0, z: 0}
+  m_StartPoint: {x: 0.1, y: 0, z: 0}
+  m_EndPoint: {x: -0.2, y: 0, z: 0}
   m_StartTransform: {fileID: 0}
   m_EndTransform: {fileID: 0}
   m_Activated: 1
@@ -860,8 +860,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_SerializedVersion: 1
   m_AgentTypeID: 0
-  m_StartPoint: {x: 0.05, y: 0, z: 0}
-  m_EndPoint: {x: 0, y: 0, z: 0}
+  m_StartPoint: {x: 0.1, y: 0, z: 0}
+  m_EndPoint: {x: -0.2, y: 0, z: 0}
   m_StartTransform: {fileID: 0}
   m_EndTransform: {fileID: 0}
   m_Activated: 1
@@ -999,7 +999,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &572955281
 Transform:
   m_ObjectHideFlags: 0
@@ -1093,8 +1093,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_SerializedVersion: 1
   m_AgentTypeID: 0
-  m_StartPoint: {x: 0, y: 0, z: 0}
-  m_EndPoint: {x: 0.05, y: 0, z: 0}
+  m_StartPoint: {x: -0.1, y: 0, z: 0}
+  m_EndPoint: {x: 0.2, y: 0, z: 0}
   m_StartTransform: {fileID: 0}
   m_EndTransform: {fileID: 0}
   m_Activated: 1
@@ -1229,7 +1229,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &628250376
 Transform:
   m_ObjectHideFlags: 0
@@ -1323,8 +1323,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_SerializedVersion: 1
   m_AgentTypeID: 0
-  m_StartPoint: {x: 0.05, y: 0, z: 0}
-  m_EndPoint: {x: 0, y: 0, z: 0}
+  m_StartPoint: {x: 0.1, y: 0, z: 0}
+  m_EndPoint: {x: -0.2, y: 0, z: 0}
   m_StartTransform: {fileID: 0}
   m_EndTransform: {fileID: 0}
   m_Activated: 1
@@ -1407,7 +1407,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &680309463
 Transform:
   m_ObjectHideFlags: 0
@@ -1471,6 +1471,7 @@ GameObject:
   - component: {fileID: 681082605}
   - component: {fileID: 681082607}
   - component: {fileID: 681082608}
+  - component: {fileID: 681082609}
   m_Layer: 0
   m_Name: NavMeshAgent
   m_TagString: Untagged
@@ -1488,11 +1489,11 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 15
-  m_Acceleration: 8
+  m_Speed: 10
+  m_Acceleration: 30
   avoidancePriority: 50
-  m_AngularSpeed: 120
-  m_StoppingDistance: 1.5
+  m_AngularSpeed: 1440
+  m_StoppingDistance: 2
   m_AutoTraverseOffMeshLink: 0
   m_AutoBraking: 1
   m_AutoRepath: 1
@@ -1585,7 +1586,7 @@ Transform:
   m_GameObject: {fileID: 681082599}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 152.7, y: 1.44, z: 68.44}
+  m_LocalPosition: {x: 68.2, y: -8, z: 88.78}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1623,7 +1624,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 681082599}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0becfdda1e3b68d468201e373318994e, type: 3}
   m_Name: 
@@ -1634,6 +1635,35 @@ MonoBehaviour:
   speed: 8
   body: {fileID: 2109991224}
   maxDistanceFromFollow: 3
+--- !u!114 &681082609
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 681082599}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17eecebe3e632f447b95fc438b8a3c57, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Jump_Method: 1
+  Jump_Curve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  Connection_Method: 0
+  Connection_Curve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  cylinder: {fileID: 1160317782}
+  body: {fileID: 2109991224}
+  maxDistanceMultiplier: 0.05
 --- !u!1001 &759495822
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1845,8 +1875,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_SerializedVersion: 1
   m_AgentTypeID: 0
-  m_StartPoint: {x: 0, y: 0, z: 0}
-  m_EndPoint: {x: 0.05, y: 0, z: 0}
+  m_StartPoint: {x: -0.1, y: 0, z: 0}
+  m_EndPoint: {x: 0.2, y: 0, z: 0}
   m_StartTransform: {fileID: 0}
   m_EndTransform: {fileID: 0}
   m_Activated: 1
@@ -1978,7 +2008,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1047849295
 Transform:
   m_ObjectHideFlags: 0
@@ -2024,7 +2054,7 @@ MonoBehaviour:
   m_OverrideVoxelSize: 0
   m_VoxelSize: 0.16666667
   m_MinRegionArea: 2
-  m_NavMeshData: {fileID: 23800000, guid: 563efa0654affba4a90b52a930e2bddf, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: 65f3509fa2b8e104d97e9cffc81126de, type: 2}
   m_BuildHeightMesh: 1
 --- !u!1 &1062684828
 GameObject:
@@ -2487,7 +2517,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1249948238
 Transform:
   m_ObjectHideFlags: 0
@@ -2581,8 +2611,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_SerializedVersion: 1
   m_AgentTypeID: 0
-  m_StartPoint: {x: 0.05, y: 0, z: 0}
-  m_EndPoint: {x: 0, y: 0, z: 0}
+  m_StartPoint: {x: 0.1, y: 0, z: 0}
+  m_EndPoint: {x: -0.2, y: 0, z: 0}
   m_StartTransform: {fileID: 0}
   m_EndTransform: {fileID: 0}
   m_Activated: 1
@@ -2728,7 +2758,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!65 &1800609499
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2868,8 +2898,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_SerializedVersion: 1
   m_AgentTypeID: 0
-  m_StartPoint: {x: 0, y: 0, z: 0}
-  m_EndPoint: {x: 0.05, y: 0, z: 0}
+  m_StartPoint: {x: -0.1, y: 0, z: 0}
+  m_EndPoint: {x: 0.2, y: 0, z: 0}
   m_StartTransform: {fileID: 0}
   m_EndTransform: {fileID: 0}
   m_Activated: 1
@@ -3023,7 +3053,7 @@ Transform:
   m_GameObject: {fileID: 2109991218}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 152.7, y: 1.44, z: 68.44}
+  m_LocalPosition: {x: 68.2, y: -8, z: 88.78}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3143,7 +3173,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   followBody: {fileID: 681082608}
-  speed: 7
+  speed: 5
   rb: {fileID: 2109991223}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
