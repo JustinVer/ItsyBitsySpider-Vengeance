@@ -229,7 +229,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_SerializedVersion: 1
   m_AgentTypeID: 0
-  m_StartPoint: {x: -0.1, y: 0, z: 0}
+  m_StartPoint: {x: 0, y: 0, z: 0}
   m_EndPoint: {x: 0.2, y: 0, z: 0}
   m_StartTransform: {fileID: 0}
   m_EndTransform: {fileID: 0}
@@ -594,8 +594,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_SerializedVersion: 1
   m_AgentTypeID: 0
-  m_StartPoint: {x: 0.1, y: 0, z: 0}
-  m_EndPoint: {x: -0.2, y: 0, z: 0}
+  m_StartPoint: {x: 0.05, y: 0, z: 0}
+  m_EndPoint: {x: -0.1, y: 0, z: 0}
   m_StartTransform: {fileID: 0}
   m_EndTransform: {fileID: 0}
   m_Activated: 1
@@ -840,7 +840,7 @@ Transform:
   m_GameObject: {fileID: 469131635}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: -8.96, y: -1.469, z: 22}
+  m_LocalPosition: {x: -9.11, y: -1.469, z: 22}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -860,8 +860,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_SerializedVersion: 1
   m_AgentTypeID: 0
-  m_StartPoint: {x: 0.1, y: 0, z: 0}
-  m_EndPoint: {x: -0.2, y: 0, z: 0}
+  m_StartPoint: {x: 0.05, y: 0, z: 0}
+  m_EndPoint: {x: -0.1, y: -0.01, z: 0}
   m_StartTransform: {fileID: 0}
   m_EndTransform: {fileID: 0}
   m_Activated: 1
@@ -1073,7 +1073,7 @@ Transform:
   m_GameObject: {fileID: 577153292}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -1, w: 0}
-  m_LocalPosition: {x: -0.44000244, y: 9.050002, z: 22}
+  m_LocalPosition: {x: -0.44000244, y: 9.05, z: 22}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1093,8 +1093,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_SerializedVersion: 1
   m_AgentTypeID: 0
-  m_StartPoint: {x: -0.1, y: 0, z: 0}
-  m_EndPoint: {x: 0.2, y: 0, z: 0}
+  m_StartPoint: {x: 0, y: -0.14, z: 0}
+  m_EndPoint: {x: 0.2, y: -0.07, z: 0}
   m_StartTransform: {fileID: 0}
   m_EndTransform: {fileID: 0}
   m_Activated: 1
@@ -1323,8 +1323,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_SerializedVersion: 1
   m_AgentTypeID: 0
-  m_StartPoint: {x: 0.1, y: 0, z: 0}
-  m_EndPoint: {x: -0.2, y: 0, z: 0}
+  m_StartPoint: {x: 0.05, y: 0, z: 0}
+  m_EndPoint: {x: -0.1, y: 0, z: 0}
   m_StartTransform: {fileID: 0}
   m_EndTransform: {fileID: 0}
   m_Activated: 1
@@ -1492,13 +1492,13 @@ NavMeshAgent:
   m_Speed: 10
   m_Acceleration: 30
   avoidancePriority: 50
-  m_AngularSpeed: 1440
-  m_StoppingDistance: 2
+  m_AngularSpeed: 720
+  m_StoppingDistance: 1
   m_AutoTraverseOffMeshLink: 0
   m_AutoBraking: 1
   m_AutoRepath: 1
-  m_Height: 2
-  m_BaseOffset: 1
+  m_Height: 0.5
+  m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
 --- !u!136 &681082601
@@ -1654,7 +1654,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  Connection_Method: 0
+  Connection_Method: 3
   Connection_Curve:
     serializedVersion: 2
     m_Curve: []
@@ -1664,6 +1664,7 @@ MonoBehaviour:
   cylinder: {fileID: 1160317782}
   body: {fileID: 2109991224}
   maxDistanceMultiplier: 0.05
+  maxDistance: 0.15
 --- !u!1001 &759495822
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1855,7 +1856,7 @@ Transform:
   m_GameObject: {fileID: 818617808}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: -9.05, y: -0.46, z: 22}
+  m_LocalPosition: {x: -9.29, y: -0.46, z: 22}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1875,7 +1876,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_SerializedVersion: 1
   m_AgentTypeID: 0
-  m_StartPoint: {x: -0.1, y: 0, z: 0}
+  m_StartPoint: {x: 0, y: 0, z: 0}
   m_EndPoint: {x: 0.2, y: 0, z: 0}
   m_StartTransform: {fileID: 0}
   m_EndTransform: {fileID: 0}
@@ -2591,7 +2592,7 @@ Transform:
   m_GameObject: {fileID: 1507694372}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -1, w: 0}
-  m_LocalPosition: {x: -1.4489975, y: 8.960002, z: 22}
+  m_LocalPosition: {x: -1.4489975, y: 9.05, z: 22}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2611,8 +2612,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_SerializedVersion: 1
   m_AgentTypeID: 0
-  m_StartPoint: {x: 0.1, y: 0, z: 0}
-  m_EndPoint: {x: -0.2, y: 0, z: 0}
+  m_StartPoint: {x: 0.05, y: 0.07, z: 0}
+  m_EndPoint: {x: -0.1, y: -0.07, z: 0}
   m_StartTransform: {fileID: 0}
   m_EndTransform: {fileID: 0}
   m_Activated: 1
@@ -2898,7 +2899,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_SerializedVersion: 1
   m_AgentTypeID: 0
-  m_StartPoint: {x: -0.1, y: 0, z: 0}
+  m_StartPoint: {x: 0, y: 0, z: 0}
   m_EndPoint: {x: 0.2, y: 0, z: 0}
   m_StartTransform: {fileID: 0}
   m_EndTransform: {fileID: 0}

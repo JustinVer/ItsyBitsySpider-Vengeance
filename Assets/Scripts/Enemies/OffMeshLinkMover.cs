@@ -7,7 +7,8 @@ public enum OffMeshLinkMoveMethod
 {
     NormalSpeed,
     Parabola,
-    Curve
+    Curve,
+    Teleport
 }
 
 [RequireComponent(typeof(NavMeshAgent))]
@@ -22,6 +23,7 @@ public class AgentLinkMover : MonoBehaviour
     private NavMeshAgent agent;
     [SerializeField] private BodyFollowAgent body;
     [SerializeField] private float maxDistanceMultiplier;
+    [SerializeField] private float maxDistance;
     private bool inLink = false;
     private Vector3 lastPosition;
 
@@ -36,10 +38,9 @@ public class AgentLinkMover : MonoBehaviour
 
     private void Update()
     {
-
-        if (DistanceStop())
+        if (DistanceStop() > maxDistance)
         {
-            agent.speed = 0;
+            agent.speed = speed / (1 + (DistanceStop() * 2));
         }
         else
         {
@@ -66,18 +67,20 @@ public class AgentLinkMover : MonoBehaviour
                     StartCoroutine(Parabola(agent, 2.0f, 0.5f));
                 else if (Connection_Method == OffMeshLinkMoveMethod.Curve)
                     StartCoroutine(Curve(agent, 0.5f, Connection_Curve));
+                else
+                    agent.CompleteOffMeshLink();
             }
         }
         lastPosition = agent.transform.position;
 
     }
 
-    private bool DistanceStop()
+    private float DistanceStop()
     {
-        return Mathf.Abs(Vector3.Distance(this.transform.position, body.gameObject.transform.position)) > maxDistance();
+        return Mathf.Abs(Vector3.Distance(this.transform.position, body.gameObject.transform.position));
     }
 
-    private float maxDistance()
+    private float maxDistanceSpeed()
     {
         return speed * maxDistanceMultiplier;
     }
