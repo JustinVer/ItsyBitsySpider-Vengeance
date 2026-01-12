@@ -286,7 +286,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_SerializedVersion: 1
   m_AgentTypeID: 0
-  m_StartPoint: {x: 0, y: -2, z: 1.57}
+  m_StartPoint: {x: 0, y: -1.25, z: 1.57}
   m_EndPoint: {x: 0.00000018294418, y: 2.0000014, z: -0.84088135}
   m_StartTransform: {fileID: 0}
   m_EndTransform: {fileID: 0}
@@ -1380,7 +1380,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_SerializedVersion: 1
   m_AgentTypeID: 0
-  m_StartPoint: {x: 0, y: -2, z: 1.57}
+  m_StartPoint: {x: 0, y: -1.25, z: 1.57}
   m_EndPoint: {x: 0.00000018294418, y: 2.0000014, z: -0.84088135}
   m_StartTransform: {fileID: 0}
   m_EndTransform: {fileID: 0}
@@ -1635,6 +1635,7 @@ MonoBehaviour:
   speed: 8
   body: {fileID: 2109991224}
   maxDistanceFromFollow: 3
+  currentMaxDistance: 0
 --- !u!114 &681082609
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1819,7 +1820,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_SerializedVersion: 1
   m_AgentTypeID: 0
-  m_StartPoint: {x: 0, y: -2, z: 1.57}
+  m_StartPoint: {x: 0, y: -1.25, z: 1.57}
   m_EndPoint: {x: 0.00000018294418, y: 2.0000014, z: -0.84088135}
   m_StartTransform: {fileID: 0}
   m_EndTransform: {fileID: 0}
@@ -2956,7 +2957,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_SerializedVersion: 1
   m_AgentTypeID: 0
-  m_StartPoint: {x: 0, y: -2, z: 1.57}
+  m_StartPoint: {x: 0, y: -1.25, z: 1.57}
   m_EndPoint: {x: 0.00000018294418, y: 2.0000014, z: -0.84088135}
   m_StartTransform: {fileID: 0}
   m_EndTransform: {fileID: 0}
@@ -3173,9 +3174,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7fa4a2196d3313419cb231173e32b36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  followBody: {fileID: 681082608}
+  followBody: {fileID: 681082609}
   speed: 5
   rb: {fileID: 2109991223}
+  distanceToAgentBeforeJump: 0.5
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

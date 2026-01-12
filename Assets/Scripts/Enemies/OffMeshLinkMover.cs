@@ -25,6 +25,7 @@ public class AgentLinkMover : MonoBehaviour
     [SerializeField] private float maxDistanceMultiplier;
     [SerializeField] private float maxDistance;
     private bool inLink = false;
+    private bool waitingForFollowBody = false;
     private Vector3 lastPosition;
 
     void Start()
@@ -104,12 +105,16 @@ public class AgentLinkMover : MonoBehaviour
         }
         Debug.Log("End movement speed");
         agent.CompleteOffMeshLink();
+        body.EndJump();
         inLink = false;
     }
 
     IEnumerator Parabola(NavMeshAgent agent, float height, float duration)
     {
         inLink = true;
+        waitingForFollowBody = true;
+        body.StartJump();
+        yield return new WaitUntil(() => !waitingForFollowBody);
         OffMeshLinkData data = agent.currentOffMeshLinkData;
         Vector3 startPos = agent.transform.position;
         Vector3 endPos = data.endPos + (-1 * GameplayManager.Instance.GetGravity(data.endPos).normalized) * (agent.baseOffset / 2);
@@ -122,12 +127,16 @@ public class AgentLinkMover : MonoBehaviour
             yield return null;
         }
         agent.CompleteOffMeshLink();
+        body.EndJump();
         inLink = false;
     }
 
     IEnumerator Curve(NavMeshAgent agent, float duration, AnimationCurve curve)
     {
         inLink = true;
+        waitingForFollowBody = true;
+        body.StartJump();
+        yield return new WaitUntil(() => !waitingForFollowBody);
         OffMeshLinkData data = agent.currentOffMeshLinkData;
         Vector3 startPos = agent.transform.position;
         Vector3 endPos = data.endPos + (-1 * GameplayManager.Instance.GetGravity(data.endPos).normalized) * agent.baseOffset;
@@ -140,6 +149,7 @@ public class AgentLinkMover : MonoBehaviour
             yield return null;
         }
         agent.CompleteOffMeshLink();
+        body.EndJump();
         inLink = false;
     }
 
@@ -153,5 +163,10 @@ public class AgentLinkMover : MonoBehaviour
 
         // Apply rotation (object faces outward from cylinder)
         transform.rotation = Quaternion.Euler(0, 0, angle * -1);
+    }
+
+    public void StartJump()
+    {
+        waitingForFollowBody = false;
     }
 }
