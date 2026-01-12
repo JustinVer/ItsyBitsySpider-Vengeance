@@ -155,18 +155,31 @@ public class AgentLinkMover : MonoBehaviour
 
     private void rotateAroundCylinder()
     {
-        Vector3 direction = transform.position - cylinder.position;
-        direction.z = 0;  // Flatten to XZ plane
+        if (cylinder != null)
+        {
+            Vector3 direction = transform.position - cylinder.position;
+            direction.z = 0;  // Flatten to XZ plane
 
-        // Calculate angle
-        float angle = Mathf.Atan2(direction.x, direction.y) * Mathf.Rad2Deg;
+            // Calculate angle
+            float angle = Mathf.Atan2(direction.x, direction.y) * Mathf.Rad2Deg;
 
-        // Apply rotation (object faces outward from cylinder)
-        transform.rotation = Quaternion.Euler(0, 0, angle * -1);
+            // Apply rotation (object faces outward from cylinder)
+            transform.rotation = Quaternion.Euler(0, 0, angle * -1);
+        }
     }
 
     public void StartJump()
     {
         waitingForFollowBody = false;
+    }
+
+    public void SetDestination(Vector3 destination)
+    {
+        agent.destination = destination;
+    }
+
+    public void StopAgent()
+    {
+        agent.Stop();
     }
 }

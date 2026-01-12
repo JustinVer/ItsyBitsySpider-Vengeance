@@ -38,9 +38,11 @@ public class GameplayManager : MonoBehaviour
     public GameObject Player => player;
     public PlayerInput PlayerInput => playerInput;
 
-    private GameObject player;
+    [SerializeField] private GameObject player;
 
     public event Action onLevelReset;
+
+    public LayerMask NotPlayerOrEnemyMask;
 
     #region sceneManagement
     [SerializeField] private LoadScreen loadScreen;

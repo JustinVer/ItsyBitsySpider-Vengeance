@@ -2,15 +2,30 @@ using UnityEngine;
 
 public abstract class EnemyBase : MonoBehaviour, IDamageable, IReturnSelfObject<EnemyBase>
 {
-    [SerializeField] private float MaxHP = 30f;
     [SerializeField] private Animator animator;
+    [SerializeField] protected EnemyData data;
     private float currentHP;
+    private bool isDying = false;
     private ObjectPool<EnemyBase> parentPool;
 
     protected virtual void Start()
     {
-        setHP(MaxHP);
+        setHP(data.maxHP);
     }
+    protected virtual void Update()
+    {
+        if (!isDying)
+        {
+            NotDyingUpdate();
+        }
+    }
+
+    protected virtual void NotDyingUpdate()
+    {
+        Move();
+        Attack();
+    }
+
     public float getHP()
     {
         return currentHP;
@@ -18,7 +33,7 @@ public abstract class EnemyBase : MonoBehaviour, IDamageable, IReturnSelfObject<
 
     public void modifyHP(float hpChange)
     {
-        currentHP = Mathf.Clamp(currentHP + hpChange, 0f, MaxHP);
+        currentHP = Mathf.Clamp(currentHP + hpChange, 0f, data.maxHP);
         if (currentHP == 0)
         {
             Die();
@@ -27,7 +42,12 @@ public abstract class EnemyBase : MonoBehaviour, IDamageable, IReturnSelfObject<
 
     public void setHP(float hp)
     {
-        currentHP = Mathf.Clamp(hp, 0f, MaxHP);
+        currentHP = Mathf.Clamp(hp, 0f, data.maxHP);
+    }
+
+    public void SetEnemyData(EnemyData data)
+    {
+        this.data = data;
     }
 
     protected abstract void Move();
