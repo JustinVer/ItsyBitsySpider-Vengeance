@@ -108,6 +108,7 @@ public class Ant : EnemyBase, IFireAnimation
     public override void SetEnemyData(EnemyData data)
     {
         base.SetEnemyData(data);
-
+        agentMover.agent.speed = data.moveSpeed * 2;
+        bodyFollower.setSpeed(data.moveSpeed);
     }
 }
