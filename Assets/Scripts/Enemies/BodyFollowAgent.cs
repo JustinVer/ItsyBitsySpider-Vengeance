@@ -6,6 +6,7 @@ public class BodyFollowAgent : MonoBehaviour
     [SerializeField] private float speed = 2f;
     [SerializeField] private Rigidbody rb;
     [SerializeField] private float distanceToAgentBeforeJump = 0.3f;
+    [SerializeField] private float height = 0.7f;
     private bool jumping = false;
     private bool waitingForJump = false;
 
@@ -23,9 +24,9 @@ public class BodyFollowAgent : MonoBehaviour
             waitingForJump = false;
             followBody.StartJump();
         }
-        else
+        else if (Vector3.Distance(this.transform.position, followBody.transform.position) > 0.5f)
         {
-            Rotate(this.transform.position - followBody.transform.position);
+            Rotate((this.transform.position - followBody.transform.position) + ((height / 2.0f) * GameplayManager.Instance.GetGravity(this.transform.position).normalized));
         }
     }
 

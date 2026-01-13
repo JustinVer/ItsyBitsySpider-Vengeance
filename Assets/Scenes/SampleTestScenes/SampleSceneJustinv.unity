@@ -286,7 +286,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_SerializedVersion: 1
   m_AgentTypeID: 0
-  m_StartPoint: {x: 0, y: -1.25, z: 1.57}
+  m_StartPoint: {x: 0, y: -0.64, z: 1.57}
   m_EndPoint: {x: 0.00000018294418, y: 2.0000014, z: -0.84088135}
   m_StartTransform: {fileID: 0}
   m_EndTransform: {fileID: 0}
@@ -1384,7 +1384,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_SerializedVersion: 1
   m_AgentTypeID: 0
-  m_StartPoint: {x: 0, y: -1.25, z: 1.57}
+  m_StartPoint: {x: 0, y: -0.64, z: 1.57}
   m_EndPoint: {x: 0.00000018294418, y: 2.0000014, z: -0.84088135}
   m_StartTransform: {fileID: 0}
   m_EndTransform: {fileID: 0}
@@ -1804,7 +1804,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_SerializedVersion: 1
   m_AgentTypeID: 0
-  m_StartPoint: {x: 0, y: -1.25, z: 1.57}
+  m_StartPoint: {x: 0, y: -0.64, z: 1.57}
   m_EndPoint: {x: 0.00000018294418, y: 2.0000014, z: -0.84088135}
   m_StartTransform: {fileID: 0}
   m_EndTransform: {fileID: 0}
@@ -2857,17 +2857,21 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1888921641523643599, guid: b8d33534d6b317444971f5ef7f6bf574, type: 3}
+      propertyPath: height
+      value: 0.78
+      objectReference: {fileID: 0}
     - target: {fileID: 4025982305742810253, guid: b8d33534d6b317444971f5ef7f6bf574, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 66.31522
+      value: 153.3
       objectReference: {fileID: 0}
     - target: {fileID: 4025982305742810253, guid: b8d33534d6b317444971f5ef7f6bf574, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -8.29
+      value: 1.27
       objectReference: {fileID: 0}
     - target: {fileID: 4025982305742810253, guid: b8d33534d6b317444971f5ef7f6bf574, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 87.832054
+      value: 75.4
       objectReference: {fileID: 0}
     - target: {fileID: 4025982305742810253, guid: b8d33534d6b317444971f5ef7f6bf574, type: 3}
       propertyPath: m_LocalRotation.w
@@ -3121,7 +3125,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_SerializedVersion: 1
   m_AgentTypeID: 0
-  m_StartPoint: {x: 0, y: -1.25, z: 1.57}
+  m_StartPoint: {x: 0, y: -0.64, z: 1.57}
   m_EndPoint: {x: 0.00000018294418, y: 2.0000014, z: -0.84088135}
   m_StartTransform: {fileID: 0}
   m_EndTransform: {fileID: 0}
@@ -3342,6 +3346,7 @@ MonoBehaviour:
   speed: 5
   rb: {fileID: 2109991223}
   distanceToAgentBeforeJump: 0.5
+  height: 1
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

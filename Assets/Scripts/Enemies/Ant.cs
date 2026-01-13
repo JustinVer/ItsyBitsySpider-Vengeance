@@ -36,6 +36,7 @@ public class Ant : EnemyBase, IFireAnimation
         canGrapplePlayer = true;
         setHP(data.maxHP);
         StopAllCoroutines();
+        parentPool.Return(this);
     }
 
     protected override void Attack()

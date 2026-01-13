@@ -6,7 +6,7 @@ public abstract class EnemyBase : MonoBehaviour, IDamageable, IReturnSelfObject<
     [SerializeField] protected EnemyData data;
     protected float currentHP;
     protected bool isDying = false;
-    private ObjectPool<EnemyBase> parentPool;
+    protected ObjectPool<EnemyBase> parentPool;
 
     protected virtual void Awake()
     {
