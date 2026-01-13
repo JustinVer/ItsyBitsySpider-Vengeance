@@ -8,10 +8,11 @@ public abstract class EnemyBase : MonoBehaviour, IDamageable, IReturnSelfObject<
     private bool isDying = false;
     private ObjectPool<EnemyBase> parentPool;
 
-    protected virtual void Start()
+    protected virtual void Awake()
     {
         setHP(data.maxHP);
     }
+
     protected virtual void Update()
     {
         if (!isDying)

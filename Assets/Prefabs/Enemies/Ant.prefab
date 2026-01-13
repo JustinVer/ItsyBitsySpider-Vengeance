@@ -182,6 +182,7 @@ GameObject:
   - component: {fileID: 8295030794914367927}
   - component: {fileID: 2140166832346740191}
   - component: {fileID: 1888921641523643599}
+  - component: {fileID: 111932908207374793}
   m_Layer: 0
   m_Name: Body
   m_TagString: Untagged
@@ -343,6 +344,19 @@ MonoBehaviour:
   speed: 5
   rb: {fileID: 460731196320446558}
   distanceToAgentBeforeJump: 0.5
+--- !u!114 &111932908207374793
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7620548346497764488}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c87f5fa25fe7fbb49a05fbdbf0691761, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parentObject: {fileID: 1706362089112875412}
 --- !u!1 &7910159633996045360
 GameObject:
   m_ObjectHideFlags: 0

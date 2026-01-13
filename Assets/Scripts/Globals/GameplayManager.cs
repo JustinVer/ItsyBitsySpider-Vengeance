@@ -53,7 +53,6 @@ public class GameplayManager : MonoBehaviour
 
     private bool isLoading = false;
     private string currentLevelName;
-    private int currentLevelIndex = 0;
 
     private SaveData saveData = new SaveData();
 
