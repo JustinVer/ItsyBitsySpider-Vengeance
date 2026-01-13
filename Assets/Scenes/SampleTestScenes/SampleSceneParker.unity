@@ -292,6 +292,18 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: cc77de692e3160b4b9e75677ca46c00a, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: cc77de692e3160b4b9e75677ca46c00a, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: cc77de692e3160b4b9e75677ca46c00a, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: cc77de692e3160b4b9e75677ca46c00a, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -330,6 +342,10 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: cc77de692e3160b4b9e75677ca46c00a, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: cc77de692e3160b4b9e75677ca46c00a, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: cc77de692e3160b4b9e75677ca46c00a, type: 3}
       propertyPath: m_Name
@@ -568,7 +584,7 @@ Transform:
   m_GameObject: {fileID: 660570225}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -6.38, z: 0}
+  m_LocalPosition: {x: 0, y: -11.76, z: 0}
   m_LocalScale: {x: 4.1331, y: 1, z: 4.7155375}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -597,6 +613,7 @@ MonoBehaviour:
   rideSpringDamp: 5
   maxRayDist: 2
   rotationSpeed: 10
+  cam: {fileID: 0}
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
@@ -987,6 +1004,7 @@ MonoBehaviour:
   rideSpringDamp: 5
   maxRayDist: 3
   rotationSpeed: 700
+  cam: {fileID: 7381045}
 --- !u!1 &1928740670
 GameObject:
   m_ObjectHideFlags: 0
@@ -999,7 +1017,7 @@ GameObject:
   - component: {fileID: 1928740671}
   m_Layer: 0
   m_Name: GameplayManager
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1090,7 +1108,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.88282204, y: 1.3804888, z: -0.2987085}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
