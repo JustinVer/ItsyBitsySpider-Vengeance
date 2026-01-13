@@ -1,8 +1,11 @@
 using System;
 using System.Collections;
+using System.Linq;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
+using UnityEngine.Splines;
 
 [DefaultExecutionOrder(-1000)]
 public class GameplayManager : MonoBehaviour
@@ -35,6 +38,7 @@ public class GameplayManager : MonoBehaviour
     [SerializeField] private PlayerInput playerInput;
 
     [SerializeField] private const float GRAVITY_STRENGTH = 9.8f;
+    [SerializeField] private Spline gravitySpline;
     public GameObject Player => player;
     public PlayerInput PlayerInput => playerInput;
 
@@ -126,6 +130,19 @@ public class GameplayManager : MonoBehaviour
 
     public Vector3 GetGravity(Vector3 position)
     {
-        return Vector3.down * GRAVITY_STRENGTH;
+        if (gravitySpline.Knots.Count() == 0)
+        {
+            return Vector3.down * GRAVITY_STRENGTH;
+        }
+
+
+        float3 nearestPoint;
+        float t = 1;
+
+
+        SplineUtility.GetNearestPoint<Spline>(gravitySpline, (float3)position, out nearestPoint, out t);
+        Debug.DrawLine(position, nearestPoint, Color.red);
+        return (position - ((Vector3)nearestPoint)).normalized * GRAVITY_STRENGTH;
+
     }
 }
