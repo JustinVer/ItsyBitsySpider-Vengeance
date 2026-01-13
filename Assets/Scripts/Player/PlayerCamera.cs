@@ -5,6 +5,11 @@ public class PlayerCamera : MonoBehaviour
     [SerializeField] private GameObject target;
     [SerializeField] private Vector3 offset;
     [SerializeField] private float followSpeed = 1f;
+    [SerializeField] private float sensitivity = 1f;
+
+    private Vector2 mouseInput = Vector2.zero;
+    private Vector2 lastMouse = Vector2.zero;
+
 
     private Camera cam;
 
@@ -15,9 +20,24 @@ public class PlayerCamera : MonoBehaviour
         cam = GetComponentInChildren<Camera>();
     }
 
+    private void Update()
+    {
+        mouseInput = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
+    }
+
     private void FixedUpdate()
     {
-        targetPosition = target.transform.position + offset;
+        Vector3 gravity = GameplayManager.Instance.GetGravity(target.transform.position);
+
+
+
+
+        Quaternion armRotation = Quaternion.LookRotation(cam.transform.forward, -gravity);
+        Quaternion camRotation = Quaternion.LookRotation(cam.transform.forward, -gravity);
+        //camRotation *= Quaternion.AngleAxis((mouseInput - lastMouse).x * sensitivity, -gravity);
+        targetPosition = target.transform.position + (armRotation * offset);
+
+        cam.transform.rotation = camRotation;
 
         float camDist = Vector3.Distance(transform.position, targetPosition);
 
@@ -26,7 +46,7 @@ public class PlayerCamera : MonoBehaviour
         Vector3 moveStep = (targetPosition - transform.position) * Mathf.Min(camMove, camDist);
 
         transform.position += moveStep;
-
+        lastMouse = mouseInput;
     }
 
 }

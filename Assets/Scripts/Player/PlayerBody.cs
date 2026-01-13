@@ -38,6 +38,8 @@ public class PlayerBody : MonoBehaviour
 
     [SerializeField] private float rotationSpeed = 10f;
 
+    [SerializeField] private Camera cam;
+
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -79,7 +81,7 @@ public class PlayerBody : MonoBehaviour
 
     private void movePlayer()
     {
-
+        movementDir = Quaternion.LookRotation(cam.transform.forward, -gravity) * movementDir;
 
 
         if (movementDir != Vector3.zero)
