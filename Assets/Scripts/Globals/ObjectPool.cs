@@ -76,7 +76,8 @@ public class ObjectPool<T> where T : Component
     // Called when an item is taken from the pool using Get
     void OnTakeFromPool(T obj)
     {
-        obj.gameObject.SetActive(true);
+        //I don't think we wont to always set active right away so that th eposition of the object can be set by wahtever is using it first. This way on enable works properly.
+        //obj.gameObject.SetActive(true);
     }
 
     // If the pool capacity is reached then any items returned will be destroyed.

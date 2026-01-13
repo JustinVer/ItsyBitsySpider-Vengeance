@@ -1,5 +1,3 @@
-using UnityEngine;
-
 public interface IDamageable
 {
     public void modifyHP(float hpChange);

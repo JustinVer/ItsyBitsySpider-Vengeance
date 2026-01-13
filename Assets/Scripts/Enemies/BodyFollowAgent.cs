@@ -39,4 +39,9 @@ public class BodyFollowAgent : MonoBehaviour
         waitingForJump = false;
         rb.MovePosition(followBody.transform.position);
     }
+
+    public void setSpeed(float newSpeed)
+    {
+        this.speed = newSpeed;
+    }
 }

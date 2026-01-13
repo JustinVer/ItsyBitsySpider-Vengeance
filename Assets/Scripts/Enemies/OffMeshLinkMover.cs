@@ -20,7 +20,7 @@ public class AgentLinkMover : MonoBehaviour
     public AnimationCurve Connection_Curve = new AnimationCurve();
     public Transform cylinder;
     private float speed;
-    private NavMeshAgent agent;
+    public NavMeshAgent agent { private set; get; }
     [SerializeField] private BodyFollowAgent body;
     [SerializeField] private float maxDistanceMultiplier;
     [SerializeField] private float maxDistance;
@@ -176,10 +176,5 @@ public class AgentLinkMover : MonoBehaviour
     public void SetDestination(Vector3 destination)
     {
         agent.destination = destination;
-    }
-
-    public void StopAgent()
-    {
-        agent.Stop();
     }
 }

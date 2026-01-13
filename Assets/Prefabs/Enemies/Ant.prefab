@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 7237363863971760412}
   - component: {fileID: 2962581179581134040}
   - component: {fileID: 965495797798000649}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: NavMeshAgent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -183,7 +183,8 @@ GameObject:
   - component: {fileID: 2140166832346740191}
   - component: {fileID: 1888921641523643599}
   - component: {fileID: 111932908207374793}
-  m_Layer: 0
+  - component: {fileID: 6203758562322766912}
+  m_Layer: 7
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -316,7 +317,7 @@ Animator:
   m_GameObject: {fileID: 7620548346497764488}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 7d840de83a8269a43a0e39b727258577, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -357,6 +358,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parentObject: {fileID: 1706362089112875412}
+--- !u!114 &6203758562322766912
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7620548346497764488}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1458404d83d6c7f49b3b9ab320f86c77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7910159633996045360
 GameObject:
   m_ObjectHideFlags: 0
@@ -367,9 +380,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4025982305742810253}
   - component: {fileID: 1706362089112875412}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Ant
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

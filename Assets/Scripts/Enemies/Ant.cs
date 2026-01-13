@@ -1,15 +1,28 @@
 using System.Collections;
 using UnityEngine;
 
-public class Ant : EnemyBase
+public class Ant : EnemyBase, IFireAnimation
 {
     [SerializeField] private AgentLinkMover agentMover;
     [SerializeField] private BodyFollowAgent bodyFollower;
     private bool isGrapplingPlayer = false;
+    private bool waitingForGrapple = true;
     private bool canGrapplePlayer = true;
     private float distanceToPlayer = 999f;
     private Vector3 grapplePlayerOffset = Vector3.zero;
+    private Vector3 startPosition = Vector3.zero;
+    private SendFireSignal fireSignal;
 
+    private void OnEnable()
+    {
+        Debug.Log("Ant enabled");
+        this.startPosition = this.transform.position;
+    }
+    private void Start()
+    {
+        fireSignal = this.gameObject.GetComponentInChildren<SendFireSignal>();
+        fireSignal.body = this;
+    }
     protected override void NotDyingUpdate()
     {
         distanceToPlayer = Vector3.Distance(bodyFollower.transform.position, GameplayManager.Instance.Player.transform.position);
@@ -35,8 +48,11 @@ public class Ant : EnemyBase
 
     protected override void Die()
     {
-        //TODO implement animator death
-        ReturnSelf();
+        if (!isDying)
+        {
+            animator.SetTrigger("Died");
+            isDying = true;
+        }
     }
 
     protected override void Move()
@@ -49,7 +65,7 @@ public class Ant : EnemyBase
         else if (!canGrapplePlayer)
         {
             //TODO Should be a run away thing once fully implemented
-            agentMover.StopAgent();
+            agentMover.SetDestination(startPosition);
         }
         else if (distanceToPlayer < data.detectionDistanceClose || (distanceToPlayer < data.detectionDistanceLineOfSight && Physics.Linecast(bodyFollower.transform.position, GameplayManager.Instance.Player.transform.position, GameplayManager.Instance.NotPlayerOrEnemyMask)))
         {
@@ -60,12 +76,38 @@ public class Ant : EnemyBase
     private IEnumerator Grapple(float grappleTime, float attackCooldown)
     {
         Debug.Log("Grapple");
+        animator.SetTrigger("Fire1");
         isGrapplingPlayer = true;
+        waitingForGrapple = true;
         canGrapplePlayer = false;
         grapplePlayerOffset = bodyFollower.transform.position - GameplayManager.Instance.Player.transform.position;
-        yield return new WaitForSeconds(grappleTime);
-        isGrapplingPlayer = false;
+        yield return new WaitUntil(() => !waitingForGrapple);
+        //TODO slow player here
+        yield return new WaitUntil(() => !isGrapplingPlayer);
         yield return new WaitForSeconds(attackCooldown);
         canGrapplePlayer = true;
+    }
+
+    public override void EndDeath()
+    {
+        ReturnSelf();
+    }
+
+    public void FireProjectile()
+    {
+        Debug.Log("Fire projectile");
+        waitingForGrapple = false;
+    }
+
+    public void FireComplete()
+    {
+        Debug.Log("Fire complete");
+        isGrapplingPlayer = false;
+    }
+
+    public override void SetEnemyData(EnemyData data)
+    {
+        base.SetEnemyData(data);
+
     }
 }

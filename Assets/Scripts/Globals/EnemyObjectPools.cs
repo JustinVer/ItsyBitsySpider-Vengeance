@@ -25,27 +25,63 @@ public class EnemyObjectPools : MonoBehaviour
         }
     }
     #endregion
-    public GameObject prefab;
 
-    private ObjectPool<Transform> pool;
+    public GameObject antPrefab;
+    private ObjectPool<Transform> antPool;
 
-    public ObjectPool<Transform> Pool
+    public GameObject pillPrefab;
+    private ObjectPool<Transform> pillPool;
+
+    public GameObject beetlePrefab;
+    private ObjectPool<Transform> beetlePool;
+
+    public ObjectPool<Transform> AntPool
     {
         get
         {
-            if (pool == null)
+            if (antPool == null)
             {
-                pool = new ObjectPool<Transform>(prefab, 10);
+                antPool = new ObjectPool<Transform>(antPrefab, 10);
             }
-            return pool;
+            return antPool;
+        }
+    }
+    public ObjectPool<Transform> PillPool
+    {
+        get
+        {
+            if (pillPool == null)
+            {
+                pillPool = new ObjectPool<Transform>(pillPrefab, 10);
+            }
+            return pillPool;
+        }
+    }
+    public ObjectPool<Transform> BeetlePool
+    {
+        get
+        {
+            if (beetlePool == null)
+            {
+                beetlePool = new ObjectPool<Transform>(beetlePrefab, 10);
+            }
+            return beetlePool;
         }
     }
 
     private void Awake()
     {
-        if (pool == null)
+        if (antPool == null)
         {
-            pool = new ObjectPool<Transform>(prefab);
+            antPool = new ObjectPool<Transform>(antPrefab);
+        }
+        if (pillPool == null)
+        {
+            pillPool = new ObjectPool<Transform>(pillPrefab);
+        }
+        if (beetlePool == null)
+        {
+            beetlePool = new ObjectPool<Transform>(beetlePrefab);
         }
     }
 }
