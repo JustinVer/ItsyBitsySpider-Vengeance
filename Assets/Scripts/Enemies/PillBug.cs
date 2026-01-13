@@ -106,4 +106,6 @@ public class PillBug : EnemyBase, ICollisionReciever
         agentMover.agent.speed = data.moveSpeed * 2;
         bodyFollower.setSpeed(data.moveSpeed);
     }
+
+
 }

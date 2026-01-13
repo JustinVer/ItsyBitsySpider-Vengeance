@@ -12,6 +12,7 @@ public class BodyFollowAgent : MonoBehaviour
     private void FixedUpdate()
     {
 
+        rb.MovePosition(Vector3.MoveTowards(this.transform.position, followBody.transform.position, speed * Time.fixedDeltaTime));
         if (jumping)
         {
             rb.MovePosition(followBody.transform.position);
@@ -24,7 +25,7 @@ public class BodyFollowAgent : MonoBehaviour
         }
         else
         {
-            rb.MovePosition(Vector3.MoveTowards(this.transform.position, followBody.transform.position, speed * Time.fixedDeltaTime));
+            Rotate(this.transform.position - followBody.transform.position);
         }
     }
 
@@ -43,5 +44,10 @@ public class BodyFollowAgent : MonoBehaviour
     public void setSpeed(float newSpeed)
     {
         this.speed = newSpeed;
+    }
+
+    private void Rotate(Vector3 direction)
+    {
+        this.transform.rotation = Quaternion.LookRotation(direction, GameplayManager.Instance.GetGravity(this.transform.position) * -1);
     }
 }
