@@ -4,7 +4,6 @@ using UnityEngine;
 public class BirdAttack : MonoBehaviour
 {
     [SerializeField] GameObject beak;
-    GameObject player;
     Vector3 targetPosition;
     [SerializeField] float attackDuration = 0.25f;
     //number indicates what the bird should be doing
@@ -20,13 +19,16 @@ public class BirdAttack : MonoBehaviour
 
     private void OnTriggerEnter(Collider collision)
     {
-        if (attackStage == 0)
+        if (ReferenceEquals(GameplayManager.Instance.Player, collision.gameObject))
         {
-            targetPosition = collision.transform.position;
-            attackStage = 1;
-            beak.transform.LookAt(collision.transform.position);
-            beak.transform.Rotate(90, 0, 0);
-            StartCoroutine(moveBeak(collision.transform.position, attackDuration));
+            if (attackStage == 0)
+            {
+                targetPosition = collision.transform.position;
+                attackStage = 1;
+                beak.transform.LookAt(collision.transform.position);
+                beak.transform.Rotate(90, 0, 0);
+                StartCoroutine(moveBeak(collision.transform.position, attackDuration));
+            }
         }
     }
 
@@ -58,7 +60,7 @@ public class BirdAttack : MonoBehaviour
         if (attackStage == 1)
         {
             attackStage = 2;
-            StartCoroutine(moveBeak(homePos, attackDuration * 4));
+            StartCoroutine(moveBeak(homePos, attackDuration * 3));
         }
         else
         {
