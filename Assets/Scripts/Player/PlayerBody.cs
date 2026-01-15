@@ -194,7 +194,7 @@ public class PlayerBody : MonoBehaviour
         }
 
         {
-            Debug.Log(old + " -> " + targetRot);
+            //Debug.Log(old + " -> " + targetRot);
             transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRot, rotationSpeed * Time.deltaTime);
         }
 

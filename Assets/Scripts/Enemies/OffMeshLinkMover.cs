@@ -18,7 +18,6 @@ public class AgentLinkMover : MonoBehaviour
     public AnimationCurve Jump_Curve = new AnimationCurve();
     public OffMeshLinkMoveMethod Connection_Method = OffMeshLinkMoveMethod.NormalSpeed;
     public AnimationCurve Connection_Curve = new AnimationCurve();
-    public Transform cylinder;
     private float speed;
     public NavMeshAgent agent { private set; get; }
     [SerializeField] private BodyFollowAgent body;
@@ -155,17 +154,7 @@ public class AgentLinkMover : MonoBehaviour
 
     private void rotateAroundCylinder()
     {
-        if (cylinder != null)
-        {
-            Vector3 direction = transform.position - cylinder.position;
-            direction.z = 0;  // Flatten to XZ plane
-
-            // Calculate angle
-            float angle = Mathf.Atan2(direction.x, direction.y) * Mathf.Rad2Deg;
-
-            // Apply rotation (object faces outward from cylinder)
-            transform.rotation = Quaternion.Euler(0, 0, angle * -1);
-        }
+        this.transform.rotation = Quaternion.LookRotation(agent.velocity, GameplayManager.Instance.GetGravity(this.transform.position) * -1);
     }
 
     public void StartJump()

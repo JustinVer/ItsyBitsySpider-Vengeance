@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 2185270970197539129}
   - component: {fileID: 1714875183624178614}
   - component: {fileID: 8534928393240747428}
-  - component: {fileID: 7237363863971760412}
   - component: {fileID: 2962581179581134040}
   - component: {fileID: 965495797798000649}
   m_Layer: 7
@@ -112,19 +111,6 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &7237363863971760412
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4975532466478798762}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 832723eeb0fffd34f98ff98fbcaa1c39, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  agent: {fileID: 8534928393240747428}
 --- !u!114 &2962581179581134040
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -163,7 +149,6 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  cylinder: {fileID: 0}
   body: {fileID: 1888921641523643599}
   maxDistanceMultiplier: 0.05
   maxDistance: 0.15
@@ -287,8 +272,8 @@ GameObject:
   - component: {fileID: 841805455574214827}
   - component: {fileID: 3068479437843565788}
   - component: {fileID: 460731196320446558}
-  - component: {fileID: 8295030794914367927}
   - component: {fileID: 2140166832346740191}
+  - component: {fileID: 8288114495295638178}
   - component: {fileID: 1888921641523643599}
   - component: {fileID: 111932908207374793}
   - component: {fileID: 8592437294342629768}
@@ -395,27 +380,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!135 &8295030794914367927
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7620548346497764488}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!95 &2140166832346740191
 Animator:
   serializedVersion: 7
@@ -438,6 +402,29 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!136 &8288114495295638178
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7620548346497764488}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &1888921641523643599
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -454,6 +441,7 @@ MonoBehaviour:
   speed: 5
   rb: {fileID: 460731196320446558}
   distanceToAgentBeforeJump: 0.5
+  height: 0.7
 --- !u!114 &111932908207374793
 MonoBehaviour:
   m_ObjectHideFlags: 0
