@@ -12,6 +12,8 @@ public class PlayerBody : MonoBehaviour
 
     private bool doRideForce = false;
 
+    private float currentMaxSpeed;
+
     private float currentJumpDelay = 0;
     private float jumpDelay = 1;
     public Vector3 MovementDir
@@ -91,7 +93,7 @@ public class PlayerBody : MonoBehaviour
             Vector3 targetVel = rb.linearVelocity + (MovementDir * acceleration) / rb.mass * Time.fixedDeltaTime;
 
 
-            if (targetVel.magnitude <= maxSpeed)
+            if (targetVel.magnitude <= currentMaxSpeed)
             {
                 rb.AddForce(MovementDir * acceleration, ForceMode.Force);
 
@@ -165,7 +167,7 @@ public class PlayerBody : MonoBehaviour
         {
             rb.linearVelocity = rb.linearVelocity.normalized * velCap;
         }
-
+        currentMaxSpeed = maxSpeed;
     }
     //TODO fix this
     private void rotateBody()
@@ -200,5 +202,14 @@ public class PlayerBody : MonoBehaviour
 
     }
 
+    public void ApplyForce(Vector3 force, ForceMode forceMode)
+    {
+        rb.AddForce(force, forceMode);
+    }
+
+    public void Slow(float slowPercent)
+    {
+        currentMaxSpeed = maxSpeed * slowPercent;
+    }
 
 }
