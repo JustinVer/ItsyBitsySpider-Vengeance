@@ -4,6 +4,10 @@ using UnityEngine;
 public class BirdAttack : MonoBehaviour
 {
     [SerializeField] GameObject beak;
+    GameObject upperBeak;
+    private string upperBeakName = "BottomBeak001";
+    GameObject lowerBeak;
+    private string lowerBeakName = "TopBeak001";
     Vector3 targetPosition;
     [SerializeField] float attackDuration = 0.25f;
     //number indicates what the bird should be doing
