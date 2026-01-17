@@ -64,6 +64,11 @@ public class GameplayManager : MonoBehaviour
     {
         saveData = FileHandler.LoadGame();
         HUD.SetActive(true);
+
+        // Lock the cursor to the center of the screen
+        Cursor.lockState = CursorLockMode.Locked;
+        // Hide the cursor
+        Cursor.visible = false;
     }
 
     private IEnumerator LoadLevel(string levelName)

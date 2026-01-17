@@ -9,8 +9,6 @@ public class PlayerCamera : MonoBehaviour
     [SerializeField] private float minPitch = -80f;
     [SerializeField] private float maxPitch = 80;
 
-    private Vector2 mouseInput = Vector2.zero;
-    
 
 
     private Camera cam;
@@ -20,8 +18,6 @@ public class PlayerCamera : MonoBehaviour
     private float yaw = 0;
     private float pitch = 0;
 
-    private Vector2 lastMousePos = Vector2.zero;
-    
 
     private void Start()
     {
@@ -30,17 +26,10 @@ public class PlayerCamera : MonoBehaviour
 
     private void Update()
     {
-        if (Input.mousePosition.x != lastMousePos.x)
-        {
-            yaw += (Input.mousePosition.x - lastMousePos.x) * sensitivity * Time.deltaTime;
-        }
-        if (Input.mousePosition.y != lastMousePos.y) {
-            pitch -= (Input.mousePosition.y - lastMousePos.y) * sensitivity * Time.deltaTime;
-            pitch = Mathf.Clamp(pitch, minPitch, maxPitch);
-        }
-        
+        yaw += Input.GetAxis("Mouse X") * sensitivity * Time.deltaTime;
 
-        lastMousePos = Input.mousePosition;
+        pitch -= Input.GetAxis("Mouse Y") * sensitivity * Time.deltaTime;
+        pitch = Mathf.Clamp(pitch, minPitch, maxPitch);
     }
 
     private void FixedUpdate()
@@ -51,7 +40,7 @@ public class PlayerCamera : MonoBehaviour
 
         Quaternion yawRot = Quaternion.AngleAxis(yaw, Vector3.up);
         Quaternion pitchRot = Quaternion.AngleAxis(pitch, Vector3.right);
-        
+
         Quaternion camRotation = baseRot * yawRot * pitchRot;
 
         targetPosition = target.transform.position + (camRotation * offset);
@@ -62,9 +51,9 @@ public class PlayerCamera : MonoBehaviour
 
         transform.position = targetPosition;
         cam.transform.rotation = camRotation;
-       
+
     }
 
-    
+
 
 }

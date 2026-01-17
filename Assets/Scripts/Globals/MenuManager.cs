@@ -45,6 +45,10 @@ public class MenuManager : MonoBehaviour
     {
         optionsMenu.LoadSettings();
         saveData = FileHandler.LoadGame();
+        // Lock the cursor to the center of the screen
+        Cursor.lockState = CursorLockMode.None;
+        // Hide the cursor
+        Cursor.visible = true;
         LoadMainMenu();
     }
 
