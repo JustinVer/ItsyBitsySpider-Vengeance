@@ -145,16 +145,13 @@ public class GameplayManager : MonoBehaviour
         return (position - ((Vector3)nearestPoint)).normalized * GRAVITY_STRENGTH;
 
     }
-    [Obsolete]
     public Vector3 GetForward(Vector3 position) //TODO fix bugs with this
     {
         float3 nearestPoint;
         float t = 1;
-        float tanT;
         SplineUtility.GetNearestPoint<Spline>(gravitySpline, (float3)position, out nearestPoint, out t);
-        Vector3 tanPoint = SplineUtility.GetPointAtLinearDistance<Spline>(gravitySpline, t, 0.01f, out tanT);
-        Vector3 tan = (tanPoint - (Vector3)nearestPoint).normalized;
+        Vector3 tan = gravitySpline.EvaluateTangent(t);
         Debug.DrawLine(position, position + tan, Color.green);
-        return -tan;
+        return tan;
     }
 }
