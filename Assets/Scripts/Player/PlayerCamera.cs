@@ -6,8 +6,8 @@ public class PlayerCamera : MonoBehaviour
     [SerializeField] private Vector3 offset;
     [SerializeField] private float followSpeed = 1f;
     [SerializeField] private float sensitivity = 30f;
-    [SerializeField] private float minPitch = -45f;
-    [SerializeField] private float maxPitch = 45f;
+    [SerializeField] private float minPitch = -80f;
+    [SerializeField] private float maxPitch = 80;
 
     private Vector2 mouseInput = Vector2.zero;
     
@@ -35,7 +35,7 @@ public class PlayerCamera : MonoBehaviour
             yaw += (Input.mousePosition.x - lastMousePos.x) * sensitivity * Time.deltaTime;
         }
         if (Input.mousePosition.y != lastMousePos.y) {
-            pitch += (Input.mousePosition.y - lastMousePos.y) * sensitivity * Time.deltaTime;
+            pitch -= (Input.mousePosition.y - lastMousePos.y) * sensitivity * Time.deltaTime;
             pitch = Mathf.Clamp(pitch, minPitch, maxPitch);
         }
         
