@@ -163,6 +163,7 @@ MonoBehaviour:
     m_ObjectData:
       m_Data: []
   player: {fileID: 334607109}
+  playerBody: {fileID: 0}
   NotPlayerOrEnemyMask:
     serializedVersion: 2
     m_Bits: 0
@@ -272,13 +273,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0.9919787, z: -0, w: 0.12640533}
-  m_LocalPosition: {x: -0.05, y: 1, z: 21}
+  m_LocalRotation: {x: -0.017103324, y: -0.9828564, z: 0.13421981, w: 0.12524332}
+  m_LocalPosition: {x: -0.05, y: 1, z: 24.49}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: -165.476, z: 0}
+  m_LocalEulerAnglesHint: {x: 15.044, y: -164.949, z: 3.993}
 --- !u!114 &330585547
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -501,8 +502,8 @@ Transform:
   m_GameObject: {fileID: 387139985}
   serializedVersion: 2
   m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: -0.25, z: 1.1}
-  m_LocalScale: {x: 1, y: 1, z: 0.16666667}
+  m_LocalPosition: {x: 0, y: -0.25, z: 1.1000004}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1418354144}
@@ -910,11 +911,11 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: -3, z: 0}
-  m_LocalScale: {x: 1, y: 6, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 387139986}
   - {fileID: 2129021198}
+  - {fileID: 387139986}
   m_Father: {fileID: 452960886}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &1418354145
@@ -936,7 +937,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 1, y: 6, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!95 &1418354148
 Animator:
@@ -1122,6 +1123,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   beak: {fileID: 452960885}
+  upperBeak: {fileID: 2129021197}
+  lowerBeak: {fileID: 387139985}
   attackDuration: 0.25
 --- !u!1001 &2041175748
 PrefabInstance:
@@ -1225,7 +1228,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: -0.25, z: -1.1}
-  m_LocalScale: {x: 1, y: 1, z: 0.16666667}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1418354144}

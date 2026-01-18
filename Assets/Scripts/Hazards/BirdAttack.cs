@@ -4,10 +4,8 @@ using UnityEngine;
 public class BirdAttack : MonoBehaviour
 {
     [SerializeField] GameObject beak;
-    GameObject upperBeak;
-    private string upperBeakName = "BottomBeak001";
-    GameObject lowerBeak;
-    private string lowerBeakName = "TopBeak001";
+    [SerializeField] GameObject upperBeak;
+    [SerializeField] GameObject lowerBeak;
     Vector3 targetPosition;
     [SerializeField] float attackDuration = 0.25f;
     //number indicates what the bird should be doing
@@ -23,6 +21,8 @@ public class BirdAttack : MonoBehaviour
 
     private void OnTriggerEnter(Collider collision)
     {
+        Vector3 upperBeakOpen = new Vector3(-10f, 0f, 0f);
+        Vector3 lowerBeakOpen = new Vector3(10f, 0f, 0f);
         if (ReferenceEquals(GameplayManager.Instance.Player, collision.gameObject))
         {
             if (attackStage == 0)
@@ -30,16 +30,23 @@ public class BirdAttack : MonoBehaviour
                 targetPosition = collision.transform.position;
                 attackStage = 1;
                 beak.transform.LookAt(collision.transform.position);
-                beak.transform.Rotate(90, 0, 0);
-                StartCoroutine(moveBeak(collision.transform.position, attackDuration));
+                beak.transform.Rotate(90f, 0f, 0f);
+                upperBeak.transform.Rotate(upperBeakOpen);
+                lowerBeak.transform.Rotate(lowerBeakOpen);
+                StartCoroutine(moveBeak(collision.transform.position, attackDuration, -upperBeakOpen, -lowerBeakOpen));
             }
         }
     }
 
-    IEnumerator moveBeak(Vector3 targetPosition, float duration)
+    IEnumerator moveBeak(Vector3 targetPosition, float duration, Vector3 upperBeakAngle, Vector3 lowerBeakAngle)
     {
         float timeMoving = 0;
         Vector3 startPosition = beak.transform.position;
+        Quaternion upperStartRotation = upperBeak.transform.rotation;
+        Quaternion upperEndRotation = upperBeak.transform.rotation * Quaternion.Euler(upperBeakAngle);
+        Quaternion lowerStartRotation = lowerBeak.transform.rotation;
+        Quaternion lowerEndRotation = lowerBeak.transform.rotation * Quaternion.Euler(lowerBeakAngle);
+        Debug.Log("corutine");
 
         while (timeMoving < duration)
         {
@@ -48,6 +55,8 @@ public class BirdAttack : MonoBehaviour
 
 
             beak.transform.position = Vector3.Lerp(startPosition, targetPosition, t);
+            upperBeak.transform.rotation = Quaternion.Slerp(upperStartRotation, upperEndRotation, timeMoving / duration);
+            lowerBeak.transform.rotation = Quaternion.Slerp(lowerStartRotation, lowerEndRotation, timeMoving / duration);
 
             timeMoving += Time.deltaTime;
 
@@ -64,11 +73,12 @@ public class BirdAttack : MonoBehaviour
         if (attackStage == 1)
         {
             attackStage = 2;
-            StartCoroutine(moveBeak(homePos, attackDuration * 3));
+            StartCoroutine(moveBeak(homePos, attackDuration * 3, Vector3.zero, Vector3.zero));
         }
         else
         {
             attackStage = 0;
+            beak.transform.eulerAngles = new Vector3(0f, 0f, 0f);
         }
     }
 }
