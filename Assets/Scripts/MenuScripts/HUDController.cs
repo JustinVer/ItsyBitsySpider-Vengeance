@@ -22,7 +22,7 @@ public class HUDController : MonoBehaviour
     {
         if (GameplayManager.Instance.Player && GameplayManager.Instance.Player.gameObject.activeInHierarchy)
         {
-            //playerHealth.value = Mathf.Clamp01(GameManager.Instance.Player.CurrentHealth / GameManager.Instance.Player.Maxhealth);
+            playerHealth.value = Mathf.Clamp01(GameplayManager.Instance.PlayerBody.getHP() / GameplayManager.Instance.PlayerBody.getMaxHP());
         }
 
         if (LevelManager.Instance)

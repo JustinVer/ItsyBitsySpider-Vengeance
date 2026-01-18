@@ -43,6 +43,7 @@ public class Ant : EnemyBase, IFireAnimation
     {
         if (canGrapplePlayer && distanceToPlayer <= data.attackRange)
         {
+            Debug.Log("Ant attack");
             StartCoroutine(Grapple(data.abilityCoolDown, data.attackCoolDown));
         }
     }
@@ -76,15 +77,21 @@ public class Ant : EnemyBase, IFireAnimation
 
     private IEnumerator Grapple(float grappleTime, float attackCooldown)
     {
-        Debug.Log("Grapple");
+        Debug.Log("Ant Grapple");
         animator.SetTrigger("Fire1");
         isGrapplingPlayer = true;
         waitingForGrapple = true;
         canGrapplePlayer = false;
         grapplePlayerOffset = bodyFollower.transform.position - GameplayManager.Instance.Player.transform.position;
         yield return new WaitUntil(() => !waitingForGrapple);
-        //TODO slow player here
+        Debug.Log("Ant Start slow");
+        while (isGrapplingPlayer)
+        {
+            GameplayManager.Instance.Player.GetComponent<PlayerBody>().Slow(data.damage);
+            yield return null;
+        }
         yield return new WaitUntil(() => !isGrapplingPlayer);
+        Debug.Log("Ant EndSlow");
         yield return new WaitForSeconds(attackCooldown);
         canGrapplePlayer = true;
     }

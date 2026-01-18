@@ -1,7 +1,7 @@
 using Unity.Mathematics;
 using UnityEngine;
 
-public class PlayerBody : MonoBehaviour
+public class PlayerBody : MonoBehaviour, IDamageable
 {
     private Rigidbody rb;
 
@@ -22,7 +22,8 @@ public class PlayerBody : MonoBehaviour
         set { movementDir = value; }
     }
 
-
+    private float currentHP;
+    [SerializeField] private float maxHP = 100f;
     [SerializeField] private float acceleration = 5f;
     [SerializeField] private float deceleration = 5f;
     [SerializeField] private float maxSpeed = 10f;
@@ -41,6 +42,11 @@ public class PlayerBody : MonoBehaviour
     [SerializeField] private float rotationSpeed = 10f;
 
     [SerializeField] private Camera cam;
+
+    private void Awake()
+    {
+        currentHP = maxHP;
+    }
 
     void Start()
     {
@@ -212,4 +218,23 @@ public class PlayerBody : MonoBehaviour
         currentMaxSpeed = maxSpeed * slowPercent;
     }
 
+    public float getHP()
+    {
+        return currentHP;
+    }
+
+    public void modifyHP(float hpChange)
+    {
+        currentHP = Mathf.Clamp(currentHP + hpChange, 0f, maxHP);
+    }
+
+    public void setHP(float hp)
+    {
+        currentHP = Mathf.Clamp(hp, 0f, maxHP);
+    }
+
+    public float getMaxHP()
+    {
+        return maxHP;
+    }
 }
