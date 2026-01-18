@@ -67,10 +67,7 @@ public class GameplayManager : MonoBehaviour
         saveData = FileHandler.LoadGame();
         HUD.SetActive(true);
 
-        // Lock the cursor to the center of the screen
-        Cursor.lockState = CursorLockMode.Locked;
-        // Hide the cursor
-        Cursor.visible = false;
+
     }
 
     private IEnumerator LoadLevel(string levelName)
@@ -160,5 +157,13 @@ public class GameplayManager : MonoBehaviour
         Vector3 tan = gravitySpline.EvaluateTangent(t);
         Debug.DrawLine(position, position + tan, Color.green);
         return tan;
+    }
+
+    private void Update()
+    {
+        // Lock the cursor to the center of the screen
+        Cursor.lockState = CursorLockMode.Locked;
+        // Hide the cursor
+        Cursor.visible = false;
     }
 }

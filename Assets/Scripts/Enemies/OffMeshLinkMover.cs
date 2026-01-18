@@ -127,6 +127,7 @@ public class AgentLinkMover : MonoBehaviour
         }
         agent.CompleteOffMeshLink();
         body.EndJump();
+        this.transform.position = agent.transform.position;
         inLink = false;
     }
 
@@ -149,6 +150,7 @@ public class AgentLinkMover : MonoBehaviour
         }
         agent.CompleteOffMeshLink();
         body.EndJump();
+        this.transform.position = agent.transform.position;
         inLink = false;
     }
 
