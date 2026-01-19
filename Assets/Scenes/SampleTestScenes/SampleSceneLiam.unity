@@ -657,6 +657,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: BirdUp
       objectReference: {fileID: 0}
+    - target: {fileID: 4116736610747567052, guid: 2b868a202f9a6d34e8d0da8dd4566717, type: 3}
+      propertyPath: lowerBeak
+      value: 
+      objectReference: {fileID: 2522752095860469382}
+    - target: {fileID: 4116736610747567052, guid: 2b868a202f9a6d34e8d0da8dd4566717, type: 3}
+      propertyPath: upperBeak
+      value: 
+      objectReference: {fileID: 2522752095860469383}
     - target: {fileID: 4585626720578743491, guid: 2b868a202f9a6d34e8d0da8dd4566717, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -702,6 +710,16 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2b868a202f9a6d34e8d0da8dd4566717, type: 3}
+--- !u!1 &2522752095860469382 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4799130220329575988, guid: 2b868a202f9a6d34e8d0da8dd4566717, type: 3}
+  m_PrefabInstance: {fileID: 2522752095860469381}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &2522752095860469383 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1606332320316593326, guid: 2b868a202f9a6d34e8d0da8dd4566717, type: 3}
+  m_PrefabInstance: {fileID: 2522752095860469381}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5655648500474222853
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -768,5 +786,5 @@ SceneRoots:
   - {fileID: 832575519}
   - {fileID: 5655648500474222853}
   - {fileID: 334607114}
-  - {fileID: 2522752095860469381}
   - {fileID: 89354938}
+  - {fileID: 2522752095860469381}
