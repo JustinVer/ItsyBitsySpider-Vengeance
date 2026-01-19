@@ -7,7 +7,10 @@ public class BirdAttack : MonoBehaviour
     [SerializeField] GameObject upperBeak;
     [SerializeField] GameObject lowerBeak;
     Vector3 targetPosition;
+    PlayerBody body;
     [SerializeField] float attackDuration = 0.25f;
+    [SerializeField] float attackForce = 30f;
+    [SerializeField] float attackDamage = -30f;
     //number indicates what the bird should be doing
     //0 = Idle, 1 = poking forward, 2 = retreating
     private int attackStage = 0;
@@ -17,12 +20,13 @@ public class BirdAttack : MonoBehaviour
     void Start()
     {
         homePos = beak.transform.position;
+        body = GameplayManager.Instance.Player.GetComponentInChildren<PlayerBody>();
     }
 
     private void OnTriggerEnter(Collider collision)
     {
-        Vector3 upperBeakOpen = new Vector3(-10f, 0f, 0f);
-        Vector3 lowerBeakOpen = new Vector3(10f, 0f, 0f);
+        Vector3 upperBeakOpen = new Vector3(-20f, 0f, 0f);
+        Vector3 lowerBeakOpen = new Vector3(20f, 0f, 0f);
         if (ReferenceEquals(GameplayManager.Instance.Player, collision.gameObject))
         {
             if (attackStage == 0)
@@ -73,6 +77,14 @@ public class BirdAttack : MonoBehaviour
         if (attackStage == 1)
         {
             attackStage = 2;
+
+            Vector3 attackDirection = targetPosition - homePos;
+            attackDirection = attackDirection.normalized;
+            attackDirection = attackDirection * attackForce;
+            body.ApplyForce(attackDirection, ForceMode.Impulse);
+
+            body.modifyHP(attackDamage);
+
             StartCoroutine(moveBeak(homePos, attackDuration * 3, Vector3.zero, Vector3.zero));
         }
         else
