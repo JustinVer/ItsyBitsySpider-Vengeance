@@ -178,12 +178,13 @@ public class PlayerBody : MonoBehaviour, IDamageable
     {
         float airAngle = 120;
         float groundAngle = 5;
+        Vector3 moveDir = (rb.linearVelocity.magnitude > ROTATION_THRESHOLD) ? rb.linearVelocity : transform.forward;
 
         Vector3 up = -gravity.normalized;
-        Vector3 forward = Vector3.ProjectOnPlane(rb.linearVelocity, up).normalized;
+        Vector3 forward = Vector3.ProjectOnPlane(moveDir, up).normalized;
         Vector3 left = Vector3.Cross(up, forward);
 
-        float pitchAngle = Vector3.SignedAngle(forward, rb.linearVelocity, left);
+        float pitchAngle = Vector3.SignedAngle(forward, moveDir, left);
         pitchAngle = IsGrounded() ? Mathf.Clamp(pitchAngle, -(groundAngle / 2), groundAngle / 2) : Mathf.Clamp(pitchAngle, -(airAngle / 2), airAngle / 2);
 
         Quaternion baseRot = Quaternion.LookRotation(forward, up);
