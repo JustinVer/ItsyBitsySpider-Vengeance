@@ -7,6 +7,7 @@ public class SegmentRandomizer : MonoBehaviour
     [SerializeField] SegmentNode[] area1;
     [SerializeField] SegmentNode[] area2;
     [SerializeField] SegmentNode[] area3;
+    [SerializeField] GameObject[] segmentPool;
     [SerializeField] string debugOrder1 = "";
     [SerializeField] string debugOrder2 = "";
     [SerializeField] string debugOrder3 = "";
@@ -21,7 +22,9 @@ public class SegmentRandomizer : MonoBehaviour
         {
             for (int i = 0; i < segmentsPerLevel; i++)
             {
-                area1[i] = new SegmentNode(new Vector3(10, 10, 10), new Vector3(10, 10, 10), debugOrder1[i]);
+                area1[i] = new SegmentNode(debugOrder1[i]);
+                area2[i] = new SegmentNode(debugOrder2[i]);
+                area3[i] = new SegmentNode(debugOrder3[i]);
             }
         }
 

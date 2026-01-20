@@ -2,17 +2,17 @@ using UnityEngine;
 
 public class SegmentNode
 {
-    private Vector3 Position;
-    private Vector3 Rotation;
+    private Vector3 Position = Vector3.zero;
+    private Vector3 Rotation = Vector3.zero;
     private int segmentID;
 
-    public SegmentNode(Vector3 p, Vector3 r, int segment)
+    public SegmentNode(int segment)
     {
-        Position = p;
-        Rotation = r;
         segmentID = segment;
     }
     public Vector3 getPosition() { return Position; }
-    public Vector3 getRotation() {  return Rotation; }
-    public int getSegmentID() {  return segmentID; }
+    public void setPosition(Vector3 newPos) { Position = newPos; }
+    public Vector3 getRotation() { return Rotation; }
+    public void setRotation(Vector3 newRot) { Rotation = newRot; }
+    public int getSegmentID() { return segmentID; }
 }
