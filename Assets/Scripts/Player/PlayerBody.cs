@@ -41,6 +41,8 @@ public class PlayerBody : MonoBehaviour, IDamageable
     [SerializeField] private float maxRayDist = 2f;
 
     [SerializeField] private float rotationSpeed = 10f;
+    [SerializeField] private float airAngle = 120f;
+    [SerializeField] private float groundAngle = 5f;
 
     [SerializeField] private Camera cam;
 
@@ -176,8 +178,8 @@ public class PlayerBody : MonoBehaviour, IDamageable
     //TODO fix this
     private void rotateBody()
     {
-        float airAngle = 120;
-        float groundAngle = 5;
+
+
         Vector3 moveDir = (rb.linearVelocity.magnitude > ROTATION_THRESHOLD) ? rb.linearVelocity : transform.forward;
 
         Vector3 up = -gravity.normalized;
