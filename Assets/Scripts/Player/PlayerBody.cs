@@ -89,7 +89,10 @@ public class PlayerBody : MonoBehaviour, IDamageable
 
     private void movePlayer()
     {
-        movementDir = Quaternion.LookRotation(cam.transform.forward, -gravity) * movementDir;
+        Vector3 camRight = Vector3.Cross(cam.transform.forward, -gravity);
+        Vector3 trueForward = Vector3.Cross(-gravity, camRight);
+
+        movementDir = Quaternion.LookRotation(trueForward, -gravity) * movementDir;
 
 
         if (movementDir != Vector3.zero)
