@@ -3,9 +3,9 @@ using UnityEngine;
 public class Bullet : MonoBehaviour
 {
     [SerializeField] private float damage = 10f;
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(UnityEngine.Collider other)
     {
-        IDamageable hitObject = collision.gameObject.GetComponent<IDamageable>();
+        IDamageable hitObject = other.gameObject.GetComponent<IDamageable>();
         if (hitObject != null)
         {
             hitObject.modifyHP(-damage);

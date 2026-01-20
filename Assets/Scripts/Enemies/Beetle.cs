@@ -14,7 +14,14 @@ public class Beetle : EnemyBase, IFireAnimation
     [SerializeField] private float timeDistanceMultiplier = 0.05f;
     [SerializeField] private float timeDistanceBase = 0.25f;
     private float distanceToPlayer = 999f;
-    [SerializeField] private Animator Animator;
+    [SerializeField] private float maxDegreesRotation = 90f;
+    Rigidbody rb;
+
+    protected override void Awake()
+    {
+        rb = GetComponent<Rigidbody>();
+        base.Awake();
+    }
 
     private void Start()
     {
@@ -25,6 +32,7 @@ public class Beetle : EnemyBase, IFireAnimation
     protected override void NotDyingUpdate()
     {
         distanceToPlayer = Vector3.Distance(this.transform.position, GameplayManager.Instance.Player.transform.position);
+        rotateToPlayer();
         base.NotDyingUpdate();
     }
     public override void EndDeath()
@@ -37,8 +45,10 @@ public class Beetle : EnemyBase, IFireAnimation
         if (isDying) return;
         GameObject bullet = GameObject.Instantiate(projectilePrefab);
         bullet.transform.forward = fireLocation.forward;
+        bullet.transform.position = fireLocation.position;
         Rigidbody rb = bullet.GetComponent<Rigidbody>();
         rb.linearVelocity = fireLocation.forward * ProjectileVelocity;
+        Debug.Log("fire projectile");
     }
 
     public void FireComplete()
@@ -59,6 +69,7 @@ public class Beetle : EnemyBase, IFireAnimation
     {
         if (!isFiring && distanceToPlayer < data.attackRange && Physics.Linecast(this.transform.position, GameplayManager.Instance.Player.transform.position, GameplayManager.Instance.NotPlayerOrEnemyMask))
         {
+            Debug.Log("start fire projectile");
             animator.SetTrigger("Fire1");
             isFiring = true;
         }
@@ -82,6 +93,10 @@ public class Beetle : EnemyBase, IFireAnimation
                 Vector3 endPosition = getNewPlatformPosition();
                 StartCoroutine(Parabola(endPosition, jumpHeight, (Vector3.Distance(this.transform.position, endPosition) * timeDistanceMultiplier) + timeDistanceBase));
             }
+            else
+            {
+                rb.AddForce(GameplayManager.Instance.GetGravity(this.transform.position).normalized * Time.deltaTime, ForceMode.Impulse);
+            }
         }
     }
 
@@ -104,5 +119,10 @@ public class Beetle : EnemyBase, IFireAnimation
     {
         //TODO implement platforming detection
         return this.transform.position;
+    }
+
+    private void rotateToPlayer()
+    {
+        this.transform.rotation = Quaternion.RotateTowards(this.transform.rotation, Quaternion.LookRotation(GameplayManager.Instance.PlayerBody.transform.position - fireLocation.position, GameplayManager.Instance.GetGravity(this.transform.position) * -1), maxDegreesRotation * Time.fixedDeltaTime);
     }
 }
