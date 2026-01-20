@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class PlayerCamera : MonoBehaviour
 {
+    [SerializeField] private bool cameraFollow;
+
     [SerializeField] private GameObject target;
     [SerializeField] private Vector3 offset;
     [SerializeField] private float followSpeed = 1f;
@@ -34,6 +36,10 @@ public class PlayerCamera : MonoBehaviour
 
     private void FixedUpdate()
     {
+
+
+
+
         Vector3 up = -GameplayManager.Instance.GetGravity(target.transform.position);
         Vector3 foreward = GameplayManager.Instance.GetForward(target.transform.position);
         Quaternion baseRot = Quaternion.LookRotation(foreward, up);
@@ -44,12 +50,21 @@ public class PlayerCamera : MonoBehaviour
         Quaternion camRotation = baseRot * yawRot * pitchRot;
 
         targetPosition = target.transform.position + (camRotation * offset);
+        Vector3 updatedOffset = camRotation * offset;
+        RaycastHit hit;
+        if (Physics.Raycast(target.transform.position, updatedOffset, out hit, updatedOffset.magnitude))
+        {
+            if (hit.distance < updatedOffset.magnitude)
+            {
+                targetPosition = target.transform.position + (updatedOffset.normalized * hit.distance);
+            }
+        }
 
         float camDist = Vector3.Distance(transform.position, targetPosition);
         float camMove = followSpeed * camDist * Time.fixedDeltaTime;
         Vector3 moveStep = (targetPosition - transform.position) * Mathf.Min(camMove, camDist);
 
-        transform.position = targetPosition;
+        transform.position = (cameraFollow) ? transform.position + moveStep : targetPosition;
         cam.transform.rotation = camRotation;
 
     }
