@@ -154,7 +154,7 @@ public class GameplayManager : MonoBehaviour
         float3 nearestPoint;
         float t = 1;
         SplineUtility.GetNearestPoint<Spline>(gravitySpline, (float3)position, out nearestPoint, out t);
-        Vector3 tan = gravitySpline.EvaluateTangent(t);
+        Vector3 tan = ((Vector3)gravitySpline.EvaluateTangent(t)).normalized;
         Debug.DrawLine(position, position + tan, Color.green);
         return tan;
     }

@@ -1,4 +1,3 @@
-using Unity.Mathematics;
 using UnityEngine;
 
 public class PlayerBody : MonoBehaviour, IDamageable
@@ -16,6 +15,8 @@ public class PlayerBody : MonoBehaviour, IDamageable
 
     private float currentJumpDelay = 0;
     private float jumpDelay = 1;
+
+    private const float ROTATION_THRESHOLD = 0.1f;
     public Vector3 MovementDir
     {
         get { return movementDir; }
@@ -98,9 +99,7 @@ public class PlayerBody : MonoBehaviour, IDamageable
         if (movementDir != Vector3.zero)
         {
             //would new speed go above max speed
-
             Vector3 targetVel = rb.linearVelocity + (MovementDir * acceleration) / rb.mass * Time.fixedDeltaTime;
-
 
             if (targetVel.magnitude <= currentMaxSpeed)
             {
@@ -133,9 +132,6 @@ public class PlayerBody : MonoBehaviour, IDamageable
                 rb.AddForce(-rb.linearVelocity * deceleration, ForceMode.Force);
             }
         }
-
-
-
 
         RaycastHit rayHit;
         if (Physics.Raycast(transform.position, gravity, out rayHit, maxRayDist))
@@ -170,7 +166,6 @@ public class PlayerBody : MonoBehaviour, IDamageable
             currentJumpDelay = jumpDelay;
         }
 
-
         //max velocity
         if (rb.linearVelocity.magnitude > velCap)
         {
@@ -181,34 +176,22 @@ public class PlayerBody : MonoBehaviour, IDamageable
     //TODO fix this
     private void rotateBody()
     {
+        float airAngle = 120;
+        float groundAngle = 5;
 
-        Quaternion targetRot = Quaternion.LookRotation(rb.linearVelocity, -gravity);
-        Debug.DrawLine(transform.position, transform.position + transform.forward * 2);
-        Vector3 sideAxis = Vector3.Cross(transform.forward, -gravity);
-        Debug.DrawLine(transform.position, transform.position + sideAxis.normalized * 2);
-        Vector3 forwardAxis = Vector3.Cross(-gravity, sideAxis);
-        Debug.DrawLine(transform.position, transform.position + forwardAxis.normalized * 2);
+        Vector3 up = -gravity.normalized;
+        Vector3 forward = Vector3.ProjectOnPlane(rb.linearVelocity, up).normalized;
+        Vector3 left = Vector3.Cross(up, forward);
 
-        float pitch = Vector3.SignedAngle(targetRot * Vector3.forward, forwardAxis, sideAxis);
+        float pitchAngle = Vector3.SignedAngle(forward, rb.linearVelocity, left);
+        pitchAngle = IsGrounded() ? Mathf.Clamp(pitchAngle, -(groundAngle / 2), groundAngle / 2) : Mathf.Clamp(pitchAngle, -(airAngle / 2), airAngle / 2);
 
-        float max = 45;
-        float min = -45;
-        quaternion old = targetRot;
-        if (pitch > max)
-        {
-            targetRot *= Quaternion.AngleAxis(max - pitch, sideAxis);
-        }
-        else
-        if (pitch < min)
-        {
-            targetRot *= Quaternion.AngleAxis(min - pitch, sideAxis);
-        }
+        Quaternion baseRot = Quaternion.LookRotation(forward, up);
+        Quaternion pitch = Quaternion.Euler(pitchAngle, 0, 0);
 
-        {
-            //Debug.Log(old + " -> " + targetRot);
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRot, rotationSpeed * Time.deltaTime);
-        }
+        Quaternion targetRot = baseRot * pitch;
 
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRot, rotationSpeed * Time.deltaTime);
     }
 
     public void ApplyForce(Vector3 force, ForceMode forceMode)

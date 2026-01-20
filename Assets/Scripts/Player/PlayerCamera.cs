@@ -11,7 +11,7 @@ public class PlayerCamera : MonoBehaviour
     [SerializeField] private float minPitch = -80f;
     [SerializeField] private float maxPitch = 80;
 
-
+    private const float CAMERA_BUFFER = 0.1f;
 
     private Camera cam;
 
@@ -56,7 +56,7 @@ public class PlayerCamera : MonoBehaviour
         {
             if (hit.distance < updatedOffset.magnitude)
             {
-                targetPosition = target.transform.position + (updatedOffset.normalized * hit.distance);
+                targetPosition = target.transform.position + (updatedOffset.normalized * (hit.distance - CAMERA_BUFFER));
             }
         }
 
