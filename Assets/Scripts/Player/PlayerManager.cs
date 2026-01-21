@@ -18,4 +18,9 @@ public class PlayerManager : MonoBehaviour
         }
 
     }
+
+    public Vector3 LinearVelocity()
+    {
+        return body.LinearVelocity();
+    }
 }

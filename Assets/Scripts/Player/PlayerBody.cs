@@ -226,4 +226,9 @@ public class PlayerBody : MonoBehaviour, IDamageable
     {
         return maxHP;
     }
+
+    public Vector3 LinearVelocity()
+    {
+        return rb.linearVelocity;
+    }
 }
