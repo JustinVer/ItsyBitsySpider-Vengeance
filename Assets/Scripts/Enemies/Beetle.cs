@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class Beetle : EnemyBase, IFireAnimation
 {
@@ -16,6 +17,10 @@ public class Beetle : EnemyBase, IFireAnimation
     private float distanceToPlayer = 999f;
     [SerializeField] private float maxDegreesRotation = 90f;
     Rigidbody rb;
+    [SerializeField] private GameObject[] platforms;
+    [SerializeField] private float detectionWidth = 2f;
+    [SerializeField] private int numDetectionCasts = 11;
+    [SerializeField] private float fireVelocityDistanceMultiplier = 0.5f;
 
     protected override void Awake()
     {
@@ -32,7 +37,10 @@ public class Beetle : EnemyBase, IFireAnimation
     protected override void NotDyingUpdate()
     {
         distanceToPlayer = Vector3.Distance(this.transform.position, GameplayManager.Instance.Player.transform.position);
-        rotateToPlayer();
+        if (!inJump)
+        {
+            rotateTowards(GameplayManager.Instance.PlayerBody.transform.position + ((GameplayManager.Instance.PlayerBody.LinearVelocity() * fireVelocityDistanceMultiplier * Mathf.Abs(Vector3.Distance(GameplayManager.Instance.PlayerBody.transform.position, this.transform.position))) / ProjectileVelocity), GameplayManager.Instance.GetGravity(this.transform.position) * -1);
+        }
         base.NotDyingUpdate();
     }
     public override void EndDeath()
@@ -88,6 +96,7 @@ public class Beetle : EnemyBase, IFireAnimation
     {
         if (!isDying && !inJump)
         {
+            Debug.Log("Mpve beetle");
             if (distanceToPlayer < data.detectionDistanceClose || (distanceToPlayer < data.detectionDistanceLineOfSight && Physics.Linecast(this.transform.position, GameplayManager.Instance.Player.transform.position, GameplayManager.Instance.NotPlayerOrEnemyMask)))
             {
                 Vector3 endPosition = getNewPlatformPosition();
@@ -105,24 +114,84 @@ public class Beetle : EnemyBase, IFireAnimation
         inJump = true;
         Vector3 startPos = this.transform.position;
         float normalizedTime = 0.0f;
+        Vector3 gravityDir = -GameplayManager.Instance.GetGravity(Vector3.Lerp(startPos, endPos, 0.5f)).normalized;
+        yield return new WaitForFixedUpdate();
         while (normalizedTime < 1.0f)
         {
+            rotateTowards(endPos, gravityDir);
             float yOffset = height * 4.0f * (normalizedTime - normalizedTime * normalizedTime);
-            this.transform.position = Vector3.Lerp(startPos, endPos, normalizedTime) + yOffset * (-1 * GameplayManager.Instance.GetGravity(this.transform.position).normalized);
+            this.transform.position = Vector3.Lerp(startPos, endPos, normalizedTime) + yOffset * gravityDir;
+            Debug.Log("Beetle gravity " + GameplayManager.Instance.GetGravity(this.transform.position).normalized);
             normalizedTime += Time.deltaTime / duration;
-            yield return null;
+            yield return new WaitForFixedUpdate();
         }
         inJump = false;
     }
 
     private Vector3 getNewPlatformPosition()
     {
-        //TODO implement platforming detection
+        MaxHeap<GameObject> maxHeap = new MaxHeap<GameObject>(platforms, x => platformHeuristic(x));
+
+        GameObject currentPlatform = null;
+        Debug.Log("beetle before while loop");
+        while (maxHeap.Count > 0)
+        {
+            currentPlatform = maxHeap.Pull();
+            Debug.Log("Beetle before obstacle check");
+            NavMeshHit hit;
+            if (NavMesh.SamplePosition(currentPlatform.transform.position - GameplayManager.Instance.GetGravity(currentPlatform.transform.position).normalized * 2, out hit, 5.0f, NavMesh.AllAreas))
+            {
+                Vector3 platformPosition = hit.position;
+                if (!obstaclesInJump(this.transform.position, platformPosition, 3f, 2f, currentPlatform))
+                {
+                    Debug.Log("Beetle found platform");
+                    return platformPosition;
+                }
+            }
+
+
+        }
         return this.transform.position;
     }
 
-    private void rotateToPlayer()
+    private float platformHeuristic(GameObject platform)
     {
-        this.transform.rotation = Quaternion.RotateTowards(this.transform.rotation, Quaternion.LookRotation(GameplayManager.Instance.PlayerBody.transform.position - fireLocation.position, GameplayManager.Instance.GetGravity(this.transform.position) * -1), maxDegreesRotation * Time.fixedDeltaTime);
+        float heuristic = 0;
+
+        heuristic += (Vector3.Distance(this.transform.position, platform.transform.position) - 5f);
+
+        return heuristic;
+    }
+
+    private bool obstaclesInJump(Vector3 startPos, Vector3 endPos, float height, float duration, GameObject platform)
+    {
+        Vector3 gravityDir = -GameplayManager.Instance.GetGravity(Vector3.Lerp(startPos, endPos, 0.5f)).normalized;
+
+        Vector3 halfExtents = new Vector3(1f, 1f, 1f); // match beetle size
+
+        for (int i = 1; i <= numDetectionCasts - 1; i++)
+        {
+            float t = i / (float)numDetectionCasts;
+
+            float yOffset = height * 4.0f * (t - t * t);
+            Debug.Log("Beetle y offset" + yOffset + " " + gravityDir);
+            Vector3 samplePos = Vector3.Lerp(startPos, endPos, t) + yOffset * gravityDir;
+
+            //collision check
+            Collider[] hits = Physics.OverlapBox(samplePos, halfExtents, Quaternion.identity, GameplayManager.Instance.NotPlayerOrEnemyMask);
+
+            if (hits.Length > 0 && hits[0].gameObject != platform)
+            {
+                Debug.Log("Beetle jump blocked by " + hits[0].name);
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private void rotateTowards(Vector3 position, Vector3 gravity)
+    {
+        this.transform.rotation = Quaternion.RotateTowards(this.transform.rotation, Quaternion.LookRotation(position - fireLocation.position, gravity), maxDegreesRotation * Time.fixedDeltaTime);
     }
 }

@@ -596,6 +596,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6bb6d24e3d4e65a48b7f3c8bd8106703, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &310166613 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4631387236263978617, guid: ddb4f1e845e83d442b5d66d1b125a23e, type: 3}
+  m_PrefabInstance: {fileID: 525282432}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &319259739
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -948,6 +953,11 @@ MonoBehaviour:
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
   m_SoftShadowQuality: 1
+--- !u!1 &457840202 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4631387236263978617, guid: ddb4f1e845e83d442b5d66d1b125a23e, type: 3}
+  m_PrefabInstance: {fileID: 1721626898}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &516641058
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1306,6 +1316,11 @@ Transform:
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5753947218193776783, guid: 8ea23ff2656df754486b851e2faaad22, type: 3}
   m_PrefabInstance: {fileID: 613547614}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &628962743 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4631387236263978617, guid: ddb4f1e845e83d442b5d66d1b125a23e, type: 3}
+  m_PrefabInstance: {fileID: 541436236}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &685914487
 PrefabInstance:
@@ -4350,6 +4365,26 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2063973954630196966, guid: 99fea6dca5d8b834d8214565a8073d5f, type: 3}
+      propertyPath: platforms.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2063973954630196966, guid: 99fea6dca5d8b834d8214565a8073d5f, type: 3}
+      propertyPath: 'platforms.Array.data[0]'
+      value: 
+      objectReference: {fileID: 310166613}
+    - target: {fileID: 2063973954630196966, guid: 99fea6dca5d8b834d8214565a8073d5f, type: 3}
+      propertyPath: 'platforms.Array.data[1]'
+      value: 
+      objectReference: {fileID: 457840202}
+    - target: {fileID: 2063973954630196966, guid: 99fea6dca5d8b834d8214565a8073d5f, type: 3}
+      propertyPath: 'platforms.Array.data[2]'
+      value: 
+      objectReference: {fileID: 628962743}
+    - target: {fileID: 2063973954630196966, guid: 99fea6dca5d8b834d8214565a8073d5f, type: 3}
+      propertyPath: fireVelocityDistanceMultiplier
+      value: 1.02
+      objectReference: {fileID: 0}
     - target: {fileID: 4025982305742810253, guid: 99fea6dca5d8b834d8214565a8073d5f, type: 3}
       propertyPath: m_LocalPosition.x
       value: -19.46
