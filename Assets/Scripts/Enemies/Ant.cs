@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class Ant : EnemyBase, IFireAnimation
+public class Ant : EnemyBase, IFireAnimation, ICollisionReciever
 {
     [SerializeField] private AgentLinkMover agentMover;
     [SerializeField] private BodyFollowAgent bodyFollower;
@@ -41,11 +41,11 @@ public class Ant : EnemyBase, IFireAnimation
 
     protected override void Attack()
     {
-        if (canGrapplePlayer && distanceToPlayer <= data.attackRange)
+        /*if (canGrapplePlayer && distanceToPlayer <= data.attackRange)
         {
             Debug.Log("Ant attack");
             StartCoroutine(Grapple(data.abilityCoolDown, data.attackCoolDown));
-        }
+        }*/
     }
 
     protected override void Die()
@@ -90,7 +90,12 @@ public class Ant : EnemyBase, IFireAnimation
             GameplayManager.Instance.Player.GetComponent<PlayerBody>().Slow(data.damage);
             yield return null;
         }
-        yield return new WaitUntil(() => !isGrapplingPlayer);
+        RaycastHit hit;
+        Physics.Raycast(bodyFollower.transform.position, GameplayManager.Instance.GetGravity(bodyFollower.transform.position), out hit, 80, GameplayManager.Instance.NotPlayerOrEnemyMask, QueryTriggerInteraction.Ignore);
+        if (hit.point != null)
+        {
+            agentMover.SetPosition(hit.point);
+        }
         Debug.Log("Ant EndSlow");
         yield return new WaitForSeconds(attackCooldown);
         canGrapplePlayer = true;
@@ -118,5 +123,20 @@ public class Ant : EnemyBase, IFireAnimation
         base.SetEnemyData(data);
         agentMover.agent.speed = data.moveSpeed * 2;
         bodyFollower.setSpeed(data.moveSpeed);
+    }
+
+    public void CollisionSignal(Collision collision)
+    {
+
+    }
+
+    public void TriggerSignal(Collider collision)
+    {
+        Debug.Log("Ant " + collision.gameObject.name);
+        if (canGrapplePlayer && collision.gameObject == GameplayManager.Instance.PlayerBody.gameObject)
+        {
+            Debug.Log("Ant attack");
+            StartCoroutine(Grapple(data.abilityCoolDown, data.attackCoolDown));
+        }
     }
 }

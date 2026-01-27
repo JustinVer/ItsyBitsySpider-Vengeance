@@ -1,6 +1,5 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.AI;
 
 public class PillBug : EnemyBase, ICollisionReciever
 {
@@ -59,15 +58,13 @@ public class PillBug : EnemyBase, ICollisionReciever
         player.modifyHP(data.damage * -1);
         rollingPastPlayer = true;
         canAttack = false;
-        NavMeshHit hit;
-        float angle = 30.0f;
-        do
+        RaycastHit hit;
+        float angle = 60.0f;
+        while ((!Physics.Raycast(bodyFollower.transform.position, Quaternion.AngleAxis(angle, -bodyFollower.transform.forward).eulerAngles, out hit, 80, GameplayManager.Instance.NotPlayerOrEnemyMask, QueryTriggerInteraction.Ignore) && angle > -10) || hit.point == null)
         {
-            NavMesh.Raycast(this.transform.position, Quaternion.AngleAxis(angle, this.transform.forward) * (this.transform.position + (this.transform.forward.normalized * 30)), out hit, NavMesh.AllAreas);
             angle -= 1.0f;
-        } while (hit.position != null && angle > -10);
-
-        awayFromPlayerTarget = hit.position;
+        }
+        awayFromPlayerTarget = hit.point;
         yield return new WaitForSeconds(data.attackCoolDown);
         canAttack = true;
         yield return new WaitForSeconds(data.abilityCoolDown - data.attackCoolDown);
@@ -107,5 +104,7 @@ public class PillBug : EnemyBase, ICollisionReciever
         bodyFollower.setSpeed(data.moveSpeed);
     }
 
-
+    public void TriggerSignal(Collider collision)
+    {
+    }
 }

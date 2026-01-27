@@ -104,6 +104,7 @@ public class AgentLinkMover : MonoBehaviour
         }
         Debug.Log("End movement speed");
         agent.CompleteOffMeshLink();
+        yield return null;
         body.EndJump();
         inLink = false;
     }
@@ -126,6 +127,7 @@ public class AgentLinkMover : MonoBehaviour
             yield return null;
         }
         agent.CompleteOffMeshLink();
+        yield return null;
         body.EndJump();
         this.transform.position = agent.transform.position;
         inLink = false;
@@ -149,6 +151,7 @@ public class AgentLinkMover : MonoBehaviour
             yield return null;
         }
         agent.CompleteOffMeshLink();
+        yield return null;
         body.EndJump();
         this.transform.position = agent.transform.position;
         inLink = false;
@@ -167,5 +170,15 @@ public class AgentLinkMover : MonoBehaviour
     public void SetDestination(Vector3 destination)
     {
         agent.destination = destination;
+    }
+
+    public void SetPosition(Vector3 position)
+    {
+        NavMeshHit hit;
+        NavMesh.SamplePosition(position, out hit, 10f, NavMesh.AllAreas);
+        if (hit.position != null)
+        {
+            agent.transform.position = hit.position;
+        }
     }
 }

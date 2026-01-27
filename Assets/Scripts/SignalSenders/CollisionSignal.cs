@@ -11,4 +11,8 @@ public class CollisionSignal : MonoBehaviour
     {
         reciever.CollisionSignal(collision);
     }
+    private void OnTriggerEnter(Collider other)
+    {
+        reciever.TriggerSignal(other);
+    }
 }

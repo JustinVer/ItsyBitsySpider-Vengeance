@@ -13,7 +13,8 @@ public class BodyFollowAgent : MonoBehaviour
 
     private void FixedUpdate()
     {
-
+        rb.angularVelocity = Vector3.zero;
+        rb.linearVelocity = Vector3.zero;
         rb.MovePosition(Vector3.MoveTowards(this.transform.position, followBody.transform.position, speed * Time.fixedDeltaTime));
         if (jumping)
         {
@@ -29,6 +30,8 @@ public class BodyFollowAgent : MonoBehaviour
         {
             Rotate((followBody.transform.position - this.transform.position) + ((height / 2.0f) * GameplayManager.Instance.GetGravity(this.transform.position).normalized));
         }
+        rb.angularVelocity = Vector3.zero;
+        rb.linearVelocity = Vector3.zero;
     }
 
     public void StartJump()
