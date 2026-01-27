@@ -42,11 +42,6 @@ public class Ant : EnemyBase, IFireAnimation, ICollisionReciever
 
     protected override void Attack()
     {
-        /*if (canGrapplePlayer && distanceToPlayer <= data.attackRange)
-        {
-            Debug.Log("Ant attack");
-            StartCoroutine(Grapple(data.abilityCoolDown, data.attackCoolDown));
-        }*/
     }
 
     protected override void Die()
@@ -79,14 +74,12 @@ public class Ant : EnemyBase, IFireAnimation, ICollisionReciever
 
     private IEnumerator Grapple(float grappleTime, float attackCooldown)
     {
-        Debug.Log("Ant Grapple");
         animator.SetTrigger("Fire1");
         isGrapplingPlayer = true;
         waitingForGrapple = true;
         canGrapplePlayer = false;
         grapplePlayerOffset = bodyFollower.transform.position - GameplayManager.Instance.Player.transform.position;
         yield return new WaitUntil(() => !waitingForGrapple);
-        Debug.Log("Ant Start slow");
         while (isGrapplingPlayer)
         {
             GameplayManager.Instance.Player.GetComponent<PlayerBody>().Slow(data.damage);
@@ -98,7 +91,6 @@ public class Ant : EnemyBase, IFireAnimation, ICollisionReciever
         {
             agentMover.SetPosition(hit.point);
         }
-        Debug.Log("Ant EndSlow");
         yield return new WaitForSeconds(attackCooldown);
         canGrapplePlayer = true;
     }
@@ -116,7 +108,6 @@ public class Ant : EnemyBase, IFireAnimation, ICollisionReciever
 
     public void FireComplete()
     {
-        Debug.Log("Fire complete");
         isGrapplingPlayer = false;
     }
 
@@ -134,10 +125,8 @@ public class Ant : EnemyBase, IFireAnimation, ICollisionReciever
 
     public void TriggerSignal(Collider collision)
     {
-        Debug.Log("Ant " + collision.gameObject.name);
         if (canGrapplePlayer && collision.gameObject == GameplayManager.Instance.PlayerBody.gameObject)
         {
-            Debug.Log("Ant attack");
             StartCoroutine(Grapple(data.abilityCoolDown, data.attackCoolDown));
         }
     }
