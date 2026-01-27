@@ -34,6 +34,7 @@ public abstract class EnemyBase : MonoBehaviour, IDamageable, IReturnSelfObject<
 
     public void modifyHP(float hpChange)
     {
+        Debug.Log("Ant modify HP");
         currentHP = Mathf.Clamp(currentHP + hpChange, 0f, data.maxHP);
         if (currentHP == 0)
         {

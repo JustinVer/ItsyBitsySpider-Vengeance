@@ -36,6 +36,7 @@ public class Ant : EnemyBase, IFireAnimation, ICollisionReciever
         canGrapplePlayer = true;
         setHP(data.maxHP);
         StopAllCoroutines();
+        this.gameObject.SetActive(false);
         parentPool.Return(this);
     }
 
@@ -52,6 +53,7 @@ public class Ant : EnemyBase, IFireAnimation, ICollisionReciever
     {
         if (!isDying)
         {
+            Debug.Log("ant died");
             animator.SetTrigger("Died");
             isDying = true;
         }

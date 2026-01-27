@@ -8,6 +8,7 @@ public class Bullet : MonoBehaviour
         IDamageable hitObject = other.gameObject.GetComponent<IDamageable>();
         if (hitObject != null)
         {
+            Debug.Log("Bullet hit " + hitObject);
             hitObject.modifyHP(-damage);
         }
         Destroy(gameObject);
