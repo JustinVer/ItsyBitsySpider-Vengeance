@@ -8,12 +8,12 @@ public class TestDamageScript : MonoBehaviour, IDamageable
         return currentHP;
     }
 
-    public void modifyHP(float hpChange)
+    public void modifyHP(int hpChange)
     {
         currentHP = currentHP + hpChange;
     }
 
-    public void setHP(float hp)
+    public void setHP(int hp)
     {
         currentHP = hp;
     }

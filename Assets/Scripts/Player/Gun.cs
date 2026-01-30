@@ -14,6 +14,10 @@ public class Gun : MonoBehaviour
 
     [SerializeField] Transform folloeTransform;
 
+    [SerializeField] int damage = 10;
+
+    [SerializeField] LayerMask fireMask;
+
     Vector3 hitPosition;
 
     // Update is called once per frame
@@ -48,5 +52,17 @@ public class Gun : MonoBehaviour
         GameObject newBullet = Instantiate(bullet, muzzle.position, Quaternion.identity);
         newBullet.GetComponent<Rigidbody>().AddForce(muzzle.forward * shotForce, ForceMode.Impulse);
         newBullet.transform.forward = muzzle.forward;
+        Ray ray = playerCamera.ScreenPointToRay(new Vector3(Screen.width / 2f, Screen.height / 2f, 0));
+        RaycastHit hit;
+        if (Physics.Raycast(ray, out hit, 200f, fireMask, QueryTriggerInteraction.Ignore))
+        {
+            IDamageable hitObject = hit.collider.gameObject.GetComponent<IDamageable>();
+
+            if (hitObject != null)
+            {
+                Debug.Log(hitObject + " player hit");
+                hitObject.modifyHP(-damage);
+            }
+        }
     }
 }

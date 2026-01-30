@@ -10,7 +10,7 @@ public class BirdAttack : MonoBehaviour
     PlayerBody body;
     [SerializeField] float attackDuration = 0.25f;
     [SerializeField] float attackForce = 30f;
-    [SerializeField] float attackDamage = -30f;
+    [SerializeField] int attackDamage = -30;
     //number indicates what the bird should be doing
     //0 = Idle, 1 = poking forward, 2 = retreating
     private int attackStage = 0;

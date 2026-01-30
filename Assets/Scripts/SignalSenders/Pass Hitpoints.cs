@@ -12,12 +12,13 @@ public class PassHitpoints : MonoBehaviour, IDamageable
         return parent.getHP();
     }
 
-    public void modifyHP(float hpChange)
+    public void modifyHP(int hpChange)
     {
+        Debug.Log("pass hit " + parentObject.name + " " + parent);
         parent.modifyHP(hpChange);
     }
 
-    public void setHP(float hp)
+    public void setHP(int hp)
     {
         parent.setHP(hp);
     }

@@ -48,6 +48,7 @@ public class Ant : EnemyBase, IFireAnimation, ICollisionReciever
     {
         if (!isDying)
         {
+            this.gameObject.SetActive(false);
             Debug.Log("ant died");
             animator.SetTrigger("Died");
             isDying = true;

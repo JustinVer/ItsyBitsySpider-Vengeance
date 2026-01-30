@@ -32,16 +32,16 @@ public abstract class EnemyBase : MonoBehaviour, IDamageable, IReturnSelfObject<
         return currentHP;
     }
 
-    public void modifyHP(float hpChange)
+    public void modifyHP(int hpChange)
     {
         currentHP = Mathf.Clamp(currentHP + hpChange, 0f, data.maxHP);
-        if (currentHP <= 0.2f)
+        if (currentHP <= 1.0f)
         {
             Die();
         }
     }
 
-    public void setHP(float hp)
+    public void setHP(int hp)
     {
         currentHP = Mathf.Clamp(hp, 0f, data.maxHP);
     }

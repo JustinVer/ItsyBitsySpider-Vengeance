@@ -243,12 +243,12 @@ public class PlayerBody : MonoBehaviour, IDamageable
         return currentHP;
     }
 
-    public void modifyHP(float hpChange)
+    public void modifyHP(int hpChange)
     {
         currentHP = Mathf.Clamp(currentHP + hpChange, 0f, maxHP);
     }
 
-    public void setHP(float hp)
+    public void setHP(int hp)
     {
         currentHP = Mathf.Clamp(hp, 0f, maxHP);
     }

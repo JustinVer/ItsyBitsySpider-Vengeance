@@ -10,12 +10,12 @@ public class Beetle : EnemyBase, IFireAnimation
     [SerializeField] private GameObject projectilePrefab;
     [SerializeField] private float ProjectileVelocity = 10f;
     [SerializeField] private Transform fireLocation;
-    private bool inJump = false;
     [SerializeField] private float jumpHeight = 2.0f;
     [SerializeField] private float timeDistanceMultiplier = 0.05f;
     [SerializeField] private float timeDistanceBase = 0.25f;
     private float distanceToPlayer = 999f;
-    [SerializeField] private float maxDegreesRotation = 90f;
+    [SerializeField] private float maxDegreesRotationNormal = 90f;
+    [SerializeField] private float maxDegreesRotationJump = 90f;
     Rigidbody rb;
     [SerializeField] private GameObject[] platforms;
     [SerializeField] private float detectionWidth = 2f;
@@ -37,20 +37,26 @@ public class Beetle : EnemyBase, IFireAnimation
     protected override void NotDyingUpdate()
     {
         distanceToPlayer = Vector3.Distance(this.transform.position, GameplayManager.Instance.Player.transform.position);
-        if (!inJump)
+        if (!isJumping)
         {
-            rotateTowards(GameplayManager.Instance.PlayerBody.transform.position + ((GameplayManager.Instance.PlayerBody.LinearVelocity() * fireVelocityDistanceMultiplier * Mathf.Abs(Vector3.Distance(GameplayManager.Instance.PlayerBody.transform.position, this.transform.position))) / ProjectileVelocity), GameplayManager.Instance.GetGravity(this.transform.position) * -1);
+            rotateTowards(fireLocation.position, getPlayerProjectionPosition(), GameplayManager.Instance.GetGravity(this.transform.position) * -1, maxDegreesRotationNormal);
         }
         base.NotDyingUpdate();
     }
+
+    private Vector3 getPlayerProjectionPosition()
+    {
+        return GameplayManager.Instance.PlayerBody.transform.position + ((GameplayManager.Instance.PlayerBody.LinearVelocity() * fireVelocityDistanceMultiplier * Mathf.Abs(Vector3.Distance(GameplayManager.Instance.PlayerBody.transform.position, this.transform.position))) / ProjectileVelocity);
+    }
     public override void EndDeath()
     {
+        this.gameObject.SetActive(false);
         ReturnSelf();
     }
 
     public void FireProjectile()
     {
-        if (isDying) return;
+        if (isDying || isJumping) return;
         GameObject bullet = GameObject.Instantiate(projectilePrefab);
         bullet.transform.forward = fireLocation.forward;
         bullet.transform.position = fireLocation.position;
@@ -75,7 +81,7 @@ public class Beetle : EnemyBase, IFireAnimation
 
     protected override void Attack()
     {
-        if (!isFiring && distanceToPlayer < data.attackRange && Physics.Linecast(this.transform.position, GameplayManager.Instance.Player.transform.position, GameplayManager.Instance.NotPlayerOrEnemyMask))
+        if (!isFiring && !isJumping && distanceToPlayer < data.attackRange && Physics.Linecast(this.transform.position, GameplayManager.Instance.Player.transform.position, GameplayManager.Instance.NotPlayerOrEnemyMask))
         {
             Debug.Log("start fire projectile");
             animator.SetTrigger("Fire1");
@@ -87,6 +93,7 @@ public class Beetle : EnemyBase, IFireAnimation
     {
         if (!isDying)
         {
+            this.gameObject.SetActive(false);
             animator.SetTrigger("Died");
             isDying = true;
         }
@@ -94,13 +101,13 @@ public class Beetle : EnemyBase, IFireAnimation
 
     protected override void Move()
     {
-        if (!isDying && !inJump)
+        if (!isDying && !isJumping)
         {
             Debug.Log("Mpve beetle");
             if (distanceToPlayer < data.detectionDistanceClose || (distanceToPlayer < data.detectionDistanceLineOfSight && Physics.Linecast(this.transform.position, GameplayManager.Instance.Player.transform.position, GameplayManager.Instance.NotPlayerOrEnemyMask)))
             {
                 Vector3 endPosition = getNewPlatformPosition();
-                StartCoroutine(Parabola(endPosition, jumpHeight, (Vector3.Distance(this.transform.position, endPosition) * timeDistanceMultiplier) + timeDistanceBase));
+                StartCoroutine(Jump(endPosition, jumpHeight, (Vector3.Distance(this.transform.position, endPosition) * timeDistanceMultiplier) + timeDistanceBase));
             }
             else
             {
@@ -109,23 +116,23 @@ public class Beetle : EnemyBase, IFireAnimation
         }
     }
 
-    private IEnumerator Parabola(Vector3 endPos, float height, float duration)
+    private IEnumerator Jump(Vector3 endPos, float height, float duration)
     {
-        inJump = true;
+        isJumping = true;
         Vector3 startPos = this.transform.position;
         float normalizedTime = 0.0f;
         Vector3 gravityDir = -GameplayManager.Instance.GetGravity(Vector3.Lerp(startPos, endPos, 0.5f)).normalized;
         yield return new WaitForFixedUpdate();
         while (normalizedTime < 1.0f)
         {
-            rotateTowards(endPos, gravityDir);
+            rotateTowards(endPos, getPlayerProjectionPosition(), -GameplayManager.Instance.GetGravity(endPos), maxDegreesRotationJump);
             float yOffset = height * 4.0f * (normalizedTime - normalizedTime * normalizedTime);
             this.transform.position = Vector3.Lerp(startPos, endPos, normalizedTime) + yOffset * gravityDir;
             Debug.Log("Beetle gravity " + GameplayManager.Instance.GetGravity(this.transform.position).normalized);
             normalizedTime += Time.deltaTime / duration;
             yield return new WaitForFixedUpdate();
         }
-        inJump = false;
+        isJumping = false;
     }
 
     private Vector3 getNewPlatformPosition()
@@ -190,8 +197,8 @@ public class Beetle : EnemyBase, IFireAnimation
         return false;
     }
 
-    private void rotateTowards(Vector3 position, Vector3 gravity)
+    private void rotateTowards(Vector3 startPosition, Vector3 endPosition, Vector3 gravity, float maxRotation)
     {
-        this.transform.rotation = Quaternion.RotateTowards(this.transform.rotation, Quaternion.LookRotation(position - fireLocation.position, gravity), maxDegreesRotation * Time.fixedDeltaTime);
+        this.transform.rotation = Quaternion.RotateTowards(this.transform.rotation, Quaternion.LookRotation(endPosition - startPosition, gravity), maxRotation * Time.fixedDeltaTime);
     }
 }

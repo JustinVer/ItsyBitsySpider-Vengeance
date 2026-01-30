@@ -1,6 +1,6 @@
 public interface IDamageable
 {
-    public void modifyHP(float hpChange);
+    public void modifyHP(int hpChange);
     public float getHP();
-    public void setHP(float hp);
+    public void setHP(int hp);
 }
