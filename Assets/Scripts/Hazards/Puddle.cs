@@ -15,4 +15,9 @@ public class Puddle : MonoBehaviour
             //TODO: knockback code
         }
     }
+
+    private void coverPuddle()
+    {
+        plugged = true;
+    }
 }
