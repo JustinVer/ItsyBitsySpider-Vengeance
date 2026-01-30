@@ -23,6 +23,13 @@ public class PlayerBody : MonoBehaviour, IDamageable
         set { movementDir = value; }
     }
 
+    private bool glide = false;
+    public bool Glide
+    {
+        get { return glide; }
+        set { glide = value; }
+    }
+
     private float currentHP;
     [SerializeField] private float maxHP = 100f;
     [SerializeField] private float acceleration = 5f;
@@ -45,6 +52,8 @@ public class PlayerBody : MonoBehaviour, IDamageable
     [SerializeField] private float groundAngle = 5f;
 
     [SerializeField] private Camera cam;
+
+    [SerializeField, Range(0, 1)] private float glideStrength = 0.5f;
 
     private void Awake()
     {
@@ -166,6 +175,12 @@ public class PlayerBody : MonoBehaviour, IDamageable
             doJump = false;
             doRideForce = false;
             currentJumpDelay = jumpDelay;
+        }
+
+        //glide
+        if (glide)
+        {
+            rb.AddForce(-gravity * glideStrength, ForceMode.Force);
         }
 
         //max velocity
