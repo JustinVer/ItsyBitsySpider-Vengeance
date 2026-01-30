@@ -71,6 +71,22 @@ public class PlayerBody : MonoBehaviour, IDamageable
         gravity = GameplayManager.Instance.GetGravity(transform.position);
         movePlayer();
         rotateBody();
+
+        Vector3 targetGrapplePoint = Vector3.zero;
+        float maxDepth = 100;
+
+
+        foreach (GameObject go in GrapplePoint.VisiblePoints)
+        {
+            Debug.DrawLine(transform.position, go.transform.position, Color.red);
+            if (targetGrapplePoint == Vector3.zero) targetGrapplePoint = go.transform.position;
+
+            float currentDist = Vector3.Distance(targetGrapplePoint, Vector3.Project(targetGrapplePoint, cam.transform.position + cam.transform.forward));
+            float nextDist = Vector3.Distance(go.transform.position, Vector3.Project(targetGrapplePoint, cam.transform.position + cam.transform.forward));
+            if (nextDist < currentDist) targetGrapplePoint = go.transform.position;
+        }
+        Debug.DrawRay(cam.transform.position, cam.transform.position + cam.transform.forward, Color.blue);
+        Debug.DrawLine(transform.position, targetGrapplePoint, Color.green);
     }
 
     public bool IsGrounded()
