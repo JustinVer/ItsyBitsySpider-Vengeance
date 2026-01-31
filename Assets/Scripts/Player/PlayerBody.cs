@@ -29,6 +29,14 @@ public class PlayerBody : MonoBehaviour, IDamageable
         get { return glide; }
         set { glide = value; }
     }
+    private bool grapple = false;
+    public bool Grapple
+    {
+        get { return grapple; }
+        set { grapple = value; }
+    }
+
+    private Vector3 targetGrapplePoint = Vector3.zero;
 
     private float currentHP;
     [SerializeField] private float maxHP = 100f;
@@ -53,7 +61,8 @@ public class PlayerBody : MonoBehaviour, IDamageable
 
     [SerializeField] private Camera cam;
 
-    [SerializeField, Range(0, 1)] private float glideStrength = 0.5f;
+    [SerializeField, Range(0, 1)] private float glideStrength = 0.1f;
+    [SerializeField] private float grappleStrength = 10f;
 
     private void Awake()
     {
@@ -72,6 +81,11 @@ public class PlayerBody : MonoBehaviour, IDamageable
         movePlayer();
         rotateBody();
 
+        targetGrapplePoint = getTargetGrapplePoint();
+    }
+
+    private Vector3 getTargetGrapplePoint()
+    {
         Vector3 targetGrapplePoint = Vector3.zero;
         float maxDepth = 100;
 
@@ -81,12 +95,17 @@ public class PlayerBody : MonoBehaviour, IDamageable
             Debug.DrawLine(transform.position, go.transform.position, Color.red);
             if (targetGrapplePoint == Vector3.zero) targetGrapplePoint = go.transform.position;
 
-            float currentDist = Vector3.Distance(targetGrapplePoint, Vector3.Project(targetGrapplePoint, cam.transform.position + cam.transform.forward));
-            float nextDist = Vector3.Distance(go.transform.position, Vector3.Project(targetGrapplePoint, cam.transform.position + cam.transform.forward));
+            Vector3 camToNextPoint = go.transform.position - cam.transform.position;
+            Vector3 camToCurrentPoint = targetGrapplePoint - cam.transform.position;
+
+            float currentDist = Vector3.ProjectOnPlane(camToCurrentPoint, cam.transform.forward).magnitude;
+            float nextDist = Vector3.ProjectOnPlane(camToNextPoint, cam.transform.forward).magnitude;
             if (nextDist < currentDist) targetGrapplePoint = go.transform.position;
         }
         Debug.DrawRay(cam.transform.position, cam.transform.position + cam.transform.forward, Color.blue);
         Debug.DrawLine(transform.position, targetGrapplePoint, Color.green);
+
+        return targetGrapplePoint;
     }
 
     public bool IsGrounded()
@@ -197,6 +216,14 @@ public class PlayerBody : MonoBehaviour, IDamageable
         if (glide)
         {
             rb.AddForce(-gravity * glideStrength, ForceMode.Force);
+        }
+
+        //grapple
+        if (grapple && targetGrapplePoint != Vector3.zero)
+        {
+            rb.linearVelocity = Vector3.zero;
+            Vector3 grappleForce = (targetGrapplePoint - transform.position).normalized * grappleStrength;
+            rb.AddForce(grappleForce, ForceMode.Acceleration);
         }
 
         //max velocity

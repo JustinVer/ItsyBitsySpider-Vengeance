@@ -22,6 +22,14 @@ public class PlayerManager : MonoBehaviour
         {
             body.Glide = false;
         }
+        if (Input.GetAxis("Grapple") > 0)
+        {
+            body.Grapple = true;
+        }
+        else
+        {
+            body.Grapple = false;
+        }
 
     }
 
