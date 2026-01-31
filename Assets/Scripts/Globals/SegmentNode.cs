@@ -1,29 +1,29 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class SegmentNode : MonoBehaviour
 {
-    private Vector3 Position = Vector3.zero;
-    private Vector3 Rotation = Vector3.zero;
+    private Quaternion rotation = Quaternion.identity;
     private List<GameObject> platforms;
     private GameObject forwardTrigger;
     private GameObject backwardTrigger;
     private GameObject levelPrefab;
-    private Transform pipeStart;
     private Transform pipeEnd;
 
     public SegmentNode(GameObject level)
     {
         levelPrefab = level;
-        pipeStart = levelPrefab.transform.Find("beginning");
-        pipeEnd = levelPrefab.transform.Find("end");
-    }
-    public Vector3 getPosition() { return Position; }
-    public void setPosition(Vector3 newPos) { Position = newPos; }
-    public Vector3 getRotation() { return Rotation; }
-    public void setRotation(Vector3 newRot) { Rotation = newRot; }
 
+        if (pipeEnd)
+        {
+            Debug.Log("found end");
+        }
+
+    }
+    public Vector3 getEnd() { return pipeEnd.position; }
+    public Quaternion getRotation() { return rotation; }
     public void findPlatforms()
     {
         //TODO search for  things marked as platforms
@@ -37,10 +37,11 @@ public class SegmentNode : MonoBehaviour
 
     public List<GameObject> getPlatforms() { return platforms; }
 
-    public async Task loadSection(Transform lastEnd)
+    public void loadSection(Vector3 lastEnd, Quaternion lastRotation)
     {
-        AsyncInstantiateOperation op = InstantiateAsync(levelPrefab);
-
-        await op;
+        GameObject levelSection = Instantiate(levelPrefab, lastEnd, lastRotation);
+        pipeEnd = levelSection.transform.Find("end");
+        rotation = lastRotation;
+        Debug.Log(lastEnd);
     }
 }
