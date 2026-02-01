@@ -16,7 +16,9 @@ public class PlayerBody : MonoBehaviour, IDamageable
     private float currentJumpDelay = 0;
     private float jumpDelay = 1;
 
-    private const float ROTATION_THRESHOLD = 0.1f;
+    private float minGrappleDist = 0.5f;
+
+    private const float ROTATION_THRESHOLD = 0.2f;
     public Vector3 MovementDir
     {
         get { return movementDir; }
@@ -82,10 +84,13 @@ public class PlayerBody : MonoBehaviour, IDamageable
         rotateBody();
 
         targetGrapplePoint = getTargetGrapplePoint();
+        if (grapple && Vector3.Distance(transform.position, targetGrapplePoint) < minGrappleDist) grapple = false;
     }
 
     private Vector3 getTargetGrapplePoint()
     {
+        if (grapple) return this.targetGrapplePoint;
+
         Vector3 targetGrapplePoint = Vector3.zero;
         float maxDepth = 100;
 
