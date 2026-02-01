@@ -10,6 +10,7 @@ public class SegmentNode : MonoBehaviour
     private GameObject forwardTrigger;
     private GameObject backwardTrigger;
     private GameObject levelPrefab;
+    private GameObject levelSection;
     private Transform pipeEnd;
 
     public SegmentNode(GameObject level)
@@ -39,9 +40,8 @@ public class SegmentNode : MonoBehaviour
 
     public void loadSection(Vector3 lastEnd, Quaternion lastRotation)
     {
-        GameObject levelSection = Instantiate(levelPrefab, lastEnd, lastRotation);
+        levelSection = Instantiate(levelPrefab, lastEnd, lastRotation);
         pipeEnd = levelSection.transform.Find("end");
         rotation = lastRotation;
-        Debug.Log(lastEnd);
     }
 }
