@@ -68,8 +68,16 @@ public class PlayerBody : MonoBehaviour, IDamageable
 
     [SerializeField, Range(0, 1)] private float glideStrength = 0.1f;
     [SerializeField] private float grappleStrength = 10f;
+    [SerializeField] private float crashSpeed = 10f;
     [SerializeField] private float crashDuration = 2;
     private float currentCrashDuration = 2;
+
+    private bool crash = false;
+    public bool Crash
+    {
+        get { return crash; }
+        set { crash = value; }
+    }
 
     private void Awake()
     {
@@ -90,6 +98,19 @@ public class PlayerBody : MonoBehaviour, IDamageable
 
         targetGrapplePoint = getTargetGrapplePoint();
         if (grapple && Vector3.Distance(transform.position, targetGrapplePoint) < minGrappleDist) grapple = false;
+        if (crash)
+        {
+            currentCrashDuration += Time.deltaTime;
+            Debug.Log("CRASHING");
+        }
+        else
+        {
+            currentCrashDuration = 0;
+        }
+        if (currentCrashDuration > crashDuration)
+        {
+            crash = false;
+        }
     }
 
     private Vector3 getTargetGrapplePoint()
@@ -243,6 +264,14 @@ public class PlayerBody : MonoBehaviour, IDamageable
             rb.AddForce(grappleForce, ForceMode.Acceleration);
         }
 
+        //crash
+        if (crash)
+        {
+            rb.linearVelocity = Vector3.zero;
+            Vector3 crashForce = Vector3.Cross(-gravity, -cam.transform.right).normalized * crashSpeed;
+            rb.AddForce(crashForce, ForceMode.Acceleration);
+        }
+
         //max velocity
         if (rb.linearVelocity.magnitude > velCap)
         {
@@ -250,7 +279,7 @@ public class PlayerBody : MonoBehaviour, IDamageable
         }
         currentMaxSpeed = maxSpeed;
     }
-    //TODO fix this
+   
     private void rotateBody()
     {
         if (grapple)

@@ -26,6 +26,10 @@ public class PlayerManager : MonoBehaviour
         {
             body.Grapple = !body.Grapple;
         }
+        if (Input.GetButtonDown("Crash"))
+        {
+            body.Crash = !body.Crash;
+        }
        
 
     }
