@@ -1,3 +1,4 @@
+using System.Runtime.CompilerServices;
 using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 using UnityEngine.XR;
@@ -67,6 +68,8 @@ public class PlayerBody : MonoBehaviour, IDamageable
 
     [SerializeField, Range(0, 1)] private float glideStrength = 0.1f;
     [SerializeField] private float grappleStrength = 10f;
+    [SerializeField] private float crashDuration = 2;
+    private float currentCrashDuration = 2;
 
     private void Awake()
     {
