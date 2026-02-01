@@ -213,6 +213,11 @@ public class PlayerBody : MonoBehaviour, IDamageable
             }
         }
 
+        if (IsGrounded() && rb.linearVelocity.magnitude >= currentMaxSpeed)
+        {
+            rb.AddForce(-rb.linearVelocity * deceleration, ForceMode.Force);
+        }
+
         RaycastHit rayHit;
         if (Physics.Raycast(transform.position, gravity, out rayHit, maxRayDist))
         {
