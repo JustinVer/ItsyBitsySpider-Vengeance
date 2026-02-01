@@ -286,6 +286,10 @@ public class PlayerBody : MonoBehaviour, IDamageable
         {
             transform.rotation = Quaternion.LookRotation(targetGrapplePoint - transform.position, -gravity);
         }
+        if (crash)
+        {
+            transform.rotation = Quaternion.LookRotation(Vector3.Cross(-gravity, -cam.transform.right), -gravity);
+        }
 
         Vector3 moveDir = (rb.linearVelocity.magnitude > ROTATION_THRESHOLD) ? rb.linearVelocity : transform.forward;
 
