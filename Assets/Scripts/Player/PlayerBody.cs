@@ -1,4 +1,6 @@
+using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
+using UnityEngine.XR;
 
 public class PlayerBody : MonoBehaviour, IDamageable
 {
@@ -103,11 +105,14 @@ public class PlayerBody : MonoBehaviour, IDamageable
             Vector3 camToNextPoint = go.transform.position - cam.transform.position;
             Vector3 camToCurrentPoint = targetGrapplePoint - cam.transform.position;
 
+            //if (Vector3.Distance(cam.transform.position, go.transform.position) < Vector3.Distance(cam.transform.position, transform.position)) continue; //this will be a check to see if the grapple point is behind the player;
+
             float currentDist = Vector3.ProjectOnPlane(camToCurrentPoint, cam.transform.forward).magnitude;
             float nextDist = Vector3.ProjectOnPlane(camToNextPoint, cam.transform.forward).magnitude;
             if (nextDist < currentDist) targetGrapplePoint = go.transform.position;
+            
         }
-        Debug.DrawRay(cam.transform.position, cam.transform.position + cam.transform.forward, Color.blue);
+       
         Debug.DrawLine(transform.position, targetGrapplePoint, Color.green);
 
         return targetGrapplePoint;
@@ -226,8 +231,12 @@ public class PlayerBody : MonoBehaviour, IDamageable
         //grapple
         if (grapple && targetGrapplePoint != Vector3.zero)
         {
+            float currentSpeed = rb.linearVelocity.magnitude;
+            float dot = Vector3.Dot(rb.linearVelocity, targetGrapplePoint - transform.position);
+
             rb.linearVelocity = Vector3.zero;
-            Vector3 grappleForce = (targetGrapplePoint - transform.position).normalized * grappleStrength;
+
+            Vector3 grappleForce = (targetGrapplePoint - transform.position).normalized * ((dot > 0.5) ? Mathf.Max(currentSpeed, grappleStrength) : grappleStrength);
             rb.AddForce(grappleForce, ForceMode.Acceleration);
         }
 
@@ -241,7 +250,10 @@ public class PlayerBody : MonoBehaviour, IDamageable
     //TODO fix this
     private void rotateBody()
     {
-
+        if (grapple)
+        {
+            transform.rotation = Quaternion.LookRotation(targetGrapplePoint - transform.position, -gravity);
+        }
 
         Vector3 moveDir = (rb.linearVelocity.magnitude > ROTATION_THRESHOLD) ? rb.linearVelocity : transform.forward;
 
