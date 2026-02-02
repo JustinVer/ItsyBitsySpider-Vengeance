@@ -8,39 +8,118 @@ public class Leg : MonoBehaviour
     [SerializeField] private GameObject foot;
     [SerializeField] private Transform outPoint;
     [SerializeField] private float legLength;
+    public float stepDistance;
+    public float stepHeight;
+    public float stepDuraion;
 
-    public Vector3 TargetPos = Vector3.zero;
-    public Vector3 FootPos = Vector3.zero;
+    private bool stepping = false;
+    private float stepTimer = 0f;
 
-    private void Update()
+    private Vector3 stepStart = Vector3.zero;
+    private Vector3 stepEnd = Vector3.zero;
+
+    private bool footPlanted = true;
+    private Vector3 plantPosition = Vector3.zero;
+
+    private Vector3 footPosition = Vector3.zero;
+    public Vector3 FootPosition
+    {
+        get { return footPosition; }
+        set { footPosition = value; }
+    }
+
+    private Vector3 targetPosition = Vector3.zero;
+    public Vector3 TargetPosition
+    {
+        get { return targetPosition; }
+        set { targetPosition = value; }
+    }
+
+    private Vector3 bodyVelocity = Vector3.zero;
+    public Vector3 BodyVelocity
+    {
+        get { return bodyVelocity; }
+        set { bodyVelocity = value; }
+    }
+   
+
+    private void FixedUpdate()
     {
         Vector3 down = GameplayManager.Instance.GetGravity(outPoint.position).normalized;
 
         Debug.DrawRay(outPoint.position, down * legLength, Color.red);
 
         RaycastHit hit;
-
-
         if (Physics.Raycast(outPoint.position, down, out hit, legLength))
         {
-            TargetPos = hit.point;
+            targetPosition = hit.point;
+
+            if (!footPlanted && !stepping)
+            {
+                plantPosition = hit.point;
+                footPlanted = true;
+            }
         }
         else
         {
-            TargetPos = outPoint.position + down * legLength;
+            targetPosition = outPoint.position + down * legLength;
+            footPlanted = false;
         }
 
 
-      
-       
+        if (stepping)
+        {
 
-            FootPos = foot.transform.position;
+            Vector3 predictedTarget = targetPosition + BodyVelocity * stepDuraion;
+
+            stepEnd = predictedTarget;
+
+            stepTimer += Time.fixedDeltaTime;
+            float t = stepTimer / stepDuraion;
+
+            t = Mathf.Clamp01(t);
+
+            Vector3 pos = Vector3.Lerp(stepStart, stepEnd, t);
+
+            float height = Mathf.Sin(t * Mathf.PI) * stepHeight;
+            pos += -down * height;
+
+            foot.transform.position = pos;
+
+            if (t >= 1)
+            {
+                stepping = false;
+                footPlanted = true;
+                plantPosition = stepEnd;
+            }
+
+            
+        }
+        else if (footPlanted)
+        {
+            foot.transform.position = plantPosition;
+        }
+        else
+        {
+            foot.transform.position = targetPosition;
+        }
+
+        
+
+        footPosition = foot.transform.position;
     }
         
     
 
     public void Step()
     {
-        foot.transform.position = TargetPos;
+        if (stepping) return;
+
+        stepping = true;
+        footPlanted = false;
+
+        stepTimer = 0f;
+        stepStart = foot.transform.position;
+        stepEnd = targetPosition;
     }
 }

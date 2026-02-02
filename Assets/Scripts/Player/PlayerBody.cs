@@ -240,6 +240,8 @@ public class PlayerBody : MonoBehaviour, IDamageable
 
         }
 
+        if (rb.linearVelocity.magnitude < 0.1) rb.linearVelocity = Vector3.zero;
+
         //gravity
         rb.AddForce(gravity * gravityMod, ForceMode.Acceleration);
 
