@@ -87,7 +87,7 @@ public class Ant : EnemyBase, IFireAnimation, ICollisionReciever
             yield return null;
         }
         RaycastHit hit;
-        Physics.Raycast(bodyFollower.transform.position, GameplayManager.Instance.GetGravity(bodyFollower.transform.position), out hit, 80, GameplayManager.Instance.NotPlayerOrEnemyMask, QueryTriggerInteraction.Ignore);
+        Physics.Raycast(bodyFollower.transform.position - GameplayManager.Instance.GetGravity(bodyFollower.transform.position).normalized, GameplayManager.Instance.GetGravity(bodyFollower.transform.position), out hit, 80, GameplayManager.Instance.NotPlayerOrEnemyMask, QueryTriggerInteraction.Ignore);
         if (hit.point != null)
         {
             agentMover.SetPosition(hit.point);
