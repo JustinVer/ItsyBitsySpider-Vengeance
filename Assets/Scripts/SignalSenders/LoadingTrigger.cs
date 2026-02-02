@@ -22,7 +22,7 @@ public class LoadingTrigger : MonoBehaviour
     {
         this.transform.rotation = newRot;
         this.transform.position = newPos - new Vector3(0, 0, 10);
-        StartCoroutine(DelayedAction(3f));
+        StartCoroutine(DelayedAction(10f));
     }
 
     private void OnTriggerEnter(Collider other)

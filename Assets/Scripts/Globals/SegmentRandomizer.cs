@@ -11,7 +11,9 @@ public class SegmentRandomizer : MonoBehaviour
     [SerializeField] SegmentNode[] area3;
     [SerializeField] GameObject[] segmentPool; //0 is reserved for the start area
     [SerializeField] GameObject corner;
-    SegmentNode cornerSegment;
+    SegmentNode cornerSegment1;
+    SegmentNode cornerSegment2;
+    int nextCorner = 1;
     [SerializeField] int[] debugOrder1;
     [SerializeField] int[] debugOrder2;
     [SerializeField] int[] debugOrder3;
@@ -40,7 +42,8 @@ public class SegmentRandomizer : MonoBehaviour
         area1[0].loadSection(Vector3.zero, Quaternion.identity);
         lastLoaded = 0;
         Debug.Log("loading start");
-        cornerSegment = new SegmentNode(corner);
+        cornerSegment1 = new SegmentNode(corner);
+        cornerSegment2 = new SegmentNode(corner);
 
         loadForward();
     }
@@ -53,10 +56,13 @@ public class SegmentRandomizer : MonoBehaviour
         {
             if (sectionsToTurn >= segmentsBeforeTurn-1)
             {
-                cornerSegment.loadSection(area1[i - 1].getEnd(), area1[i - 1].getRotation());
-                area1[i].loadSection(cornerSegment.getEnd(), cornerSegment.exitAngle());
-                forwardTrigger.reposition(area1[i - 1].getEnd(), area1[i - 1].getRotation());
-                unloadBack(lastLoaded);
+                if (nextCorner == 1)
+                {
+                    endLoad(cornerSegment1, i);
+                } else if(nextCorner == 2)
+                {
+                    endLoad(cornerSegment2, i);
+                }
                 lastLoaded = i;
                 break;
             }
@@ -68,6 +74,19 @@ public class SegmentRandomizer : MonoBehaviour
             }
         }
     }
+    private void endLoad(SegmentNode cornerToUse, int segmentIndex)
+    {
+        cornerToUse.loadSection(area1[segmentIndex - 1].getEnd(), area1[segmentIndex - 1].getRotation());
+        area1[segmentIndex].loadSection(cornerToUse.getEnd(), cornerToUse.exitAngle());
+        forwardTrigger.reposition(area1[segmentIndex - 1].getEnd(), area1[segmentIndex - 1].getRotation());
+        unloadBack(lastLoaded);
+        nextCorner++;
+        if(nextCorner > 2)
+        {
+            nextCorner = 1;
+        }
+    }
+
 
     private void unloadBack(int unloadBefore)
     {
