@@ -46,10 +46,10 @@ public class BirdAttack : MonoBehaviour
     {
         float timeMoving = 0;
         Vector3 startPosition = beak.transform.position;
-        Quaternion upperStartRotation = upperBeak.transform.rotation;
-        Quaternion upperEndRotation = upperBeak.transform.rotation * Quaternion.Euler(upperBeakAngle);
-        Quaternion lowerStartRotation = lowerBeak.transform.rotation;
-        Quaternion lowerEndRotation = lowerBeak.transform.rotation * Quaternion.Euler(lowerBeakAngle);
+        Quaternion upperStartRotation = upperBeak.transform.localRotation;
+        Quaternion upperEndRotation = upperBeak.transform.localRotation * Quaternion.Euler(upperBeakAngle);
+        Quaternion lowerStartRotation = lowerBeak.transform.localRotation;
+        Quaternion lowerEndRotation = lowerBeak.transform.localRotation * Quaternion.Euler(lowerBeakAngle);
         Debug.Log("corutine");
 
         while (timeMoving < duration)
@@ -59,8 +59,8 @@ public class BirdAttack : MonoBehaviour
 
 
             beak.transform.position = Vector3.Lerp(startPosition, targetPosition, t);
-            upperBeak.transform.rotation = Quaternion.Slerp(upperStartRotation, upperEndRotation, timeMoving / duration);
-            lowerBeak.transform.rotation = Quaternion.Slerp(lowerStartRotation, lowerEndRotation, timeMoving / duration);
+            upperBeak.transform.localRotation = Quaternion.Slerp(upperStartRotation, upperEndRotation, timeMoving / duration);
+            lowerBeak.transform.localRotation = Quaternion.Slerp(lowerStartRotation, lowerEndRotation, timeMoving / duration);
 
             timeMoving += Time.deltaTime;
 
@@ -90,7 +90,7 @@ public class BirdAttack : MonoBehaviour
         else
         {
             attackStage = 0;
-            beak.transform.eulerAngles = new Vector3(0f, 0f, 0f);
+            beak.transform.localRotation = Quaternion.Euler(0, 0, 0);
         }
     }
 }

@@ -1,7 +1,4 @@
-using System.Runtime.CompilerServices;
-using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
-using UnityEngine.XR;
 
 public class PlayerBody : MonoBehaviour, IDamageable
 {
@@ -134,9 +131,9 @@ public class PlayerBody : MonoBehaviour, IDamageable
             float currentDist = Vector3.ProjectOnPlane(camToCurrentPoint, cam.transform.forward).magnitude;
             float nextDist = Vector3.ProjectOnPlane(camToNextPoint, cam.transform.forward).magnitude;
             if (nextDist < currentDist) targetGrapplePoint = go.transform.position;
-            
+
         }
-       
+
         Debug.DrawLine(transform.position, targetGrapplePoint, Color.green);
 
         return targetGrapplePoint;
@@ -284,7 +281,7 @@ public class PlayerBody : MonoBehaviour, IDamageable
         }
         currentMaxSpeed = maxSpeed;
     }
-   
+
     private void rotateBody()
     {
         if (grapple)
