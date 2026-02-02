@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -59,5 +60,13 @@ public class SegmentNode : MonoBehaviour
         pipeEnd = levelSection.transform.Find("end");
         orientationPoint = levelSection.transform.Find("orientationPoint");
         rotation = lastRotation;
+    }
+
+    public void unloadSection()
+    {
+        if (levelSection)
+        {
+            Destroy(levelSection);
+        }
     }
 }
