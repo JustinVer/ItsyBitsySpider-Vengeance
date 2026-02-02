@@ -94,7 +94,11 @@ public class PlayerBody : MonoBehaviour, IDamageable
         rotateBody();
 
         targetGrapplePoint = getTargetGrapplePoint();
-        if (grapple && Vector3.Distance(transform.position, targetGrapplePoint) < minGrappleDist) grapple = false;
+        if (grapple && Vector3.Distance(transform.position, targetGrapplePoint) < minGrappleDist)
+        {
+            grapple = false;
+            rb.linearVelocity = Vector3.zero;
+        }
         if (crash)
         {
             currentCrashDuration += Time.deltaTime;
@@ -206,13 +210,13 @@ public class PlayerBody : MonoBehaviour, IDamageable
             //decel if on ground
             if (IsGrounded())
             {
-                rb.AddForce(-rb.linearVelocity * deceleration, ForceMode.Force);
+                rb.AddForce(-rb.linearVelocity.normalized * deceleration, ForceMode.Force);
             }
         }
 
         if (IsGrounded() && rb.linearVelocity.magnitude >= currentMaxSpeed)
         {
-            rb.AddForce(-rb.linearVelocity * deceleration, ForceMode.Force);
+            rb.AddForce(-rb.linearVelocity.normalized * deceleration, ForceMode.Force);
         }
 
         RaycastHit rayHit;
@@ -343,5 +347,18 @@ public class PlayerBody : MonoBehaviour, IDamageable
     public Vector3 LinearVelocity()
     {
         return rb.linearVelocity;
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (crash) { 
+            crash = false;
+            BreakableWall wall = collision.gameObject.GetComponent<BreakableWall>();
+            if (wall != null)
+            {
+                wall.Break();
+
+            }
+        }
     }
 }
