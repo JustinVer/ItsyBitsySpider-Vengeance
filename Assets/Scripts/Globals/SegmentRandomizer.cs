@@ -56,7 +56,7 @@ public class SegmentRandomizer : MonoBehaviour
                 cornerSegment.loadSection(area1[i - 1].getEnd(), area1[i - 1].getRotation());
                 area1[i].loadSection(cornerSegment.getEnd(), cornerSegment.exitAngle());
                 forwardTrigger.reposition(area1[i - 1].getEnd(), area1[i - 1].getRotation());
-
+                unloadBack(lastLoaded);
                 lastLoaded = i;
                 break;
             }
@@ -66,6 +66,14 @@ public class SegmentRandomizer : MonoBehaviour
                 Debug.Log("loading straight");
                 sectionsToTurn++;
             }
+        }
+    }
+
+    private void unloadBack(int unloadBefore)
+    {
+        for (int i = unloadBefore-1; i >= 0 ; i-=1) 
+        {
+            area1[i].unloadSection();
         }
     }
 }
