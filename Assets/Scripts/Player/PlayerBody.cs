@@ -45,6 +45,7 @@ public class PlayerBody : MonoBehaviour, IDamageable
     [SerializeField] private float acceleration = 5f;
     [SerializeField] private float deceleration = 5f;
     [SerializeField] private float maxSpeed = 10f;
+ 
 
     [SerializeField] private float jumpForce = 100f;
 

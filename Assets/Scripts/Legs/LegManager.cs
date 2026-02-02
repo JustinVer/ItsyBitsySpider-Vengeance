@@ -22,10 +22,15 @@ public class LegManager : MonoBehaviour
     private int lStepIdx = 0;
 
     private Rigidbody body;
-    private bool wasMoving = true;
+    private PlayerBody player;
+    private bool wasMoving = false;
 
     private void Awake()
     {
+        body = GetComponentInParent<Rigidbody>();
+        player = GetComponentInParent<PlayerBody>();
+        if (body == null) Debug.Log("Rigidbody not found");
+
         rightLegs = new Leg[rightLegPositions.Length];
         leftLegs = new Leg[leftLegPositions.Length];
 
@@ -52,7 +57,10 @@ public class LegManager : MonoBehaviour
         }
 
         body = GetComponentInParent<Rigidbody>();
+        player = GetComponentInParent<PlayerBody>();
         if (body == null) Debug.Log("Rigidbody not found");
+
+
     }
 
     private void FixedUpdate()
@@ -85,7 +93,8 @@ public class LegManager : MonoBehaviour
         wasMoving = moving;
         
         stepOffsetTimer += Time.fixedDeltaTime;
-        if (stepOffsetTimer >= stepOffsetDuration)
+
+        if (stepOffsetTimer >= stepOffsetDuration && player.IsGrounded())
         {
             Vector3 footPosition;
             Vector3 targetPosition;
@@ -94,7 +103,10 @@ public class LegManager : MonoBehaviour
                 footPosition = rightLegs[rStepIdx].FootPosition;
                 targetPosition = rightLegs[rStepIdx].TargetPosition;
 
-                if (Vector3.Distance(footPosition, targetPosition) > stepDistance)
+                Vector3 predictedTarget =
+     targetPosition + body.linearVelocity * stepDuraion;
+
+                if (Vector3.Distance(footPosition, predictedTarget) > stepDistance)
                 {
                     rightLegs[rStepIdx].Step();
                     rStepIdx = (rStepIdx + 1) % rightLegs.Length;
@@ -111,7 +123,10 @@ public class LegManager : MonoBehaviour
                 footPosition = leftLegs[lStepIdx].FootPosition;
                 targetPosition = leftLegs[lStepIdx].TargetPosition;
 
-                if (Vector3.Distance(footPosition, targetPosition) > stepDistance)
+                Vector3 predictedTarget =
+    targetPosition + body.linearVelocity * stepDuraion;
+
+                if (Vector3.Distance(footPosition, predictedTarget) > stepDistance)
                 {
                     leftLegs[lStepIdx].Step();
                     lStepIdx = (lStepIdx + 1) % leftLegs.Length;

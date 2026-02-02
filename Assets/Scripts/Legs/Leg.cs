@@ -69,10 +69,8 @@ public class Leg : MonoBehaviour
 
         if (stepping)
         {
-
             Vector3 predictedTarget = targetPosition + BodyVelocity * stepDuraion;
-
-            stepEnd = predictedTarget;
+            stepEnd = Vector3.Lerp(targetPosition, predictedTarget, 0.5f);
 
             stepTimer += Time.fixedDeltaTime;
             float t = stepTimer / stepDuraion;
@@ -106,6 +104,8 @@ public class Leg : MonoBehaviour
 
         
 
+        
+
         footPosition = foot.transform.position;
     }
         
@@ -113,6 +113,8 @@ public class Leg : MonoBehaviour
 
     public void Step()
     {
+
+
         if (stepping) return;
 
         stepping = true;
