@@ -34,6 +34,27 @@ public class AgentLinkMover : MonoBehaviour
         agent.autoTraverseOffMeshLink = false;
         agent.updateRotation = false;
         agent.updateUpAxis = false;
+        agent.updatePosition = true;
+
+        //StartCoroutine(setStartAgent());
+    }
+
+    private IEnumerator setStartAgent()
+    {
+        yield return new WaitForSeconds(3f);
+        yield return null;
+        NavMeshHit hit;
+        NavMesh.SamplePosition(body.transform.position - GameplayManager.Instance.GetGravity(body.transform.position).normalized, out hit, 3f, NavMesh.AllAreas);
+
+        if (hit.position != null)
+        {
+            agent.transform.position = hit.position;
+        }
+        else
+        {
+            agent.transform.position = Vector3.zero;
+        }
+        agent.transform.position = Vector3.zero;
     }
 
     private void Update()
