@@ -71,6 +71,12 @@ public class Ant : EnemyBase, IFireAnimation, ICollisionReciever
         {
             agentMover.SetDestination(GameplayManager.Instance.Player.transform.position);
         }
+        else
+        {
+            agentMover.agent.velocity = Vector3.zero;
+            bodyFollower.RB.linearVelocity = Vector3.zero;
+            bodyFollower.RB.angularVelocity = Vector3.zero;
+        }
     }
 
     private IEnumerator Grapple(float grappleTime, float attackCooldown)

@@ -5,6 +5,7 @@ public class BodyFollowAgent : MonoBehaviour
     [SerializeField] private AgentLinkMover followBody;
     [SerializeField] private float speed = 2f;
     [SerializeField] private Rigidbody rb;
+    public Rigidbody RB { get { return rb; } }
     [SerializeField] private float distanceToAgentBeforeJump = 0.3f;
     [SerializeField] private float height = 0.7f;
     [SerializeField] private float maxDegreesRotation = 1f;

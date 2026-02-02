@@ -92,6 +92,12 @@ public class PillBug : EnemyBase, ICollisionReciever
         {
             agentMover.SetDestination(GameplayManager.Instance.Player.transform.position);
         }
+        else
+        {
+            agentMover.agent.velocity = Vector3.zero;
+            bodyFollower.RB.linearVelocity = Vector3.zero;
+            bodyFollower.RB.angularVelocity = Vector3.zero;
+        }
     }
 
     public override void EndDeath()
