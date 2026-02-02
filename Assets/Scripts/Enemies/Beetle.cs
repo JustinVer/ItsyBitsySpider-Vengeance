@@ -103,7 +103,7 @@ public class Beetle : EnemyBase, IFireAnimation
     {
         if (!isDying && !isJumping)
         {
-            Debug.Log("Mpve beetle");
+            Debug.Log("Mpve beetle " + (distanceToPlayer < data.detectionDistanceClose));
             if (distanceToPlayer < data.detectionDistanceClose || (distanceToPlayer < data.detectionDistanceLineOfSight && Physics.Linecast(this.transform.position, GameplayManager.Instance.Player.transform.position, GameplayManager.Instance.NotPlayerOrEnemyMask)))
             {
                 Vector3 endPosition = getNewPlatformPosition();
@@ -118,6 +118,7 @@ public class Beetle : EnemyBase, IFireAnimation
 
     private IEnumerator Jump(Vector3 endPos, float height, float duration)
     {
+        Debug.Log("Start Jump beetle " + endPos + " " + height + " " + duration);
         isJumping = true;
         Vector3 startPos = this.transform.position;
         float normalizedTime = 0.0f;
@@ -166,6 +167,7 @@ public class Beetle : EnemyBase, IFireAnimation
         float heuristic = 0;
 
         heuristic += (Vector3.Distance(this.transform.position, platform.transform.position) - 5f);
+        heuristic += Random.Range(-10, 10);
 
         return heuristic;
     }

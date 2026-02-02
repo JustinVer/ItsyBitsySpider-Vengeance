@@ -41,6 +41,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4025982305742810253}
   - component: {fileID: 2063973954630196966}
+  - component: {fileID: 6872550894311772471}
   m_Layer: 7
   m_Name: Beetle
   m_TagString: Enemy
@@ -83,14 +84,44 @@ MonoBehaviour:
   ProjectileVelocity: 60
   fireLocation: {fileID: 2940687982059109472}
   jumpHeight: 2
-  timeDistanceMultiplier: 0.05
-  timeDistanceBase: 0.25
+  timeDistanceMultiplier: 0.04
+  timeDistanceBase: 0.2
   maxDegreesRotationNormal: 120
   maxDegreesRotationJump: 90
-  platforms: []
+  platforms:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   detectionWidth: 2
   numDetectionCasts: 11
-  fireVelocityDistanceMultiplier: 0.5
+  fireVelocityDistanceMultiplier: 1.02
+--- !u!54 &6872550894311772471
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7910159633996045360}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 112
+  m_CollisionDetection: 0
 --- !u!1001 &8376854262830874852
 PrefabInstance:
   m_ObjectHideFlags: 0
