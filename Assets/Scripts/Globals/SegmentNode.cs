@@ -49,6 +49,10 @@ public class SegmentNode : MonoBehaviour
 
     public void loadSection(Vector3 lastEnd, Quaternion lastRotation)
     {
+        Vector3 rotationVector = lastRotation.eulerAngles;
+        rotationVector.z = Random.Range(0, 361);
+        lastRotation = Quaternion.Euler(rotationVector);
+
         if (levelSection)
         {
             levelSection.transform.position = lastEnd;
