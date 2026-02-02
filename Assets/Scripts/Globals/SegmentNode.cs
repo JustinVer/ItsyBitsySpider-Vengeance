@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Net;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -12,6 +13,7 @@ public class SegmentNode : MonoBehaviour
     private GameObject levelPrefab;
     private GameObject levelSection;
     private Transform pipeEnd;
+    private Transform orientationPoint;
 
     public SegmentNode(GameObject level)
     {
@@ -25,6 +27,12 @@ public class SegmentNode : MonoBehaviour
     }
     public Vector3 getEnd() { return pipeEnd.position; }
     public Quaternion getRotation() { return rotation; }
+    public Quaternion exitAngle() 
+    {
+        Vector3 directionToTarget = pipeEnd.position - orientationPoint.position;
+
+        return Quaternion.LookRotation(directionToTarget);
+    }
     public void findPlatforms()
     {
         //TODO search for  things marked as platforms
@@ -40,8 +48,16 @@ public class SegmentNode : MonoBehaviour
 
     public void loadSection(Vector3 lastEnd, Quaternion lastRotation)
     {
-        levelSection = Instantiate(levelPrefab, lastEnd, lastRotation);
+        if (levelSection)
+        {
+            levelSection.transform.position = lastEnd;
+            levelSection.transform.rotation = lastRotation;
+        } else
+        {
+            levelSection = Instantiate(levelPrefab, lastEnd, lastRotation);
+        }
         pipeEnd = levelSection.transform.Find("end");
+        orientationPoint = levelSection.transform.Find("orientationPoint");
         rotation = lastRotation;
     }
 }

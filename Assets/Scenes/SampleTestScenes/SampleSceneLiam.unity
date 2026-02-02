@@ -274,7 +274,7 @@ Transform:
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
   m_LocalRotation: {x: -0.017103324, y: -0.9828564, z: 0.13421981, w: 0.12524332}
-  m_LocalPosition: {x: -0.05, y: 1, z: 24.49}
+  m_LocalPosition: {x: -8, y: 61, z: 75.7}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -344,7 +344,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &334607110
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -442,7 +442,7 @@ Transform:
   m_GameObject: {fileID: 334607109}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -8, y: 0, z: 10}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -674,17 +674,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3c00c058d194cd44aad839886e8e34c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  segmentsBeforeTurn: 5
+  segmentsBeforeTurn: 1
+  cornerAngle: {x: 0, y: 0.70710677, z: 0, w: 0.70710677}
   area1: []
   area2: []
   area3: []
   segmentPool:
   - {fileID: 8047777929218949312, guid: af7845d9f0de2eb44a6420cf8e210aec, type: 3}
   - {fileID: 2010273967314991345, guid: eca8511538f2b8b439d09b3b2dbe1df0, type: 3}
-  corner: {fileID: 0}
-  debugOrder1: 000000000000000000000000000000000000000001000000
+  corner: {fileID: 2010273967314991345, guid: eca8511538f2b8b439d09b3b2dbe1df0, type: 3}
+  debugOrder1: 000000000000000000000000000000000000000000000000
   debugOrder2: 
   debugOrder3: 
+  forwardTriggerPrefab: {fileID: 17452995249798997, guid: f8d9512657a46424dbf5a3a3839686e7, type: 3}
+  backwardTriggerPrefab: {fileID: 17452995249798997, guid: f8d9512657a46424dbf5a3a3839686e7, type: 3}
 --- !u!4 &1619204026
 Transform:
   m_ObjectHideFlags: 0
@@ -844,8 +847,8 @@ PrefabInstance:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
-  - {fileID: 330585546}
   - {fileID: 410087041}
+  - {fileID: 330585546}
   - {fileID: 832575519}
   - {fileID: 5655648500474222853}
   - {fileID: 334607114}
