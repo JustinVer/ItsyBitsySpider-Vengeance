@@ -1,4 +1,3 @@
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class SegmentRandomizer : MonoBehaviour
@@ -18,7 +17,8 @@ public class SegmentRandomizer : MonoBehaviour
     [SerializeField] int[] debugOrder2;
     [SerializeField] int[] debugOrder3;
 
-    private int lastLoaded;
+    private int lastLoaded = 0;
+    private int nextUnload;
     [SerializeField] private GameObject forwardTriggerPrefab;
     private LoadingTrigger forwardTrigger;
     [SerializeField] private GameObject backwardTriggerPrefab;
@@ -47,23 +47,52 @@ public class SegmentRandomizer : MonoBehaviour
 
         loadForward();
     }
-
     public void loadForward()
     {
         int sectionsToTurn = 0;
 
-        for (int i = lastLoaded+1; i < debugOrder1.Length; i++)
+        for (int i = lastLoaded + 1; i < debugOrder1.Length; i++)
         {
-            if (sectionsToTurn >= segmentsBeforeTurn-1)
+            if (sectionsToTurn >= segmentsBeforeTurn - 1)
             {
                 if (nextCorner == 1)
                 {
                     endLoad(cornerSegment1, i);
-                } else if(nextCorner == 2)
+                }
+                else if (nextCorner == 2)
                 {
                     endLoad(cornerSegment2, i);
                 }
+                nextUnload = lastLoaded;
                 lastLoaded = i;
+                break;
+            }
+            else
+            {
+                area1[i].loadSection(area1[i - 1].getEnd(), area1[i - 1].getRotation());
+                Debug.Log("loading straight");
+                sectionsToTurn++;
+            }
+        }
+    }
+    public void loadBackward()
+    {
+        int sectionsToTurn = 0;
+
+        for (int i = nextUnload - 1; i > -1; i++)
+        {
+            if (sectionsToTurn >= segmentsBeforeTurn - 1)
+            {
+                if (nextCorner == 1)
+                {
+                    endLoad(cornerSegment2, i);
+                }
+                else if (nextCorner == 2)
+                {
+                    endLoad(cornerSegment1, i);
+                }
+                lastLoaded = nextUnload;
+                nextUnload = i;
                 break;
             }
             else
@@ -79,18 +108,16 @@ public class SegmentRandomizer : MonoBehaviour
         cornerToUse.loadSection(area1[segmentIndex - 1].getEnd(), area1[segmentIndex - 1].getRotation());
         area1[segmentIndex].loadSection(cornerToUse.getEnd(), cornerToUse.exitAngle());
         forwardTrigger.reposition(area1[segmentIndex - 1].getEnd(), area1[segmentIndex - 1].getRotation());
-        unloadBack(lastLoaded);
+        unloadBack(nextUnload);
         nextCorner++;
-        if(nextCorner > 2)
+        if (nextCorner > 2)
         {
             nextCorner = 1;
         }
     }
-
-
     private void unloadBack(int unloadBefore)
     {
-        for (int i = unloadBefore-1; i >= 0 ; i-=1) 
+        for (int i = unloadBefore - 1; i >= 0; i -= 1)
         {
             area1[i].unloadSection();
         }

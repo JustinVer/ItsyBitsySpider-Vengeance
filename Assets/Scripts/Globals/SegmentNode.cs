@@ -1,14 +1,10 @@
 using System.Collections.Generic;
-using System.Net;
-using System.Threading.Tasks;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class SegmentNode : MonoBehaviour
 {
     private Quaternion rotation = Quaternion.identity;
-    private List<GameObject> platforms;
+    [SerializeField] private List<Platform> platforms;
     private GameObject forwardTrigger;
     private GameObject backwardTrigger;
     private GameObject levelPrefab;
@@ -28,7 +24,7 @@ public class SegmentNode : MonoBehaviour
     }
     public Vector3 getEnd() { return pipeEnd.position; }
     public Quaternion getRotation() { return rotation; }
-    public Quaternion exitAngle() 
+    public Quaternion exitAngle()
     {
         Vector3 directionToTarget = pipeEnd.position - orientationPoint.position;
 
@@ -36,7 +32,7 @@ public class SegmentNode : MonoBehaviour
     }
     public void findPlatforms()
     {
-        //TODO search for  things marked as platforms
+        //TODO search for things marked as platforms
     }
 
     public void findTriggers()
@@ -45,7 +41,7 @@ public class SegmentNode : MonoBehaviour
         backwardTrigger = GameObject.Find("Backward Trigger");
     }
 
-    public List<GameObject> getPlatforms() { return platforms; }
+    public List<Platform> getPlatforms() { return platforms; }
 
     public void loadSection(Vector3 lastEnd, Quaternion lastRotation)
     {
@@ -57,7 +53,8 @@ public class SegmentNode : MonoBehaviour
         {
             levelSection.transform.position = lastEnd;
             levelSection.transform.rotation = lastRotation;
-        } else
+        }
+        else
         {
             levelSection = Instantiate(levelPrefab, lastEnd, lastRotation);
         }
