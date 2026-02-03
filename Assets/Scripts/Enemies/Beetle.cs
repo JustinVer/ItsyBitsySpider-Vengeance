@@ -17,7 +17,7 @@ public class Beetle : EnemyBase, IFireAnimation
     [SerializeField] private float maxDegreesRotationNormal = 90f;
     [SerializeField] private float maxDegreesRotationJump = 90f;
     Rigidbody rb;
-    [SerializeField] private GameObject[] platforms;
+    [SerializeField] private Platform[] platforms;
     [SerializeField] private float detectionWidth = 2f;
     [SerializeField] private int numDetectionCasts = 11;
     [SerializeField] private float fireVelocityDistanceMultiplier = 0.5f;
@@ -138,19 +138,19 @@ public class Beetle : EnemyBase, IFireAnimation
 
     private Vector3 getNewPlatformPosition()
     {
-        MaxHeap<GameObject> maxHeap = new MaxHeap<GameObject>(platforms, x => platformHeuristic(x));
+        MaxHeap<Platform> maxHeap = new MaxHeap<Platform>(platforms, x => platformHeuristic(x));
 
-        GameObject currentPlatform = null;
+        Platform currentPlatform = null;
         Debug.Log("beetle before while loop");
         while (maxHeap.Count > 0)
         {
             currentPlatform = maxHeap.Pull();
             Debug.Log("Beetle before obstacle check");
             NavMeshHit hit;
-            if (NavMesh.SamplePosition(currentPlatform.transform.position - GameplayManager.Instance.GetGravity(currentPlatform.transform.position).normalized * 2, out hit, 5.0f, NavMesh.AllAreas))
+            if (NavMesh.SamplePosition(currentPlatform.PlatformObject.transform.position - GameplayManager.Instance.GetGravity(currentPlatform.PlatformObject.transform.position).normalized * 2, out hit, 5.0f, NavMesh.AllAreas))
             {
                 Vector3 platformPosition = hit.position;
-                if (!obstaclesInJump(this.transform.position, platformPosition, 3f, 2f, currentPlatform))
+                if (!obstaclesInJump(this.transform.position, platformPosition, 3f, 2f, currentPlatform.PlatformObject))
                 {
                     Debug.Log("Beetle found platform");
                     return platformPosition;
@@ -162,11 +162,11 @@ public class Beetle : EnemyBase, IFireAnimation
         return this.transform.position;
     }
 
-    private float platformHeuristic(GameObject platform)
+    private float platformHeuristic(Platform platform)
     {
         float heuristic = 0;
 
-        heuristic += (Vector3.Distance(this.transform.position, platform.transform.position) - 5f);
+        heuristic += (Vector3.Distance(this.transform.position, platform.PlatformObject.transform.position) - 5f);
         heuristic += Random.Range(-10, 10);
 
         return heuristic;

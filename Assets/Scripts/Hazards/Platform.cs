@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class Platform : MonoBehaviour
 {
-    List<Transform> availPoints = new List<Transform>();
+    [SerializeField] private GameObject platformObject;
+    [SerializeField] public GameObject PlatformObject { get { return platformObject; } }
+    [SerializeField] List<Transform> availPoints = new List<Transform>();
     List<Transform> takenPoints = new List<Transform>();
 
     public Transform getPlatformPoint()
