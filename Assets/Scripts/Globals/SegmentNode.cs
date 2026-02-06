@@ -42,8 +42,8 @@ public class SegmentNode : MonoBehaviour
 
     public void findTriggers()
     {
-        forwardTrigger = GameObject.Find("Forward Trigger");
-        backwardTrigger = GameObject.Find("Backward Trigger");
+        //forwardTrigger = GameObject.Find("Forward Trigger");
+        //backwardTrigger = GameObject.Find("Backward Trigger");
     }
 
     public List<Platform> getPlatforms() { return platforms; }

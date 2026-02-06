@@ -1,4 +1,6 @@
+using NUnit.Framework;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -18,6 +20,8 @@ public class Beetle : EnemyBase, IFireAnimation
     [SerializeField] private float maxDegreesRotationJump = 90f;
     Rigidbody rb;
     [SerializeField] private Platform[] platforms;
+    private Platform currentPlatformScript = null;
+    private Transform currentPlatformTransform = null;
     [SerializeField] private float detectionWidth = 2f;
     [SerializeField] private int numDetectionCasts = 11;
     [SerializeField] private float fireVelocityDistanceMultiplier = 0.5f;
@@ -72,6 +76,10 @@ public class Beetle : EnemyBase, IFireAnimation
 
     public override void ReturnSelf()
     {
+        if (currentPlatformScript != null && currentPlatformTransform != null)
+        {
+            currentPlatformScript.returnPlatformPoint(currentPlatformTransform);
+        }
         isFiring = false;
         isJumping = false;
         setHP(data.maxHP);
@@ -93,6 +101,10 @@ public class Beetle : EnemyBase, IFireAnimation
     {
         if (!isDying)
         {
+            if (currentPlatformScript != null && currentPlatformTransform != null)
+            {
+                currentPlatformScript.returnPlatformPoint(currentPlatformTransform);
+            }
             this.gameObject.SetActive(false);
             animator.SetTrigger("Died");
             isDying = true;
@@ -138,6 +150,11 @@ public class Beetle : EnemyBase, IFireAnimation
 
     private Vector3 getNewPlatformPosition()
     {
+        if (currentPlatformScript != null && currentPlatformTransform != null)
+        {
+            currentPlatformScript.returnPlatformPoint(currentPlatformTransform);
+        }
+
         MaxHeap<Platform> maxHeap = new MaxHeap<Platform>(platforms, x => platformHeuristic(x));
 
         Platform currentPlatform = null;
@@ -145,18 +162,35 @@ public class Beetle : EnemyBase, IFireAnimation
         while (maxHeap.Count > 0)
         {
             currentPlatform = maxHeap.Pull();
-            Debug.Log("Beetle before obstacle check");
-            NavMeshHit hit;
-            if (NavMesh.SamplePosition(currentPlatform.PlatformObject.transform.position - GameplayManager.Instance.GetGravity(currentPlatform.PlatformObject.transform.position).normalized * 2, out hit, 5.0f, NavMesh.AllAreas))
+            List<Transform> platformTransforms = new List<Transform>();
+            Transform currentTransform = currentPlatform.getPlatformPoint();
+
+            while (currentTransform != null)
             {
-                Vector3 platformPosition = hit.position;
-                if (!obstaclesInJump(this.transform.position, platformPosition, 3f, 2f, currentPlatform.PlatformObject))
+                Debug.Log("Beetle before obstacle check");
+                NavMeshHit hit;
+                if (NavMesh.SamplePosition(currentTransform.position - GameplayManager.Instance.GetGravity(currentTransform.position).normalized * 2, out hit, 5.0f, NavMesh.AllAreas))
                 {
-                    Debug.Log("Beetle found platform");
-                    return platformPosition;
+                    Vector3 platformPosition = hit.position;
+                    if (!obstaclesInJump(this.transform.position, platformPosition, 3f, 2f, currentPlatform.PlatformObject))
+                    {
+                        Debug.Log("Beetle found platform");
+                        foreach (Transform t in platformTransforms)
+                        {
+                            currentPlatform.returnPlatformPoint(t);
+                        }
+                        return platformPosition;
+                    }
                 }
+
+                platformTransforms.Add(currentTransform);
+                currentTransform = currentPlatform.getPlatformPoint();
             }
 
+            foreach (Transform t in platformTransforms)
+            {
+                currentPlatform.returnPlatformPoint(t);
+            }
 
         }
         return this.transform.position;
