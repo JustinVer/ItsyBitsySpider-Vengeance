@@ -27,9 +27,16 @@ public class LoadingTrigger : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (forward == true)
+        if (other == GameplayManager.Instance.Player)
         {
-            segmentRandomizer.loadForward();
+            if (forward == true)
+            {
+                segmentRandomizer.loadForward();
+            }
+            else if (forward == false)
+            {
+                segmentRandomizer.loadBackward();
+            }
         }
     }
     IEnumerator DelayedAction(float waitTime)

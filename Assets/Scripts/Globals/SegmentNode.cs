@@ -5,8 +5,6 @@ public class SegmentNode : MonoBehaviour
 {
     private Quaternion rotation = Quaternion.identity;
     [SerializeField] private List<Platform> platforms;
-    private GameObject forwardTrigger;
-    private GameObject backwardTrigger;
     private GameObject levelPrefab;
     private GameObject levelSection;
     private Transform pipeEnd;
@@ -22,11 +20,18 @@ public class SegmentNode : MonoBehaviour
         }
 
     }
+    public Vector3 getBeginning() { return transform.position; }
     public Vector3 getEnd() { return pipeEnd.position; }
     public Quaternion getRotation() { return rotation; }
     public Quaternion exitAngle()
     {
         Vector3 directionToTarget = pipeEnd.position - orientationPoint.position;
+
+        return Quaternion.LookRotation(directionToTarget);
+    }
+    public Quaternion entryAngle()
+    {
+        Vector3 directionToTarget = levelSection.transform.position - orientationPoint.position;
 
         return Quaternion.LookRotation(directionToTarget);
     }

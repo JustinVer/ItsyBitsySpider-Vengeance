@@ -57,11 +57,11 @@ public class SegmentRandomizer : MonoBehaviour
             {
                 if (nextCorner == 1)
                 {
-                    endLoad(cornerSegment1, i);
+                    endLoadFront(cornerSegment1, i);
                 }
                 else if (nextCorner == 2)
                 {
-                    endLoad(cornerSegment2, i);
+                    endLoadFront(cornerSegment2, i);
                 }
                 nextUnload = lastLoaded;
                 lastLoaded = i;
@@ -85,11 +85,11 @@ public class SegmentRandomizer : MonoBehaviour
             {
                 if (nextCorner == 1)
                 {
-                    endLoad(cornerSegment2, i);
+                    endLoadBack(cornerSegment2, i);
                 }
                 else if (nextCorner == 2)
                 {
-                    endLoad(cornerSegment1, i);
+                    endLoadBack(cornerSegment1, i);
                 }
                 lastLoaded = nextUnload;
                 nextUnload = i;
@@ -103,7 +103,7 @@ public class SegmentRandomizer : MonoBehaviour
             }
         }
     }
-    private void endLoad(SegmentNode cornerToUse, int segmentIndex)
+    private void endLoadFront(SegmentNode cornerToUse, int segmentIndex)
     {
         cornerToUse.loadSection(area1[segmentIndex - 1].getEnd(), area1[segmentIndex - 1].getRotation());
         area1[segmentIndex].loadSection(cornerToUse.getEnd(), cornerToUse.exitAngle());
@@ -115,9 +115,28 @@ public class SegmentRandomizer : MonoBehaviour
             nextCorner = 1;
         }
     }
+    private void endLoadBack(SegmentNode cornerToUse, int segmentIndex)
+    {
+        cornerToUse.loadSection(area1[segmentIndex - 1].getBeginning(), area1[segmentIndex - 1].getRotation());
+        area1[segmentIndex].loadSection(cornerToUse.getBeginning(), cornerToUse.entryAngle());
+        forwardTrigger.reposition(area1[segmentIndex + segmentsBeforeTurn - 1].getEnd(), area1[segmentIndex + segmentsBeforeTurn - 1].getRotation());
+        unloadBack(nextUnload);
+        nextCorner++;
+        if (nextCorner > 2)
+        {
+            nextCorner = 1;
+        }
+    }
     private void unloadBack(int unloadBefore)
     {
         for (int i = unloadBefore - 1; i >= 0; i -= 1)
+        {
+            area1[i].unloadSection();
+        }
+    }
+    private void unloadForward(int unloadAfter)
+    {
+        for (int i = unloadAfter - 1; i <= area1.Length; i++)
         {
             area1[i].unloadSection();
         }
