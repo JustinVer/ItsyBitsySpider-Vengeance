@@ -40,12 +40,6 @@ public class SegmentNode : MonoBehaviour
         //TODO search for things marked as platforms
     }
 
-    public void findTriggers()
-    {
-        //forwardTrigger = GameObject.Find("Forward Trigger");
-        //backwardTrigger = GameObject.Find("Backward Trigger");
-    }
-
     public List<Platform> getPlatforms() { return platforms; }
 
     public void loadSection(Vector3 lastEnd, Quaternion lastRotation)

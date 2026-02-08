@@ -3,6 +3,11 @@ using UnityEngine;
 public class Puddle : MonoBehaviour
 {
     private bool plugged = false;
+    private bool slowing = false;
+    private void Update()
+    {
+        //TODO: slow thing in player
+    }
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.name == "WebPlug")
@@ -12,12 +17,14 @@ public class Puddle : MonoBehaviour
         }
         else if (other.gameObject == GameplayManager.Instance.Player && !plugged)
         {
-            //TODO: knockback code
+            slowing = true;
         }
     }
-
-    private void coverPuddle()
+    private void OnTriggerExit(Collider other)
     {
-        plugged = true;
+        if (other.gameObject == GameplayManager.Instance.Player && !plugged)
+        {
+            slowing = false;
+        }
     }
 }
