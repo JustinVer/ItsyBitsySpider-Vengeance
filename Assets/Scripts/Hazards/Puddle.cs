@@ -6,7 +6,10 @@ public class Puddle : MonoBehaviour
     private bool slowing = false;
     private void Update()
     {
-        //TODO: slow thing in player
+        if (slowing)
+        {
+            GameplayManager.Instance.PlayerBody.Slow(0.25f);
+        }
     }
     private void OnTriggerEnter(Collider other)
     {
