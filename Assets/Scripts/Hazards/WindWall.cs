@@ -1,4 +1,3 @@
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class WindWall : MonoBehaviour
@@ -16,17 +15,25 @@ public class WindWall : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
+        if (other.gameObject == GameplayManager.Instance.Player && !plugged)
+        {
+            Vector3 launchDirection = bottomPoint - other.transform.position;
+            body.ApplyForce(launchDirection, ForceMode.Impulse);
+        }
+    }
+    private void OnTriggerStay(Collider other)
+    {
         if (other.gameObject.name == "WebPlug")
         {
             plugged = true;
             //TODO: change to plugged model
-        } 
-        else if (other.gameObject == GameplayManager.Instance.Player && !plugged) 
+        }
+        else if (other.gameObject == GameplayManager.Instance.Player && !plugged)
         {
-            Vector3 launchDirection = other.transform.position - bottomPoint;
+            Vector3 launchDirection = bottomPoint - other.transform.position;
             launchDirection = launchDirection.normalized;
             launchDirection = launchDirection * launchForce;
-            body.ApplyForce(launchDirection, ForceMode.Impulse);
+            body.ApplyForce(launchDirection, ForceMode.Force);
         }
     }
 }
