@@ -12,6 +12,7 @@ public class Ant : EnemyBase, IFireAnimation, ICollisionReciever
     private Vector3 grapplePlayerOffset = Vector3.zero;
     private Vector3 startPosition = Vector3.zero;
     private SendFireSignal fireSignal;
+    [SerializeField] private float slowPercentage = 0.5f;
 
     private void OnEnable()
     {
@@ -89,7 +90,7 @@ public class Ant : EnemyBase, IFireAnimation, ICollisionReciever
         yield return new WaitUntil(() => !waitingForGrapple);
         while (isGrapplingPlayer)
         {
-            GameplayManager.Instance.Player.GetComponent<PlayerBody>().Slow(data.damage);
+            GameplayManager.Instance.Player.GetComponent<PlayerBody>().Slow(slowPercentage);
             yield return null;
         }
         RaycastHit hit;
