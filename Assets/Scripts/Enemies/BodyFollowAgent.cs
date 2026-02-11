@@ -11,6 +11,8 @@ public class BodyFollowAgent : MonoBehaviour
     [SerializeField] private float maxDegreesRotation = 1f;
     private bool jumping = false;
     private bool waitingForJump = false;
+    [SerializeField] private Animator anim;
+    public Animator Anim { get { return anim; } }
 
     private void FixedUpdate()
     {
