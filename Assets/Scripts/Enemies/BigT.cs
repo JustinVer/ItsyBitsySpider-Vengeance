@@ -1,13 +1,33 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class BigT : MonoBehaviour
 {
     [SerializeField] private AgentLinkMover agentMover;
     [SerializeField] private BodyFollowAgent bodyFollower;
     private float distanceToPlayer = 999f;
-    private SendFireSignal fireSignal;
     private State currentState = State.Summon;
     private bool trySummoning = false;
+    [SerializeField] private Platform[] platforms;
+    private Platform currentPlatformScript = null;
+    private Transform currentPlatformTransform = null;
+    [SerializeField] private float detectionWidth = 2f;
+    [SerializeField] private int numDetectionCasts = 11;
+    [SerializeField] private float jumpHeight = 4.0f;
+    [SerializeField] private float timeDistanceMultiplier = 0.05f;
+    [SerializeField] private float timeDistanceBase = 0.25f;
+    [SerializeField] private float maxDegreesRotationJump = 90f;
+
+    private SendFireSignal fireSignal;
+    private bool isFiring = false;
+    [SerializeField] private GameObject projectilePrefab;
+    [SerializeField] private float ProjectileVelocity = 10f;
+    [SerializeField] private Transform fireLocation;
+    private bool isDying = false;
+    [SerializeField] private float attackRange = 15f;
+    [SerializeField] private Animator animator;
 
     private enum State
     {
@@ -26,7 +46,6 @@ public class BigT : MonoBehaviour
                 updateSummon();
                 break;
             case State.Jump:
-                updateJump();
                 break;
             case State.Attack:
                 updateAttack();
@@ -59,12 +78,146 @@ public class BigT : MonoBehaviour
         return true;
     }
 
-    private void updateJump()
+    private IEnumerator Jump(Vector3 endPos, float height, float duration)
     {
+        Debug.Log("Start Jump beetle " + endPos + " " + height + " " + duration);
+        currentState = State.Jump;
+        Vector3 startPos = this.transform.position;
+        float normalizedTime = 0.0f;
+        Vector3 gravityDir = -GameplayManager.Instance.GetGravity(Vector3.Lerp(startPos, endPos, 0.5f)).normalized;
+        yield return new WaitForFixedUpdate();
+        while (normalizedTime < 1.0f)
+        {
+            //rotateTowards(endPos, getPlayerProjectionPosition(), -GameplayManager.Instance.GetGravity(endPos), maxDegreesRotationJump);
+            float yOffset = height * 4.0f * (normalizedTime - normalizedTime * normalizedTime);
+            this.transform.position = Vector3.Lerp(startPos, endPos, normalizedTime) + yOffset * gravityDir;
+            Debug.Log("Beetle gravity " + GameplayManager.Instance.GetGravity(this.transform.position).normalized);
+            normalizedTime += Time.deltaTime / duration;
+            yield return new WaitForFixedUpdate();
+        }
+        nextState();
+    }
 
+    private Vector3 getNewPlatformPosition()
+    {
+        if (currentPlatformScript != null && currentPlatformTransform != null)
+        {
+            currentPlatformScript.returnPlatformPoint(currentPlatformTransform);
+        }
+
+        MaxHeap<Platform> maxHeap = new MaxHeap<Platform>(platforms, x => platformHeuristic(x));
+
+        Platform currentPlatform = null;
+        Debug.Log("beetle before while loop");
+        while (maxHeap.Count > 0)
+        {
+            currentPlatform = maxHeap.Pull();
+            List<Transform> platformTransforms = new List<Transform>();
+            Transform currentTransform = currentPlatform.getPlatformPoint();
+
+            while (currentTransform != null)
+            {
+                Debug.Log("Beetle before obstacle check");
+                NavMeshHit hit;
+                if (NavMesh.SamplePosition(currentTransform.position - GameplayManager.Instance.GetGravity(currentTransform.position).normalized * 2, out hit, 5.0f, NavMesh.AllAreas))
+                {
+                    Vector3 platformPosition = hit.position;
+                    if (!obstaclesInJump(this.transform.position, platformPosition, 3f, 2f, currentPlatform.PlatformObject))
+                    {
+                        Debug.Log("Beetle found platform");
+                        foreach (Transform t in platformTransforms)
+                        {
+                            currentPlatform.returnPlatformPoint(t);
+                        }
+                        return platformPosition;
+                    }
+                }
+
+                platformTransforms.Add(currentTransform);
+                currentTransform = currentPlatform.getPlatformPoint();
+            }
+
+            foreach (Transform t in platformTransforms)
+            {
+                currentPlatform.returnPlatformPoint(t);
+            }
+
+        }
+        return this.transform.position;
+    }
+
+    private float platformHeuristic(Platform platform)
+    {
+        float heuristic = 0;
+
+        heuristic += (Vector3.Distance(this.transform.position, platform.PlatformObject.transform.position) - 5f);
+        heuristic += UnityEngine.Random.Range(-10, 10);
+
+        return heuristic;
+    }
+
+    private bool obstaclesInJump(Vector3 startPos, Vector3 endPos, float height, float duration, GameObject platform)
+    {
+        Vector3 gravityDir = -GameplayManager.Instance.GetGravity(Vector3.Lerp(startPos, endPos, 0.5f)).normalized;
+
+        Vector3 halfExtents = new Vector3(1f, 1f, 1f); // match beetle size
+
+        for (int i = 1; i <= numDetectionCasts - 1; i++)
+        {
+            float t = i / (float)numDetectionCasts;
+
+            float yOffset = height * 4.0f * (t - t * t);
+            Debug.Log("Beetle y offset" + yOffset + " " + gravityDir);
+            Vector3 samplePos = Vector3.Lerp(startPos, endPos, t) + yOffset * gravityDir;
+
+            //collision check
+            Collider[] hits = Physics.OverlapBox(samplePos, halfExtents, Quaternion.identity, GameplayManager.Instance.NotPlayerOrEnemyMask);
+
+            if (hits.Length > 0 && hits[0].gameObject != platform)
+            {
+                Debug.Log("Beetle jump blocked by " + hits[0].name);
+                return true;
+            }
+        }
+
+        return false;
     }
 
     private void updateAttack()
+    {
+        if (!isFiring)
+        {
+            if (distanceToPlayer > attackRange * 4)
+            {
+                currentState = State.Jump;
+                //StartCoroutine(Jump());
+            }
+            else if (distanceToPlayer < attackRange && Physics.Linecast(this.transform.position, GameplayManager.Instance.Player.transform.position, GameplayManager.Instance.NotPlayerOrEnemyMask))
+            {
+                Debug.Log("start fire projectile");
+                animator.SetTrigger("Fire1");
+                isFiring = true;
+            }
+        }
+    }
+
+    public void FireProjectile()
+    {
+        if (isDying || currentState == State.Jump) return;
+        GameObject bullet = GameObject.Instantiate(projectilePrefab);
+        bullet.transform.forward = fireLocation.forward;
+        bullet.transform.position = fireLocation.position;
+        Rigidbody rb = bullet.GetComponent<Rigidbody>();
+        rb.linearVelocity = fireLocation.forward * ProjectileVelocity;
+        Debug.Log("fire projectile");
+    }
+
+    public void FireComplete()
+    {
+        isFiring = false;
+    }
+
+    private void nextState()
     {
 
     }
