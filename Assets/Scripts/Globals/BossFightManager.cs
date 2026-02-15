@@ -28,5 +28,8 @@ public class BossFightManager : MonoBehaviour
 
     private float timer = 0.0f;
     private int numEnemies = 0;
+    private Transform[] enemySpawnPositions;
+
+    public Transform[] EnemySpawnPositions { get { return enemySpawnPositions; } }
 
 }

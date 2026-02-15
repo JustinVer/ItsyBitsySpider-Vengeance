@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class BigT : MonoBehaviour
+public class BigT : MonoBehaviour, IFireAnimation
 {
     [SerializeField] private AgentLinkMover agentMover;
     [SerializeField] private BodyFollowAgent bodyFollower;
@@ -19,6 +19,7 @@ public class BigT : MonoBehaviour
     [SerializeField] private float timeDistanceMultiplier = 0.05f;
     [SerializeField] private float timeDistanceBase = 0.25f;
     [SerializeField] private float maxDegreesRotationJump = 90f;
+    [SerializeField] private float distancePastBossJumps = 40f;
 
     private SendFireSignal fireSignal;
     private bool isFiring = false;
@@ -27,7 +28,15 @@ public class BigT : MonoBehaviour
     [SerializeField] private Transform fireLocation;
     private bool isDying = false;
     [SerializeField] private float attackRange = 15f;
+    [SerializeField] private float chaseRange = 25f;
     [SerializeField] private Animator animator;
+
+    [SerializeField] private float minTimeBetweenSummons = 30.0f;
+    [SerializeField] private float timeSinceLastSummon = 0.0f;
+
+    [SerializeField] private int baseNumMinionsPerSummon = 4;
+    [SerializeField] private int numMinionsPerSummonIncrease = 1;
+    [SerializeField] private int randomnessOfMinionsPerSummon = 2;
 
     private enum State
     {
@@ -40,6 +49,7 @@ public class BigT : MonoBehaviour
     private void Update()
     {
         distanceToPlayer = Vector3.Distance(bodyFollower.transform.position, GameplayManager.Instance.Player.transform.position);
+        timeSinceLastSummon += Time.deltaTime;
         switch (currentState)
         {
             case State.Summon:
@@ -59,11 +69,12 @@ public class BigT : MonoBehaviour
         if (trySummoning && canSummon())
         {
             bodyFollower.Anim.SetTrigger("Summon");
+            summonMinions();
             trySummoning = false;
         }
         else if (!trySummoning && !bodyFollower.Anim.GetCurrentAnimatorStateInfo(0).IsName("Summon"))
         {
-            currentState = State.Attack;
+            nextState();
         }
     }
 
@@ -76,6 +87,38 @@ public class BigT : MonoBehaviour
         }
 
         return true;
+    }
+
+    private void summonMinions()
+    {
+        int numMinions = baseNumMinionsPerSummon + (int)((Random.value * randomnessOfMinionsPerSummon) - (int)(randomnessOfMinionsPerSummon * 0.5f));
+        baseNumMinionsPerSummon += numMinionsPerSummonIncrease;
+        List<Transform> spawnTransforms = new List<Transform>(BossFightManager.Instance.EnemySpawnPositions);
+
+        int randSpawnPosition = Random.Range(0, spawnTransforms.Count);
+        //Get enemy prefab from object pool and spawn at this position
+
+
+
+
+
+
+
+
+    }
+
+    private bool startJump()
+    {
+        Vector3 endPosition = getNewPlatformPosition();
+        if (endPosition != this.transform.position)
+        {
+            StartCoroutine(Jump(endPosition, jumpHeight, (Vector3.Distance(this.transform.position, endPosition) * timeDistanceMultiplier) + timeDistanceBase));
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
     private IEnumerator Jump(Vector3 endPos, float height, float duration)
@@ -112,6 +155,10 @@ public class BigT : MonoBehaviour
         while (maxHeap.Count > 0)
         {
             currentPlatform = maxHeap.Pull();
+            if (platformHeuristic(currentPlatform) < 0)
+            {
+                return this.transform.position;
+            }
             List<Transform> platformTransforms = new List<Transform>();
             Transform currentTransform = currentPlatform.getPlatformPoint();
 
@@ -187,10 +234,9 @@ public class BigT : MonoBehaviour
     {
         if (!isFiring)
         {
-            if (distanceToPlayer > attackRange * 4)
+            if (distanceToPlayer >= chaseRange)
             {
-                currentState = State.Jump;
-                //StartCoroutine(Jump());
+                nextState();
             }
             else if (distanceToPlayer < attackRange && Physics.Linecast(this.transform.position, GameplayManager.Instance.Player.transform.position, GameplayManager.Instance.NotPlayerOrEnemyMask))
             {
@@ -219,6 +265,42 @@ public class BigT : MonoBehaviour
 
     private void nextState()
     {
-
+        if (currentState == State.Jump)
+        {
+            if (distanceToPlayer >= distancePastBossJumps)
+            {
+                currentState = State.Summon;
+            }
+            else
+            {
+                currentState = State.Attack;
+            }
+        }
+        else if (currentState == State.Summon)
+        {
+            if (distanceToPlayer >= distancePastBossJumps && startJump())
+            {
+                currentState = State.Jump;
+            }
+            else
+            {
+                currentState = State.Attack;
+            }
+        }
+        else if (currentState == State.Attack)
+        {
+            if (timeSinceLastSummon >= minTimeBetweenSummons)
+            {
+                currentState = State.Summon;
+            }
+            else if (distanceToPlayer >= distancePastBossJumps && startJump())
+            {
+                currentState = State.Jump;
+            }
+            else
+            {
+                currentState = State.Attack;
+            }
+        }
     }
 }
