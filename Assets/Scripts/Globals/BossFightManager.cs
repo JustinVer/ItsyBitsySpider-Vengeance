@@ -29,7 +29,21 @@ public class BossFightManager : MonoBehaviour
     private float timer = 0.0f;
     private int numEnemies = 0;
     private Transform[] enemySpawnPositions;
+    private GameObject[] enemyPrefabs;
 
-    public Transform[] EnemySpawnPositions { get { return enemySpawnPositions; } }
 
+    public void SummonRandomEnemies(int numEnemies)
+    {
+        float spawnChance = numEnemies / (float)enemySpawnPositions.Length;
+        for (int i = 0; i < enemySpawnPositions.Length; i++)
+        {
+            if (enemySpawnPositions.Length - i >= numEnemies || Random.value < spawnChance)
+            {
+                int enemyToSpawn = Random.Range(0, enemyPrefabs.Length);
+
+                Instantiate(enemyPrefabs[enemyToSpawn], enemySpawnPositions[i].position, enemySpawnPositions[i].rotation);
+                numEnemies--;
+            }
+        }
+    }
 }

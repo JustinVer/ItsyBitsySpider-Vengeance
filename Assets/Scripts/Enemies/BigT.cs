@@ -69,7 +69,8 @@ public class BigT : MonoBehaviour, IFireAnimation
         if (trySummoning && canSummon())
         {
             bodyFollower.Anim.SetTrigger("Summon");
-            summonMinions();
+            BossFightManager.Instance.SummonRandomEnemies(baseNumMinionsPerSummon + (int)((Random.value * randomnessOfMinionsPerSummon) - (int)(randomnessOfMinionsPerSummon * 0.5f)));
+            baseNumMinionsPerSummon += numMinionsPerSummonIncrease;
             trySummoning = false;
         }
         else if (!trySummoning && !bodyFollower.Anim.GetCurrentAnimatorStateInfo(0).IsName("Summon"))
@@ -87,24 +88,6 @@ public class BigT : MonoBehaviour, IFireAnimation
         }
 
         return true;
-    }
-
-    private void summonMinions()
-    {
-        int numMinions = baseNumMinionsPerSummon + (int)((Random.value * randomnessOfMinionsPerSummon) - (int)(randomnessOfMinionsPerSummon * 0.5f));
-        baseNumMinionsPerSummon += numMinionsPerSummonIncrease;
-        List<Transform> spawnTransforms = new List<Transform>(BossFightManager.Instance.EnemySpawnPositions);
-
-        int randSpawnPosition = Random.Range(0, spawnTransforms.Count);
-        //Get enemy prefab from object pool and spawn at this position
-
-
-
-
-
-
-
-
     }
 
     private bool startJump()
