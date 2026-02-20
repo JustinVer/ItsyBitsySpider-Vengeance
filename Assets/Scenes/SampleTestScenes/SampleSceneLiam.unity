@@ -676,16 +676,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   segmentsBeforeTurn: 1
   cornerAngle: {x: 0, y: 0.70710677, z: 0, w: 0.70710677}
-  area1: []
-  area2: []
-  area3: []
+  area: []
   segmentPool:
   - {fileID: 8047777929218949312, guid: af7845d9f0de2eb44a6420cf8e210aec, type: 3}
   - {fileID: 2010273967314991345, guid: eca8511538f2b8b439d09b3b2dbe1df0, type: 3}
+  - {fileID: 8047777929218949312, guid: af7845d9f0de2eb44a6420cf8e210aec, type: 3}
   corner: {fileID: 2010273967314991345, guid: eca8511538f2b8b439d09b3b2dbe1df0, type: 3}
-  debugOrder1: 00000000000000000000000000000000000000000000000000000000000000000000000000000000
-  debugOrder2: 
-  debugOrder3: 
+  debugOrder: 00000000020000000100000002000000000000000200000001000000020000000000000002000000010000000200000000000000
   forwardTriggerPrefab: {fileID: 17452995249798997, guid: f8d9512657a46424dbf5a3a3839686e7, type: 3}
   backwardTriggerPrefab: {fileID: 17452995249798997, guid: f8d9512657a46424dbf5a3a3839686e7, type: 3}
 --- !u!4 &1619204026
@@ -839,63 +836,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c2f9b99a7757d1140a82459c71497da8, type: 3}
---- !u!1001 &4919116038320224885
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 3576366191483657438, guid: e20de1da7ac065c4cbaa3b82943c1a34, type: 3}
-      propertyPath: m_Name
-      value: Small Water Puddle
-      objectReference: {fileID: 0}
-    - target: {fileID: 4245239369350891108, guid: e20de1da7ac065c4cbaa3b82943c1a34, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -419.70532
-      objectReference: {fileID: 0}
-    - target: {fileID: 4245239369350891108, guid: e20de1da7ac065c4cbaa3b82943c1a34, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4245239369350891108, guid: e20de1da7ac065c4cbaa3b82943c1a34, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -108.19336
-      objectReference: {fileID: 0}
-    - target: {fileID: 4245239369350891108, guid: e20de1da7ac065c4cbaa3b82943c1a34, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.7071068
-      objectReference: {fileID: 0}
-    - target: {fileID: 4245239369350891108, guid: e20de1da7ac065c4cbaa3b82943c1a34, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0.7071068
-      objectReference: {fileID: 0}
-    - target: {fileID: 4245239369350891108, guid: e20de1da7ac065c4cbaa3b82943c1a34, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4245239369350891108, guid: e20de1da7ac065c4cbaa3b82943c1a34, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4245239369350891108, guid: e20de1da7ac065c4cbaa3b82943c1a34, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4245239369350891108, guid: e20de1da7ac065c4cbaa3b82943c1a34, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4245239369350891108, guid: e20de1da7ac065c4cbaa3b82943c1a34, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: e20de1da7ac065c4cbaa3b82943c1a34, type: 3}
 --- !u!1001 &5655648500474222853
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -969,5 +909,4 @@ SceneRoots:
   - {fileID: 89354938}
   - {fileID: 2522752095860469381}
   - {fileID: 1619204026}
-  - {fileID: 4919116038320224885}
   - {fileID: 3463900395968260186}
