@@ -27,9 +27,8 @@ public class BossFightManager : MonoBehaviour
     #endregion
 
     private float timer = 0.0f;
-    private int numEnemies = 0;
-    private Transform[] enemySpawnPositions;
-    private GameObject[] enemyPrefabs;
+    [SerializeField] private Transform[] enemySpawnPositions;
+    [SerializeField] private GameObject[] enemyPrefabs;
 
 
     public void SummonRandomEnemies(int numEnemies)

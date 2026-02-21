@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class BigT : MonoBehaviour, IFireAnimation
+public class BigT : MonoBehaviour, IFireAnimation, IDamageable
 {
     [SerializeField] private AgentLinkMover agentMover;
     [SerializeField] private BodyFollowAgent bodyFollower;
     private float distanceToPlayer = 999f;
-    private State currentState = State.Summon;
+    private State currentState = State.Attack;
     private bool trySummoning = false;
     [SerializeField] private Platform[] platforms;
     private Platform currentPlatformScript = null;
@@ -38,11 +38,19 @@ public class BigT : MonoBehaviour, IFireAnimation
     [SerializeField] private int numMinionsPerSummonIncrease = 1;
     [SerializeField] private int randomnessOfMinionsPerSummon = 2;
 
+    [SerializeField] private int maxHitPoint = 500;
+    private int currentHP = 500;
+
     private enum State
     {
         Summon,
         Jump,
         Attack
+    }
+
+    private void Awake()
+    {
+        currentHP = maxHitPoint;
     }
 
 
@@ -106,7 +114,6 @@ public class BigT : MonoBehaviour, IFireAnimation
 
     private IEnumerator Jump(Vector3 endPos, float height, float duration)
     {
-        Debug.Log("Start Jump beetle " + endPos + " " + height + " " + duration);
         currentState = State.Jump;
         Vector3 startPos = this.transform.position;
         float normalizedTime = 0.0f;
@@ -117,7 +124,6 @@ public class BigT : MonoBehaviour, IFireAnimation
             //rotateTowards(endPos, getPlayerProjectionPosition(), -GameplayManager.Instance.GetGravity(endPos), maxDegreesRotationJump);
             float yOffset = height * 4.0f * (normalizedTime - normalizedTime * normalizedTime);
             this.transform.position = Vector3.Lerp(startPos, endPos, normalizedTime) + yOffset * gravityDir;
-            Debug.Log("Beetle gravity " + GameplayManager.Instance.GetGravity(this.transform.position).normalized);
             normalizedTime += Time.deltaTime / duration;
             yield return new WaitForFixedUpdate();
         }
@@ -134,7 +140,6 @@ public class BigT : MonoBehaviour, IFireAnimation
         MaxHeap<Platform> maxHeap = new MaxHeap<Platform>(platforms, x => platformHeuristic(x));
 
         Platform currentPlatform = null;
-        Debug.Log("beetle before while loop");
         while (maxHeap.Count > 0)
         {
             currentPlatform = maxHeap.Pull();
@@ -147,14 +152,12 @@ public class BigT : MonoBehaviour, IFireAnimation
 
             while (currentTransform != null)
             {
-                Debug.Log("Beetle before obstacle check");
                 NavMeshHit hit;
                 if (NavMesh.SamplePosition(currentTransform.position - GameplayManager.Instance.GetGravity(currentTransform.position).normalized * 2, out hit, 5.0f, NavMesh.AllAreas))
                 {
                     Vector3 platformPosition = hit.position;
                     if (!obstaclesInJump(this.transform.position, platformPosition, 3f, 2f, currentPlatform.PlatformObject))
                     {
-                        Debug.Log("Beetle found platform");
                         foreach (Transform t in platformTransforms)
                         {
                             currentPlatform.returnPlatformPoint(t);
@@ -197,7 +200,6 @@ public class BigT : MonoBehaviour, IFireAnimation
             float t = i / (float)numDetectionCasts;
 
             float yOffset = height * 4.0f * (t - t * t);
-            Debug.Log("Beetle y offset" + yOffset + " " + gravityDir);
             Vector3 samplePos = Vector3.Lerp(startPos, endPos, t) + yOffset * gravityDir;
 
             //collision check
@@ -205,7 +207,6 @@ public class BigT : MonoBehaviour, IFireAnimation
 
             if (hits.Length > 0 && hits[0].gameObject != platform)
             {
-                Debug.Log("Beetle jump blocked by " + hits[0].name);
                 return true;
             }
         }
@@ -223,7 +224,6 @@ public class BigT : MonoBehaviour, IFireAnimation
             }
             else if (distanceToPlayer < attackRange && Physics.Linecast(this.transform.position, GameplayManager.Instance.Player.transform.position, GameplayManager.Instance.NotPlayerOrEnemyMask))
             {
-                Debug.Log("start fire projectile");
                 animator.SetTrigger("Fire1");
                 isFiring = true;
             }
@@ -238,7 +238,6 @@ public class BigT : MonoBehaviour, IFireAnimation
         bullet.transform.position = fireLocation.position;
         Rigidbody rb = bullet.GetComponent<Rigidbody>();
         rb.linearVelocity = fireLocation.forward * ProjectileVelocity;
-        Debug.Log("fire projectile");
     }
 
     public void FireComplete()
@@ -285,5 +284,29 @@ public class BigT : MonoBehaviour, IFireAnimation
                 currentState = State.Attack;
             }
         }
+    }
+
+    public float getHP()
+    {
+        return currentHP;
+    }
+
+    public void modifyHP(int hpChange)
+    {
+        currentHP = (int)Mathf.Clamp(currentHP + hpChange, 0f, maxHitPoint);
+        if (currentHP <= 1.0f)
+        {
+            Die();
+        }
+    }
+
+    public void setHP(int hp)
+    {
+        currentHP = (int)Mathf.Clamp(hp, 0f, maxHitPoint);
+    }
+
+    private void Die()
+    {
+
     }
 }
