@@ -20,7 +20,7 @@ Material:
   stringTagMap: {}
   disabledShaderPasses:
   - MOTIONVECTORS
-  m_LockedProperties: 
+  m_LockedProperties: _QueueOffset
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
@@ -46,34 +46,35 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Depth: 0
+    - _Depth: -0.18
+    - _DepthStrength: 0.11
     - _Frequency: 1
-    - _Frequency_1: 0
+    - _Frequency_1: 1
     - _Frequency_2: 1
-    - _NormalStrength: 0.475
+    - _NormalStrength: 1
     - _Peak: 1.79
     - _Peak_1: 1
     - _Peak_2: 0.5
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _Smoothness: 0.417
+    - _Smoothness: 0.378
     - _Speed: 4
-    - _Speed_1: 0
-    - _Speed_2: 0.5
-    - _Speed_3: 3.96
+    - _Speed_1: 4
+    - _Speed_2: 1.1
+    - _Speed_3: 3.25
     - _Speed_4: 0.1
-    - _Strength: 0.373
+    - _Strength: 0.049
     - _WaveHeight: 0.5
-    - _WaveHeight_1: 0
+    - _WaveHeight_1: 0.5
     - _WaveHeight_2: 0.2
     m_Colors:
-    - _DeepWaterColour: {r: 0.031372547, g: 0.5941542, b: 1, a: 0.7647059}
-    - _Direction: {r: 0, g: 0, b: 1, a: 0}
-    - _Direction_1: {r: -0.2, g: 0, b: 1, a: 0}
-    - _Direction_2: {r: -0.5, g: 0, b: -0.5, a: 0}
-    - _ShallowWaterColour: {r: 0.031372547, g: 0.74912703, b: 1, a: 0.44705883}
-    - _Tileing: {r: 1, g: 1, b: 0, a: 0}
-    - _Tileing2: {r: 1, g: 1, b: 0, a: 0}
+    - _DeepWaterColour: {r: 0.031372547, g: 0.66641104, b: 1, a: 0.88235295}
+    - _Direction: {r: 0, g: 0, b: 1.1, a: 0}
+    - _Direction_1: {r: -0.3, g: -0.3, b: -0.3, a: 0}
+    - _Direction_2: {r: 0.9, g: 0, b: 0, a: 0}
+    - _ShallowWaterColour: {r: 0.031372547, g: 0.8602153, b: 1, a: 0.78431374}
+    - _Tileing: {r: 10, g: 10, b: 0, a: 0}
+    - _Tileing2: {r: 10, g: 10, b: 0, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
 --- !u!114 &605902680793518293
