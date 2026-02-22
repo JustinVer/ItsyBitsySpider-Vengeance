@@ -20,18 +20,22 @@ public class SegmentNode : MonoBehaviour
         }
 
     }
-    public Vector3 getBeginning() { return transform.position; }
+    public Vector3 getBeginning() { return levelSection.transform.position; }
     public Vector3 getEnd() { return pipeEnd.position; }
     public Quaternion getRotation() { return rotation; }
     public Quaternion exitAngle()
     {
         Vector3 directionToTarget = pipeEnd.position - orientationPoint.position;
+        directionToTarget.z = 0;
+        directionToTarget = directionToTarget.normalized;
 
         return Quaternion.LookRotation(directionToTarget);
     }
     public Quaternion entryAngle()
     {
         Vector3 directionToTarget = levelSection.transform.position - orientationPoint.position;
+        directionToTarget.z = 0;
+        directionToTarget = directionToTarget.normalized;
 
         return Quaternion.LookRotation(directionToTarget);
     }

@@ -1,4 +1,6 @@
 using UnityEngine;
+using UnityEngine.Splines;
+using Unity.Mathematics;
 
 public class SegmentRandomizer : MonoBehaviour
 {
@@ -10,13 +12,14 @@ public class SegmentRandomizer : MonoBehaviour
     // 1 is corner segment
     // actual levels are any larger numbers
     [SerializeField] int[] debugOrder;
-    //SplineContainer container;
-    //Spline gravitySpline;
+    SplineContainer container;
+    Spline gravitySpline;
 
     private int lastLoaded = 0;
     private int nextUnload;
     private int pipeLength = 44;
     private int cornerLength = 28;
+    private int cornerDir = -1;
 
     [SerializeField] private GameObject forwardTriggerPrefab;
     private LoadingTrigger forwardTrigger;
@@ -25,116 +28,70 @@ public class SegmentRandomizer : MonoBehaviour
 
     private void Start()
     {
-        //area = new SegmentNode[debugOrder.Length];
-        //buildSpline();
+        area = new SegmentNode[debugOrder.Length];
+        buildSpline();
 
-        //forwardTrigger = Instantiate(forwardTriggerPrefab).GetComponentInChildren<LoadingTrigger>();
-        //backwardTrigger = Instantiate(backwardTriggerPrefab).GetComponentInChildren<LoadingTrigger>();
+        forwardTrigger = Instantiate(forwardTriggerPrefab).GetComponentInChildren<LoadingTrigger>();
+        backwardTrigger = Instantiate(backwardTriggerPrefab).GetComponentInChildren<LoadingTrigger>();
 
-        ////loading logic
-        //for (int i = 0; i < debugOrder.Length; i++)
-        //{
-        //    area[i] = new SegmentNode(segmentPool[debugOrder[i]]);
-        //}
+        //loading logic
+        for (int i = 0; i < debugOrder.Length; i++)
+        {
+            area[i] = new SegmentNode(segmentPool[debugOrder[i]]);
+        }
 
-        //area[0].loadSection(Vector3.zero, Quaternion.identity);
-        //lastLoaded = 0;
-        //Debug.Log("loading start");
-        //cornerSegment1 = new SegmentNode(corner);
-        //cornerSegment2 = new SegmentNode(corner);
+        area[0].loadSection(Vector3.zero, Quaternion.identity);
+        lastLoaded = 0;
+        Debug.Log("loading start");
 
-        //loadForward();
+        loadForward();
     }
     public void loadForward()
     {
-        //int sectionsToTurn = 0;
+        for (int i = lastLoaded + 1; i < debugOrder.Length; i++)
+        {
+            area[i].loadSection(area[i - 1].getEnd(), area[i - 1].exitAngle());
+            if (debugOrder[i-1] == 1)
+            {
+                nextUnload = lastLoaded-2;
+                lastLoaded = i;
+                unloadBack(nextUnload);
 
-        //for (int i = lastLoaded + 1; i < debugOrder.Length; i++)
-        //{
-        //    if (sectionsToTurn >= segmentsBeforeTurn - 1)
-        //    {
-        //        if (nextCorner == 1)
-        //        {
-        //            endLoadFront(cornerSegment1, i);
-        //        }
-        //        else if (nextCorner == 2)
-        //        {
-        //            endLoadFront(cornerSegment2, i);
-        //        }
-        //        nextUnload = lastLoaded;
-        //        lastLoaded = i;
-        //        break;
-        //    }
-        //    else
-        //    {
-        //        area[i].loadSection(area[i - 1].getEnd(), area[i - 1].getRotation());
-        //        Debug.Log("loading straight");
-        //        sectionsToTurn++;
-        //    }
-        //}
+                forwardTrigger.reposition(area[lastLoaded - 2].getEnd(), area[lastLoaded - 2].exitAngle());
+                backwardTrigger.reposition(area[nextUnload + 2].getBeginning(), area[nextUnload + 2].entryAngle());
+
+                break;
+            }
+        }
     }
     public void loadBackward()
     {
-        //int sectionsToTurn = 0;
+        for (int i = lastLoaded + 1; i < debugOrder.Length; i++)
+        {
+            area[i].loadSection(area[i - 1].getEnd(), area[i - 1].entryAngle());
+            if (debugOrder[i+1] == 1)
+            {
+                lastLoaded = nextUnload+2;
+                nextUnload = i;
+                unloadForward(lastLoaded);
 
-        //for (int i = nextUnload - 1; i > -1; i++)
-        //{
-        //    if (sectionsToTurn >= segmentsBeforeTurn - 1)
-        //    {
-        //        if (nextCorner == 1)
-        //        {
-        //            endLoadBack(cornerSegment2, i);
-        //        }
-        //        else if (nextCorner == 2)
-        //        {
-        //            endLoadBack(cornerSegment1, i);
-        //        }
-        //        lastLoaded = nextUnload;
-        //        nextUnload = i;
-        //        break;
-        //    }
-        //    else
-        //    {
-        //        area[i].loadSection(area[i - 1].getEnd(), area[i - 1].getRotation());
-        //        Debug.Log("loading straight");
-        //        sectionsToTurn++;
-        //    }
-        //}
-    }
-    private void endLoadFront(SegmentNode cornerToUse, int segmentIndex)
-    {
-        //cornerToUse.loadSection(area[segmentIndex - 1].getEnd(), area[segmentIndex - 1].getRotation());
-        //area[segmentIndex].loadSection(cornerToUse.getEnd(), cornerToUse.exitAngle());
-        //forwardTrigger.reposition(area[segmentIndex - 1].getEnd(), area[segmentIndex - 1].getRotation());
-        //unloadBack(nextUnload);
-        //nextCorner++;
-        //if (nextCorner > 2)
-        //{
-        //    nextCorner = 1;
-        //}
-    }
-    private void endLoadBack(SegmentNode cornerToUse, int segmentIndex)
-    {
-        //cornerToUse.loadSection(area[segmentIndex - 1].getBeginning(), area[segmentIndex - 1].getRotation());
-        //area[segmentIndex].loadSection(cornerToUse.getBeginning(), cornerToUse.entryAngle());
-        //forwardTrigger.reposition(area[segmentIndex + segmentsBeforeTurn - 1].getEnd(), area[segmentIndex + segmentsBeforeTurn - 1].getRotation());
-        //unloadBack(nextUnload);
-        //nextCorner++;
-        //if (nextCorner > 2)
-        //{
-        //    nextCorner = 1;
-        //}
+                forwardTrigger.reposition(area[nextUnload - 2].getEnd(), area[lastLoaded - 2].exitAngle());
+                backwardTrigger.reposition(area[nextUnload + 2].getBeginning(), area[nextUnload + 2].entryAngle());
+
+                break;
+            }
+        }
     }
     private void unloadBack(int unloadBefore)
     {
-        for (int i = unloadBefore - 1; i >= 0; i -= 1)
+        for (int i = unloadBefore-1; i >= 0; i -= 1)
         {
             area[i].unloadSection();
         }
     }
     private void unloadForward(int unloadAfter)
     {
-        for (int i = unloadAfter - 1; i <= area.Length; i++)
+        for (int i = unloadAfter+1; i <= area.Length; i += 1)
         {
             area[i].unloadSection();
         }
@@ -142,14 +99,35 @@ public class SegmentRandomizer : MonoBehaviour
 
     private void buildSpline()
     {
-        //container = gameObject.AddComponent<SplineContainer>();
-        //gravitySpline = container.AddSpline();
+        container = gameObject.AddComponent<SplineContainer>();
+        gravitySpline = container.AddSpline();
+        float3 knotPos = Vector3.zero;
 
-        //BezierKnot[] knots = new BezierKnot[]
-        //{
-        //    new BezierKnot(new float3(0f, 0f, 0f)),   // Start point
-        //    new BezierKnot(new float3(5f, 2f, 0f)),   // Middle point
-        //    new BezierKnot(new float3(10f, 0f, 0f))  // End point
-        //};
+        BezierKnot[] knots = new BezierKnot[debugOrder.Length+1];
+        knots[0] = new BezierKnot(knotPos);
+        for(int i = 1; i < knots.Length; i++)
+        {
+            if (debugOrder[i-1] != 1) {
+                if (cornerDir == -1)
+                {
+                    knotPos += new float3(0, 0, pipeLength);
+                } else if (cornerDir == 1)
+                {
+                    knotPos += new float3(pipeLength, 0, 0);
+                }
+            } else {
+                knotPos += new float3(cornerLength, 0, cornerLength);
+                cornerDir *= -1;
+            }
+
+            knots[i] = new BezierKnot(knotPos);
+
+            area[i - 1] = new SegmentNode(segmentPool[debugOrder[i-1]]);
+            Debug.Log(i);
+        }
+        gravitySpline.Knots = knots;
+
+        var allKnotsRange = new SplineRange(0, gravitySpline.Count);
+        gravitySpline.SetTangentMode(allKnotsRange, TangentMode.AutoSmooth);
     }
 }
