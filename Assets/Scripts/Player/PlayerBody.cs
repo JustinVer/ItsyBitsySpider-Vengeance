@@ -95,10 +95,11 @@ public class PlayerBody : MonoBehaviour, IDamageable
         rotateBody();
 
         targetGrapplePoint = getTargetGrapplePoint();
+        
         if (grapple && Vector3.Distance(transform.position, targetGrapplePoint) < minGrappleDist)
         {
             grapple = false;
-            rb.linearVelocity = Vector3.zero;
+            
         }
         if (crash)
         {
@@ -256,7 +257,7 @@ public class PlayerBody : MonoBehaviour, IDamageable
         }
 
         //glide
-        if (glide)
+        if (glide && Vector3.Dot(rb.linearVelocity, gravity) >= 0) //check if moving down
         {
             rb.AddForce(-gravity * glideStrength, ForceMode.Force);
         }
@@ -287,6 +288,8 @@ public class PlayerBody : MonoBehaviour, IDamageable
             rb.linearVelocity = rb.linearVelocity.normalized * velCap;
         }
         currentMaxSpeed = maxSpeed;
+
+
     }
 
     private void rotateBody()
