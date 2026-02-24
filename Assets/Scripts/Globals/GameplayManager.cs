@@ -149,6 +149,10 @@ public class GameplayManager : MonoBehaviour
         return (position - ((Vector3)nearestPoint)).normalized * GRAVITY_STRENGTH;
 
     }
+    public void UpdateGravitySpline(Spline splineToAdd)
+    {
+        gravitySpline.Add(splineToAdd);
+    }
     public Vector3 GetForward(Vector3 position) //TODO fix bugs with this
     {
         float3 nearestPoint;
