@@ -8,7 +8,7 @@ public class TestDamageScript : MonoBehaviour, IDamageable
         return currentHP;
     }
 
-    public void hitEffect(Vector3 position)
+    public void hitEffect(Vector3 position, Vector3 forwardDirection)
     {
         throw new System.NotImplementedException();
     }

@@ -53,7 +53,11 @@ public class BigT : MonoBehaviour, IFireAnimation, IDamageable
     private void Awake()
     {
         currentHP = maxHitPoint;
-        damageParticle.transform.parent = null;
+        if (damageParticle)
+        {
+            damageParticle.transform.parent = null;
+            damageParticle.gameObject.SetActive(true);
+        }
     }
 
 
@@ -313,9 +317,10 @@ public class BigT : MonoBehaviour, IFireAnimation, IDamageable
 
     }
 
-    public void hitEffect(Vector3 position)
+    public void hitEffect(Vector3 position, Vector3 forwardDirection)
     {
         damageParticle.transform.position = position;
+        damageParticle.transform.forward = forwardDirection;
         damageParticle.Play();
     }
 }

@@ -12,7 +12,11 @@ public abstract class EnemyBase : MonoBehaviour, IDamageable, IReturnSelfObject<
     protected virtual void Awake()
     {
         setHP(data.maxHP);
-        damageParticle.transform.parent = null;
+        if (damageParticle)
+        {
+            damageParticle.transform.parent = null;
+            damageParticle.gameObject.SetActive(true);
+        }
     }
 
     protected virtual void Update()
@@ -68,9 +72,10 @@ public abstract class EnemyBase : MonoBehaviour, IDamageable, IReturnSelfObject<
         this.parentPool = parentPool;
     }
 
-    public void hitEffect(Vector3 position)
+    public void hitEffect(Vector3 position, Vector3 forwardDirection)
     {
         damageParticle.transform.position = position;
+        damageParticle.transform.forward = forwardDirection;
         damageParticle.Play();
     }
 }

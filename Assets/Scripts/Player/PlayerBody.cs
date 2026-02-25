@@ -82,7 +82,11 @@ public class PlayerBody : MonoBehaviour, IDamageable
     private void Awake()
     {
         currentHP = maxHP;
-        damageParticle.transform.parent = null;
+        if (damageParticle)
+        {
+            damageParticle.transform.parent = null;
+            damageParticle.gameObject.SetActive(true);
+        }
     }
 
     void Start()
@@ -372,9 +376,10 @@ public class PlayerBody : MonoBehaviour, IDamageable
         }
     }
 
-    public void hitEffect(Vector3 position)
+    public void hitEffect(Vector3 position, Vector3 forwardDirection)
     {
         damageParticle.transform.position = position;
+        damageParticle.transform.forward = forwardDirection;
         damageParticle.Play();
     }
 }

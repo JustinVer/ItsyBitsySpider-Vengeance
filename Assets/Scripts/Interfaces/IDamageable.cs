@@ -6,5 +6,5 @@ public interface IDamageable
     public float getHP();
     public void setHP(int hp);
 
-    public void hitEffect(Vector3 position);
+    public void hitEffect(Vector3 position, Vector3 forwardDirection);
 }

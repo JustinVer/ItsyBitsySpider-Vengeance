@@ -12,9 +12,9 @@ public class PassHitpoints : MonoBehaviour, IDamageable
         return parent.getHP();
     }
 
-    public void hitEffect(Vector3 position)
+    public void hitEffect(Vector3 position, Vector3 forwardDirection)
     {
-        parent.hitEffect(position);
+        parent.hitEffect(position, forwardDirection);
     }
 
     public void modifyHP(int hpChange)
