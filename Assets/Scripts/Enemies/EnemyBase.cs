@@ -7,10 +7,12 @@ public abstract class EnemyBase : MonoBehaviour, IDamageable, IReturnSelfObject<
     protected float currentHP;
     protected bool isDying = false;
     protected ObjectPool<EnemyBase> parentPool;
+    [SerializeField] private ParticleSystem damageParticle;
 
     protected virtual void Awake()
     {
         setHP(data.maxHP);
+        damageParticle.transform.parent = null;
     }
 
     protected virtual void Update()
@@ -66,4 +68,9 @@ public abstract class EnemyBase : MonoBehaviour, IDamageable, IReturnSelfObject<
         this.parentPool = parentPool;
     }
 
+    public void hitEffect(Vector3 position)
+    {
+        damageParticle.transform.position = position;
+        damageParticle.Play();
+    }
 }

@@ -8,6 +8,11 @@ public class TestDamageScript : MonoBehaviour, IDamageable
         return currentHP;
     }
 
+    public void hitEffect(Vector3 position)
+    {
+        throw new System.NotImplementedException();
+    }
+
     public void modifyHP(int hpChange)
     {
         currentHP = currentHP + hpChange;

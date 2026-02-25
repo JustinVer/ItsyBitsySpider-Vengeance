@@ -41,6 +41,8 @@ public class BigT : MonoBehaviour, IFireAnimation, IDamageable
     [SerializeField] private int maxHitPoint = 500;
     private int currentHP = 500;
 
+    [SerializeField] private ParticleSystem damageParticle;
+
     private enum State
     {
         Summon,
@@ -51,6 +53,7 @@ public class BigT : MonoBehaviour, IFireAnimation, IDamageable
     private void Awake()
     {
         currentHP = maxHitPoint;
+        damageParticle.transform.parent = null;
     }
 
 
@@ -308,5 +311,11 @@ public class BigT : MonoBehaviour, IFireAnimation, IDamageable
     private void Die()
     {
 
+    }
+
+    public void hitEffect(Vector3 position)
+    {
+        damageParticle.transform.position = position;
+        damageParticle.Play();
     }
 }

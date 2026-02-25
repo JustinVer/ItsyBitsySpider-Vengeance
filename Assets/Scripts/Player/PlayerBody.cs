@@ -19,6 +19,8 @@ public class PlayerBody : MonoBehaviour, IDamageable
     private float minGrappleDist = 0.5f;
 
     private const float ROTATION_THRESHOLD = 0.2f;
+
+    [SerializeField] private ParticleSystem damageParticle;
     public Vector3 MovementDir
     {
         get { return movementDir; }
@@ -45,7 +47,7 @@ public class PlayerBody : MonoBehaviour, IDamageable
     [SerializeField] private float acceleration = 5f;
     [SerializeField] private float deceleration = 5f;
     [SerializeField] private float maxSpeed = 10f;
- 
+
 
     [SerializeField] private float jumpForce = 100f;
 
@@ -80,6 +82,7 @@ public class PlayerBody : MonoBehaviour, IDamageable
     private void Awake()
     {
         currentHP = maxHP;
+        damageParticle.transform.parent = null;
     }
 
     void Start()
@@ -95,11 +98,11 @@ public class PlayerBody : MonoBehaviour, IDamageable
         rotateBody();
 
         targetGrapplePoint = getTargetGrapplePoint();
-        
+
         if (grapple && Vector3.Distance(transform.position, targetGrapplePoint) < minGrappleDist)
         {
             grapple = false;
-            
+
         }
         if (crash)
         {
@@ -357,7 +360,8 @@ public class PlayerBody : MonoBehaviour, IDamageable
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (crash) { 
+        if (crash)
+        {
             crash = false;
             BreakableWall wall = collision.gameObject.GetComponent<BreakableWall>();
             if (wall != null)
@@ -366,5 +370,11 @@ public class PlayerBody : MonoBehaviour, IDamageable
 
             }
         }
+    }
+
+    public void hitEffect(Vector3 position)
+    {
+        damageParticle.transform.position = position;
+        damageParticle.Play();
     }
 }
