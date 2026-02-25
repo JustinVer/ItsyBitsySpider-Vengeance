@@ -18,6 +18,9 @@ public class Gun : MonoBehaviour
 
     [SerializeField] LayerMask fireMask;
 
+    [SerializeField] private ParticleSystem muzzleFlash1;
+    [SerializeField] private ParticleSystem muzzleFlash2;
+
     Vector3 hitPosition;
 
     // Update is called once per frame
@@ -53,5 +56,7 @@ public class Gun : MonoBehaviour
         newBullet.GetComponent<Rigidbody>().AddForce(muzzle.forward * shotForce, ForceMode.Impulse);
         Debug.Log("bullet forward gun " + muzzle.forward);
         newBullet.transform.forward = muzzle.forward;
+        muzzleFlash1.Play();
+        muzzleFlash2.Play();
     }
 }

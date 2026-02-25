@@ -87,16 +87,19 @@ public class PillBug : EnemyBase, ICollisionReciever
         {
             //TODO Should be a run away thing once fully implemented
             agentMover.SetDestination(awayFromPlayerTarget);
+            animator.SetBool("Moving", true);
         }
         else if (distanceToPlayer < data.detectionDistanceClose || (distanceToPlayer < data.detectionDistanceLineOfSight && Physics.Linecast(bodyFollower.transform.position, GameplayManager.Instance.Player.transform.position, GameplayManager.Instance.NotPlayerOrEnemyMask)))
         {
             agentMover.SetDestination(GameplayManager.Instance.Player.transform.position);
+            animator.SetBool("Moving", true);
         }
         else
         {
             agentMover.agent.velocity = Vector3.zero;
             bodyFollower.RB.linearVelocity = Vector3.zero;
             bodyFollower.RB.angularVelocity = Vector3.zero;
+            animator.SetBool("Moving", false);
         }
     }
 
