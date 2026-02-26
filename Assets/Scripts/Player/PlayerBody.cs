@@ -18,7 +18,7 @@ public class PlayerBody : MonoBehaviour, IDamageable
 
     private float minGrappleDist = 0.5f;
 
-    private const float ROTATION_THRESHOLD = 0.2f;
+    private const float ROTATION_THRESHOLD = 0.5f;
 
     [SerializeField] private ParticleSystem damageParticle;
     public Vector3 MovementDir
@@ -45,7 +45,7 @@ public class PlayerBody : MonoBehaviour, IDamageable
     private float currentHP;
     [SerializeField] private float maxHP = 100f;
     [SerializeField] private float acceleration = 5f;
-    [SerializeField] private float deceleration = 5f;
+    [SerializeField] private float deceleration = 10f;
     [SerializeField] private float maxSpeed = 10f;
 
 
@@ -225,7 +225,7 @@ public class PlayerBody : MonoBehaviour, IDamageable
 
         if (IsGrounded() && rb.linearVelocity.magnitude >= currentMaxSpeed)
         {
-            rb.AddForce(-rb.linearVelocity.normalized * deceleration, ForceMode.Force);
+            rb.AddForce(-rb.linearVelocity * deceleration, ForceMode.Force);
         }
 
         RaycastHit rayHit;

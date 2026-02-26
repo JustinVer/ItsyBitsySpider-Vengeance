@@ -74,8 +74,13 @@ public class LegManager : MonoBehaviour
             l.BodyVelocity = body.linearVelocity;
         }
 
-        bool moving = body.linearVelocity.magnitude > 0.1f;
-        
+        Vector3 planarVel = Vector3.ProjectOnPlane(
+    body.linearVelocity,
+    -player.transform.up
+);
+
+        bool moving = planarVel.sqrMagnitude > 0.25f;
+
 
         if (!moving && wasMoving)
         {
