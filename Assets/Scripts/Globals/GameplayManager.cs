@@ -56,7 +56,8 @@ public class GameplayManager : MonoBehaviour
     [SerializeField] private GameOver gameOver;
     [SerializeField] private GameObject victoryScreen;
     [SerializeField] private PauseMenu pauseMenu;
-    [SerializeField] private HUDController HUD;
+    [SerializeField] private GameObject HUD;
+    private HUDController HUDController;
 
     private bool isLoading = false;
     private string currentLevelName;
@@ -66,8 +67,8 @@ public class GameplayManager : MonoBehaviour
     private void Start()
     {
         saveData = FileHandler.LoadGame();
-        HUD.gameObject.SetActive(true);
-
+        HUD.SetActive(true);
+        HUDController = HUD.GetComponent<HUDController>();
 
     }
 
