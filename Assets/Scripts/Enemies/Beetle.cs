@@ -136,8 +136,10 @@ public class Beetle : EnemyBase, IFireAnimation
         float normalizedTime = 0.0f;
         Vector3 gravityDir = -GameplayManager.Instance.GetGravity(Vector3.Lerp(startPos, endPos, 0.5f)).normalized;
         yield return new WaitForFixedUpdate();
+        animator.SetBool("Jumping", true);
         while (normalizedTime < 1.0f)
         {
+            animator.SetFloat("JumpT", normalizedTime);
             rotateTowards(endPos, getPlayerProjectionPosition(), -GameplayManager.Instance.GetGravity(endPos), maxDegreesRotationJump);
             float yOffset = height * 4.0f * (normalizedTime - normalizedTime * normalizedTime);
             this.transform.position = Vector3.Lerp(startPos, endPos, normalizedTime) + yOffset * gravityDir;
@@ -146,6 +148,7 @@ public class Beetle : EnemyBase, IFireAnimation
             yield return new WaitForFixedUpdate();
         }
         isJumping = false;
+        animator.SetBool("Jumping", false);
     }
 
     private Vector3 getNewPlatformPosition()
