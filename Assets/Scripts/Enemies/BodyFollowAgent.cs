@@ -12,14 +12,15 @@ public class BodyFollowAgent : MonoBehaviour
     private bool jumping = false;
     private bool waitingForJump = false;
     [SerializeField] private Animator anim;
+    [SerializeField] private float downMultiplier = -0.1f;
     public Animator Anim { get { return anim; } }
 
     private void FixedUpdate()
     {
         rb.angularVelocity = Vector3.zero;
         rb.linearVelocity = Vector3.zero;
-        rb.MovePosition(Vector3.MoveTowards(this.transform.position, followBody.transform.position, speed * Time.fixedDeltaTime));
-        rb.MovePosition(this.transform.position + (GameplayManager.Instance.GetGravity(this.transform.position) * Time.fixedDeltaTime));
+        rb.MovePosition(Vector3.MoveTowards(this.transform.position, followBody.transform.position, speed * Time.fixedDeltaTime) + (GameplayManager.Instance.GetGravity(this.transform.position) * Time.fixedDeltaTime * downMultiplier));
+        //rb.MovePosition(this.transform.position + (GameplayManager.Instance.GetGravity(this.transform.position) * Time.fixedDeltaTime * downMultiplier));
         if (jumping)
         {
             rb.MovePosition(followBody.transform.position);
