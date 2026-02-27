@@ -1,4 +1,4 @@
-using System.Threading;
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -6,12 +6,15 @@ using UnityEngine.UI;
 public class HUDController : MonoBehaviour
 {
     [SerializeField] Slider playerHealth, enemiesRemaining;
-    [SerializeField]TMP_Text rainTimer;
+    [SerializeField] TMP_Text rainTimer;
+    [SerializeField] GameObject webIcons;
 
     private int maxNumEnemies = 1;
 
     private bool timerActive = true;
-    private float timeInSeconds = 180f;
+    private float timeInSeconds = 10f;
+
+    private int web;
 
     private void Start()
     {
@@ -44,10 +47,14 @@ public class HUDController : MonoBehaviour
 
         if (timerActive)
         {
+            string displayTime = "3:00";
             timeInSeconds -= Time.deltaTime;
-            int minutes = Mathf.FloorToInt(timeInSeconds / 60);
-            int seconds = Mathf.FloorToInt(timeInSeconds % 60);
-            string displayTime = string.Format("{0:0}:{1:00}", minutes, seconds);
+            if (timeInSeconds <= 0 && timeInSeconds > -1) timeInSeconds -= 1;
+            int minutes = (int)(timeInSeconds / 60);
+            int seconds = (int)(timeInSeconds % 60);
+            if (timeInSeconds >= 0) displayTime = string.Format("{0:0}:{1:00}", Math.Abs(minutes), Math.Abs(seconds));
+            else displayTime = string.Format("-{0:0}:{1:00}", Math.Abs(minutes), Math.Abs(seconds));
+
             rainTimer.SetText(displayTime);
         }
     }
