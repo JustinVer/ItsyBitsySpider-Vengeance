@@ -36,7 +36,7 @@ public class NewSegmentRandomizer : MonoBehaviour
                     }
                     if (i != 0)
                     {
-                        corners[i - 1] = new NewCornerNode(segments[i - 1], segments[i], corner);
+                        corners[i - 1] = new NewCornerNode(segments[i - 1], segments[i], corner, i-1, this);
                     }
                     index++;
                     break;
@@ -48,5 +48,12 @@ public class NewSegmentRandomizer : MonoBehaviour
                 }
             }
         }
+    }
+
+    public void LoadCorners(int index)
+    {
+        if (index > 0) corners[index - 1].LoadCorner();
+        corners[index].LoadCorner();
+        if(index < corners.Length) corners[index + 1].LoadCorner();
     }
 }

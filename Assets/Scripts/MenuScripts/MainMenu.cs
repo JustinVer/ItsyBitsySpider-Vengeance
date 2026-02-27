@@ -18,6 +18,7 @@ public class MainMenu : MonoBehaviour
         }
         //GameManager.Instance.PlayerInput.enabled = false;
     }
+
     public void NewGame()
     {
         MenuManager.Instance.StartNewGame();

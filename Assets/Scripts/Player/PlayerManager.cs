@@ -30,7 +30,6 @@ public class PlayerManager : MonoBehaviour
         {
             body.Crash = !body.Crash;
         }
-       
 
     }
 
