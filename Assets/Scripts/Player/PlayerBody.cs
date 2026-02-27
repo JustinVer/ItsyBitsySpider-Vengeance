@@ -72,6 +72,9 @@ public class PlayerBody : MonoBehaviour, IDamageable
     [SerializeField] private float maxGrappleDist = 50f;
     [SerializeField] private float crashSpeed = 10f;
     [SerializeField] private float crashDuration = 2;
+
+    [SerializeField] private float knockBackHeight = 10f;
+    [SerializeField] private float knockBackStrength = 50f;
     private float currentCrashDuration = 2;
 
     private bool crash = false;
@@ -131,6 +134,7 @@ public class PlayerBody : MonoBehaviour, IDamageable
         {
             crash = false;
         }
+        if (currentHP <= 0) onDeath();
     }
 
     private Vector3 getTargetGrapplePoint()
@@ -393,6 +397,13 @@ public class PlayerBody : MonoBehaviour, IDamageable
     public Vector3 LinearVelocity()
     {
         return rb.linearVelocity;
+    }
+
+    private void onDeath()
+    {
+        currentHP = maxHP;
+        Vector3 knockBackForce = -GameplayManager.Instance.GetForward(transform.position).normalized * knockBackStrength + -gravity*knockBackHeight;
+        rb.AddForce(knockBackForce, ForceMode.VelocityChange);
     }
 
     private void OnCollisionEnter(Collision collision)
