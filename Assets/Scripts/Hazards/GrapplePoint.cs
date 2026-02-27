@@ -3,12 +3,24 @@ using UnityEngine;
 
 public class GrapplePoint : MonoBehaviour
 {
-    public static List<GameObject> VisiblePoints;
+    private static List<GameObject> visiblePoints;
+    public static List<GameObject> VisiblePoints
+    {
+        get
+        {
+            if (visiblePoints == null)
+            {
+                visiblePoints = new List<GameObject>();
+            }
+            return visiblePoints;
+        }
+
+    }
 
     private void Awake()
     {
-        if (VisiblePoints == null) VisiblePoints = new List<GameObject>();
-        VisiblePoints.Add(gameObject);
+        if (visiblePoints == null) visiblePoints = new List<GameObject>();
+        visiblePoints.Add(gameObject);
     }
 
     //private void OnBecameVisible()
