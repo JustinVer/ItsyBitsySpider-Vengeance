@@ -39,6 +39,7 @@ public class GameplayManager : MonoBehaviour
 
     [SerializeField] private const float GRAVITY_STRENGTH = 9.8f;
     [SerializeField] private Spline gravitySpline;
+    public Spline GravitySpline => gravitySpline;
     public GameObject Player => player;
     public PlayerBody PlayerBody => playerBody;
     public PlayerInput PlayerInput => playerInput;

@@ -41,6 +41,7 @@ public class PlayerBody : MonoBehaviour, IDamageable
     }
 
     private Vector3 targetGrapplePoint = Vector3.zero;
+    private Vector3 modGrapplePoint = Vector3.zero;
 
     private float currentHP;
     [SerializeField] private float maxHP = 100f;
@@ -104,6 +105,9 @@ public class PlayerBody : MonoBehaviour, IDamageable
         {
             grapple = false;
         }
+        if (grapple) {
+            updateGrappleDirection();
+        }
         movePlayer();
         rotateBody();
 
@@ -163,6 +167,22 @@ public class PlayerBody : MonoBehaviour, IDamageable
         Debug.DrawLine(transform.position, targetGrapplePoint, Color.green);
 
         return targetGrapplePoint;
+    }
+
+    private void updateGrappleDirection()
+    {
+        float moveAmount = 0.5f;
+        float dist = Vector3.Distance(transform.position, targetGrapplePoint);
+
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, targetGrapplePoint-transform.position, out hit, dist))
+        {
+            modGrapplePoint = modGrapplePoint + -gravity.normalized * moveAmount;
+        }
+        else
+        {
+            modGrapplePoint = targetGrapplePoint;
+        }
     }
 
     public bool IsGrounded()
@@ -286,11 +306,11 @@ public class PlayerBody : MonoBehaviour, IDamageable
         if (grapple)
         {
             float currentSpeed = rb.linearVelocity.magnitude;
-            float dot = Vector3.Dot(rb.linearVelocity, targetGrapplePoint - transform.position);
+            float dot = Vector3.Dot(rb.linearVelocity, modGrapplePoint - transform.position);
 
             rb.linearVelocity = Vector3.zero;
 
-            Vector3 grappleForce = (targetGrapplePoint - transform.position).normalized * ((dot > 0.5) ? Mathf.Max(currentSpeed, grappleStrength) : grappleStrength);
+            Vector3 grappleForce = (modGrapplePoint - transform.position).normalized * ((dot > 0.5) ? Mathf.Max(currentSpeed, grappleStrength) : grappleStrength);
             rb.AddForce(grappleForce, ForceMode.Acceleration);
         }
 
