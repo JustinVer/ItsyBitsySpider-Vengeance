@@ -172,10 +172,10 @@ public class PlayerBody : MonoBehaviour, IDamageable
     private void updateGrappleDirection()
     {
         float moveAmount = 0.5f;
-        float dist = Vector3.Distance(transform.position, targetGrapplePoint);
+        float dist = Vector3.Distance(transform.position, modGrapplePoint);
 
         RaycastHit hit;
-        if (Physics.Raycast(transform.position, targetGrapplePoint-transform.position, out hit, dist))
+        if (Physics.Raycast(transform.position, modGrapplePoint - transform.position, out hit, dist))
         {
             modGrapplePoint = modGrapplePoint + -gravity.normalized * moveAmount;
         }
