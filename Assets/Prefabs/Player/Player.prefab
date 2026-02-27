@@ -312,11 +312,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6bb6d24e3d4e65a48b7f3c8bd8106703, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damageParticle: {fileID: 0}
   maxHP: 100
   acceleration: 7
-  deceleration: 30
+  deceleration: 10
   maxSpeed: 10
-  jumpForce: 12
+  jumpForce: 20
   velCap: 100
   gravityMod: 1
   rideheight: 1.5
@@ -329,6 +330,7 @@ MonoBehaviour:
   cam: {fileID: 4560535321691413841}
   glideStrength: 0.882
   grappleStrength: 950
+  maxGrappleDist: 30
   crashSpeed: 1300
   crashDuration: 0.5
 --- !u!33 &731748397136411037

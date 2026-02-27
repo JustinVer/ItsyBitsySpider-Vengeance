@@ -68,6 +68,7 @@ public class PlayerBody : MonoBehaviour, IDamageable
 
     [SerializeField, Range(0, 1)] private float glideStrength = 0.1f;
     [SerializeField] private float grappleStrength = 10f;
+    [SerializeField] private float maxGrappleDist = 50f;
     [SerializeField] private float crashSpeed = 10f;
     [SerializeField] private float crashDuration = 2;
     private float currentCrashDuration = 2;
@@ -98,10 +99,15 @@ public class PlayerBody : MonoBehaviour, IDamageable
     private void FixedUpdate()
     {
         gravity = GameplayManager.Instance.GetGravity(transform.position);
+        targetGrapplePoint = getTargetGrapplePoint();
+        if (targetGrapplePoint == Vector3.zero)
+        {
+            grapple = false;
+        }
         movePlayer();
         rotateBody();
 
-        targetGrapplePoint = getTargetGrapplePoint();
+        
 
         if (grapple && Vector3.Distance(transform.position, targetGrapplePoint) < minGrappleDist)
         {
@@ -128,11 +134,17 @@ public class PlayerBody : MonoBehaviour, IDamageable
         if (grapple) return this.targetGrapplePoint;
 
         Vector3 targetGrapplePoint = Vector3.zero;
-        float maxDepth = 100;
 
 
         foreach (GameObject go in GrapplePoint.VisiblePoints)
         {
+            
+            if (Vector3.Dot(go.transform.position - transform.position, cam.transform.forward) < 0) continue;
+            if (Vector3.Distance(transform.position, go.transform.position) > maxGrappleDist)
+            {
+                Debug.DrawLine(transform.position, go.transform.position, Color.blue);
+                continue;
+            }
             Debug.DrawLine(transform.position, go.transform.position, Color.red);
             if (targetGrapplePoint == Vector3.zero) targetGrapplePoint = go.transform.position;
 
@@ -143,6 +155,7 @@ public class PlayerBody : MonoBehaviour, IDamageable
 
             float currentDist = Vector3.ProjectOnPlane(camToCurrentPoint, cam.transform.forward).magnitude;
             float nextDist = Vector3.ProjectOnPlane(camToNextPoint, cam.transform.forward).magnitude;
+            
             if (nextDist < currentDist) targetGrapplePoint = go.transform.position;
 
         }
@@ -270,7 +283,7 @@ public class PlayerBody : MonoBehaviour, IDamageable
         }
 
         //grapple
-        if (grapple && targetGrapplePoint != Vector3.zero)
+        if (grapple)
         {
             float currentSpeed = rb.linearVelocity.magnitude;
             float dot = Vector3.Dot(rb.linearVelocity, targetGrapplePoint - transform.position);
