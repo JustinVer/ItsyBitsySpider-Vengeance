@@ -5,26 +5,18 @@ using UnityEngine.UI;
 
 public class HUDController : MonoBehaviour
 {
-    [SerializeField] Slider playerHealth, enemiesRemaining;
+    [SerializeField] Slider playerHealth;
     [SerializeField] TMP_Text rainTimer;
-    [SerializeField] GameObject webIcons;
-
-    private int maxNumEnemies = 1;
+    [SerializeField] GameObject[] webIcons;
 
     private bool timerActive = true;
-    private float timeInSeconds = 10f;
+    [SerializeField] private float timeInSeconds = 180f;
 
     private int web;
 
-    private void Start()
-    {
-        GameplayManager.Instance.onLevelReset += SceneReset;
-    }
     private void OnEnable()
     {
         playerHealth.value = 1;
-        enemiesRemaining.value = 1;
-
         Update();
     }
 
@@ -33,16 +25,6 @@ public class HUDController : MonoBehaviour
         if (GameplayManager.Instance.Player && GameplayManager.Instance.Player.gameObject.activeInHierarchy)
         {
             playerHealth.value = Mathf.Clamp01(GameplayManager.Instance.PlayerBody.getHP() / GameplayManager.Instance.PlayerBody.getMaxHP());
-        }
-
-        if (LevelManager.Instance)
-        {
-            if (maxNumEnemies < LevelManager.Instance.numEnemies)
-            {
-                maxNumEnemies = LevelManager.Instance.numEnemies;
-            }
-            Debug.Log("MAx numbers of enemies: " + LevelManager.Instance.numEnemies + " " + maxNumEnemies);
-            enemiesRemaining.value = (float)LevelManager.Instance.numEnemies / (float)maxNumEnemies;
         }
 
         if (timerActive)
@@ -59,14 +41,12 @@ public class HUDController : MonoBehaviour
         }
     }
 
-    public void SceneReset()
+    public void UpdateWebDisplay(int webNum)
     {
-        maxNumEnemies = 1;
-    }
-
-    private void OnDestroy()
-    {
-        if (GameplayManager.Instance != null)
-            GameplayManager.Instance.onLevelReset -= SceneReset;
+        for (int i = 0; i < webIcons.Length; i++)
+        {
+            if (i < webNum) webIcons[i].SetActive(true);
+            else webIcons[i].SetActive(false);
+        }
     }
 }
