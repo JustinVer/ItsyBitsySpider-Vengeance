@@ -19,7 +19,7 @@ public class BodyFollowAgent : MonoBehaviour
     {
         rb.angularVelocity = Vector3.zero;
         rb.linearVelocity = Vector3.zero;
-        rb.MovePosition(Vector3.MoveTowards(this.transform.position, followBody.transform.position, speed * Time.fixedDeltaTime) + (GameplayManager.Instance.GetGravity(this.transform.position) * Time.fixedDeltaTime * downMultiplier));
+        rb.MovePosition(Vector3.MoveTowards(this.transform.position, followBody.transform.position, speed * Time.fixedDeltaTime));
         //rb.MovePosition(this.transform.position + (GameplayManager.Instance.GetGravity(this.transform.position) * Time.fixedDeltaTime * downMultiplier));
         if (jumping)
         {
