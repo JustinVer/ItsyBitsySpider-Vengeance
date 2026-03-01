@@ -21,15 +21,21 @@ public class LegManager : MonoBehaviour
     private int rStepIdx = 0;
     private int lStepIdx = 0;
 
-    private Rigidbody body;
+   
     private PlayerBody player;
     private bool wasMoving = false;
 
+    private bool grounded;
+    private Vector3 linearVelocity;
+    private Vector3 lastPosition;
+
     private void Awake()
     {
-        body = GetComponentInParent<Rigidbody>();
+        
+        lastPosition = transform.position;
+
+        
         player = GetComponentInParent<PlayerBody>();
-        if (body == null) Debug.Log("Rigidbody not found");
 
         rightLegs = new Leg[rightLegPositions.Length];
         leftLegs = new Leg[leftLegPositions.Length];
@@ -55,29 +61,26 @@ public class LegManager : MonoBehaviour
                 leftLegs[i].stepDuraion = stepDuraion;
             }
         }
-
-        body = GetComponentInParent<Rigidbody>();
-        player = GetComponentInParent<PlayerBody>();
-        if (body == null) Debug.Log("Rigidbody not found");
-
-
     }
 
     private void FixedUpdate()
     {
+
+        linearVelocity = (transform.position - lastPosition) / Time.fixedDeltaTime;
+
+        grounded = player.IsGrounded() ? player.IsGrounded() : true;
+
+
         foreach (Leg l in leftLegs)
         {
-            l.BodyVelocity = body.linearVelocity;
+            l.BodyVelocity = linearVelocity;
         }
         foreach (Leg l in rightLegs)
         {
-            l.BodyVelocity = body.linearVelocity;
+            l.BodyVelocity = linearVelocity;
         }
 
-        Vector3 planarVel = Vector3.ProjectOnPlane(
-    body.linearVelocity,
-    -player.transform.up
-);
+        Vector3 planarVel = Vector3.ProjectOnPlane(linearVelocity, -transform.up);
 
         bool moving = planarVel.sqrMagnitude > 0.25f;
 
@@ -99,7 +102,7 @@ public class LegManager : MonoBehaviour
         
         stepOffsetTimer += Time.fixedDeltaTime;
 
-        if (stepOffsetTimer >= stepOffsetDuration && player.IsGrounded())
+        if (stepOffsetTimer >= stepOffsetDuration && grounded)
         {
             Vector3 footPosition;
             Vector3 targetPosition;
@@ -108,8 +111,7 @@ public class LegManager : MonoBehaviour
                 footPosition = rightLegs[rStepIdx].FootPosition;
                 targetPosition = rightLegs[rStepIdx].TargetPosition;
 
-                Vector3 predictedTarget =
-     targetPosition + body.linearVelocity * stepDuraion;
+                Vector3 predictedTarget = targetPosition + linearVelocity * stepDuraion;
 
                 if (Vector3.Distance(footPosition, predictedTarget) > stepDistance)
                 {
@@ -128,8 +130,7 @@ public class LegManager : MonoBehaviour
                 footPosition = leftLegs[lStepIdx].FootPosition;
                 targetPosition = leftLegs[lStepIdx].TargetPosition;
 
-                Vector3 predictedTarget =
-    targetPosition + body.linearVelocity * stepDuraion;
+                Vector3 predictedTarget = targetPosition + linearVelocity * stepDuraion;
 
                 if (Vector3.Distance(footPosition, predictedTarget) > stepDistance)
                 {
@@ -142,6 +143,8 @@ public class LegManager : MonoBehaviour
                 
             }
         }
-       
+
+        lastPosition = transform.position;
+
     }
 }
