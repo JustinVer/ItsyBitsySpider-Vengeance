@@ -2,6 +2,7 @@ using UnityEngine;
 public class PlayerManager : MonoBehaviour
 {
     private PlayerBody body;
+    public bool InputEnabled = true;
 
     private void Start()
     {
@@ -9,6 +10,12 @@ public class PlayerManager : MonoBehaviour
     }
     void Update()
     {
+        if (!InputEnabled)
+        {
+            body.MovementDir = Vector3.zero;
+            return;
+        }
+
         body.MovementDir = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical")).normalized;
         if (Input.GetButton("Jump"))
         {
@@ -32,6 +39,8 @@ public class PlayerManager : MonoBehaviour
         }
 
     }
+
+    
 
     public Vector3 LinearVelocity()
     {

@@ -46,10 +46,22 @@ public class GameplayManager : MonoBehaviour
 
     [SerializeField] private GameObject player;
     [SerializeField] private PlayerBody playerBody;
+    [SerializeField] private PlayerManager playerManager;
 
     public event Action onLevelReset;
 
     public LayerMask NotPlayerOrEnemyMask;
+
+    [SerializeField] private float countdownTime = 180f;
+
+    [SerializeField] GameObject water;
+    private float waterPosition = 1;
+    [SerializeField] private float waterSpeed;
+    private float waterPercentSpeed;
+    private bool washedOut = false;
+
+    [SerializeField] private float washOutRange;
+    [SerializeField] private float washOutStrength;
 
     #region sceneManagement
     [SerializeField] private LoadScreen loadScreen;
@@ -165,11 +177,49 @@ public class GameplayManager : MonoBehaviour
         return tan;
     }
 
+    private void washOut()
+    {
+        if (!washedOut)
+        {
+            washedOut = true;
+            water.SetActive(true);
+            float length = gravitySpline.GetLength();
+            waterPercentSpeed = waterSpeed / length;
+        }
+        water.transform.position = SplineUtility.EvaluatePosition<Spline>(gravitySpline, waterPosition);
+        waterPosition -= waterPercentSpeed * Time.deltaTime;
+
+        Vector3 waterPoint = water.transform.position - water.transform.right * 10;
+
+        if (Vector3.Distance(waterPoint, playerBody.transform.position) <= washOutRange)
+        {
+            playerManager.InputEnabled = false;
+
+            Vector3 targetPoint = playerBody.transform.position + (waterPoint - playerBody.transform.position) * 10f * Time.deltaTime ;
+
+            if (Vector3.Distance(targetPoint, playerBody.transform.position) > Vector3.Distance(waterPoint, playerBody.transform.position))
+            {
+                targetPoint = waterPoint;
+            }
+
+            playerBody.transform.position = targetPoint;
+        }
+    }
+
     private void Update()
     {
         // Lock the cursor to the center of the screen
         Cursor.lockState = CursorLockMode.Locked;
         // Hide the cursor
         Cursor.visible = false;
+
+        if (!washedOut) countdownTime -= Time.deltaTime;
+    
+        HUDController.TimeInSeconds = countdownTime;
+
+       if (countdownTime < 1)
+        {
+            washOut();
+        }
     }
 }

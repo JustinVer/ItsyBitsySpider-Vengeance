@@ -80,7 +80,7 @@ public class LegManager : MonoBehaviour
             l.BodyVelocity = linearVelocity;
         }
 
-        Vector3 planarVel = Vector3.ProjectOnPlane(linearVelocity, -transform.up);
+        Vector3 planarVel = Vector3.ProjectOnPlane(linearVelocity, down);
 
         bool moving = planarVel.sqrMagnitude > 0.25f;
 

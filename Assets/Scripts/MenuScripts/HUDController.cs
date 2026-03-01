@@ -10,7 +10,16 @@ public class HUDController : MonoBehaviour
     [SerializeField] GameObject[] webIcons;
 
     private bool timerActive = true;
-    [SerializeField] private float timeInSeconds = 180f;
+   
+    private float timeInSeconds = 180f;
+    public float TimeInSeconds
+    {
+        get { return timeInSeconds; }
+        set
+        {
+            timeInSeconds = value;
+        }
+    }
 
     private int web;
 
@@ -30,7 +39,6 @@ public class HUDController : MonoBehaviour
         if (timerActive)
         {
             string displayTime = "3:00";
-            timeInSeconds -= Time.deltaTime;
             if (timeInSeconds <= 0 && timeInSeconds > -1) timeInSeconds -= 1;
             int minutes = (int)(timeInSeconds / 60);
             int seconds = (int)(timeInSeconds % 60);
@@ -49,4 +57,6 @@ public class HUDController : MonoBehaviour
             else webIcons[i].SetActive(false);
         }
     }
+
+    
 }
