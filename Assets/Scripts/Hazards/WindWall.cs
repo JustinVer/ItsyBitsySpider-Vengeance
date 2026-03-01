@@ -30,8 +30,7 @@ public class WindWall : MonoBehaviour
         }
         else if (other.gameObject == GameplayManager.Instance.Player && !plugged)
         {
-            Vector3 launchDirection = bottomPoint - other.transform.position;
-            launchDirection = launchDirection.normalized;
+            Vector3 launchDirection = -GameplayManager.Instance.GetGravity(transform.position).normalized;
             launchDirection = launchDirection * launchForce;
             body.ApplyForce(launchDirection, ForceMode.Force);
         }
