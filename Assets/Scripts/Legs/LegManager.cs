@@ -4,14 +4,17 @@ using UnityEngine;
 public class LegManager : MonoBehaviour
 {
     [SerializeField] private GameObject leg;
-    [SerializeField] private Transform[] rightLegPositions;
     [SerializeField] private Transform[] leftLegPositions;
+    [SerializeField] private Transform[] rightLegPositions;
+
+    [SerializeField] private float rideheight = 1.75f;
+    
 
     [SerializeField] private float stepDistance = 1;
     [SerializeField] private float stepHeight = 0.25f;
-    [SerializeField] private float stepDuraion = 0.5f;
+    [SerializeField] private float stepDuraion = 0.15f;
 
-    [SerializeField] private float stepOffsetDuration = 0.1f;
+    [SerializeField] private float stepOffsetDuration = 0.05f;
     private float stepOffsetTimer = 0;
     private bool rightStep = true;
 
@@ -21,11 +24,9 @@ public class LegManager : MonoBehaviour
     private int rStepIdx = 0;
     private int lStepIdx = 0;
 
-   
-    private PlayerBody player;
     private bool wasMoving = false;
 
-    private bool grounded;
+    private bool grounded = true;
     private Vector3 linearVelocity;
     private Vector3 lastPosition;
 
@@ -33,9 +34,6 @@ public class LegManager : MonoBehaviour
     {
         
         lastPosition = transform.position;
-
-        
-        player = GetComponentInParent<PlayerBody>();
 
         rightLegs = new Leg[rightLegPositions.Length];
         leftLegs = new Leg[leftLegPositions.Length];
@@ -68,7 +66,9 @@ public class LegManager : MonoBehaviour
 
         linearVelocity = (transform.position - lastPosition) / Time.fixedDeltaTime;
 
-        grounded = player.IsGrounded() ? player.IsGrounded() : true;
+        Vector3 down = GameplayManager.Instance.GetGravity(transform.position);
+        RaycastHit hit;
+        grounded = Physics.Raycast(transform.position, down, out hit, rideheight);
 
 
         foreach (Leg l in leftLegs)

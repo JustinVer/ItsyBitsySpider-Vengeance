@@ -5,12 +5,13 @@ using UnityEngine.InputSystem.Controls;
 public class Leg : MonoBehaviour
 {
     [SerializeField] private GameObject root;
+    [SerializeField] private Transform knee;
     [SerializeField] private GameObject foot;
-    [SerializeField] private Transform outPoint;
+    
     [SerializeField] private float legLength;
-    public float stepDistance;
-    public float stepHeight;
-    public float stepDuraion;
+    [HideInInspector] public float stepDistance;
+    [HideInInspector] public float stepHeight;
+    [HideInInspector] public float stepDuraion;
 
     private bool stepping = false;
     private float stepTimer = 0f;
@@ -45,12 +46,12 @@ public class Leg : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Vector3 down = GameplayManager.Instance.GetGravity(outPoint.position).normalized;
+        Vector3 down = GameplayManager.Instance.GetGravity(knee.position).normalized;
 
-        Debug.DrawRay(outPoint.position, down * legLength, Color.red);
+        Debug.DrawRay(knee.position, down * legLength, Color.red);
 
         RaycastHit hit;
-        if (Physics.Raycast(outPoint.position, down, out hit, legLength))
+        if (Physics.Raycast(knee.position, down, out hit, legLength))
         {
             targetPosition = hit.point;
 
@@ -62,7 +63,7 @@ public class Leg : MonoBehaviour
         }
         else
         {
-            targetPosition = outPoint.position + down * legLength;
+            targetPosition = knee.position + down * legLength;
             footPlanted = false;
         }
 

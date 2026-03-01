@@ -27,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 716792526195757876}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.5, y: -0.5, z: 0}
+  m_LocalPosition: {x: -0.5, y: -0.5, z: 0}
   m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -220,8 +220,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   root: {fileID: 2351681780485256469}
+  knee: {fileID: 2511978574038121187}
   foot: {fileID: 716792526195757876}
-  outPoint: {fileID: 2511978574038121187}
   legLength: 2
   stepDistance: 1
   stepHeight: 0.25
@@ -236,7 +236,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2511978574038121187}
   m_Layer: 0
-  m_Name: Out Point
+  m_Name: Knee
   m_TagString: Untagged
   m_Icon: {fileID: 2488908585195742037, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -251,7 +251,7 @@ Transform:
   m_GameObject: {fileID: 8670972736029055324}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.5, y: 0, z: 0}
+  m_LocalPosition: {x: -0.5, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
