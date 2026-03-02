@@ -82,6 +82,10 @@ public class GameplayManager : MonoBehaviour
         HUD.SetActive(true);
         HUDController = HUD.GetComponent<HUDController>();
 
+        // Lock the cursor to the center of the screen
+        Cursor.lockState = CursorLockMode.Locked;
+        // Hide the cursor
+        Cursor.visible = false;
     }
 
     private IEnumerator LoadLevel(string levelName)
@@ -126,6 +130,11 @@ public class GameplayManager : MonoBehaviour
         isLoading = false;
 
         loadScreen.gameObject.SetActive(false);
+
+        // Lock the cursor to the center of the screen
+        Cursor.lockState = CursorLockMode.Locked;
+        // Hide the cursor
+        Cursor.visible = false;
         pauseMenu.CanPause = true;
     }
 
@@ -208,11 +217,6 @@ public class GameplayManager : MonoBehaviour
 
     private void Update()
     {
-        // Lock the cursor to the center of the screen
-        Cursor.lockState = CursorLockMode.Locked;
-        // Hide the cursor
-        Cursor.visible = false;
-
         if (!washedOut) countdownTime -= Time.deltaTime;
     
         HUDController.TimeInSeconds = countdownTime;

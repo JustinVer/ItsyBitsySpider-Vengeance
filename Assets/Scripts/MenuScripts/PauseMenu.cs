@@ -21,7 +21,21 @@ public class PauseMenu : MonoBehaviour
         isPaused = pause;
         pauseCanvas.SetActive(isPaused);
         Time.timeScale = isPaused ? 0f : 1f;
+        LockUnlockCursor(isPaused);
         GameplayManager.Instance.PlayerInput.enabled = !isPaused;
+    }
+
+    private void LockUnlockCursor(bool isPaused)
+    {
+        if (isPaused)
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        } else
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
     }
 
     public void Continue()
@@ -37,7 +51,7 @@ public class PauseMenu : MonoBehaviour
 
     public void SaveGame()
     {
-        //TODO: Find save system in scripts
+        //FileHandler.SaveGame();
     }
 
     public void QuitGame()
