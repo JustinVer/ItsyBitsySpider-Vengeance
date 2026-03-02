@@ -52,7 +52,7 @@ public class PlayerCamera : MonoBehaviour
         targetPosition = target.transform.position + (camRotation * offset);
         Vector3 updatedOffset = camRotation * offset;
         RaycastHit hit;
-        if (Physics.Raycast(target.transform.position, updatedOffset, out hit, updatedOffset.magnitude))
+        if (Physics.Raycast(target.transform.position, updatedOffset, out hit, updatedOffset.magnitude, GameplayManager.Instance.NotPlayerOrEnemyMask))
         {
             if (hit.distance < updatedOffset.magnitude)
             {
