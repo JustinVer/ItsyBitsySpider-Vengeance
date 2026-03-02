@@ -893,17 +893,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6399846864411734124, guid: 0eb41b34e632d13419e1fd4018572fda, type: 3}
   m_PrefabInstance: {fileID: 1657520028}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1657520030 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7783686131909136691, guid: 0eb41b34e632d13419e1fd4018572fda, type: 3}
-  m_PrefabInstance: {fileID: 1657520028}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1657520031 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 9080956781804218236, guid: 0eb41b34e632d13419e1fd4018572fda, type: 3}
@@ -933,8 +922,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerHealth: {fileID: 1657520031}
-  enemiesRemaining: {fileID: 1657520030}
   rainTimer: {fileID: 0}
+  webIcons: []
 --- !u!1001 &1719641961
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -981,19 +970,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6446262707042050114, guid: 16b80fd4e8d46fb4fb00f3477ac95f23, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.7304841
+      value: 0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 6446262707042050114, guid: 16b80fd4e8d46fb4fb00f3477ac95f23, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.00010553139
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6446262707042050114, guid: 16b80fd4e8d46fb4fb00f3477ac95f23, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.68292975
+      value: 0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 6446262707042050114, guid: 16b80fd4e8d46fb4fb00f3477ac95f23, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.000109206405
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6446262707042050114, guid: 16b80fd4e8d46fb4fb00f3477ac95f23, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -1001,11 +990,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6446262707042050114, guid: 16b80fd4e8d46fb4fb00f3477ac95f23, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 86.146
+      value: 90
       objectReference: {fileID: 0}
     - target: {fileID: 6446262707042050114, guid: 16b80fd4e8d46fb4fb00f3477ac95f23, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0.017
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7123016546734318069, guid: 16b80fd4e8d46fb4fb00f3477ac95f23, type: 3}
       propertyPath: m_NavMeshData
@@ -1185,9 +1174,15 @@ MonoBehaviour:
       m_Data: []
   player: {fileID: 1262036163}
   playerBody: {fileID: 222048797}
+  playerManager: {fileID: 0}
   NotPlayerOrEnemyMask:
     serializedVersion: 2
     m_Bits: 63
+  countdownTime: 180
+  water: {fileID: 0}
+  waterSpeed: 0
+  washOutRange: 0
+  washOutStrength: 0
   loadScreen: {fileID: 1548044106}
   gameOver: {fileID: 685914489}
   victoryScreen: {fileID: 689900614}

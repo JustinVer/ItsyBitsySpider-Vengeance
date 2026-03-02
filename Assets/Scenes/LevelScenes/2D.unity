@@ -175,6 +175,46 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 541164881573629809, guid: 9f084e77656a85c49b6c035cf9e353e7, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 541164881573629809, guid: 9f084e77656a85c49b6c035cf9e353e7, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -3.08
+      objectReference: {fileID: 0}
+    - target: {fileID: 541164881573629809, guid: 9f084e77656a85c49b6c035cf9e353e7, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.01
+      objectReference: {fileID: 0}
+    - target: {fileID: 541164881573629809, guid: 9f084e77656a85c49b6c035cf9e353e7, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7323317
+      objectReference: {fileID: 0}
+    - target: {fileID: 541164881573629809, guid: 9f084e77656a85c49b6c035cf9e353e7, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.6809481
+      objectReference: {fileID: 0}
+    - target: {fileID: 541164881573629809, guid: 9f084e77656a85c49b6c035cf9e353e7, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 5.5155867e-12
+      objectReference: {fileID: 0}
+    - target: {fileID: 541164881573629809, guid: 9f084e77656a85c49b6c035cf9e353e7, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.000000037252896
+      objectReference: {fileID: 0}
+    - target: {fileID: 541164881573629809, guid: 9f084e77656a85c49b6c035cf9e353e7, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -85.836
+      objectReference: {fileID: 0}
+    - target: {fileID: 541164881573629809, guid: 9f084e77656a85c49b6c035cf9e353e7, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 541164881573629809, guid: 9f084e77656a85c49b6c035cf9e353e7, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1327253928798030499, guid: 9f084e77656a85c49b6c035cf9e353e7, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -1030,17 +1070,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6399846864411734124, guid: 0eb41b34e632d13419e1fd4018572fda, type: 3}
   m_PrefabInstance: {fileID: 1657520028}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1657520030 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7783686131909136691, guid: 0eb41b34e632d13419e1fd4018572fda, type: 3}
-  m_PrefabInstance: {fileID: 1657520028}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1657520031 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 9080956781804218236, guid: 0eb41b34e632d13419e1fd4018572fda, type: 3}
@@ -1070,8 +1099,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerHealth: {fileID: 1657520031}
-  enemiesRemaining: {fileID: 1657520030}
   rainTimer: {fileID: 0}
+  webIcons: []
 --- !u!1001 &1735520302
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1233,9 +1262,15 @@ MonoBehaviour:
       m_Data: []
   player: {fileID: 1262036163}
   playerBody: {fileID: 222048797}
+  playerManager: {fileID: 0}
   NotPlayerOrEnemyMask:
     serializedVersion: 2
     m_Bits: 63
+  countdownTime: 180
+  water: {fileID: 0}
+  waterSpeed: 0
+  washOutRange: 0
+  washOutStrength: 0
   loadScreen: {fileID: 1548044106}
   gameOver: {fileID: 685914489}
   victoryScreen: {fileID: 689900614}
