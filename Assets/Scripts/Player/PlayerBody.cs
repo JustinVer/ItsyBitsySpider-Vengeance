@@ -40,7 +40,7 @@ public class PlayerBody : MonoBehaviour, IDamageable
         set { grapple = value; }
     }
 
-    private Vector3 targetGrapplePoint = Vector3.zero;
+    [HideInInspector] public Vector3 TargetGrapplePoint = Vector3.zero;
     private Vector3 modGrapplePoint = Vector3.zero;
 
     private float currentHP;
@@ -67,6 +67,11 @@ public class PlayerBody : MonoBehaviour, IDamageable
 
     [SerializeField] private Camera cam;
 
+    [SerializeField] private float maxWebs = 10;
+    
+    private float currentWebs;
+    public float CurrentWebs { get { return currentWebs; } set { currentWebs = value; } }
+
     [SerializeField, Range(0, 1)] private float glideStrength = 0.1f;
     [SerializeField] private float grappleStrength = 10f;
     [SerializeField] private float maxGrappleDist = 50f;
@@ -87,6 +92,7 @@ public class PlayerBody : MonoBehaviour, IDamageable
     private void Awake()
     {
         currentHP = maxHP;
+        currentWebs = maxWebs;
         if (damageParticle)
         {
             damageParticle.transform.parent = null;
@@ -102,9 +108,11 @@ public class PlayerBody : MonoBehaviour, IDamageable
 
     private void FixedUpdate()
     {
+        Debug.Log("Current Webs: " + currentWebs);
+
         gravity = GameplayManager.Instance.GetGravity(transform.position);
-        targetGrapplePoint = getTargetGrapplePoint();
-        if (targetGrapplePoint == Vector3.zero)
+        TargetGrapplePoint = getTargetGrapplePoint();
+        if (TargetGrapplePoint == Vector3.zero)
         {
             grapple = false;
         }
@@ -116,7 +124,7 @@ public class PlayerBody : MonoBehaviour, IDamageable
 
         
 
-        if (grapple && Vector3.Distance(transform.position, targetGrapplePoint) < minGrappleDist)
+        if (grapple && Vector3.Distance(transform.position, TargetGrapplePoint) < minGrappleDist)
         {
             grapple = false;
 
@@ -139,7 +147,7 @@ public class PlayerBody : MonoBehaviour, IDamageable
 
     private Vector3 getTargetGrapplePoint()
     {
-        if (grapple) return this.targetGrapplePoint;
+        if (grapple) return this.TargetGrapplePoint;
 
         Vector3 targetGrapplePoint = Vector3.zero;
 
@@ -185,7 +193,7 @@ public class PlayerBody : MonoBehaviour, IDamageable
         }
         else
         {
-            modGrapplePoint = targetGrapplePoint;
+            modGrapplePoint = TargetGrapplePoint;
         }
     }
 
@@ -340,7 +348,7 @@ public class PlayerBody : MonoBehaviour, IDamageable
     {
         if (grapple)
         {
-            transform.rotation = Quaternion.LookRotation(targetGrapplePoint - transform.position, -gravity);
+            transform.rotation = Quaternion.LookRotation(TargetGrapplePoint - transform.position, -gravity);
         }
         if (crash)
         {

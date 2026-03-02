@@ -21,21 +21,27 @@ public class PlayerManager : MonoBehaviour
         {
             body.Jump();
         }
-        if (Input.GetButton("Glide"))
+        if (Input.GetButton("Glide") && body.CurrentWebs > 0)
         {
             body.Glide = true;
+            body.CurrentWebs -= Time.deltaTime;
         }
         else
         {
             body.Glide = false;
         }
-        if (Input.GetButtonDown("Grapple"))
+        if (Input.GetButtonDown("Grapple") && body.CurrentWebs >= 1)
         {
             body.Grapple = !body.Grapple;
+            body.CurrentWebs -= 1;
         }
-        if (Input.GetButtonDown("Crash"))
+        if (Input.GetButtonDown("Crash") && body.CurrentWebs >= 1)
         {
             body.Crash = !body.Crash;
+            if (body.TargetGrapplePoint != Vector3.zero)
+            {
+                body.CurrentWebs -= 1;
+            }
         }
 
     }

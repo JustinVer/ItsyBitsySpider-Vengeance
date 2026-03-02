@@ -47,9 +47,10 @@ public class HUDController : MonoBehaviour
 
             rainTimer.SetText(displayTime);
         }
+        UpdateWebDisplay(GameplayManager.Instance.PlayerBody.CurrentWebs);
     }
 
-    public void UpdateWebDisplay(int webNum)
+    public void UpdateWebDisplay(float webNum)
     {
         for (int i = 0; i < webIcons.Length; i++)
         {

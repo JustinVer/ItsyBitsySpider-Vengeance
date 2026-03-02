@@ -313,6 +313,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damageParticle: {fileID: 0}
+  TargetGrapplePoint: {x: 0, y: 0, z: 0}
   maxHP: 100
   acceleration: 7
   deceleration: 10
@@ -328,6 +329,7 @@ MonoBehaviour:
   airAngle: 120
   groundAngle: 5
   cam: {fileID: 4560535321691413841}
+  maxWebs: 10
   glideStrength: 0.882
   grappleStrength: 950
   maxGrappleDist: 30
