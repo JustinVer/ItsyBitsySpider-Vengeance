@@ -1,4 +1,3 @@
-using Unity.Mathematics;
 using UnityEngine;
 
 public class LegManager : MonoBehaviour
@@ -8,7 +7,7 @@ public class LegManager : MonoBehaviour
     [SerializeField] private Transform[] rightLegPositions;
 
     [SerializeField] private float rideheight = 1.75f;
-    
+
 
     [SerializeField] private float stepDistance = 1;
     [SerializeField] private float stepHeight = 0.25f;
@@ -18,8 +17,8 @@ public class LegManager : MonoBehaviour
     private float stepOffsetTimer = 0;
     private bool rightStep = true;
 
-    private Leg[] rightLegs;
-    private Leg[] leftLegs;
+    [SerializeField] private Leg[] rightLegs;
+    [SerializeField] private Leg[] leftLegs;
 
     private int rStepIdx = 0;
     private int lStepIdx = 0;
@@ -32,7 +31,7 @@ public class LegManager : MonoBehaviour
 
     private void Awake()
     {
-        
+
         lastPosition = transform.position;
 
         rightLegs = new Leg[rightLegPositions.Length];
@@ -42,7 +41,7 @@ public class LegManager : MonoBehaviour
         {
             if (i < rightLegPositions.Length)
             {
-                rightLegs[i] = Instantiate(leg, transform).GetComponent<Leg>();
+                //rightLegs[i] = Instantiate(leg, transform).GetComponent<Leg>();
                 rightLegs[i].transform.localPosition = rightLegPositions[i].transform.localPosition;
                 rightLegs[i].transform.localRotation = rightLegPositions[i].transform.localRotation;
                 rightLegs[i].stepDistance = stepDistance;
@@ -51,7 +50,7 @@ public class LegManager : MonoBehaviour
             }
             if (i < leftLegPositions.Length)
             {
-                leftLegs[i] = Instantiate(leg, transform).GetComponent<Leg>();
+                //leftLegs[i] = Instantiate(leg, transform).GetComponent<Leg>();
                 leftLegs[i].transform.localPosition = leftLegPositions[i].transform.localPosition;
                 leftLegs[i].transform.localRotation = leftLegPositions[i].transform.localRotation;
                 leftLegs[i].stepDistance = stepDistance;
@@ -95,11 +94,11 @@ public class LegManager : MonoBehaviour
             {
                 l.Step();
             }
-        
+
         }
 
         wasMoving = moving;
-        
+
         stepOffsetTimer += Time.fixedDeltaTime;
 
         if (stepOffsetTimer >= stepOffsetDuration && grounded)
@@ -120,10 +119,10 @@ public class LegManager : MonoBehaviour
                     stepOffsetTimer = 0;
                     rightStep = false;
                 }
-                
-                
-                    
-                
+
+
+
+
             }
             else
             {
@@ -140,7 +139,7 @@ public class LegManager : MonoBehaviour
                     rightStep = true;
 
                 }
-                
+
             }
         }
 
