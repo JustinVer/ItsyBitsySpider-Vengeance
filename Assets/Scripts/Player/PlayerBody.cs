@@ -206,7 +206,7 @@ public class PlayerBody : MonoBehaviour, IDamageable
 
         RaycastHit rayHit;
 
-        return Physics.SphereCast(transform.position, sphereRadius, gravity, out rayHit, castDist);
+        return Physics.SphereCast(transform.position, sphereRadius, gravity, out rayHit, castDist, GameplayManager.Instance.NotPlayerOrEnemyMask);
 
     }
 

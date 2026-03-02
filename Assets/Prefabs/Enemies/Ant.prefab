@@ -354,7 +354,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &4025982305742810253
 Transform:
   m_ObjectHideFlags: 0
@@ -391,6 +391,7 @@ MonoBehaviour:
   agentMover: {fileID: 965495797798000649}
   bodyFollower: {fileID: 439290652462580702}
   slowPercentage: 0.5
+  LegManager: {fileID: 1775080955223522193}
 --- !u!1001 &139687041698735022
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1038,7 +1039,7 @@ MonoBehaviour:
   root: {fileID: 8587505953309852911}
   knee: {fileID: 4246651122479837862}
   foot: {fileID: 5006472941099077313}
-  legLength: 2
+  legLength: 1.5
   stepDistance: 0
   stepHeight: 0
   stepDuraion: 0
@@ -1091,8 +1092,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.850642, y: 0.71961975, z: 0.84000003}
-  m_Center: {x: 0.0043929084, y: 0.43980995, z: 0.78}
+  m_Size: {x: 0.850642, y: 0.8997083, z: 0.8467843}
+  m_Center: {x: 0.0043929084, y: 0.52985424, z: 0.78339213}
 --- !u!54 &2215476134512252190
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1243,10 +1244,10 @@ MonoBehaviour:
   - {fileID: 5468589111158136100}
   - {fileID: 3655233574612177928}
   rideheight: 2
-  stepDistance: 0.1
-  stepHeight: 0.1
-  stepDuraion: 0.1
-  stepOffsetDuration: 0.01
+  stepDistance: 0.06
+  stepHeight: 0.15
+  stepDuraion: 0.14
+  stepOffsetDuration: 0.019
   rightLegs:
   - {fileID: 2367354656022559715}
   - {fileID: 720450221739875138}

@@ -67,7 +67,7 @@ public class LegManager : MonoBehaviour
 
         Vector3 down = GameplayManager.Instance.GetGravity(transform.position);
         RaycastHit hit;
-        grounded = Physics.Raycast(transform.position, down, out hit, rideheight);
+        grounded = Physics.Raycast(transform.position, down, out hit, rideheight, GameplayManager.Instance.NotPlayerOrEnemyMask);
 
 
         foreach (Leg l in leftLegs)
@@ -144,6 +144,11 @@ public class LegManager : MonoBehaviour
         }
 
         lastPosition = transform.position;
+
+    }
+
+    public void pauseLegs(bool enabled)
+    {
 
     }
 }

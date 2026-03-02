@@ -13,6 +13,7 @@ public class Ant : EnemyBase, IFireAnimation, ICollisionReciever
     private Vector3 startPosition = Vector3.zero;
     private SendFireSignal fireSignal;
     [SerializeField] private float slowPercentage = 0.5f;
+    [SerializeField] private LegManager LegManager;
 
     private void OnEnable()
     {
@@ -87,6 +88,7 @@ public class Ant : EnemyBase, IFireAnimation, ICollisionReciever
     private IEnumerator Grapple(float grappleTime, float attackCooldown)
     {
         animator.SetTrigger("Fire1");
+        LegManager.pauseLegs(true);
         isGrapplingPlayer = true;
         waitingForGrapple = true;
         canGrapplePlayer = false;
@@ -98,6 +100,7 @@ public class Ant : EnemyBase, IFireAnimation, ICollisionReciever
             GameplayManager.Instance.Player.GetComponent<PlayerBody>().Slow(slowPercentage);
             yield return null;
         }
+        LegManager.pauseLegs(false);
         RaycastHit hit;
         Physics.Raycast(bodyFollower.transform.position - GameplayManager.Instance.GetGravity(bodyFollower.transform.position).normalized, GameplayManager.Instance.GetGravity(bodyFollower.transform.position), out hit, 80, GameplayManager.Instance.NotPlayerOrEnemyMask, QueryTriggerInteraction.Ignore);
         if (hit.point != null)
