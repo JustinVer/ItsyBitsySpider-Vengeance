@@ -34,8 +34,8 @@ public class LegManager : MonoBehaviour
 
         lastPosition = transform.position;
 
-        rightLegs = new Leg[rightLegPositions.Length];
-        leftLegs = new Leg[leftLegPositions.Length];
+        //rightLegs = new Leg[rightLegPositions.Length];
+        //leftLegs = new Leg[leftLegPositions.Length];
 
         for (int i = 0; i < Mathf.Max(rightLegPositions.Length, leftLegPositions.Length); i++)
         {

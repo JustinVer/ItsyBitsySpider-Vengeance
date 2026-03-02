@@ -354,7 +354,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &4025982305742810253
 Transform:
   m_ObjectHideFlags: 0
@@ -706,6 +706,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 7
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: f381b4cdca56c8c4e8da22bbb3881bb1, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1414427359374990563, guid: f381b4cdca56c8c4e8da22bbb3881bb1, type: 3}
       propertyPath: m_Materials.Array.size
       value: 2
@@ -1034,7 +1038,7 @@ MonoBehaviour:
   root: {fileID: 8587505953309852911}
   knee: {fileID: 4246651122479837862}
   foot: {fileID: 5006472941099077313}
-  legLength: 1.5
+  legLength: 2
   stepDistance: 0
   stepHeight: 0
   stepDuraion: 0
@@ -1238,10 +1242,10 @@ MonoBehaviour:
   - {fileID: 1718812945754129086}
   - {fileID: 5468589111158136100}
   - {fileID: 3655233574612177928}
-  rideheight: 0.8
-  stepDistance: 0.3
-  stepHeight: 0.2
-  stepDuraion: 0.15
+  rideheight: 2
+  stepDistance: 0.1
+  stepHeight: 0.1
+  stepDuraion: 0.1
   stepOffsetDuration: 0.01
   rightLegs:
   - {fileID: 2367354656022559715}
