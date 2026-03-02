@@ -94,6 +94,7 @@ public class Ant : EnemyBase, IFireAnimation, ICollisionReciever
         yield return new WaitUntil(() => !waitingForGrapple);
         while (isGrapplingPlayer)
         {
+            Debug.Log("Ant current grapple");
             GameplayManager.Instance.Player.GetComponent<PlayerBody>().Slow(slowPercentage);
             yield return null;
         }
@@ -139,6 +140,7 @@ public class Ant : EnemyBase, IFireAnimation, ICollisionReciever
     {
         if (canGrapplePlayer && collision.gameObject == GameplayManager.Instance.PlayerBody.gameObject)
         {
+            Debug.Log("Ant start grapple");
             StartCoroutine(Grapple(data.abilityCoolDown, data.attackCoolDown));
         }
     }

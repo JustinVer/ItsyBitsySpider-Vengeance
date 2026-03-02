@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5507417782432013008}
   - component: {fileID: 8781375149231348074}
   - component: {fileID: 2012919778247335326}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: BeetleProjectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -60,7 +60,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 112
-  m_CollisionDetection: 0
+  m_CollisionDetection: 2
 --- !u!114 &2012919778247335326
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -162,6 +162,10 @@ PrefabInstance:
       propertyPath: 'm_Materials.Array.data[1]'
       value: 
       objectReference: {fileID: 2100000, guid: c2a6e2848cd32bd4f9a48b71417df5ea, type: 2}
+    - target: {fileID: -6896115923320363897, guid: 1f3bf9d035d343741b0eb4e51549e884, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: -6891933019060453264, guid: 1f3bf9d035d343741b0eb4e51549e884, type: 3}
       propertyPath: m_Materials.Array.size
       value: 2
@@ -174,6 +178,14 @@ PrefabInstance:
       propertyPath: 'm_Materials.Array.data[1]'
       value: 
       objectReference: {fileID: 2100000, guid: c2a6e2848cd32bd4f9a48b71417df5ea, type: 2}
+    - target: {fileID: -5828604482201625110, guid: 1f3bf9d035d343741b0eb4e51549e884, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -5735155286304982711, guid: 1f3bf9d035d343741b0eb4e51549e884, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: -4547700188334446616, guid: 1f3bf9d035d343741b0eb4e51549e884, type: 3}
       propertyPath: m_Materials.Array.size
       value: 2
@@ -190,6 +202,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Goo Bullet
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 1f3bf9d035d343741b0eb4e51549e884, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1114743186166739481, guid: 1f3bf9d035d343741b0eb4e51549e884, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 1424187783861403486, guid: 1f3bf9d035d343741b0eb4e51549e884, type: 3}
       propertyPath: m_Materials.Array.size
       value: 2
@@ -202,6 +222,14 @@ PrefabInstance:
       propertyPath: 'm_Materials.Array.data[1]'
       value: 
       objectReference: {fileID: 2100000, guid: c2a6e2848cd32bd4f9a48b71417df5ea, type: 2}
+    - target: {fileID: 2509717699793758099, guid: 1f3bf9d035d343741b0eb4e51549e884, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4393896800048209883, guid: 1f3bf9d035d343741b0eb4e51549e884, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 5205108284407782799, guid: 1f3bf9d035d343741b0eb4e51549e884, type: 3}
       propertyPath: m_Materials.Array.size
       value: 2
@@ -226,6 +254,10 @@ PrefabInstance:
       propertyPath: 'm_Materials.Array.data[1]'
       value: 
       objectReference: {fileID: 2100000, guid: c2a6e2848cd32bd4f9a48b71417df5ea, type: 2}
+    - target: {fileID: 8404859555351833579, guid: 1f3bf9d035d343741b0eb4e51549e884, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -257,13 +289,13 @@ CapsuleCollider:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 128
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.26
-  m_Height: 1.28
+  m_Radius: 0.4
+  m_Height: 1.52
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}

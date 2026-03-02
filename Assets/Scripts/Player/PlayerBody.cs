@@ -68,7 +68,7 @@ public class PlayerBody : MonoBehaviour, IDamageable
     [SerializeField] private Camera cam;
 
     [SerializeField] private float maxWebs = 10;
-    
+
     private float currentWebs;
     public float CurrentWebs { get { return currentWebs; } set { currentWebs = value; } }
 
@@ -116,13 +116,14 @@ public class PlayerBody : MonoBehaviour, IDamageable
         {
             grapple = false;
         }
-        if (grapple) {
+        if (grapple)
+        {
             updateGrappleDirection();
         }
         movePlayer();
         rotateBody();
 
-        
+
 
         if (grapple && Vector3.Distance(transform.position, TargetGrapplePoint) < minGrappleDist)
         {
@@ -154,7 +155,7 @@ public class PlayerBody : MonoBehaviour, IDamageable
 
         foreach (GameObject go in GrapplePoint.VisiblePoints)
         {
-            
+
             if (Vector3.Dot(go.transform.position - transform.position, cam.transform.forward) < 0) continue;
             if (Vector3.Distance(transform.position, go.transform.position) > maxGrappleDist)
             {
@@ -171,7 +172,7 @@ public class PlayerBody : MonoBehaviour, IDamageable
 
             float currentDist = Vector3.ProjectOnPlane(camToCurrentPoint, cam.transform.forward).magnitude;
             float nextDist = Vector3.ProjectOnPlane(camToNextPoint, cam.transform.forward).magnitude;
-            
+
             if (nextDist < currentDist) targetGrapplePoint = go.transform.position;
 
         }
@@ -379,6 +380,7 @@ public class PlayerBody : MonoBehaviour, IDamageable
 
     public void Slow(float slowPercent)
     {
+        Debug.Log("Player being slowed " + slowPercent);
         currentMaxSpeed = maxSpeed * slowPercent;
     }
 
@@ -410,7 +412,7 @@ public class PlayerBody : MonoBehaviour, IDamageable
     private void onDeath()
     {
         currentHP = maxHP;
-        Vector3 knockBackForce = -GameplayManager.Instance.GetForward(transform.position).normalized * knockBackStrength + -gravity*knockBackHeight;
+        Vector3 knockBackForce = -GameplayManager.Instance.GetForward(transform.position).normalized * knockBackStrength + -gravity * knockBackHeight;
         rb.AddForce(knockBackForce, ForceMode.VelocityChange);
     }
 
