@@ -38,7 +38,8 @@ public class GameplayManager : MonoBehaviour
     [SerializeField] private PlayerInput playerInput;
 
     [SerializeField] private const float GRAVITY_STRENGTH = 9.8f;
-    [SerializeField] private Spline gravitySpline;
+    [SerializeField] private SplineContainer gravitySplineContainer;
+    private Spline gravitySpline;
     public Spline GravitySpline => gravitySpline;
     public GameObject Player => player;
     public PlayerBody PlayerBody => playerBody;
@@ -154,7 +155,10 @@ public class GameplayManager : MonoBehaviour
 
     }
     #endregion
-
+    private void Awake()
+    {
+        gravitySpline = gravitySplineContainer.Spline;
+    }
     public Vector3 GetGravity(Vector3 position)
     {
         if (gravitySpline.Knots.Count() == 0)
