@@ -1,4 +1,4 @@
-using System;
+using NUnit.Framework;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -201,18 +201,10 @@ public class Beetle : EnemyBase, IFireAnimation
 
     private float platformHeuristic(Platform platform)
     {
-
         float heuristic = 0;
 
-        try
-        {
-            heuristic += (Vector3.Distance(this.transform.position, platform.PlatformObject.transform.position) - 5f);
-            heuristic += UnityEngine.Random.Range(-10, 10);
-        }
-        catch (Exception)
-        {
-
-        }
+        heuristic += (Vector3.Distance(this.transform.position, platform.PlatformObject.transform.position) - 5f);
+        heuristic += Random.Range(-10, 10);
 
         return heuristic;
     }
