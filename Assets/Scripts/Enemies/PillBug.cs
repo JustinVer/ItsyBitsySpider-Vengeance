@@ -75,7 +75,7 @@ public class PillBug : EnemyBase, ICollisionReciever
     {
         if (!isDying)
         {
-            this.gameObject.SetActive(false);
+            GameplayManager.Instance.PlayerBody.CurrentWebs++;
             animator.SetTrigger("Died");
             isDying = true;
         }

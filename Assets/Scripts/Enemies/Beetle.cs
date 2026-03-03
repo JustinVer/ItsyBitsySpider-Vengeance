@@ -105,7 +105,7 @@ public class Beetle : EnemyBase, IFireAnimation
             {
                 currentPlatformScript.returnPlatformPoint(currentPlatformTransform);
             }
-            this.gameObject.SetActive(false);
+            GameplayManager.Instance.PlayerBody.CurrentWebs++;
             animator.SetTrigger("Died");
             isDying = true;
         }

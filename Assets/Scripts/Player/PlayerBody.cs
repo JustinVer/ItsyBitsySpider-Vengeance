@@ -70,7 +70,21 @@ public class PlayerBody : MonoBehaviour, IDamageable
     [SerializeField] private float maxWebs = 10;
 
     private float currentWebs;
-    public float CurrentWebs { get { return currentWebs; } set { currentWebs = value; } }
+    public float CurrentWebs
+    {
+        get { return currentWebs; }
+        set
+        {
+            if (value < maxWebs)
+            {
+                currentWebs = value;
+            }
+            else
+            {
+                currentWebs = maxWebs;
+            }
+        }
+    }
 
     [SerializeField, Range(0, 1)] private float glideStrength = 0.1f;
     [SerializeField] private float grappleStrength = 10f;
