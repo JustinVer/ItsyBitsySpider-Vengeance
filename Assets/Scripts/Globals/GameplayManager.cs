@@ -192,6 +192,7 @@ public class GameplayManager : MonoBehaviour
 
     private void washOut()
     {
+
         if (!washedOut)
         {
             washedOut = true;
@@ -202,13 +203,15 @@ public class GameplayManager : MonoBehaviour
         water.transform.position = SplineUtility.EvaluatePosition<Spline>(gravitySpline, waterPosition);
         waterPosition -= waterPercentSpeed * Time.deltaTime;
 
-        Vector3 waterPoint = water.transform.position - water.transform.right * 10;
+        Vector3 waterPoint = water.transform.position - water.transform.forward * -30;
 
-        if (Vector3.Distance(waterPoint, playerBody.transform.position) <= washOutRange)
+        water.transform.forward = GetForward(water.transform.position);
+
+        if (Vector3.Distance(water.transform.position, playerBody.transform.position) <= washOutRange)
         {
             playerManager.InputEnabled = false;
 
-            Vector3 targetPoint = playerBody.transform.position + (waterPoint - playerBody.transform.position) * 10f * Time.deltaTime ;
+            Vector3 targetPoint = playerBody.transform.position + (waterPoint - playerBody.transform.position) * 10f * Time.deltaTime;
 
             if (Vector3.Distance(targetPoint, playerBody.transform.position) > Vector3.Distance(waterPoint, playerBody.transform.position))
             {
@@ -222,10 +225,10 @@ public class GameplayManager : MonoBehaviour
     private void Update()
     {
         if (!washedOut) countdownTime -= Time.deltaTime;
-    
+
         HUDController.TimeInSeconds = countdownTime;
 
-       if (countdownTime < 1)
+        if (countdownTime < 1)
         {
             washOut();
         }
