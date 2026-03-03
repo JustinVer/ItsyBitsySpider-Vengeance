@@ -13,9 +13,9 @@ public class NewSegmentNode : MonoBehaviour
         thisSegment = levelSegment;
         gravitySpline = thisSegment.GetComponent<SplineContainer>().Splines[0];
     }
-    public void LoadSection()
+    public void LoadSection(Vector3 pos, Vector3 rot)
     {
-        
+
     }
     public void UnloadSection()
     {

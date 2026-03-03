@@ -5,11 +5,10 @@ public class NewCornerNode : MonoBehaviour
     NewSegmentNode[] forwardSegments;
     NewSegmentNode[] backwardSegments;
     GameObject cornerPrefab;
-    GameObject preForwardTrigger;
-    GameObject preBackwardTrigger;
     GameObject forwardTrigger;
     GameObject backwardTrigger;
     GameObject levelSection;
+    private bool active = false;
     private int index;
     private NewSegmentRandomizer randomizer;
 
@@ -29,16 +28,41 @@ public class NewCornerNode : MonoBehaviour
 
     public void LoadCorner()
     {
-        levelSection = Instantiate(cornerPrefab, Vector3.zero, Quaternion.Euler(Vector3.zero));
+        if (!levelSection)
+        {
+            levelSection = Instantiate(cornerPrefab, Vector3.zero, Quaternion.Euler(new Vector3(0, 270 * (index % 2), 180 * (index % 2))));
+        }
+    }
+
+    public void LoadAhead()
+    {
+        //calls LoadSection() from forwardSegments
+        for (int i = 0; i < forwardSegments.Length; i++)
+        {
+            forwardSegments[i].LoadSection(new Vector3(), new Vector3(0, 270 * (index % 2), 0));
+        }
+    }
+
+    public void LoadBehind()
+    {
+        //calls LoadSection() from backwardSegments
     }
 
     public void UnloadBehind()
     {
-
+        //calls UnloadSection() from backwardSegments
     }
 
     public void UnloadAhead()
     {
+        //calls UnloadSection() from forwardSegments
+    }
 
+    public void TriggerCall()
+    {
+        if (!active)
+        {
+            Load();
+        }
     }
 }
