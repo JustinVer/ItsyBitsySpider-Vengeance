@@ -122,7 +122,7 @@ public class PlayerBody : MonoBehaviour, IDamageable
 
     private void FixedUpdate()
     {
-        Debug.Log("Current Webs: " + currentWebs);
+        //Debug.Log("Current Webs: " + currentWebs);
 
         gravity = GameplayManager.Instance.GetGravity(transform.position);
         TargetGrapplePoint = getTargetGrapplePoint();
@@ -243,6 +243,7 @@ public class PlayerBody : MonoBehaviour, IDamageable
         Vector3 camRight = Vector3.Cross(cam.transform.forward, -gravity);
         Vector3 trueForward = Vector3.Cross(-gravity, camRight);
 
+        Debug.Log("Player movement direction 1" + movementDir);
         movementDir = Quaternion.LookRotation(trueForward, -gravity) * movementDir;
 
 
@@ -250,6 +251,7 @@ public class PlayerBody : MonoBehaviour, IDamageable
         {
             //would new speed go above max speed
             Vector3 targetVel = rb.linearVelocity + (MovementDir * acceleration) / rb.mass * Time.fixedDeltaTime;
+            Debug.Log("Player movement direction 2" + movementDir + " target vel " + targetVel);
 
             if (targetVel.magnitude <= currentMaxSpeed)
             {

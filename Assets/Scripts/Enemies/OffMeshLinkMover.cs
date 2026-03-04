@@ -180,7 +180,10 @@ public class AgentLinkMover : MonoBehaviour
 
     private void rotateAroundCylinder()
     {
-        this.transform.rotation = Quaternion.LookRotation(agent.velocity, GameplayManager.Instance.GetGravity(this.transform.position) * -1);
+        if (agent.velocity != Vector3.zero)
+        {
+            this.transform.rotation = Quaternion.LookRotation(agent.velocity, GameplayManager.Instance.GetGravity(this.transform.position) * -1);
+        }
     }
 
     public void StartJump()

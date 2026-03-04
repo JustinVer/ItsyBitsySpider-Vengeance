@@ -66,7 +66,7 @@ public class Beetle : EnemyBase, IFireAnimation
         bullet.transform.position = fireLocation.position;
         Rigidbody rb = bullet.GetComponent<Rigidbody>();
         rb.linearVelocity = fireLocation.forward * ProjectileVelocity;
-        Debug.Log("fire projectile");
+        //Debug.Log("fire projectile");
     }
 
     public void FireComplete()
@@ -91,7 +91,7 @@ public class Beetle : EnemyBase, IFireAnimation
     {
         if (!isFiring && !isJumping && distanceToPlayer < data.attackRange && Physics.Linecast(this.transform.position, GameplayManager.Instance.Player.transform.position, GameplayManager.Instance.NotPlayerOrEnemyMask))
         {
-            Debug.Log("start fire projectile");
+            //Debug.Log("start fire projectile");
             animator.SetTrigger("Fire1");
             isFiring = true;
         }
@@ -115,7 +115,7 @@ public class Beetle : EnemyBase, IFireAnimation
     {
         if (!isDying && !isJumping)
         {
-            Debug.Log("Mpve beetle " + (distanceToPlayer < data.detectionDistanceClose));
+            //Debug.Log("Mpve beetle " + (distanceToPlayer < data.detectionDistanceClose));
             if (distanceToPlayer < data.detectionDistanceClose || (distanceToPlayer < data.detectionDistanceLineOfSight && Physics.Linecast(this.transform.position, GameplayManager.Instance.Player.transform.position, GameplayManager.Instance.NotPlayerOrEnemyMask)))
             {
                 Vector3 endPosition = getNewPlatformPosition();
@@ -130,7 +130,7 @@ public class Beetle : EnemyBase, IFireAnimation
 
     private IEnumerator Jump(Vector3 endPos, float height, float duration)
     {
-        Debug.Log("Start Jump beetle " + endPos + " " + height + " " + duration);
+        //Debug.Log("Start Jump beetle " + endPos + " " + height + " " + duration);
         isJumping = true;
         Vector3 startPos = this.transform.position;
         float normalizedTime = 0.0f;
