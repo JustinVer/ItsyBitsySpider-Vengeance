@@ -44,7 +44,7 @@ public class Gun : MonoBehaviour
         //Debug.DrawRay(ray.origin, ray.direction * 10, Color.yellow, 1f);
         //Debug.DrawLine(this.transform.position, hit.point, Color.red, 1f);
 
-        if (Input.GetMouseButtonDown(0))
+        if (GameplayManager.Instance.Fire)
         {
             Shoot();
         }

@@ -16,12 +16,13 @@ public class PlayerManager : MonoBehaviour
             return;
         }
 
-        body.MovementDir = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical")).normalized;
-        if (Input.GetButton("Jump"))
+        Debug.Log("Player movement raw direction: " + new Vector3(GameplayManager.Instance.MoveVector.x, 0, GameplayManager.Instance.MoveVector.y) + " " + new Vector3(GameplayManager.Instance.MoveVector.x, 0, GameplayManager.Instance.MoveVector.y).normalized);
+        body.MovementDir = new Vector3(GameplayManager.Instance.MoveVector.x, 0, GameplayManager.Instance.MoveVector.y).normalized;
+        if (GameplayManager.Instance.Jump)
         {
             body.Jump();
         }
-        if (Input.GetButton("Glide") && body.CurrentWebs > 0)
+        if (GameplayManager.Instance.Glide && body.CurrentWebs > 0)
         {
             body.Glide = true;
             body.CurrentWebs -= Time.deltaTime;
@@ -30,12 +31,12 @@ public class PlayerManager : MonoBehaviour
         {
             body.Glide = false;
         }
-        if (Input.GetButtonDown("Grapple") && body.CurrentWebs >= 1)
+        if (GameplayManager.Instance.Grapple && body.CurrentWebs >= 1)
         {
             body.Grapple = !body.Grapple;
             body.CurrentWebs -= 1;
         }
-        if (Input.GetButtonDown("Crash") && body.CurrentWebs >= 1)
+        if (GameplayManager.Instance.Dash && body.CurrentWebs >= 1)
         {
             body.Crash = !body.Crash;
             if (body.TargetGrapplePoint != Vector3.zero)
@@ -46,7 +47,7 @@ public class PlayerManager : MonoBehaviour
 
     }
 
-    
+
 
     public Vector3 LinearVelocity()
     {

@@ -201,7 +201,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   antPrefab: {fileID: 7910159633996045360, guid: f106d389d20b59b49ab4436a4e8b1cb1, type: 3}
   pillPrefab: {fileID: 7910159633996045360, guid: b8d33534d6b317444971f5ef7f6bf574, type: 3}
-  beetlePrefab: {fileID: 7910159633996045360, guid: 99fea6dca5d8b834d8214565a8073d5f, type: 3}
+  beetlePrefab: {fileID: 7910159633996045360, guid: a75a8f5ecda46a84c8939945fd0ca1ef, type: 3}
 --- !u!1 &227530998 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2030133482294659950, guid: bb80d1dfda28d79428a7b688aeeec2d4, type: 3}
@@ -1199,6 +1199,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 464a2ce1f75912a43983de627dd0bcf5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!20 &1396476791 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 4560535321691413841, guid: bb80d1dfda28d79428a7b688aeeec2d4, type: 3}
+  m_PrefabInstance: {fileID: 1245046837}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1411307490
 GameObject:
   m_ObjectHideFlags: 0
@@ -1788,6 +1793,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1820838737}
   - component: {fileID: 1820838738}
+  - component: {fileID: 1820838739}
   m_Layer: 0
   m_Name: GameplayManager
   m_TagString: Untagged
@@ -1822,7 +1828,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af6492b0c3bfb71468a7d93bf6a983b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerInput: {fileID: 0}
+  playerInput: {fileID: 1820838739}
   gravitySplineContainer: {fileID: 788806729}
   player: {fileID: 227530998}
   playerBody: {fileID: 227531004}
@@ -1840,6 +1846,36 @@ MonoBehaviour:
   victoryScreen: {fileID: 689900614}
   pauseMenu: {fileID: 1384517688}
   HUD: {fileID: 1657520032}
+--- !u!114 &1820838739
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1820838736}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: -944628639613478452, guid: b96e77804992c2446a82b77a1f3b3d34, type: 3}
+  m_NotificationBehavior: 0
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents: []
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: Player
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 1396476791}
 --- !u!4 &1939203068 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7708445253016019367, guid: 37d84ca7535aa5d469a4c6ffade026b0, type: 3}

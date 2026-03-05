@@ -233,4 +233,70 @@ public class GameplayManager : MonoBehaviour
             washOut();
         }
     }
+
+    #region inputGathering
+
+    private Vector2 moveVector = Vector2.zero;
+    private Vector2 mousePosition = Vector2.zero;
+
+    private bool fire = false;
+    private bool grapple = false;
+    private bool dash = false;
+    private bool plug = false;
+    private bool glide = false;
+    private bool jump = false;
+    private bool escape = false;
+
+    public Vector2 MoveVector { get { return moveVector; } private set { moveVector = value; } }
+    public Vector2 MousePosition { get { return mousePosition; } private set { mousePosition = value; } }
+
+    public bool Fire { get { return fire; } private set { fire = value; } }
+    public bool Grapple { get { return grapple; } private set { grapple = value; } }
+    public bool Dash { get { return dash; } private set { dash = value; } }
+    public bool Plug { get { return plug; } private set { plug = value; } }
+    public bool Glide { get { return glide; } private set { glide = value; } }
+    public bool Jump { get { return jump; } private set { jump = value; } }
+    public bool Escape { get { return escape; } private set { escape = value; } }
+
+    public void OnMove(InputValue value)
+    {
+        moveVector = value.Get<Vector2>();
+    }
+
+    public void OnLook(InputValue value)
+    {
+        mousePosition = value.Get<Vector2>();
+    }
+    public void OnFire(InputValue value)
+    {
+        fire = value.isPressed;
+    }
+
+    public void OnGrapple(InputValue value)
+    {
+        grapple = value.isPressed;
+    }
+
+    public void OnDash(InputValue value)
+    {
+        dash = value.isPressed;
+    }
+    public void OnPlug(InputValue value)
+    {
+        plug = value.isPressed;
+    }
+
+    public void OnJump(InputValue value)
+    {
+        Debug.Log("On Jump " + value.isPressed);
+        jump = value.isPressed;
+    }
+
+    public void OnEscape(InputValue value)
+    {
+        escape = value.isPressed;
+    }
+
+
+    #endregion
 }

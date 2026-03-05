@@ -1,4 +1,3 @@
-using System.Threading;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UI;
@@ -20,7 +19,7 @@ public class PauseMenu : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetButtonDown("Cancel") && CanPause)
+        if (GameplayManager.Instance.Escape && CanPause)
         {
             isPaused = !isPaused;
             PauseGame(isPaused);
@@ -41,7 +40,8 @@ public class PauseMenu : MonoBehaviour
         {
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
-        } else
+        }
+        else
         {
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;

@@ -243,15 +243,15 @@ public class PlayerBody : MonoBehaviour, IDamageable
         Vector3 camRight = Vector3.Cross(cam.transform.forward, -gravity);
         Vector3 trueForward = Vector3.Cross(-gravity, camRight);
 
-        Debug.Log("Player movement direction 1" + movementDir);
-        movementDir = Quaternion.LookRotation(trueForward, -gravity) * movementDir;
+        Debug.Log("Player movement direction 1" + this.movementDir);
+        Vector3 movementDir = Quaternion.LookRotation(trueForward, -gravity) * this.movementDir;
 
 
         if (movementDir != Vector3.zero)
         {
             //would new speed go above max speed
             Vector3 targetVel = rb.linearVelocity + (MovementDir * acceleration) / rb.mass * Time.fixedDeltaTime;
-            Debug.Log("Player movement direction 2" + movementDir + " target vel " + targetVel);
+            Debug.Log("Player movement direction 2" + movementDir + " target vel " + targetVel + " " + rb.linearVelocity);
 
             if (targetVel.magnitude <= currentMaxSpeed)
             {
@@ -271,6 +271,7 @@ public class PlayerBody : MonoBehaviour, IDamageable
                         turnForce = -(rb.linearVelocity - forwardVel) * deceleration;
                     }
                     rb.AddForce(turnForce, ForceMode.Force);
+                    Debug.Log("Player movement direction 2 turn force " + turnForce + " " + (MovementDir * acceleration) + " " + turnForce);
                 }
 
             }
