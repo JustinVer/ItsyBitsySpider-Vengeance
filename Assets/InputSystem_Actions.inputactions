@@ -67,7 +67,7 @@
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "Press(behavior=2)",
-                    "initialStateCheck": false
+                    "initialStateCheck": true
                 },
                 {
                     "name": "Interact",
@@ -634,6 +634,15 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "Escape",
+                    "type": "Button",
+                    "id": "4a6a4370-b152-4bd3-9db3-9fecb1e1f18e",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "Press(behavior=2)",
+                    "initialStateCheck": true
+                },
+                {
                     "name": "Submit",
                     "type": "Button",
                     "id": "7607c7b6-cd76-4816-beef-bd0341cfe950",
@@ -979,6 +988,28 @@
                     "action": "Navigate",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "f668a0d9-3db7-4e54-8771-985c7cc8c052",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "Escape",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f3e49148-2945-434c-a819-8b0c02f4c582",
+                    "path": "<Gamepad>/select",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Gamepad",
+                    "action": "Escape",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 },
                 {
                     "name": "",

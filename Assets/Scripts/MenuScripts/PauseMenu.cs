@@ -15,14 +15,20 @@ public class PauseMenu : MonoBehaviour
     [SerializeField] Slider backgroundMusicVolume;
 
     public bool CanPause = true;
+    private bool hasChanged = false;
     private bool isPaused = false;
 
     private void Update()
     {
-        if (GameplayManager.Instance.Escape && CanPause)
+        if (GameplayManager.Instance.Escape && !hasChanged && CanPause)
         {
+            hasChanged = true;
             isPaused = !isPaused;
             PauseGame(isPaused);
+        }
+        if (!GameplayManager.Instance.Escape)
+        {
+            hasChanged = false;
         }
     }
     private void PauseGame(bool pause)
@@ -31,7 +37,14 @@ public class PauseMenu : MonoBehaviour
         pauseCanvas.SetActive(isPaused);
         Time.timeScale = isPaused ? 0f : 1f;
         LockUnlockCursor(isPaused);
-        GameplayManager.Instance.PlayerInput.enabled = !isPaused;
+        if (isPaused)
+        {
+            GameplayManager.Instance.setInputActionToUI();
+        }
+        else
+        {
+            GameplayManager.Instance.setInputActionToPlayer();
+        }
     }
 
     private void LockUnlockCursor(bool isPaused)

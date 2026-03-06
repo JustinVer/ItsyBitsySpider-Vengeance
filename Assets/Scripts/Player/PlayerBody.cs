@@ -246,6 +246,8 @@ public class PlayerBody : MonoBehaviour, IDamageable
         Debug.Log("Player movement direction 1" + this.movementDir);
         Vector3 movementDir = Quaternion.LookRotation(trueForward, -gravity) * this.movementDir;
 
+        //Debug.DrawLine(transform.position, transform.position + this.movementDir * 2, Color.green);
+        //Debug.DrawLine(transform.position, transform.position + movementDir * 2, Color.red);
 
         if (movementDir != Vector3.zero)
         {
