@@ -10,6 +10,7 @@ public class NewCornerNode : MonoBehaviour
     GameObject levelSection;
     private bool active = false;
     private int index;
+    private Vector3 position;
     private NewSegmentRandomizer randomizer;
 
 
@@ -30,8 +31,18 @@ public class NewCornerNode : MonoBehaviour
     {
         if (!levelSection)
         {
-            levelSection = Instantiate(cornerPrefab, Vector3.zero, Quaternion.Euler(new Vector3(0, 270 * (index % 2), 180 * (index % 2))));
+            levelSection = Instantiate(cornerPrefab, position, Quaternion.Euler(new Vector3(0, 270 * (index % 2), 180 * (index % 2))));
         }
+    }
+
+    public void SetPos(Vector3 newPos)
+    {
+        position = newPos;
+    }
+
+    public Vector3 GetPos()
+    {
+        return position;
     }
 
     public void LoadAhead()

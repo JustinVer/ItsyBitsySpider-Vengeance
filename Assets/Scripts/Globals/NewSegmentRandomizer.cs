@@ -9,6 +9,8 @@ public class NewSegmentRandomizer : MonoBehaviour
     [SerializeField] GameObject corner;
     [SerializeField] GameObject[] segmentPool;
 
+    [SerializeField] private Vector3 currentPoint = new Vector3(0, 0, 0);
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -48,6 +50,15 @@ public class NewSegmentRandomizer : MonoBehaviour
                 }
             }
         }
+    }
+
+    private void StartLoad()
+    {
+        corners[0].LoadCorner();
+        corners[0].LoadAhead();
+        corners[1].LoadCorner();
+        corners[1].LoadAhead();
+        corners[2].LoadCorner();
     }
 
     public void LoadCorners(int index)
