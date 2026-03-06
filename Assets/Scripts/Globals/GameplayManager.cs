@@ -36,6 +36,8 @@ public class GameplayManager : MonoBehaviour
 
     //[SerializeField] private HumanBody player;
     [SerializeField] private PlayerInput playerInput;
+    [SerializeField] private string playerInputName = "Player";
+    [SerializeField] private string UIInputName = "UI";
 
     [SerializeField] private const float GRAVITY_STRENGTH = 9.8f;
     [SerializeField] private SplineContainer gravitySplineContainer;
@@ -43,7 +45,6 @@ public class GameplayManager : MonoBehaviour
     public Spline GravitySpline => gravitySpline;
     public GameObject Player => player;
     public PlayerBody PlayerBody => playerBody;
-    public PlayerInput PlayerInput => playerInput;
 
     [SerializeField] private GameObject player;
     [SerializeField] private PlayerBody playerBody;
@@ -224,6 +225,7 @@ public class GameplayManager : MonoBehaviour
 
     private void Update()
     {
+        Debug.Log("Gameplay manager action maps: " + playerInput.currentActionMap);
         if (!washedOut) countdownTime -= Time.deltaTime;
 
         HUDController.TimeInSeconds = countdownTime;
@@ -232,6 +234,16 @@ public class GameplayManager : MonoBehaviour
         {
             washOut();
         }
+    }
+
+    public void setInputActionToPlayer()
+    {
+        playerInput.SwitchCurrentActionMap(playerInputName);
+    }
+
+    public void setInputActionToUI()
+    {
+        playerInput.SwitchCurrentActionMap(UIInputName);
     }
 
     #region inputGathering
@@ -288,7 +300,6 @@ public class GameplayManager : MonoBehaviour
 
     public void OnJump(InputValue value)
     {
-        Debug.Log("On Jump " + value.isPressed);
         jump = value.isPressed;
     }
 

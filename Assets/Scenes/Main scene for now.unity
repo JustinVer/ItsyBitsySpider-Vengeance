@@ -1159,10 +1159,6 @@ PrefabInstance:
       propertyPath: acceleration
       value: 9
       objectReference: {fileID: 0}
-    - target: {fileID: 4494319959366287836, guid: bb80d1dfda28d79428a7b688aeeec2d4, type: 3}
-      propertyPath: sensitivity
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 5390958442823828640, guid: bb80d1dfda28d79428a7b688aeeec2d4, type: 3}
       propertyPath: m_Enabled
       value: 1
@@ -1837,6 +1833,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerInput: {fileID: 1820838739}
+  playerInputName: Player
+  UIInputName: UI
   gravitySplineContainer: {fileID: 788806729}
   player: {fileID: 227530998}
   playerBody: {fileID: 227531004}
