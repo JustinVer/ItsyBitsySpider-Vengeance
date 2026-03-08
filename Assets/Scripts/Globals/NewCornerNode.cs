@@ -13,7 +13,7 @@ public class NewCornerNode : MonoBehaviour
     private int index;
     private Vector3 position;
     private NewSegmentRandomizer randomizer;
-    Spline gravitySpline;
+    SplineContainer segmentSplineContainer;
 
     private float cornerDimension = 28;
     private float pipeLength = 44;
@@ -39,10 +39,11 @@ public class NewCornerNode : MonoBehaviour
             levelSection = Instantiate(cornerPrefab, position, Quaternion.Euler(new Vector3(0, 270 * (index % 2), 180 * (index % 2))));
             forwardTrigger = levelSection.transform.Find("Trigger1").gameObject;
             backwardTrigger = levelSection.transform.Find("Trigger2").gameObject;
-            if (gravitySpline == null)
+            if (segmentSplineContainer == null)
             {
-                gravitySpline = levelSection.GetComponent<SplineContainer>().Splines[0];
-                GameplayManager.Instance.UpdateGravitySpline(gravitySpline);
+                segmentSplineContainer = levelSection.GetComponent<SplineContainer>();
+                if(segmentSplineContainer != null)
+                    GameplayManager.Instance.UpdateGravitySpline(segmentSplineContainer);
             }
         }
     }
@@ -63,15 +64,13 @@ public class NewCornerNode : MonoBehaviour
 
     public void SetPos(Vector3 newPos)
     {
-        if (position == null)
+        if ((index % 2) == 0)
         {
-            if((index % 2) == 0)
-            {
-                position = newPos + new Vector3(-(cornerDimension * scale), 0, (cornerDimension * scale)) + new Vector3(0, 0, (pipeLength * scale) * backwardSegments.Length);
-            } else if((index % 2) == 1)
-            {
-                position = newPos + new Vector3(-(cornerDimension * scale), 0, (cornerDimension * scale)) + new Vector3(-(pipeLength * scale) * backwardSegments.Length, 0, 0);
-            }
+            position = newPos + new Vector3(-(cornerDimension * scale), 0, (cornerDimension * scale)) + new Vector3(0, 0, (pipeLength * scale) * backwardSegments.Length);
+        }
+        else if ((index % 2) == 1)
+        {
+            position = newPos + new Vector3(-(cornerDimension * scale), 0, (cornerDimension * scale)) + new Vector3(-(pipeLength * scale) * backwardSegments.Length, 0, 0);
         }
     }
 

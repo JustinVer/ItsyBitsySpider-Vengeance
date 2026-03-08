@@ -177,9 +177,31 @@ public class GameplayManager : MonoBehaviour
         return (position - ((Vector3)nearestPoint)).normalized * GRAVITY_STRENGTH;
 
     }
-    public void UpdateGravitySpline(Spline splineToAdd)
+    public void UpdateGravitySpline(SplineContainer segmentContainer)
     {
-        gravitySpline.Add(splineToAdd);
+        Spline segmentSpline = segmentContainer.Splines[0];
+
+        for (int i = 0; i < segmentSpline.Count; i++)
+        {
+            BezierKnot knot = segmentSpline[i];
+
+            // POSITION
+            Vector3 worldPos = segmentContainer.transform.TransformPoint(knot.Position);
+            knot.Position = gravitySplineContainer.transform.InverseTransformPoint(worldPos);
+
+            // TANGENTS
+            Vector3 worldTanIn = segmentContainer.transform.TransformDirection(knot.TangentIn);
+            Vector3 worldTanOut = segmentContainer.transform.TransformDirection(knot.TangentOut);
+
+            knot.TangentIn = gravitySplineContainer.transform.InverseTransformDirection(worldTanIn);
+            knot.TangentOut = gravitySplineContainer.transform.InverseTransformDirection(worldTanOut);
+
+            // ROTATION
+            //Quaternion worldRot = segmentContainer.transform.rotation * knot.Rotation;
+            //knot.Rotation = Quaternion.Inverse(gravitySplineContainer.transform.rotation) * worldRot;
+
+            gravitySpline.Add(knot);
+        }
     }
     public Vector3 GetForward(Vector3 position) //TODO fix bugs with this
     {
@@ -225,7 +247,7 @@ public class GameplayManager : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log("Gameplay manager action maps: " + playerInput.currentActionMap);
+        //Debug.Log("Gameplay manager action maps: " + playerInput.currentActionMap);
         if (!washedOut) countdownTime -= Time.deltaTime;
 
         HUDController.TimeInSeconds = countdownTime;

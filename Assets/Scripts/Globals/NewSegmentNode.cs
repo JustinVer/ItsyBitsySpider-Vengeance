@@ -9,7 +9,7 @@ public class NewSegmentNode : MonoBehaviour
     private Vector3 rotation = Vector3.zero;
     GameObject thisSegment;
     GameObject segmentPrefab;
-    Spline gravitySpline;
+    SplineContainer segmentSplineContainer = null;
 
     public NewSegmentNode(GameObject levelSegment)
     {
@@ -17,18 +17,19 @@ public class NewSegmentNode : MonoBehaviour
     }
     public void LoadSection(Vector3 pos, Vector3 rot)
     {
-        if (position == null)
+        if (position == Vector3.zero)
             position = pos;
-        if (rotation == null)
+        if (rotation == Vector3.zero)
             rotation = rot;
 
         if (!thisSegment)
         {
             thisSegment = Instantiate(segmentPrefab, position, Quaternion.Euler(rotation));
-            if (gravitySpline == null)
+            if (segmentSplineContainer == null)
             {
-                gravitySpline = thisSegment.GetComponent<SplineContainer>().Splines[0];
-                GameplayManager.Instance.UpdateGravitySpline(gravitySpline);
+                segmentSplineContainer = thisSegment.GetComponent<SplineContainer>();
+                //if(segmentSplineContainer != null)
+                    //GameplayManager.Instance.UpdateGravitySpline(segmentSplineContainer);
             }
         }
     }

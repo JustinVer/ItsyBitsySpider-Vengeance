@@ -5,9 +5,13 @@ public class NewSegmentRandomizer : MonoBehaviour
 {
     NewCornerNode[] corners;
     NewSegmentNode[][] segments;
-    [SerializeField] int[] segmentOrder;
     [SerializeField] GameObject corner;
     [SerializeField] GameObject[] segmentPool;
+
+    // in the segment order -1 coresponds to corners other wise they corespond to the segmentPool index
+    // the first and last values must be corners
+
+    [SerializeField] int[] segmentOrder;
 
     [SerializeField] private Vector3 currentPoint = new Vector3(0, 0, 0);
 
@@ -20,36 +24,47 @@ public class NewSegmentRandomizer : MonoBehaviour
         {
             if (segmentOrder[i] == -1) cornerNum++;
         }
+
         corners = new NewCornerNode[cornerNum];
         segments = new NewSegmentNode[cornerNum - 1][];
+        int segmentCount = 0;
+        int segmentGroup = 0;
 
-        int index = 0;
-        for (int i = 0; i < cornerNum + 1; i++)
+        for (int i = 1; i < segmentOrder.Length; i++)
         {
-            List<int> tempSection = new List<int>();
-            for (; ; )
+            if (segmentOrder[i] != -1)
+                segmentCount++;
+            else
             {
-                if (segmentOrder[index] == -1)
-                {
-                    segments[i] = new NewSegmentNode[tempSection.Count];
-                    for (int k = 0; k < tempSection.Count; k++)
-                    {
-                        segments[i][k] = new NewSegmentNode(segmentPool[tempSection[k]]);
-                    }
-                    if (i != 0)
-                    {
-                        corners[i - 1] = new NewCornerNode(segments[i - 1], segments[i], corner, i - 1, this);
-                    }
-                    index++;
-                    break;
-                }
-                else
-                {
-                    tempSection.Add(segmentOrder[i]);
-                    index++;
-                }
+                segments[segmentGroup] = new NewSegmentNode[segmentCount];
+                segmentGroup++;
+                segmentCount = 0;
             }
         }
+
+        int cornerIndex = 1;
+        segmentGroup = 0;
+        segmentCount = 0;
+
+        corners[0] = new NewCornerNode(segments[0], null, corner, 0, this);
+
+        for (int i = 1; i < segmentOrder.Length-1; i++)
+        {
+            if (segmentOrder[i] == -1)
+            {
+                corners[cornerIndex] = new NewCornerNode(segments[segmentGroup+1], segments[segmentGroup], corner, cornerIndex, this);
+                cornerIndex++;
+                segmentGroup++;
+                segmentCount = 0;
+            }
+            else
+            {
+                segments[segmentGroup][segmentCount] = new NewSegmentNode(segmentPool[segmentOrder[i]]);
+                segmentCount++;
+            }
+        }
+
+        corners[corners.Length-1] = new NewCornerNode(null, segments[segments.Length - 1], corner, corners.Length - 1, this);
 
         StartLoad();
     }
