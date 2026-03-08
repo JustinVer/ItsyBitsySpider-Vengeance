@@ -4,6 +4,9 @@ public class PlayerManager : MonoBehaviour
     private PlayerBody body;
     public bool InputEnabled = true;
 
+    private bool canGrapple = true;
+    private bool canDash = false;
+
     private void Start()
     {
         body = GetComponentInChildren<PlayerBody>();
@@ -31,18 +34,29 @@ public class PlayerManager : MonoBehaviour
         {
             body.Glide = false;
         }
-        if (GameplayManager.Instance.Grapple && body.CurrentWebs >= 1)
+        if (GameplayManager.Instance.Grapple && canGrapple && body.CurrentWebs >= 1)
         {
             body.Grapple = !body.Grapple;
             body.CurrentWebs -= 1;
+            canGrapple = false;
         }
-        if (GameplayManager.Instance.Dash && body.CurrentWebs >= 1)
+        if (GameplayManager.Instance.Dash && canDash && body.CurrentWebs >= 1)
         {
             body.Crash = !body.Crash;
             if (body.TargetGrapplePoint != Vector3.zero)
             {
                 body.CurrentWebs -= 1;
             }
+            canDash = false;
+        }
+
+        if (!GameplayManager.Instance.Dash)
+        {
+            canDash = true;
+        }
+        if (!GameplayManager.Instance.Grapple)
+        {
+            canGrapple = true;
         }
 
     }
