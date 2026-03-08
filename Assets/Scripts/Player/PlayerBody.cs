@@ -6,6 +6,7 @@ public class PlayerBody : MonoBehaviour, IDamageable
 
     private Vector3 movementDir = Vector3.zero;
     private Vector3 gravity = Vector3.zero;
+    private Vector3 up = Vector3.zero;
 
     private bool doJump = false;
 
@@ -125,6 +126,8 @@ public class PlayerBody : MonoBehaviour, IDamageable
         //Debug.Log("Current Webs: " + currentWebs);
 
         gravity = GameplayManager.Instance.GetGravity(transform.position);
+        up = -gravity.normalized;
+
         TargetGrapplePoint = getTargetGrapplePoint();
         if (TargetGrapplePoint == Vector3.zero)
         {
@@ -204,7 +207,7 @@ public class PlayerBody : MonoBehaviour, IDamageable
         RaycastHit hit;
         if (Physics.Raycast(transform.position, modGrapplePoint - transform.position, out hit, dist))
         {
-            modGrapplePoint = modGrapplePoint + -gravity.normalized * moveAmount;
+            modGrapplePoint = modGrapplePoint + up * moveAmount;
         }
         else
         {
@@ -240,40 +243,40 @@ public class PlayerBody : MonoBehaviour, IDamageable
 
     private void movePlayer()
     {
-        Vector3 camRight = Vector3.Cross(cam.transform.forward, -gravity);
-        Vector3 trueForward = Vector3.Cross(-gravity, camRight);
+        Vector3 camRight = Vector3.Cross(cam.transform.forward, up);
+        Vector3 trueForward = Vector3.Cross(up, camRight);
 
-        Debug.Log("Player movement direction 1" + this.movementDir);
-        Vector3 movementDir = Quaternion.LookRotation(trueForward, -gravity) * this.movementDir;
+        Debug.Log("Player movement direction 1" + movementDir);
+        Vector3 rotatedMoveDir = Quaternion.LookRotation(trueForward, up) * movementDir;
 
-        //Debug.DrawLine(transform.position, transform.position + this.movementDir * 2, Color.green);
-        //Debug.DrawLine(transform.position, transform.position + movementDir * 2, Color.red);
+        //Debug.DrawLine(transform.position, transform.position + this.rotatedMoveDir * 2, Color.green);
+        //Debug.DrawLine(transform.position, transform.position + rotatedMoveDir * 2, Color.red);
 
-        if (movementDir != Vector3.zero)
+        if (rotatedMoveDir != Vector3.zero)
         {
             //would new speed go above max speed
-            Vector3 targetVel = rb.linearVelocity + (MovementDir * acceleration) / rb.mass * Time.fixedDeltaTime;
-            Debug.Log("Player movement direction 2" + movementDir + " target vel " + targetVel + " " + rb.linearVelocity);
+            Vector3 targetVel = rb.linearVelocity + (rotatedMoveDir * acceleration) / rb.mass * Time.fixedDeltaTime;
+            Debug.Log("Player movement direction 2" + rotatedMoveDir + " target vel " + targetVel + " " + rb.linearVelocity);
 
             if (targetVel.magnitude <= currentMaxSpeed)
             {
-                rb.AddForce(MovementDir * acceleration, ForceMode.Force);
+                rb.AddForce(rotatedMoveDir * acceleration, ForceMode.Force);
 
                 //turning assist
                 if (IsGrounded())
                 {
                     Vector3 turnForce = Vector3.zero;
-                    if (Vector3.Dot(movementDir, rb.linearVelocity) < -0.9)
+                    if (Vector3.Dot(rotatedMoveDir, rb.linearVelocity) < -0.9)
                     {
                         turnForce = -rb.linearVelocity * deceleration;
                     }
                     else
                     {
-                        Vector3 forwardVel = Vector3.Project(rb.linearVelocity, movementDir);
+                        Vector3 forwardVel = Vector3.Project(rb.linearVelocity, rotatedMoveDir);
                         turnForce = -(rb.linearVelocity - forwardVel) * deceleration;
                     }
                     rb.AddForce(turnForce, ForceMode.Force);
-                    Debug.Log("Player movement direction 2 turn force " + turnForce + " " + (MovementDir * acceleration) + " " + turnForce);
+                    Debug.Log("Player movement direction 2 turn force " + turnForce + " " + (rotatedMoveDir * acceleration) + " " + turnForce);
                 }
 
             }
@@ -322,7 +325,7 @@ public class PlayerBody : MonoBehaviour, IDamageable
         currentJumpDelay -= Time.fixedDeltaTime;
         if (doJump)
         {
-            rb.AddForce(-gravity.normalized * jumpForce, ForceMode.Impulse);
+            rb.AddForce(up * jumpForce, ForceMode.Impulse);
             doJump = false;
             doRideForce = false;
             currentJumpDelay = jumpDelay;
@@ -350,7 +353,7 @@ public class PlayerBody : MonoBehaviour, IDamageable
         if (crash)
         {
             rb.linearVelocity = Vector3.zero;
-            Vector3 crashForce = Vector3.Cross(-gravity, -cam.transform.right).normalized * crashSpeed;
+            Vector3 crashForce = Vector3.Cross(up, -cam.transform.right).normalized * crashSpeed;
             rb.AddForce(crashForce, ForceMode.Acceleration);
         }
 
@@ -368,16 +371,15 @@ public class PlayerBody : MonoBehaviour, IDamageable
     {
         if (grapple)
         {
-            transform.rotation = Quaternion.LookRotation(TargetGrapplePoint - transform.position, -gravity);
+            transform.rotation = Quaternion.LookRotation(TargetGrapplePoint - transform.position, up);
         }
         if (crash)
         {
-            transform.rotation = Quaternion.LookRotation(Vector3.Cross(-gravity, -cam.transform.right), -gravity);
+            transform.rotation = Quaternion.LookRotation(Vector3.Cross(up, -cam.transform.right), up);
         }
 
         Vector3 moveDir = (rb.linearVelocity.magnitude > ROTATION_THRESHOLD) ? rb.linearVelocity : transform.forward;
 
-        Vector3 up = -gravity.normalized;
         Vector3 forward = Vector3.ProjectOnPlane(moveDir, up).normalized;
         Vector3 left = Vector3.Cross(up, forward);
 
