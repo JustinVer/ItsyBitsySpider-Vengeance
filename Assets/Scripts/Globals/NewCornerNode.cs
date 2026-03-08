@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Splines;
 
 public class NewCornerNode : MonoBehaviour
 {
@@ -12,7 +13,11 @@ public class NewCornerNode : MonoBehaviour
     private int index;
     private Vector3 position;
     private NewSegmentRandomizer randomizer;
+    Spline gravitySpline;
 
+    private float cornerDimension = 28;
+    private float pipeLength = 44;
+    private float scale = 2.5f;
 
     public NewCornerNode(NewSegmentNode[] aheadSegments, NewSegmentNode[] behindSegments, GameObject corner, int index, NewSegmentRandomizer randomizer)
     {
@@ -32,12 +37,42 @@ public class NewCornerNode : MonoBehaviour
         if (!levelSection)
         {
             levelSection = Instantiate(cornerPrefab, position, Quaternion.Euler(new Vector3(0, 270 * (index % 2), 180 * (index % 2))));
+            forwardTrigger = levelSection.transform.Find("Trigger1").gameObject;
+            backwardTrigger = levelSection.transform.Find("Trigger2").gameObject;
+            if (gravitySpline == null)
+            {
+                gravitySpline = levelSection.GetComponent<SplineContainer>().Splines[0];
+                GameplayManager.Instance.UpdateGravitySpline(gravitySpline);
+            }
         }
+    }
+
+    public void UnloadCorner()
+    {
+        if (levelSection)
+        {
+            Destroy(levelSection);
+        }
+    }
+
+    public void SetInitialPos(Vector3 newPos)
+    {
+        if(position == null)
+            position = newPos;
     }
 
     public void SetPos(Vector3 newPos)
     {
-        position = newPos;
+        if (position == null)
+        {
+            if((index % 2) == 0)
+            {
+                position = newPos + new Vector3(-(cornerDimension * scale), 0, (cornerDimension * scale)) + new Vector3(0, 0, (pipeLength * scale) * backwardSegments.Length);
+            } else if((index % 2) == 1)
+            {
+                position = newPos + new Vector3(-(cornerDimension * scale), 0, (cornerDimension * scale)) + new Vector3(-(pipeLength * scale) * backwardSegments.Length, 0, 0);
+            }
+        }
     }
 
     public Vector3 GetPos()
@@ -50,23 +85,58 @@ public class NewCornerNode : MonoBehaviour
         //calls LoadSection() from forwardSegments
         for (int i = 0; i < forwardSegments.Length; i++)
         {
-            forwardSegments[i].LoadSection(new Vector3(), new Vector3(0, 270 * (index % 2), 0));
+            if ((index % 2) == 0)
+            {
+                forwardSegments[i].LoadSection(
+                    position + new Vector3(-(cornerDimension * scale),0, (cornerDimension * scale)) + new Vector3(-(pipeLength * scale) * i, 0, 0),
+                    new Vector3(0, 270, 0));
+            } else if ((index % 2) == 1)
+            {
+                forwardSegments[i].LoadSection(
+                    position + new Vector3(-(cornerDimension * scale), 0, (cornerDimension * scale)) + new Vector3(0, 0, (pipeLength * scale) * i),
+                    new Vector3(0, 0, 0));
+            }
         }
     }
 
     public void LoadBehind()
     {
         //calls LoadSection() from backwardSegments
+        for (int i = backwardSegments.Length - 1; i > -1; i -= 1)
+        {
+            if ((index % 2) == 0)
+            {
+                backwardSegments[i].LoadSection(
+                    position + new Vector3(0, 0, -(pipeLength * scale) * i),
+                    new Vector3(0, 0, 0));
+            }
+            else if ((index % 2) == 1)
+            {
+                forwardSegments[i].LoadSection(
+                    position + new Vector3((pipeLength * scale) * i, 0, 0),
+                    new Vector3(0, 270, 0));
+            }
+        }
     }
 
     public void UnloadBehind()
     {
         //calls UnloadSection() from backwardSegments
+        UnloadSegments(backwardSegments);
     }
 
     public void UnloadAhead()
     {
         //calls UnloadSection() from forwardSegments
+        UnloadSegments(forwardSegments);
+    }
+
+    private void UnloadSegments(NewSegmentNode[] segments)
+    {
+        for (int i = 0; i < segments.Length; i++)
+        {
+            segments[i].UnloadSection();
+        }
     }
 
     public void TriggerCall()

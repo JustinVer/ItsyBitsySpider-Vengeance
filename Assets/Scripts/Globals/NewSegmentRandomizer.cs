@@ -21,7 +21,7 @@ public class NewSegmentRandomizer : MonoBehaviour
             if (segmentOrder[i] == -1) cornerNum++;
         }
         corners = new NewCornerNode[cornerNum];
-        segments = new NewSegmentNode[cornerNum + 1][];
+        segments = new NewSegmentNode[cornerNum - 1][];
 
         int index = 0;
         for (int i = 0; i < cornerNum + 1; i++)
@@ -50,15 +50,17 @@ public class NewSegmentRandomizer : MonoBehaviour
                 }
             }
         }
+
+        StartLoad();
     }
 
     private void StartLoad()
     {
+        corners[0].SetInitialPos(Vector3.zero);
         corners[0].LoadCorner();
         corners[0].LoadAhead();
+        corners[1].SetPos(corners[0].GetPos());
         corners[1].LoadCorner();
-        corners[1].LoadAhead();
-        corners[2].LoadCorner();
     }
 
     public void LoadCorners(int index)
@@ -68,15 +70,25 @@ public class NewSegmentRandomizer : MonoBehaviour
             corners[index].LoadBehind();
             corners[index - 1].LoadCorner();
             corners[index - 1].UnloadBehind();
+            if((index - 1) > 0)
+            {
+                corners[index - 2].UnloadCorner();
+            }
         }
 
+        corners[index].SetPos(corners[index - 1].GetPos());
         corners[index].LoadCorner();
 
-        if (index < corners.Length)
+        if (index < corners.Length - 1)
         {
             corners[index].LoadAhead();
+            corners[index + 1].SetPos(corners[index].GetPos());
             corners[index + 1].LoadCorner();
             corners[index + 1].UnloadAhead();
+            if ((index + 1) < corners.Length - 1)
+            {
+                corners[index + 2].UnloadCorner();
+            }
         }
     }
 }
