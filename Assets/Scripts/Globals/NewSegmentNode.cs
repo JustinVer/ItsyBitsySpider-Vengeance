@@ -17,19 +17,16 @@ public class NewSegmentNode : MonoBehaviour
     }
     public void LoadSection(Vector3 pos, Vector3 rot)
     {
-        if (position == Vector3.zero)
-            position = pos;
-        if (rotation == Vector3.zero)
-            rotation = rot;
-
         if (!thisSegment)
         {
+            position = pos;
+            rotation = rot;
             thisSegment = Instantiate(segmentPrefab, position, Quaternion.Euler(rotation));
             if (segmentSplineContainer == null)
             {
                 segmentSplineContainer = thisSegment.GetComponent<SplineContainer>();
-                //if(segmentSplineContainer != null)
-                    //GameplayManager.Instance.UpdateGravitySpline(segmentSplineContainer);
+                if (segmentSplineContainer != null)
+                    GameplayManager.Instance.UpdateGravitySpline(segmentSplineContainer);
             }
         }
     }

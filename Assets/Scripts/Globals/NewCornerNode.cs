@@ -1,13 +1,14 @@
 using UnityEngine;
 using UnityEngine.Splines;
+using static UnityEditor.PlayerSettings;
 
 public class NewCornerNode : MonoBehaviour
 {
     NewSegmentNode[] forwardSegments;
     NewSegmentNode[] backwardSegments;
     GameObject cornerPrefab;
-    GameObject forwardTrigger;
-    GameObject backwardTrigger;
+    LoadingTrigger forwardTrigger;
+    LoadingTrigger backwardTrigger;
     GameObject levelSection;
     private bool active = false;
     private int index;
@@ -37,8 +38,10 @@ public class NewCornerNode : MonoBehaviour
         if (!levelSection)
         {
             levelSection = Instantiate(cornerPrefab, position, Quaternion.Euler(new Vector3(0, 270 * (index % 2), 180 * (index % 2))));
-            forwardTrigger = levelSection.transform.Find("Trigger1").gameObject;
-            backwardTrigger = levelSection.transform.Find("Trigger2").gameObject;
+            forwardTrigger = levelSection.transform.Find("Trigger1").GetComponent<LoadingTrigger>();
+            forwardTrigger.SetOwner(this);
+            backwardTrigger = levelSection.transform.Find("Trigger2").GetComponent<LoadingTrigger>();
+            backwardTrigger.SetOwner(this);
             if (segmentSplineContainer == null)
             {
                 segmentSplineContainer = levelSection.GetComponent<SplineContainer>();
@@ -58,8 +61,7 @@ public class NewCornerNode : MonoBehaviour
 
     public void SetInitialPos(Vector3 newPos)
     {
-        if(position == null)
-            position = newPos;
+       position = newPos;
     }
 
     public void SetPos(Vector3 newPos)
@@ -106,13 +108,13 @@ public class NewCornerNode : MonoBehaviour
             if ((index % 2) == 0)
             {
                 backwardSegments[i].LoadSection(
-                    position + new Vector3(0, 0, -(pipeLength * scale) * i),
+                    position + new Vector3(0, 0, -(pipeLength * scale) * (i+1)),
                     new Vector3(0, 0, 0));
             }
             else if ((index % 2) == 1)
             {
-                forwardSegments[i].LoadSection(
-                    position + new Vector3((pipeLength * scale) * i, 0, 0),
+                backwardSegments[i].LoadSection(
+                    position + new Vector3((pipeLength * scale) * (i+1), 0, 0),
                     new Vector3(0, 270, 0));
             }
         }
@@ -132,9 +134,12 @@ public class NewCornerNode : MonoBehaviour
 
     private void UnloadSegments(NewSegmentNode[] segments)
     {
-        for (int i = 0; i < segments.Length; i++)
+        if(segments != null)
         {
-            segments[i].UnloadSection();
+            for (int i = 0; i < segments.Length; i++)
+            {
+                segments[i].UnloadSection();
+            }
         }
     }
 

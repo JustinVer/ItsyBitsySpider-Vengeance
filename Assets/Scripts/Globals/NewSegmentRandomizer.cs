@@ -52,7 +52,7 @@ public class NewSegmentRandomizer : MonoBehaviour
         {
             if (segmentOrder[i] == -1)
             {
-                corners[cornerIndex] = new NewCornerNode(segments[segmentGroup+1], segments[segmentGroup], corner, cornerIndex, this);
+                corners[cornerIndex] = new NewCornerNode(segments[cornerIndex], segments[cornerIndex-1], corner, cornerIndex, this);
                 cornerIndex++;
                 segmentGroup++;
                 segmentCount = 0;
@@ -84,14 +84,14 @@ public class NewSegmentRandomizer : MonoBehaviour
         {
             corners[index].LoadBehind();
             corners[index - 1].LoadCorner();
-            corners[index - 1].UnloadBehind();
             if((index - 1) > 0)
             {
+                corners[index - 1].UnloadBehind();
                 corners[index - 2].UnloadCorner();
             }
         }
-
-        corners[index].SetPos(corners[index - 1].GetPos());
+        if(index>0)
+            corners[index].SetPos(corners[index - 1].GetPos());
         corners[index].LoadCorner();
 
         if (index < corners.Length - 1)
@@ -99,9 +99,9 @@ public class NewSegmentRandomizer : MonoBehaviour
             corners[index].LoadAhead();
             corners[index + 1].SetPos(corners[index].GetPos());
             corners[index + 1].LoadCorner();
-            corners[index + 1].UnloadAhead();
             if ((index + 1) < corners.Length - 1)
             {
+                corners[index + 1].UnloadAhead();
                 corners[index + 2].UnloadCorner();
             }
         }
