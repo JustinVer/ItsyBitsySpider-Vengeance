@@ -10,8 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 7277041790600359376}
   - component: {fileID: 8607026172952544407}
+  - component: {fileID: 7328008301996342232}
   m_Layer: 0
-  m_Name: Trigger
+  m_Name: Trigger2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -53,6 +54,18 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 30, y: 30, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &7328008301996342232
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 544403815177245585}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e9df7f022de7b442b4867bb524ade96, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2814460333631737385
 GameObject:
   m_ObjectHideFlags: 0
@@ -65,7 +78,7 @@ GameObject:
   - component: {fileID: 4040171503238188890}
   - component: {fileID: 1378667056394922195}
   m_Layer: 0
-  m_Name: Trigger
+  m_Name: Trigger1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -188,6 +201,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 051021482b5db4e4e854e06602bdb4ec, type: 3}
       insertIndex: -1
       addedObject: {fileID: 8540345368542253788}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 051021482b5db4e4e854e06602bdb4ec, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8725245148957481159}
   m_SourcePrefab: {fileID: 100100000, guid: 051021482b5db4e4e854e06602bdb4ec, type: 3}
 --- !u!4 &1201965397423039051 stripped
 Transform:
@@ -221,3 +237,83 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -6715750739454668501, guid: 051021482b5db4e4e854e06602bdb4ec, type: 3}
+--- !u!114 &8725245148957481159
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2010273967314991345}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dab5c7d4c32e743048dfca98e2d5914f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Spline:
+    m_EditModeType: 1
+    m_Knots: []
+    m_MetaData: []
+    m_Closed: 0
+    m_IntData:
+      m_Data: []
+    m_FloatData:
+      m_Data: []
+    m_Float4Data:
+      m_Data: []
+    m_ObjectData:
+      m_Data: []
+  m_Splines:
+  - m_EditModeType: 1
+    m_Knots:
+    - Position:
+        x: 0
+        y: 0
+        z: 0
+      TangentIn:
+        x: 0
+        y: 0
+        z: -0
+      TangentOut:
+        x: 0
+        y: 0
+        z: 70
+      Rotation:
+        value:
+          x: 0
+          y: 0
+          z: 0
+          w: 1
+    - Position:
+        x: -28
+        y: 0
+        z: 28
+      TangentIn:
+        x: 0
+        y: 0
+        z: -0
+      TangentOut:
+        x: 0
+        y: 0
+        z: 0
+      Rotation:
+        value:
+          x: 0
+          y: 0
+          z: 0
+          w: 1
+    m_MetaData:
+    - Mode: 4
+      Tension: 0.5
+    - Mode: 4
+      Tension: 0.5
+    m_Closed: 0
+    m_IntData:
+      m_Data: []
+    m_FloatData:
+      m_Data: []
+    m_Float4Data:
+      m_Data: []
+    m_ObjectData:
+      m_Data: []
+  m_Knots:
+    m_KnotsLink: []

@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerCamera : MonoBehaviour
 {
@@ -28,9 +29,9 @@ public class PlayerCamera : MonoBehaviour
 
     private void Update()
     {
-        yaw += Input.GetAxis("Mouse X") * sensitivity * Time.deltaTime;
+        yaw += Mouse.current.delta.ReadValue().x * sensitivity;
 
-        pitch -= Input.GetAxis("Mouse Y") * sensitivity * Time.deltaTime;
+        pitch -= Mouse.current.delta.ReadValue().y * sensitivity;
         pitch = Mathf.Clamp(pitch, minPitch, maxPitch);
     }
 

@@ -18,7 +18,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 79d8a50996fd4364ba3463ee5218e933, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 1.44
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 79d8a50996fd4364ba3463ee5218e933, type: 3}
       propertyPath: m_LocalRotation.w
@@ -62,6 +62,9 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 79d8a50996fd4364ba3463ee5218e933, type: 3}
       insertIndex: -1
+      addedObject: {fileID: 5456232398996668582}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 79d8a50996fd4364ba3463ee5218e933, type: 3}
+      insertIndex: -1
       addedObject: {fileID: 6788201104575451753}
   m_SourcePrefab: {fileID: 100100000, guid: 79d8a50996fd4364ba3463ee5218e933, type: 3}
 --- !u!1 &8047777929218949312 stripped
@@ -69,6 +72,28 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 79d8a50996fd4364ba3463ee5218e933, type: 3}
   m_PrefabInstance: {fileID: 7164693412663147921}
   m_PrefabAsset: {fileID: 0}
+--- !u!64 &5456232398996668582
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8047777929218949312}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 851842501153363023, guid: 79d8a50996fd4364ba3463ee5218e933, type: 3}
 --- !u!114 &6788201104575451753
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -100,15 +125,15 @@ MonoBehaviour:
     - Position:
         x: 0
         y: 0
-        z: 0
+        z: 1
       TangentIn:
         x: 0
         y: 0
-        z: -1
+        z: 0
       TangentOut:
         x: 0
         y: 0
-        z: 1
+        z: 0
       Rotation:
         value:
           x: 0
@@ -122,11 +147,11 @@ MonoBehaviour:
       TangentIn:
         x: 0
         y: 0
-        z: -2.5
+        z: 0
       TangentOut:
         x: 0
         y: 0
-        z: 2.5
+        z: 0
       Rotation:
         value:
           x: 0
@@ -134,9 +159,9 @@ MonoBehaviour:
           z: 0
           w: 1
     m_MetaData:
-    - Mode: 2
+    - Mode: 4
       Tension: 0.5
-    - Mode: 2
+    - Mode: 4
       Tension: 0.5
     m_Closed: 0
     m_IntData:

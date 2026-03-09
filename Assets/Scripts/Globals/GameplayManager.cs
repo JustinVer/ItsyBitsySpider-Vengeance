@@ -36,6 +36,8 @@ public class GameplayManager : MonoBehaviour
 
     //[SerializeField] private HumanBody player;
     [SerializeField] private PlayerInput playerInput;
+    [SerializeField] private string playerInputName = "Player";
+    [SerializeField] private string UIInputName = "UI";
 
     [SerializeField] private const float GRAVITY_STRENGTH = 9.8f;
     [SerializeField] private SplineContainer gravitySplineContainer;
@@ -43,7 +45,6 @@ public class GameplayManager : MonoBehaviour
     public Spline GravitySpline => gravitySpline;
     public GameObject Player => player;
     public PlayerBody PlayerBody => playerBody;
-    public PlayerInput PlayerInput => playerInput;
 
     [SerializeField] private GameObject player;
     [SerializeField] private PlayerBody playerBody;
@@ -176,9 +177,31 @@ public class GameplayManager : MonoBehaviour
         return (position - ((Vector3)nearestPoint)).normalized * GRAVITY_STRENGTH;
 
     }
-    public void UpdateGravitySpline(Spline splineToAdd)
+    public void UpdateGravitySpline(SplineContainer segmentContainer)
     {
-        gravitySpline.Add(splineToAdd);
+        Spline segmentSpline = segmentContainer.Splines[0];
+
+        for (int i = 0; i < segmentSpline.Count; i++)
+        {
+            BezierKnot knot = segmentSpline[i];
+
+            // POSITION
+            Vector3 worldPos = segmentContainer.transform.TransformPoint(knot.Position);
+            knot.Position = gravitySplineContainer.transform.InverseTransformPoint(worldPos);
+
+            // TANGENTS
+            Vector3 worldTanIn = segmentContainer.transform.TransformDirection(knot.TangentIn);
+            Vector3 worldTanOut = segmentContainer.transform.TransformDirection(knot.TangentOut);
+
+            knot.TangentIn = gravitySplineContainer.transform.InverseTransformDirection(worldTanIn);
+            knot.TangentOut = gravitySplineContainer.transform.InverseTransformDirection(worldTanOut);
+
+            // ROTATION
+            //Quaternion worldRot = segmentContainer.transform.rotation * knot.Rotation;
+            //knot.Rotation = Quaternion.Inverse(gravitySplineContainer.transform.rotation) * worldRot;
+
+            gravitySpline.Add(knot);
+        }
     }
     public Vector3 GetForward(Vector3 position) //TODO fix bugs with this
     {
@@ -224,6 +247,7 @@ public class GameplayManager : MonoBehaviour
 
     private void Update()
     {
+        //Debug.Log("Gameplay manager action maps: " + playerInput.currentActionMap);
         if (!washedOut) countdownTime -= Time.deltaTime;
 
         HUDController.TimeInSeconds = countdownTime;
@@ -233,4 +257,79 @@ public class GameplayManager : MonoBehaviour
             washOut();
         }
     }
+
+    public void setInputActionToPlayer()
+    {
+        playerInput.SwitchCurrentActionMap(playerInputName);
+    }
+
+    public void setInputActionToUI()
+    {
+        playerInput.SwitchCurrentActionMap(UIInputName);
+    }
+
+    #region inputGathering
+
+    private Vector2 moveVector = Vector2.zero;
+    private Vector2 mousePosition = Vector2.zero;
+
+    private bool fire = false;
+    private bool grapple = false;
+    private bool dash = false;
+    private bool plug = false;
+    private bool glide = false;
+    private bool jump = false;
+    private bool escape = false;
+
+    public Vector2 MoveVector { get { return moveVector; } private set { moveVector = value; } }
+    public Vector2 MousePosition { get { return mousePosition; } private set { mousePosition = value; } }
+
+    public bool Fire { get { return fire; } private set { fire = value; } }
+    public bool Grapple { get { return grapple; } private set { grapple = value; } }
+    public bool Dash { get { return dash; } private set { dash = value; } }
+    public bool Plug { get { return plug; } private set { plug = value; } }
+    public bool Glide { get { return glide; } private set { glide = value; } }
+    public bool Jump { get { return jump; } private set { jump = value; } }
+    public bool Escape { get { return escape; } private set { escape = value; } }
+
+    public void OnMove(InputValue value)
+    {
+        moveVector = value.Get<Vector2>();
+    }
+
+    public void OnLook(InputValue value)
+    {
+        mousePosition = value.Get<Vector2>();
+    }
+    public void OnFire(InputValue value)
+    {
+        fire = value.isPressed;
+    }
+
+    public void OnGrapple(InputValue value)
+    {
+        grapple = value.isPressed;
+    }
+
+    public void OnDash(InputValue value)
+    {
+        dash = value.isPressed;
+    }
+    public void OnPlug(InputValue value)
+    {
+        plug = value.isPressed;
+    }
+
+    public void OnJump(InputValue value)
+    {
+        jump = value.isPressed;
+    }
+
+    public void OnEscape(InputValue value)
+    {
+        escape = value.isPressed;
+    }
+
+
+    #endregion
 }

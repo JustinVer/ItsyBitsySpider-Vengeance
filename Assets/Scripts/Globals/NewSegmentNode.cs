@@ -1,32 +1,38 @@
+using System;
 using UnityEngine;
 using UnityEngine.Splines;
+using UnityEngine.UIElements;
 
 public class NewSegmentNode : MonoBehaviour
 {
-    private Vector3 Position = Vector3.zero;
-    private Vector3 Rotation = Vector3.zero;
+    private Vector3 position = Vector3.zero;
+    private Vector3 rotation = Vector3.zero;
     GameObject thisSegment;
-    Spline gravitySpline;
+    GameObject segmentPrefab;
+    SplineContainer segmentSplineContainer = null;
 
     public NewSegmentNode(GameObject levelSegment)
     {
-        thisSegment = levelSegment;
-        gravitySpline = thisSegment.GetComponent<SplineContainer>().Splines[0];
+        segmentPrefab = levelSegment;
     }
     public void LoadSection(Vector3 pos, Vector3 rot)
     {
-
+        if (!thisSegment)
+        {
+            position = pos;
+            rotation = rot;
+            thisSegment = Instantiate(segmentPrefab, position, Quaternion.Euler(rotation));
+            if (segmentSplineContainer == null)
+            {
+                segmentSplineContainer = thisSegment.GetComponent<SplineContainer>();
+                if (segmentSplineContainer != null)
+                    GameplayManager.Instance.UpdateGravitySpline(segmentSplineContainer);
+            }
+        }
     }
     public void UnloadSection()
     {
-
-    }
-    public void SetPosition(Vector3 newPos)
-    {
-
-    }
-    public void SetRotation(Vector3 newRot)
-    {
-
+        if(thisSegment)
+            Destroy(thisSegment);
     }
 }
