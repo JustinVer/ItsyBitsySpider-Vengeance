@@ -12,7 +12,7 @@ public class PlayerCamera : MonoBehaviour
     [SerializeField] private float minPitch = -80f;
     [SerializeField] private float maxPitch = 80;
 
-    private const float CAMERA_BUFFER = 0.1f;
+    private const float CAMERA_BUFFER = 0.3f;
 
     private Camera cam;
 
