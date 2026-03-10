@@ -45,6 +45,7 @@ public class GameplayManager : MonoBehaviour
     public Spline GravitySpline => gravitySpline;
     public GameObject Player => player;
     public PlayerBody PlayerBody => playerBody;
+    public PlayerManager PlayerManager => playerManager;
 
     [SerializeField] private GameObject player;
     [SerializeField] private PlayerBody playerBody;

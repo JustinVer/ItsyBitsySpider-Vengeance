@@ -7,6 +7,8 @@ public class PlayerManager : MonoBehaviour
     private bool canGrapple = true;
     private bool canDash = false;
 
+    [SerializeField] public Camera Playercam;
+
     private void Start()
     {
         body = GetComponentInChildren<PlayerBody>();
