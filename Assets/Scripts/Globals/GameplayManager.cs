@@ -201,6 +201,7 @@ public class GameplayManager : MonoBehaviour
             //knot.Rotation = Quaternion.Inverse(gravitySplineContainer.transform.rotation) * worldRot;
 
             gravitySpline.Add(knot);
+            gravitySplineContainer.Spline.Add(knot);
         }
     }
     public Vector3 GetForward(Vector3 position) //TODO fix bugs with this

@@ -956,17 +956,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76a6592fcb25d84489781ee8de7e203d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  corner: {fileID: 2010273967314991345, guid: eca8511538f2b8b439d09b3b2dbe1df0, type: 3}
+  cornerPrefabs:
+  - {fileID: 6457505982948392551, guid: eca8511538f2b8b439d09b3b2dbe1df0, type: 3}
+  - {fileID: 6457505982948392551, guid: 0cebb2ee9596eb54ca6a5c67c1950562, type: 3}
+  - {fileID: 6457505982948392551, guid: 5cf1a2515245cd347850c82404f279d5, type: 3}
   segmentPool:
-  - {fileID: 5282411458239331342, guid: f1eb02b7b6368704ca45fd8ef6399d71, type: 3}
-  - {fileID: 7321657257124285391, guid: ca19e159bcb3c344a89fcd0dd032732b, type: 3}
-  - {fileID: 3741587726524578614, guid: 65b0eda35cdbde44dac2c2aaf7a1482d, type: 3}
-  - {fileID: 2229236281414095404, guid: 69b726146e58f744a839c176d6a9770e, type: 3}
-  - {fileID: 8773007782448922023, guid: cebad401720aafb43a6d5b513022087b, type: 3}
-  segmentOrder: ffffffff00000000ffffffff01000000ffffffff02000000ffffffff03000000ffffffff04000000ffffffff
+  - {fileID: 8047777929218949312, guid: af7845d9f0de2eb44a6420cf8e210aec, type: 3}
+  - {fileID: 8047777929218949312, guid: 073d19a0b4545934eba1ccd9da988433, type: 3}
+  - {fileID: 8047777929218949312, guid: d794a48ecd2815a4ab8dac4e380604f9, type: 3}
+  segmentOrder: ffffffff00000000feffffff00000000fdffffff00000000fdffffff
   currentPoint: {x: 0, y: 0, z: 0}
-  debugMode: 1
-  areaLength: 3
+  debugMode: 0
+  areaLength: 1
+  numLevels: 1
 --- !u!1001 &1700685517
 PrefabInstance:
   m_ObjectHideFlags: 0

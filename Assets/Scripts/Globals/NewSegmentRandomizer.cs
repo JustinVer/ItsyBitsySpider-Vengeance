@@ -1,11 +1,10 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 public class NewSegmentRandomizer : MonoBehaviour
 {
     NewCornerNode[] corners;
     NewSegmentNode[][] segments;
-    [SerializeField] GameObject corner;
+    [SerializeField] GameObject[] cornerPrefabs;
     [SerializeField] GameObject[] segmentPool;
 
     // in the segment order -1 coresponds to corners other wise they corespond to the segmentPool index
@@ -17,6 +16,7 @@ public class NewSegmentRandomizer : MonoBehaviour
 
     [SerializeField] private bool debugMode = true;
     [SerializeField] private int areaLength = 3;
+    [SerializeField] private int numLevels = 5;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -25,7 +25,7 @@ public class NewSegmentRandomizer : MonoBehaviour
 
         for (int i = 0; i < segmentOrder.Length; i++)
         {
-            if (segmentOrder[i] == -1) cornerNum++;
+            if (segmentOrder[i] < 0) cornerNum++;
         }
 
         corners = new NewCornerNode[cornerNum];
@@ -35,18 +35,62 @@ public class NewSegmentRandomizer : MonoBehaviour
 
         if (!debugMode)
         {
+            int area = 0;
+            int areaProgress = 0;
+
             for (int i = 1; i < segmentOrder.Length; i++)
             {
-                if (segmentOrder[i] != -1)
+                if (segmentOrder[i] >= 0)
                 {
                     //TODO:generate random level index
+                    switch (area)
+                    {
+                        case 0:
+                            segmentOrder[i] = UnityEngine.Random.Range(0, numLevels);
+                            areaProgress++;
+
+                            break;
+                        case 1:
+                            segmentOrder[i] = UnityEngine.Random.Range(0, numLevels) + numLevels;
+                            areaProgress++;
+
+                            break;
+                        default:
+                            segmentOrder[i] = UnityEngine.Random.Range(0, numLevels) + (2 * numLevels);
+                            areaProgress++;
+
+                            break;
+                    }
+                    if (areaProgress >= areaLength)
+                    {
+                        areaProgress = 0;
+                        area++;
+                    }
+                }
+                else
+                {
+                    switch (area)
+                    {
+                        case 0:
+                            segmentOrder[i] = -1;
+
+                            break;
+                        case 1:
+                            segmentOrder[i] = -2;
+
+                            break;
+                        default:
+                            segmentOrder[i] = -3;
+
+                            break;
+                    }
                 }
             }
         }
 
         for (int i = 1; i < segmentOrder.Length; i++)
         {
-            if (segmentOrder[i] != -1)
+            if (segmentOrder[i] >= 0)
                 segmentCount++;
             else
             {
@@ -60,13 +104,13 @@ public class NewSegmentRandomizer : MonoBehaviour
         segmentGroup = 0;
         segmentCount = 0;
 
-        corners[0] = new NewCornerNode(segments[0], null, corner, 0, this);
+        corners[0] = new NewCornerNode(segments[0], null, cornerPrefabs[0], 0, this);
 
-        for (int i = 1; i < segmentOrder.Length-1; i++)
+        for (int i = 1; i < segmentOrder.Length - 1; i++)
         {
-            if (segmentOrder[i] == -1)
+            if (segmentOrder[i] < 0)
             {
-                corners[cornerIndex] = new NewCornerNode(segments[cornerIndex], segments[cornerIndex-1], corner, cornerIndex, this);
+                corners[cornerIndex] = new NewCornerNode(segments[cornerIndex], segments[cornerIndex - 1], cornerPrefabs[(segmentOrder[i] * -1) - 1], cornerIndex, this);
                 cornerIndex++;
                 segmentGroup++;
                 segmentCount = 0;
@@ -78,7 +122,7 @@ public class NewSegmentRandomizer : MonoBehaviour
             }
         }
 
-        corners[corners.Length-1] = new NewCornerNode(null, segments[segments.Length - 1], corner, corners.Length - 1, this);
+        corners[corners.Length - 1] = new NewCornerNode(null, segments[segments.Length - 1], cornerPrefabs[(-3 * -1) - 1], corners.Length - 1, this);
 
         StartLoad();
     }
@@ -98,13 +142,13 @@ public class NewSegmentRandomizer : MonoBehaviour
         {
             corners[index].LoadBehind();
             corners[index - 1].LoadCorner();
-            if((index - 1) > 0)
+            if ((index - 1) > 0)
             {
                 corners[index - 1].UnloadBehind();
                 corners[index - 2].UnloadCorner();
             }
         }
-        if(index>0)
+        if (index > 0)
             corners[index].SetPos(corners[index - 1].GetPos());
         corners[index].LoadCorner();
 

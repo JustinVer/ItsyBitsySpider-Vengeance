@@ -925,7 +925,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &617540993047330949
 Transform:
   m_ObjectHideFlags: 0
@@ -1058,10 +1058,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 6878912116724081288}
     m_Modifications:
-    - target: {fileID: 1816835289392646977, guid: ddb4f1e845e83d442b5d66d1b125a23e, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 2358983450198253267, guid: 75a35984d93fbe14bafdc812cc9f8922, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.55
@@ -1113,6 +1109,10 @@ PrefabInstance:
     - target: {fileID: 8191285427897999034, guid: 75a35984d93fbe14bafdc812cc9f8922, type: 3}
       propertyPath: m_Name
       value: LeafPlatform Long 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1816835289392646977, guid: ddb4f1e845e83d442b5d66d1b125a23e, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1256,6 +1256,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 6189923635985055154}
     m_Modifications:
+    - target: {fileID: 543569043186900164, guid: 39a10461296404442a3135dca1cd4e67, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 6be94c918a8d5464886d8ff8ed8fcfb6, type: 2}
     - target: {fileID: 1711378813219383211, guid: 39a10461296404442a3135dca1cd4e67, type: 3}
       propertyPath: m_LocalScale.x
       value: 2.4999998
@@ -1319,7 +1323,7 @@ PrefabInstance:
     - target: {fileID: 4433001336321936084, guid: 39a10461296404442a3135dca1cd4e67, type: 3}
       propertyPath: m_NavMeshData
       value: 
-      objectReference: {fileID: 23800000, guid: b3c7220ab28e0bf42a2750ddac0b33cb, type: 2}
+      objectReference: {fileID: 23800000, guid: 1603a614a9e11d74987794f3a1d7fa46, type: 2}
     - target: {fileID: 5524411200149845838, guid: 39a10461296404442a3135dca1cd4e67, type: 3}
       propertyPath: m_NavMeshData
       value: 
