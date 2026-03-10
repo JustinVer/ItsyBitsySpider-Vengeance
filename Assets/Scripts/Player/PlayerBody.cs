@@ -179,9 +179,14 @@ public class PlayerBody : MonoBehaviour, IDamageable
 
         Vector3 targetGrapplePoint = Vector3.zero;
 
+        if (GrapplePoint.VisiblePoints == null)
+        {
+            return Vector3.zero;
+        }
 
         foreach (GameObject go in GrapplePoint.VisiblePoints)
         {
+            if (go == null) continue;
 
             if (Vector3.Dot(go.transform.position - transform.position, cam.transform.forward) < 0) continue;
             if (Vector3.Distance(transform.position, go.transform.position) > maxGrappleDist)
