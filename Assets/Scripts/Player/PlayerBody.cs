@@ -153,8 +153,7 @@ public class PlayerBody : MonoBehaviour, IDamageable
 
 
 
-        if (grapple && (Vector3.Distance(transform.position, TargetGrapplePoint) < minGrappleDist ||
-            Vector3.Distance(transform.position, TargetGrapplePoint) < minGrappleDist))
+        if (grapple && (Vector3.Distance(transform.position, TargetGrapplePoint) < minGrappleDist))
         {
             grapple = false;
 
