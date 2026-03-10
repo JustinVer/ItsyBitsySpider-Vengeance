@@ -109,7 +109,6 @@ public class AgentLinkMover : MonoBehaviour
     IEnumerator NormalSpeed(NavMeshAgent agent)
     {
         inLink = true;
-        Debug.Log("Normal Movement");
         OffMeshLinkData data = agent.currentOffMeshLinkData;
         Vector3 endPos = data.endPos + (-1 * GameplayManager.Instance.GetGravity(data.endPos).normalized) * agent.baseOffset;
         bool usedLastPosition = false;
@@ -123,7 +122,6 @@ public class AgentLinkMover : MonoBehaviour
             }
             yield return null;
         }
-        Debug.Log("End movement speed");
         agent.CompleteOffMeshLink();
         yield return null;
         body.EndJump();

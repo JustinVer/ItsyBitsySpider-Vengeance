@@ -10,7 +10,6 @@ public class DeathTriggers : StateMachineBehaviour
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         //Find the parent script to send the triggers to
-        Debug.Log("enter death");
         int i = 0;
         GameObject gameObject = animator.gameObject;
         script = animator.gameObject.GetComponent<IDeathAnimation>();
@@ -30,7 +29,6 @@ public class DeathTriggers : StateMachineBehaviour
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        Debug.Log("End Death");
         //End death on the object
         if (script != null)
         {

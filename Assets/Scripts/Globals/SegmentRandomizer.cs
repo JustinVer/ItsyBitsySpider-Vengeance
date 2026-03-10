@@ -42,7 +42,6 @@ public class SegmentRandomizer : MonoBehaviour
 
         area[0].loadSection(Vector3.zero, Quaternion.identity);
         lastLoaded = 0;
-        Debug.Log("loading start");
 
         loadForward();
     }
@@ -121,7 +120,6 @@ public class SegmentRandomizer : MonoBehaviour
             knots[i] = new BezierKnot(knotPos);
 
             area[i - 1] = new SegmentNode(segmentPool[debugOrder[i - 1]]);
-            Debug.Log(i);
         }
         gravitySpline.Knots = knots;
 

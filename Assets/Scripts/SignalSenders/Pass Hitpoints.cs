@@ -19,7 +19,6 @@ public class PassHitpoints : MonoBehaviour, IDamageable
 
     public void modifyHP(int hpChange)
     {
-        Debug.Log("pass hit " + parentObject.name + " " + parent);
         parent.modifyHP(hpChange);
     }
 

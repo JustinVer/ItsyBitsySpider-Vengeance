@@ -248,7 +248,6 @@ public class GameplayManager : MonoBehaviour
 
     private void Update()
     {
-        //Debug.Log("Gameplay manager action maps: " + playerInput.currentActionMap);
         if (!washedOut) countdownTime -= Time.deltaTime;
 
         HUDController.TimeInSeconds = countdownTime;
