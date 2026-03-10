@@ -8,9 +8,9 @@ public class HUDController : MonoBehaviour
     [SerializeField] Slider playerHealth;
     [SerializeField] TMP_Text rainTimer;
     [SerializeField] GameObject[] webIcons;
-
+    [SerializeField] GameObject grappleCurser;
     private bool timerActive = true;
-   
+
     private float timeInSeconds = 180f;
     public float TimeInSeconds
     {
@@ -48,6 +48,23 @@ public class HUDController : MonoBehaviour
             rainTimer.SetText(displayTime);
         }
         UpdateWebDisplay(GameplayManager.Instance.PlayerBody.CurrentWebs);
+
+        Vector2 curserPos = Vector2.zero;
+        if (GameplayManager.Instance.PlayerBody.ValidGrapplePoint)
+        {
+            grappleCurser.SetActive(true);
+            RectTransform canvasRect = GetComponentInChildren<RectTransform>();
+            Vector3 grapplePos = GameplayManager.Instance.PlayerBody.TargetGrapplePoint;
+            Vector2 viewportPos = GameplayManager.Instance.PlayerManager.Playercam.WorldToViewportPoint(grapplePos);
+            Vector2 screenPos = new Vector2(
+                ((viewportPos.x * canvasRect.sizeDelta.x) - (canvasRect.sizeDelta.x * 0.5f)),
+                ((viewportPos.y * canvasRect.sizeDelta.y) - (canvasRect.sizeDelta.y * 0.5f)));
+            grappleCurser.GetComponent<RectTransform>().anchoredPosition = screenPos;
+        }
+        else
+        {
+            grappleCurser.SetActive(false);
+        }
     }
 
     public void UpdateWebDisplay(float webNum)
@@ -59,5 +76,5 @@ public class HUDController : MonoBehaviour
         }
     }
 
-    
+
 }

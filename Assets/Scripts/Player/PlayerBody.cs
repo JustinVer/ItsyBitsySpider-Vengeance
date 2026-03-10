@@ -42,7 +42,7 @@ public class PlayerBody : MonoBehaviour, IDamageable
         set { grapple = value; }
     }
 
-    private Vector3 TargetGrapplePoint = Vector3.zero;
+    [HideInInspector] public Vector3 TargetGrapplePoint = Vector3.zero;
     private Vector3 modGrapplePoint = Vector3.zero;
     public bool ValidGrapplePoint = false;
 
