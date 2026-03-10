@@ -37,16 +37,18 @@ public class PlayerManager : MonoBehaviour
         if (GameplayManager.Instance.Grapple && canGrapple && body.CurrentWebs >= 1)
         {
             body.Grapple = !body.Grapple;
-            body.CurrentWebs -= 1;
+            if (body.ValidGrapplePoint && !body.Grapple)
+            {
+                body.CurrentWebs -= 1;
+            }
             canGrapple = false;
         }
         if (GameplayManager.Instance.Dash && canDash && body.CurrentWebs >= 1)
         {
             body.Crash = !body.Crash;
-            if (body.TargetGrapplePoint != Vector3.zero)
-            {
-                body.CurrentWebs -= 1;
-            }
+
+            body.CurrentWebs -= 1;
+
             canDash = false;
         }
 

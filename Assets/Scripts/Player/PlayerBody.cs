@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class PlayerBody : MonoBehaviour, IDamageable
@@ -41,8 +42,9 @@ public class PlayerBody : MonoBehaviour, IDamageable
         set { grapple = value; }
     }
 
-    [HideInInspector] public Vector3 TargetGrapplePoint = Vector3.zero;
+    private Vector3 TargetGrapplePoint = Vector3.zero;
     private Vector3 modGrapplePoint = Vector3.zero;
+    public bool ValidGrapplePoint = false;
 
     private float currentHP;
     [SerializeField] private float maxHP = 100f;
@@ -129,6 +131,15 @@ public class PlayerBody : MonoBehaviour, IDamageable
         up = -gravity.normalized;
 
         TargetGrapplePoint = getTargetGrapplePoint();
+        if (TargetGrapplePoint != Vector3.zero)
+        {
+            ValidGrapplePoint = true;
+            Debug.DrawLine(transform.position, modGrapplePoint, Color.magenta);
+        }
+        else
+        {
+            ValidGrapplePoint = false;
+        }
         if (TargetGrapplePoint == Vector3.zero)
         {
             grapple = false;
@@ -199,20 +210,25 @@ public class PlayerBody : MonoBehaviour, IDamageable
         return targetGrapplePoint;
     }
 
+    [Obsolete]
     private void updateGrappleDirection()
     {
-        float moveAmount = 0.5f;
-        float dist = Vector3.Distance(transform.position, modGrapplePoint);
+        modGrapplePoint = TargetGrapplePoint;
+        return;
 
-        RaycastHit hit;
-        if (Physics.Raycast(transform.position, modGrapplePoint - transform.position, out hit, dist))
-        {
-            modGrapplePoint = modGrapplePoint + up * moveAmount;
-        }
-        else
-        {
-            modGrapplePoint = TargetGrapplePoint;
-        }
+
+        //float moveAmount = 0.5f;
+        //float dist = Vector3.Distance(transform.position, modGrapplePoint);
+
+        //RaycastHit hit;
+        //if (Physics.Raycast(transform.position, modGrapplePoint - transform.position, out hit, dist))
+        //{
+        //    modGrapplePoint = modGrapplePoint + up * moveAmount;
+        //}
+        //else
+        //{
+        //    modGrapplePoint = TargetGrapplePoint;
+        //}
     }
 
     public bool IsGrounded()
@@ -345,7 +361,9 @@ public class PlayerBody : MonoBehaviour, IDamageable
 
             rb.linearVelocity = Vector3.zero;
 
-            Vector3 grappleForce = (modGrapplePoint - transform.position).normalized * ((dot > 0.5) ? Mathf.Max(currentSpeed, grappleStrength) : grappleStrength);
+            float grappleSpeed = (dot > 0.5) ? Mathf.Max(currentSpeed, grappleStrength) : grappleStrength;
+
+            Vector3 grappleForce = (modGrapplePoint - transform.position).normalized * grappleSpeed;
             rb.AddForce(grappleForce, ForceMode.Acceleration);
         }
 
