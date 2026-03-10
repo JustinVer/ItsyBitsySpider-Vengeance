@@ -7,6 +7,7 @@ public class HUDController : MonoBehaviour
 {
     [SerializeField] Slider playerHealth;
     [SerializeField] TMP_Text rainTimer;
+    [SerializeField] GameObject rainCloud;
     [SerializeField] GameObject[] webIcons;
     [SerializeField] GameObject grappleCurser;
     private bool timerActive = true;
@@ -46,6 +47,9 @@ public class HUDController : MonoBehaviour
             else displayTime = string.Format("-{0:0}:{1:00}", Math.Abs(minutes), Math.Abs(seconds));
 
             rainTimer.SetText(displayTime);
+
+            float colorNum = Mathf.Clamp(((timeInSeconds) / 255), 0, 1);
+            rainCloud.GetComponent<Image>().color = new Color(colorNum, colorNum, colorNum, 1);
         }
         UpdateWebDisplay(GameplayManager.Instance.PlayerBody.CurrentWebs);
 
