@@ -153,7 +153,8 @@ public class PlayerBody : MonoBehaviour, IDamageable
 
 
 
-        if (grapple && Vector3.Distance(transform.position, TargetGrapplePoint) < minGrappleDist)
+        if (grapple && (Vector3.Distance(transform.position, TargetGrapplePoint) < minGrappleDist ||
+            Vector3.Distance(transform.position, TargetGrapplePoint) < minGrappleDist))
         {
             grapple = false;
 
@@ -209,25 +210,24 @@ public class PlayerBody : MonoBehaviour, IDamageable
         return targetGrapplePoint;
     }
 
-    [Obsolete]
     private void updateGrappleDirection()
     {
         modGrapplePoint = TargetGrapplePoint;
         return;
 
+        float moveAmount = 1f;
+        float dist = Vector3.Distance(transform.position, modGrapplePoint);
 
-        //float moveAmount = 0.5f;
-        //float dist = Vector3.Distance(transform.position, modGrapplePoint);
-
-        //RaycastHit hit;
-        //if (Physics.Raycast(transform.position, modGrapplePoint - transform.position, out hit, dist))
-        //{
-        //    modGrapplePoint = modGrapplePoint + up * moveAmount;
-        //}
-        //else
-        //{
-        //    modGrapplePoint = TargetGrapplePoint;
-        //}
+        RaycastHit hit;
+        if (Physics.SphereCast(transform.position, 1, modGrapplePoint - transform.position, out hit, dist))
+        {
+            Vector3 stepDir = Vector3.Project(transform.position - modGrapplePoint, up).normalized;
+            modGrapplePoint += stepDir * moveAmount;
+        }
+        else
+        {
+            modGrapplePoint = TargetGrapplePoint;
+        }
     }
 
     public bool IsGrounded()
