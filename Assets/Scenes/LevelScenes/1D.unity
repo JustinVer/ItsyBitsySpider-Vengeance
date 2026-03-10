@@ -131,6 +131,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: 1D
       objectReference: {fileID: 0}
+    - target: {fileID: 3207013241329468004, guid: 69b726146e58f744a839c176d6a9770e, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3207013241329468004, guid: 69b726146e58f744a839c176d6a9770e, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 80
+      objectReference: {fileID: 0}
     - target: {fileID: 4952146397105741013, guid: 69b726146e58f744a839c176d6a9770e, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -986,7 +994,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerHealth: {fileID: 1657520031}
   rainTimer: {fileID: 0}
+  rainCloud: {fileID: 0}
   webIcons: []
+  grappleCurser: {fileID: 0}
 --- !u!1001 &1735520302
 PrefabInstance:
   m_ObjectHideFlags: 0
