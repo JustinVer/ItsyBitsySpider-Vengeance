@@ -159,7 +159,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7321657257124285391}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -0.46000004, z: 0.37999988}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -2333,11 +2333,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1137540894864329725, guid: 39a10461296404442a3135dca1cd4e67, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1141014740292864726, guid: 39a10461296404442a3135dca1cd4e67, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1711378813219383211, guid: 39a10461296404442a3135dca1cd4e67, type: 3}
       propertyPath: m_LocalScale.x
@@ -2385,15 +2385,31 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1760548977738058800, guid: 39a10461296404442a3135dca1cd4e67, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2056976635472805137, guid: 39a10461296404442a3135dca1cd4e67, type: 3}
       propertyPath: m_Name
       value: PipeSegment
       objectReference: {fileID: 0}
+    - target: {fileID: 2473061569426173075, guid: 39a10461296404442a3135dca1cd4e67, type: 3}
+      propertyPath: m_NavMeshData
+      value: 
+      objectReference: {fileID: 23800000, guid: 7f7eab972e102f54eb258e9add1497ee, type: 2}
+    - target: {fileID: 4202612473537897761, guid: 39a10461296404442a3135dca1cd4e67, type: 3}
+      propertyPath: m_NavMeshData
+      value: 
+      objectReference: {fileID: 23800000, guid: c6b7258ec91f13045b3ac529ac853767, type: 2}
+    - target: {fileID: 4433001336321936084, guid: 39a10461296404442a3135dca1cd4e67, type: 3}
+      propertyPath: m_NavMeshData
+      value: 
+      objectReference: {fileID: 23800000, guid: 43d532f8bd751e544af5c8120965a698, type: 2}
+    - target: {fileID: 5524411200149845838, guid: 39a10461296404442a3135dca1cd4e67, type: 3}
+      propertyPath: m_NavMeshData
+      value: 
+      objectReference: {fileID: 23800000, guid: d89c440a4adb1514cbd85601ad971d33, type: 2}
     - target: {fileID: 7538338935056523436, guid: 39a10461296404442a3135dca1cd4e67, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
