@@ -1239,6 +1239,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4494319959366287836, guid: bb80d1dfda28d79428a7b688aeeec2d4, type: 3}
+      propertyPath: sensitivity
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 5390958442823828640, guid: bb80d1dfda28d79428a7b688aeeec2d4, type: 3}
       propertyPath: m_Enabled
       value: 1
@@ -1916,6 +1920,19 @@ MonoBehaviour:
   playerInputName: Player
   UIInputName: UI
   gravitySplineContainer: {fileID: 788806729}
+  gravitySpline:
+    m_EditModeType: 1
+    m_Knots: []
+    m_MetaData: []
+    m_Closed: 0
+    m_IntData:
+      m_Data: []
+    m_FloatData:
+      m_Data: []
+    m_Float4Data:
+      m_Data: []
+    m_ObjectData:
+      m_Data: []
   player: {fileID: 227530998}
   playerBody: {fileID: 227531004}
   playerManager: {fileID: 1245046838}
