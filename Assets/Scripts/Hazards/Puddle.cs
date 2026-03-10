@@ -15,7 +15,6 @@ public class Puddle : MonoBehaviour
     {
         if (other.gameObject == GameplayManager.Instance.Player && !plugged)
         {
-            Debug.Log("Puddle slow player");
             GameplayManager.Instance.PlayerBody.Slow(0.25f);
         }
     }

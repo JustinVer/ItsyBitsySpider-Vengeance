@@ -62,7 +62,6 @@ public class Gun : MonoBehaviour
     {
         GameObject newBullet = Instantiate(bullet, muzzle.position, Quaternion.identity);
         newBullet.GetComponent<Rigidbody>().AddForce(muzzle.forward * shotForce, ForceMode.Impulse);
-        Debug.Log("bullet forward gun " + muzzle.forward);
         newBullet.transform.forward = muzzle.forward;
         muzzleFlash1.Play();
         muzzleFlash2.Play();

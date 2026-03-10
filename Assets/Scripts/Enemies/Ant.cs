@@ -17,7 +17,6 @@ public class Ant : EnemyBase, IFireAnimation, ICollisionReciever
 
     private void OnEnable()
     {
-        Debug.Log("Ant enabled");
         this.startPosition = this.transform.position;
     }
     private void Start()
@@ -51,7 +50,6 @@ public class Ant : EnemyBase, IFireAnimation, ICollisionReciever
         if (!isDying)
         {
             GameplayManager.Instance.PlayerBody.CurrentWebs++;
-            Debug.Log("ant died");
             animator.SetTrigger("Died");
             isDying = true;
         }
@@ -96,7 +94,6 @@ public class Ant : EnemyBase, IFireAnimation, ICollisionReciever
         yield return new WaitUntil(() => !waitingForGrapple);
         while (isGrapplingPlayer)
         {
-            Debug.Log("Ant current grapple");
             GameplayManager.Instance.Player.GetComponent<PlayerBody>().Slow(slowPercentage);
             yield return null;
         }
@@ -118,7 +115,6 @@ public class Ant : EnemyBase, IFireAnimation, ICollisionReciever
 
     public void FireProjectile()
     {
-        Debug.Log("Fire projectile");
         waitingForGrapple = false;
     }
 
@@ -143,7 +139,6 @@ public class Ant : EnemyBase, IFireAnimation, ICollisionReciever
     {
         if (canGrapplePlayer && collision.gameObject == GameplayManager.Instance.PlayerBody.gameObject)
         {
-            Debug.Log("Ant start grapple");
             StartCoroutine(Grapple(data.abilityCoolDown, data.attackCoolDown));
         }
     }

@@ -143,7 +143,6 @@ public class Beetle : EnemyBase, IFireAnimation
             rotateTowards(endPos, getPlayerProjectionPosition(), -GameplayManager.Instance.GetGravity(endPos), maxDegreesRotationJump);
             float yOffset = height * 4.0f * (normalizedTime - normalizedTime * normalizedTime);
             this.transform.position = Vector3.Lerp(startPos, endPos, normalizedTime) + yOffset * gravityDir;
-            Debug.Log("Beetle gravity " + GameplayManager.Instance.GetGravity(this.transform.position).normalized);
             normalizedTime += Time.deltaTime / duration;
             yield return new WaitForFixedUpdate();
         }
@@ -161,7 +160,6 @@ public class Beetle : EnemyBase, IFireAnimation
         MaxHeap<Platform> maxHeap = new MaxHeap<Platform>(platforms, x => platformHeuristic(x));
 
         Platform currentPlatform = null;
-        Debug.Log("beetle before while loop");
         while (maxHeap.Count > 0)
         {
             currentPlatform = maxHeap.Pull();
@@ -170,14 +168,12 @@ public class Beetle : EnemyBase, IFireAnimation
 
             while (currentTransform != null)
             {
-                Debug.Log("Beetle before obstacle check");
                 NavMeshHit hit;
                 if (NavMesh.SamplePosition(currentTransform.position - GameplayManager.Instance.GetGravity(currentTransform.position).normalized * 2, out hit, 5.0f, NavMesh.AllAreas))
                 {
                     Vector3 platformPosition = hit.position;
                     if (!obstaclesInJump(this.transform.position, platformPosition, 3f, 2f, currentPlatform.PlatformObject))
                     {
-                        Debug.Log("Beetle found platform");
                         foreach (Transform t in platformTransforms)
                         {
                             currentPlatform.returnPlatformPoint(t);
@@ -228,7 +224,6 @@ public class Beetle : EnemyBase, IFireAnimation
             float t = i / (float)numDetectionCasts;
 
             float yOffset = height * 4.0f * (t - t * t);
-            Debug.Log("Beetle y offset" + yOffset + " " + gravityDir);
             Vector3 samplePos = Vector3.Lerp(startPos, endPos, t) + yOffset * gravityDir;
 
             //collision check
@@ -236,7 +231,6 @@ public class Beetle : EnemyBase, IFireAnimation
 
             if (hits.Length > 0 && hits[0].gameObject != platform)
             {
-                Debug.Log("Beetle jump blocked by " + hits[0].name);
                 return true;
             }
         }

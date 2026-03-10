@@ -32,7 +32,6 @@ public class PillBug : EnemyBase, ICollisionReciever
 
     public void CollisionSignal(Collision collision)
     {
-        Debug.Log("Reveied signal");
         if (collision.gameObject == GameplayManager.Instance.Player)
         {
             playerHit(collision.gameObject.GetComponent<IDamageable>());
@@ -41,7 +40,6 @@ public class PillBug : EnemyBase, ICollisionReciever
 
     public void playerHit(IDamageable player)
     {
-        Debug.Log("PlayerHitMethod " + canAttack + " " + player);
         if (canAttack && player != null)
         {
             if (hitCoroutine != null)
@@ -53,7 +51,6 @@ public class PillBug : EnemyBase, ICollisionReciever
     }
     private IEnumerator HitPlayer(IDamageable player)
     {
-        Debug.Log("Hit player coroutine");
 
         player.modifyHP(data.damage * -1);
         rollingPastPlayer = true;

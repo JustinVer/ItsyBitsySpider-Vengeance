@@ -43,7 +43,6 @@ public class ObjectPool<T> where T : Component
 
     T CreatePooledItem()
     {
-        Debug.Log("Created an item");
         objectPrefab.gameObject.SetActive(false);
 
 

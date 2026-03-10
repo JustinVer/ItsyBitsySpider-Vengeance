@@ -19,7 +19,6 @@ public class PlayerManager : MonoBehaviour
             return;
         }
 
-        Debug.Log("Player movement raw direction: " + new Vector3(GameplayManager.Instance.MoveVector.x, 0, GameplayManager.Instance.MoveVector.y) + " " + new Vector3(GameplayManager.Instance.MoveVector.x, 0, GameplayManager.Instance.MoveVector.y).normalized);
         body.MovementDir = new Vector3(GameplayManager.Instance.MoveVector.x, 0, GameplayManager.Instance.MoveVector.y).normalized;
         if (GameplayManager.Instance.Jump)
         {

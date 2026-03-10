@@ -50,7 +50,6 @@ public class BirdAttack : MonoBehaviour
         Quaternion upperEndRotation = upperBeak.transform.localRotation * Quaternion.Euler(upperBeakAngle);
         Quaternion lowerStartRotation = lowerBeak.transform.localRotation;
         Quaternion lowerEndRotation = lowerBeak.transform.localRotation * Quaternion.Euler(lowerBeakAngle);
-        Debug.Log("corutine");
 
         while (timeMoving < duration)
         {

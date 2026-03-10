@@ -161,7 +161,6 @@ public class PlayerBody : MonoBehaviour, IDamageable
         if (crash)
         {
             currentCrashDuration += Time.deltaTime;
-            Debug.Log("CRASHING");
         }
         else
         {
@@ -250,7 +249,6 @@ public class PlayerBody : MonoBehaviour, IDamageable
 
     public void Jump()
     {
-        //Debug.Log(IsGrounded());
         if (canJump())
         {
             doJump = true;
@@ -262,7 +260,6 @@ public class PlayerBody : MonoBehaviour, IDamageable
         Vector3 camRight = Vector3.Cross(cam.transform.forward, up);
         Vector3 trueForward = Vector3.Cross(up, camRight);
 
-        Debug.Log("Player movement direction 1" + movementDir);
         Vector3 rotatedMoveDir = Quaternion.LookRotation(trueForward, up) * movementDir;
 
         //Debug.DrawLine(transform.position, transform.position + this.rotatedMoveDir * 2, Color.green);
@@ -272,7 +269,6 @@ public class PlayerBody : MonoBehaviour, IDamageable
         {
             //would new speed go above max speed
             Vector3 targetVel = rb.linearVelocity + (rotatedMoveDir * acceleration) / rb.mass * Time.fixedDeltaTime;
-            Debug.Log("Player movement direction 2" + rotatedMoveDir + " target vel " + targetVel + " " + rb.linearVelocity);
 
             if (targetVel.magnitude <= currentMaxSpeed)
             {
@@ -292,7 +288,6 @@ public class PlayerBody : MonoBehaviour, IDamageable
                         turnForce = -(rb.linearVelocity - forwardVel) * deceleration;
                     }
                     rb.AddForce(turnForce, ForceMode.Force);
-                    Debug.Log("Player movement direction 2 turn force " + turnForce + " " + (rotatedMoveDir * acceleration) + " " + turnForce);
                 }
 
             }
@@ -419,7 +414,6 @@ public class PlayerBody : MonoBehaviour, IDamageable
 
     public void Slow(float slowPercent)
     {
-        Debug.Log("Player being slowed " + slowPercent);
         currentMaxSpeed = maxSpeed * slowPercent;
     }
 
