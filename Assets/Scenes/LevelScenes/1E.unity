@@ -986,7 +986,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerHealth: {fileID: 1657520031}
   rainTimer: {fileID: 0}
+  rainCloud: {fileID: 0}
   webIcons: []
+  grappleCurser: {fileID: 0}
 --- !u!1001 &1735520302
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1096,6 +1098,19 @@ MonoBehaviour:
   playerInputName: Player
   UIInputName: UI
   gravitySplineContainer: {fileID: 0}
+  gravitySpline:
+    m_EditModeType: 1
+    m_Knots: []
+    m_MetaData: []
+    m_Closed: 0
+    m_IntData:
+      m_Data: []
+    m_FloatData:
+      m_Data: []
+    m_Float4Data:
+      m_Data: []
+    m_ObjectData:
+      m_Data: []
   player: {fileID: 1262036163}
   playerBody: {fileID: 222048797}
   playerManager: {fileID: 0}

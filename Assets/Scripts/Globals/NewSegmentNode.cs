@@ -1,7 +1,5 @@
-using System;
 using UnityEngine;
 using UnityEngine.Splines;
-using UnityEngine.UIElements;
 
 public class NewSegmentNode : MonoBehaviour
 {
@@ -22,17 +20,17 @@ public class NewSegmentNode : MonoBehaviour
             position = pos;
             rotation = rot;
             thisSegment = Instantiate(segmentPrefab, position, Quaternion.Euler(rotation));
-            if (segmentSplineContainer == null)
+            /*if (segmentSplineContainer == null)
             {
                 segmentSplineContainer = thisSegment.GetComponent<SplineContainer>();
                 if (segmentSplineContainer != null)
                     GameplayManager.Instance.UpdateGravitySpline(segmentSplineContainer);
-            }
+            }*/
         }
     }
     public void UnloadSection()
     {
-        if(thisSegment)
+        if (thisSegment)
             Destroy(thisSegment);
     }
 }
