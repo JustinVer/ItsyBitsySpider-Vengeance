@@ -130,10 +130,7 @@ public class NewSegmentRandomizer : MonoBehaviour
     private void StartLoad()
     {
         corners[0].SetInitialPos(Vector3.zero);
-        corners[0].LoadCorner();
-        corners[0].LoadAhead();
-        corners[1].SetPos(corners[0].GetPos());
-        corners[1].LoadCorner();
+        LoadCorners(0);
     }
 
     public void LoadCorners(int index)

@@ -41,7 +41,7 @@ public class GameplayManager : MonoBehaviour
 
     [SerializeField] private const float GRAVITY_STRENGTH = 9.8f;
     [SerializeField] private SplineContainer gravitySplineContainer;
-    private Spline gravitySpline;
+    [SerializeField] private Spline gravitySpline;
     public Spline GravitySpline => gravitySpline;
     public GameObject Player => player;
     public PlayerBody PlayerBody => playerBody;
@@ -202,7 +202,6 @@ public class GameplayManager : MonoBehaviour
             //knot.Rotation = Quaternion.Inverse(gravitySplineContainer.transform.rotation) * worldRot;
 
             gravitySpline.Add(knot);
-            gravitySplineContainer.Spline.Add(knot);
         }
     }
     public Vector3 GetForward(Vector3 position) //TODO fix bugs with this
