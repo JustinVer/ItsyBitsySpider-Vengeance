@@ -15,6 +15,9 @@ public class NewSegmentRandomizer : MonoBehaviour
 
     [SerializeField] private Vector3 currentPoint = new Vector3(0, 0, 0);
 
+    [SerializeField] private bool debugMode = true;
+    [SerializeField] private int areaLength = 3;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -29,6 +32,17 @@ public class NewSegmentRandomizer : MonoBehaviour
         segments = new NewSegmentNode[cornerNum - 1][];
         int segmentCount = 0;
         int segmentGroup = 0;
+
+        if (!debugMode)
+        {
+            for (int i = 1; i < segmentOrder.Length; i++)
+            {
+                if (segmentOrder[i] != -1)
+                {
+                    //TODO:generate random level index
+                }
+            }
+        }
 
         for (int i = 1; i < segmentOrder.Length; i++)
         {
