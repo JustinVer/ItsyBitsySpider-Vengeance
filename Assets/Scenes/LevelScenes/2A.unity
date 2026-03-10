@@ -929,7 +929,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerHealth: {fileID: 1657520031}
   rainTimer: {fileID: 0}
+  rainCloud: {fileID: 0}
   webIcons: []
+  grappleCurser: {fileID: 0}
 --- !u!1001 &1735520302
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1039,6 +1041,19 @@ MonoBehaviour:
   playerInputName: Player
   UIInputName: UI
   gravitySplineContainer: {fileID: 0}
+  gravitySpline:
+    m_EditModeType: 1
+    m_Knots: []
+    m_MetaData: []
+    m_Closed: 0
+    m_IntData:
+      m_Data: []
+    m_FloatData:
+      m_Data: []
+    m_Float4Data:
+      m_Data: []
+    m_ObjectData:
+      m_Data: []
   player: {fileID: 1262036163}
   playerBody: {fileID: 222048797}
   playerManager: {fileID: 0}
@@ -1106,6 +1121,10 @@ PrefabInstance:
     - target: {fileID: 3791388862099580811, guid: 920ec302480d40249936ddaa855f1da9, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6956763669292624143, guid: 920ec302480d40249936ddaa855f1da9, type: 3}
+      propertyPath: m_Name
+      value: Obstacles
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
