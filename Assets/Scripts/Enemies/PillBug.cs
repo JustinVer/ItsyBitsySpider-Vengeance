@@ -22,6 +22,7 @@ public class PillBug : EnemyBase, ICollisionReciever
         bodyFollower.transform.localPosition = Vector3.zero;
         setHP(data.maxHP);
         StopAllCoroutines();
+        this.gameObject.SetActive(false);
     }
 
 
