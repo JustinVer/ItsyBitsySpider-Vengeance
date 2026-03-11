@@ -21,6 +21,8 @@ public class Gun : MonoBehaviour
     [SerializeField] private ParticleSystem muzzleFlash1;
     [SerializeField] private ParticleSystem muzzleFlash2;
 
+    [SerializeField] private float castWidth = 0.1f;
+
     Vector3 hitPosition;
 
     bool canFire = true;
@@ -32,7 +34,7 @@ public class Gun : MonoBehaviour
         //transform.LookAt(camPoint.position + camPoint.forward * 100f);
         Ray ray = playerCamera.ScreenPointToRay(new Vector3(Screen.width / 2f, Screen.height / 2f, 0));
         RaycastHit hit;
-        if (Physics.Raycast(ray, out hit, 200f, GameplayManager.Instance.NotPlayerOrEnemyMask, QueryTriggerInteraction.Ignore))
+        if (Physics.Raycast(ray, out hit, 200f))
         {
             hitPosition = hit.point;
         }
@@ -65,5 +67,25 @@ public class Gun : MonoBehaviour
         newBullet.transform.forward = muzzle.forward;
         muzzleFlash1.Play();
         muzzleFlash2.Play();
+
+
+        //hitcast
+        RaycastHit hit;
+        bool hitObjectBool = false;
+        if (Physics.BoxCast(playerCamera.transform.position, new Vector3(castWidth, castWidth, castWidth), playerCamera.transform.forward, out hit, Quaternion.identity, (hitPosition - playerCamera.transform.position).magnitude, fireMask))
+        {
+            hitObjectBool = true;
+            IDamageable hitObject = hit.collider.gameObject.GetComponent<IDamageable>();
+            Debug.Log("GUN: " + hit.collider.gameObject.name + " " + hitObjectBool + " " + hitPosition + " " + hit.collider.transform.position);
+            if (hitObject != null)
+            {
+                hitObject.modifyHP(-damage);
+                hitObject.hitEffect(hitPosition, this.transform.forward * -1);
+            }
+        }
+        else
+        {
+            Debug.Log("GUN: " + hit + " " + false + " " + hitPosition);
+        }
     }
 }

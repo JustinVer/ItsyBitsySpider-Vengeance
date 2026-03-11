@@ -11,6 +11,7 @@ public class Bullet : MonoBehaviour
         {
             hitObject.modifyHP(-damage);
             //DO not change this debug statment. For some reason the code doesn't work without it.
+            Debug.Log("bullet forward " + this.transform.forward + " " + this.transform.name + " " + this.transform.GetChild(0).transform.forward + " " + this.transform.GetChild(0).name);
             hitObject.hitEffect(hitPosition, this.transform.forward * -1);
         }
         Destroy(gameObject);

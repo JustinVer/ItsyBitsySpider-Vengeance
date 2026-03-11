@@ -570,7 +570,7 @@ MonoBehaviour:
   target: {fileID: 2030133482294659950}
   offset: {x: 3, y: 2, z: -8}
   followSpeed: 5
-  sensitivity: 0.25
+  sensitivity: 0.1
   minPitch: -45
   maxPitch: 45
 --- !u!1 &4426994471550383576
@@ -651,7 +651,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5585986459948365230
 Transform:
   m_ObjectHideFlags: 0
@@ -1036,9 +1036,21 @@ PrefabInstance:
       value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 8105757214071372947, guid: 46f0c531a703ae0458a47054a4b45332, type: 3}
+      propertyPath: castWidth
+      value: 0.08
+      objectReference: {fileID: 0}
+    - target: {fileID: 8105757214071372947, guid: 46f0c531a703ae0458a47054a4b45332, type: 3}
+      propertyPath: shotForce
+      value: 150
+      objectReference: {fileID: 0}
+    - target: {fileID: 8105757214071372947, guid: 46f0c531a703ae0458a47054a4b45332, type: 3}
       propertyPath: playerCamera
       value: 
       objectReference: {fileID: 4560535321691413841}
+    - target: {fileID: 8105757214071372947, guid: 46f0c531a703ae0458a47054a4b45332, type: 3}
+      propertyPath: fireMask.m_Bits
+      value: 128
+      objectReference: {fileID: 0}
     - target: {fileID: 8105757214071372947, guid: 46f0c531a703ae0458a47054a4b45332, type: 3}
       propertyPath: folloeTransform
       value: 

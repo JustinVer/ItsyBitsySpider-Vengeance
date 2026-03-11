@@ -757,18 +757,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 3670104184953847570, guid: bb80d1dfda28d79428a7b688aeeec2d4, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5390958442823828640, guid: bb80d1dfda28d79428a7b688aeeec2d4, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7696738527942133325, guid: bb80d1dfda28d79428a7b688aeeec2d4, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1397,7 +1385,7 @@ MonoBehaviour:
   NotPlayerOrEnemyMask:
     serializedVersion: 2
     m_Bits: 59
-  countdownTime: 5
+  countdownTime: 180
   water: {fileID: 510970074}
   waterSpeed: 50
   washOutRange: 50
