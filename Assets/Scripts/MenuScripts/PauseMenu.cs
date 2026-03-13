@@ -86,6 +86,7 @@ public class PauseMenu : MonoBehaviour
 
     public void QuitGame()
     {
+        Time.timeScale = 1f;
         GameplayManager.Instance.MainMenu();
     }
     public void masterVolumeSlider()
