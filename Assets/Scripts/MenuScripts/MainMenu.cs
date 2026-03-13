@@ -17,6 +17,8 @@ public class MainMenu : MonoBehaviour
             continueButton.interactable = false;
         }
         //GameManager.Instance.PlayerInput.enabled = false;
+
+        Debug.Log("MAIN MENU FINISHED LOADING");
     }
 
     public void NewGame()
