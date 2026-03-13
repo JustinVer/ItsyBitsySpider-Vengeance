@@ -76,6 +76,7 @@ public class GameplayManager : MonoBehaviour
 
     private bool isLoading = false;
     private string currentLevelName;
+    private string mainMenuLevelName = "StartGameScene";
 
     private SaveData saveData = new SaveData();
 
@@ -111,7 +112,7 @@ public class GameplayManager : MonoBehaviour
         }
 
         //Load new level
-        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(levelName, LoadSceneMode.Additive);
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(levelName, LoadSceneMode.Single);
         yield return new WaitUntil(() => !asyncLoad.isDone);
         yield return loadScreen.FinishLoading();
 
@@ -150,6 +151,11 @@ public class GameplayManager : MonoBehaviour
     {
         gameOver.gameObject.SetActive(true);
         playerInput.enabled = false;
+    }
+
+    public void MainMenu()
+    {
+        StartCoroutine(LoadLevel(mainMenuLevelName));
     }
 
     public void LevelComplete()
