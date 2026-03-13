@@ -50,10 +50,14 @@ public class MenuManager : MonoBehaviour
         // Hide the cursor
         Cursor.visible = true;
         LoadMainMenu();
+        loadScreen.gameObject.SetActive(false);
     }
 
     private IEnumerator LoadLevel(string levelName)
     {
+        Debug.Log("CURRENT SCENE: " + currentLevelName);
+        Debug.Log("LOADING: " + levelName);
+
         if (isLoading)
         {
             yield break;
@@ -84,12 +88,17 @@ public class MenuManager : MonoBehaviour
 
         currentLevelName = levelName;
 
+        Debug.Log("LOADED: " + levelName);
+
         //Wait one frame before saying loaded is done just to make sure everything is done loading in the scene
         yield return null;
+        yield return null;
+        Debug.Log("SETS NEW ACTIVE SCENE");
         SceneManager.SetActiveScene(SceneManager.GetSceneByName(levelName));
         isLoading = false;
 
         loadScreen.gameObject.SetActive(false);
+        Debug.Log("FINISHES LOAD");
     }
 
     public void StartNewGame()
@@ -98,6 +107,7 @@ public class MenuManager : MonoBehaviour
         saveData.InitilizeData();
         saveData.currentLevel = 0;
         FileHandler.SaveGame(saveData);
+        Debug.Log("NEW GAME");
         StartCoroutine(LoadLevel(gameplayScene));
     }
 

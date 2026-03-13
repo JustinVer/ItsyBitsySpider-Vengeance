@@ -69,7 +69,7 @@ public class Ant : EnemyBase, IFireAnimation, ICollisionReciever
             agentMover.SetDestination(startPosition);
             animator.SetBool("Moving", true);
         }
-        else if (distanceToPlayer < data.detectionDistanceClose || (distanceToPlayer < data.detectionDistanceLineOfSight && Physics.Linecast(bodyFollower.transform.position, GameplayManager.Instance.Player.transform.position, GameplayManager.Instance.NotPlayerOrEnemyMask)))
+        else if (distanceToPlayer < data.detectionDistanceLineOfSight && distanceToPlayer < data.detectionDistanceClose || Physics.Linecast(bodyFollower.transform.position, GameplayManager.Instance.Player.transform.position, GameplayManager.Instance.NotPlayerOrEnemyMask))
         {
             agentMover.SetDestination(GameplayManager.Instance.Player.transform.position);
             animator.SetBool("Moving", true);

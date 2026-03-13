@@ -86,11 +86,8 @@ public class PauseMenu : MonoBehaviour
 
     public void QuitGame()
     {
-#if UNITY_EDITOR
-        UnityEditor.EditorApplication.isPlaying = false;
-#elif UNITY_STANDALONE
-        Application.Quit();
-#endif
+        Time.timeScale = 1f;
+        GameplayManager.Instance.MainMenu();
     }
     public void masterVolumeSlider()
     {

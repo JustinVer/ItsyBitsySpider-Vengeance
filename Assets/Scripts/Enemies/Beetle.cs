@@ -116,7 +116,7 @@ public class Beetle : EnemyBase, IFireAnimation
         if (!isDying && !isJumping)
         {
             //Debug.Log("Mpve beetle " + (distanceToPlayer < data.detectionDistanceClose));
-            if (distanceToPlayer < data.detectionDistanceClose || (distanceToPlayer < data.detectionDistanceLineOfSight && Physics.Linecast(this.transform.position, GameplayManager.Instance.Player.transform.position, GameplayManager.Instance.NotPlayerOrEnemyMask)))
+            if (distanceToPlayer < data.detectionDistanceLineOfSight && distanceToPlayer < data.detectionDistanceClose || Physics.Linecast(this.transform.position, GameplayManager.Instance.Player.transform.position, GameplayManager.Instance.NotPlayerOrEnemyMask))
             {
                 Vector3 endPosition = getNewPlatformPosition();
                 StartCoroutine(Jump(endPosition, jumpHeight, (Vector3.Distance(this.transform.position, endPosition) * timeDistanceMultiplier) + timeDistanceBase));
