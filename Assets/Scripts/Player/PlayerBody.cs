@@ -349,7 +349,8 @@ public class PlayerBody : MonoBehaviour, IDamageable
         //glide
         if (glide && Vector3.Dot(rb.linearVelocity, gravity) >= 0) //check if moving down
         {
-            rb.AddForce(-gravity * glideStrength, ForceMode.Force);
+            Debug.Log("PlayerGlide");
+            rb.AddForce(-gravity * gravityMod * glideStrength, ForceMode.Force);
         }
 
         //grapple
