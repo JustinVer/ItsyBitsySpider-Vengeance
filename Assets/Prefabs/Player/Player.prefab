@@ -316,28 +316,28 @@ MonoBehaviour:
   TargetGrapplePoint: {x: 0, y: 0, z: 0}
   ValidGrapplePoint: 0
   maxHP: 100
-  acceleration: 9
-  deceleration: 10
-  maxSpeed: 10
-  jumpForce: 20
-  velCap: 100
-  gravityMod: 1
-  rideheight: 1.5
-  rideSpringStrength: 100
+  acceleration: 18
+  deceleration: 20
+  maxSpeed: 12.5
+  jumpForce: 26
+  velCap: 150
+  gravityMod: 1.9
+  rideheight: 1
+  rideSpringStrength: 110
   rideSpringDamp: 5
-  maxRayDist: 3
-  rotationSpeed: 700
-  airAngle: 120
+  maxRayDist: 2
+  rotationSpeed: 900
+  airAngle: 100
   groundAngle: 5
   cam: {fileID: 4560535321691413841}
-  maxWebs: 10
-  glideStrength: 0.882
-  grappleStrength: 950
-  maxGrappleDist: 30
-  crashSpeed: 1300
-  crashDuration: 0.5
-  knockBackHeight: 3
-  knockBackStrength: 35
+  maxWebs: 6
+  glideStrength: 0.8
+  grappleStrength: 1410
+  maxGrappleDist: 70
+  crashSpeed: 1200
+  crashDuration: 0.35
+  knockBackHeight: 5
+  knockBackStrength: 65
 --- !u!33 &731748397136411037
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -568,11 +568,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cameraFollow: 0
   target: {fileID: 2030133482294659950}
-  offset: {x: 3, y: 2, z: -8}
-  followSpeed: 5
-  sensitivity: 0.1
-  minPitch: -45
-  maxPitch: 45
+  offset: {x: 2, y: 1.5, z: -7}
+  followSpeed: 7
+  sensitivity: 0.09
+  minPitch: -55
+  maxPitch: 60
 --- !u!1 &4426994471550383576
 GameObject:
   m_ObjectHideFlags: 0
@@ -1037,7 +1037,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8105757214071372947, guid: 46f0c531a703ae0458a47054a4b45332, type: 3}
       propertyPath: castWidth
-      value: 0.08
+      value: 0.12
       objectReference: {fileID: 0}
     - target: {fileID: 8105757214071372947, guid: 46f0c531a703ae0458a47054a4b45332, type: 3}
       propertyPath: shotForce
@@ -1055,6 +1055,10 @@ PrefabInstance:
       propertyPath: folloeTransform
       value: 
       objectReference: {fileID: 7287214929669278032}
+    - target: {fileID: 8105757214071372947, guid: 46f0c531a703ae0458a47054a4b45332, type: 3}
+      propertyPath: screenRaycastMask.m_Bits
+      value: 185
+      objectReference: {fileID: 0}
     - target: {fileID: 8621322498738720801, guid: 46f0c531a703ae0458a47054a4b45332, type: 3}
       propertyPath: m_Layer
       value: 6

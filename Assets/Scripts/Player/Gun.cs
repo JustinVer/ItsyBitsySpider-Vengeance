@@ -17,6 +17,7 @@ public class Gun : MonoBehaviour
     [SerializeField] int damage = 10;
 
     [SerializeField] LayerMask fireMask;
+    [SerializeField] LayerMask screenRaycastMask;
 
     [SerializeField] private ParticleSystem muzzleFlash1;
     [SerializeField] private ParticleSystem muzzleFlash2;
@@ -34,8 +35,9 @@ public class Gun : MonoBehaviour
         //transform.LookAt(camPoint.position + camPoint.forward * 100f);
         Ray ray = playerCamera.ScreenPointToRay(new Vector3(Screen.width / 2f, Screen.height / 2f, 0));
         RaycastHit hit;
-        if (Physics.Raycast(ray, out hit, 200f))
+        if (Physics.Raycast(ray, out hit, 200f, screenRaycastMask))
         {
+            Debug.Log("Player gun hit " + hit.collider.gameObject.name);
             hitPosition = hit.point;
         }
         else
@@ -80,7 +82,7 @@ public class Gun : MonoBehaviour
             if (hitObject != null)
             {
                 hitObject.modifyHP(-damage);
-                hitObject.hitEffect(hitPosition, this.transform.forward * -1);
+                hitObject.hitEffect(hit.point, muzzle.forward * -1);
             }
         }
         else

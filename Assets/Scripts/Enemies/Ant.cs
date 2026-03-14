@@ -38,7 +38,8 @@ public class Ant : EnemyBase, IFireAnimation, ICollisionReciever
         setHP(data.maxHP);
         StopAllCoroutines();
         this.gameObject.SetActive(false);
-        parentPool.Return(this);
+        if (parentPool != null)
+            parentPool.Return(this);
     }
 
     protected override void Attack()

@@ -336,6 +336,11 @@ public class GameplayManager : MonoBehaviour
         escape = value.isPressed;
     }
 
+    public void OnGlide(InputValue value)
+    {
+        glide = value.isPressed;
+    }
+
 
     #endregion
 }
