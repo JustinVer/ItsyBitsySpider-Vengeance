@@ -29,6 +29,7 @@ struct SurfaceVariables {
    
    float3 normal;
    float3 view;
+   float3 clipPosition;
 
    EdgeConstants ec;
 
@@ -64,7 +65,7 @@ float3 CalculateCelShading(Light l, SurfaceVariables s) {
 #endif
 
 void LightingCelShaded_float(float Smoothness, 
-      float RimStrength, float RimAmount, float RimThreshold, 
+      float RimStrength, float RimAmount, float RimThreshold, float3 ClipPos, 
       float3 Position, float3 Normal, float3 View, float EdgeDiffuse,
       float EdgeSpecular, float EdgeDistanceAttenuation,
       float EdgeShadowAttenuation, float EdgeRim, out float3 Color) {
@@ -78,8 +79,9 @@ void LightingCelShaded_float(float Smoothness,
    s.rimStrength = RimStrength;
    s.rimAmount = RimAmount;
    s.rimThreshold = RimThreshold;
-    s.normal = SafeNormalize(Normal);
+   s.normal = SafeNormalize(Normal);
    s.view = SafeNormalize(View);
+   s.clipPosition = ClipPos;
    s.ec.diffuse = EdgeDiffuse;
    s.ec.specular = EdgeSpecular;
    s.ec.distanceAttenuation = EdgeDistanceAttenuation;
@@ -109,6 +111,10 @@ InputData inputData = (InputData)0;
 inputData.positionWS = Position;
 inputData.normalWS = s.normal;
 inputData.viewDirectionWS = s.view;
+inputData.shadowCoord = shadowCoord;
+    
+float4 screenPos = float4(s.clipPosition.x, (_ScaledScreenParams.y - s.clipPosition.y), 0, 0);
+inputData.normalizedScreenSpaceUV = GetNormalizedScreenSpaceUV(screenPos);
     
 LIGHT_LOOP_BEGIN(pixelLightCount)
     Light addLight = GetAdditionalLight(lightIndex, Position);
