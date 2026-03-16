@@ -15,6 +15,8 @@ public class BodyFollowAgent : MonoBehaviour
     [SerializeField] private float downMultiplier = -0.1f;
     public Animator Anim { get { return anim; } }
 
+    [SerializeField] private bool autoRotate = true;
+
     private void FixedUpdate()
     {
         rb.angularVelocity = Vector3.zero;
@@ -32,7 +34,7 @@ public class BodyFollowAgent : MonoBehaviour
             waitingForJump = false;
             followBody.StartJump();
         }
-        else if (Vector3.Distance(this.transform.position, followBody.transform.position) > 0.5f)
+        else if (autoRotate && Vector3.Distance(this.transform.position, followBody.transform.position) > 0.5f)
         {
             Rotate((followBody.transform.position - this.transform.position) + ((height / 2.0f) * GameplayManager.Instance.GetGravity(this.transform.position).normalized));
         }

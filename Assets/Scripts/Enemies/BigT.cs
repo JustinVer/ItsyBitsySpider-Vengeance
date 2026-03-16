@@ -8,7 +8,7 @@ public class BigT : MonoBehaviour, IFireAnimation, IDamageable
     [SerializeField] private AgentLinkMover agentMover;
     [SerializeField] private BodyFollowAgent bodyFollower;
     private float distanceToPlayer = 999f;
-    private State currentState = State.Attack;
+    [SerializeField] private State currentState = State.Attack;
     private bool trySummoning = false;
     [SerializeField] private Platform[] platforms;
     private Platform currentPlatformScript = null;
@@ -42,6 +42,9 @@ public class BigT : MonoBehaviour, IFireAnimation, IDamageable
     private int currentHP = 500;
 
     [SerializeField] private ParticleSystem damageParticle;
+    [SerializeField] private float maxRotation = 90f;
+    [SerializeField] private float landTime = 0.75f;
+    [SerializeField] private BigTGun gun;
 
     private enum State
     {
@@ -75,7 +78,6 @@ public class BigT : MonoBehaviour, IFireAnimation, IDamageable
             case State.Attack:
                 updateAttack();
                 break;
-
         }
     }
 
@@ -122,6 +124,7 @@ public class BigT : MonoBehaviour, IFireAnimation, IDamageable
     private IEnumerator Jump(Vector3 endPos, float height, float duration)
     {
         currentState = State.Jump;
+        animator.SetBool("Jumping", true);
         Vector3 startPos = this.transform.position;
         float normalizedTime = 0.0f;
         Vector3 gravityDir = -GameplayManager.Instance.GetGravity(Vector3.Lerp(startPos, endPos, 0.5f)).normalized;
@@ -132,8 +135,13 @@ public class BigT : MonoBehaviour, IFireAnimation, IDamageable
             float yOffset = height * 4.0f * (normalizedTime - normalizedTime * normalizedTime);
             this.transform.position = Vector3.Lerp(startPos, endPos, normalizedTime) + yOffset * gravityDir;
             normalizedTime += Time.deltaTime / duration;
+            if (normalizedTime * duration > duration - landTime)
+            {
+                animator.SetBool("Landing", true);
+            }
             yield return new WaitForFixedUpdate();
         }
+        animator.SetBool("Jumping", false);
         nextState();
     }
 
@@ -234,17 +242,18 @@ public class BigT : MonoBehaviour, IFireAnimation, IDamageable
                 animator.SetTrigger("Fire1");
                 isFiring = true;
             }
+            else if (!isFiring)
+            {
+                agentMover.SetDestination(GameplayManager.Instance.Player.transform.position);
+            }
         }
+        rotateTowards(bodyFollower.transform.position, GameplayManager.Instance.Player.transform.position, -GameplayManager.Instance.GetGravity(bodyFollower.transform.position), maxRotation);
     }
 
     public void FireProjectile()
     {
         if (isDying || currentState == State.Jump) return;
-        GameObject bullet = GameObject.Instantiate(projectilePrefab);
-        bullet.transform.forward = fireLocation.forward;
-        bullet.transform.position = fireLocation.position;
-        Rigidbody rb = bullet.GetComponent<Rigidbody>();
-        rb.linearVelocity = fireLocation.forward * ProjectileVelocity;
+        gun.Shoot();
     }
 
     public void FireComplete()
@@ -322,5 +331,15 @@ public class BigT : MonoBehaviour, IFireAnimation, IDamageable
         damageParticle.transform.position = position;
         damageParticle.transform.forward = forwardDirection;
         damageParticle.Play();
+    }
+
+    private void rotateTowards(Vector3 startPosition, Vector3 endPosition, Vector3 gravity, float maxRotation)
+    {
+        bodyFollower.transform.rotation = Quaternion.RotateTowards(bodyFollower.transform.rotation, Quaternion.LookRotation(endPosition - startPosition, gravity), maxRotation * Time.fixedDeltaTime);
+        Quaternion rotation2 = Quaternion.RotateTowards(bodyFollower.transform.rotation, agentMover.transform.rotation, maxRotation * Time.fixedDeltaTime);
+        Vector3 rot = bodyFollower.transform.localEulerAngles;
+        rot.x = rotation2.eulerAngles.x;
+        rot.z = rotation2.eulerAngles.z;
+        bodyFollower.transform.localEulerAngles = rot;
     }
 }
