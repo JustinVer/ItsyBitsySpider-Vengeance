@@ -25,6 +25,7 @@ public class Beetle : EnemyBase, IFireAnimation
     [SerializeField] private float detectionWidth = 2f;
     [SerializeField] private int numDetectionCasts = 11;
     [SerializeField] private float fireVelocityDistanceMultiplier = 0.5f;
+    private float landTime = 0.95f;
 
     protected override void Awake()
     {
@@ -36,11 +37,12 @@ public class Beetle : EnemyBase, IFireAnimation
     {
         fireSignal = this.gameObject.GetComponentInChildren<SendFireSignal>();
         fireSignal.body = this;
+        platforms = FindObjectsByType<Platform>(FindObjectsSortMode.None);
     }
 
     protected override void NotDyingUpdate()
     {
-        distanceToPlayer = Vector3.Distance(this.transform.position, GameplayManager.Instance.Player.transform.position);
+        distanceToPlayer = Vector3.Distance(this.transform.position, GameplayManager.Instance.PlayerBody.transform.position);
         if (!isJumping)
         {
             rotateTowards(fireLocation.position, getPlayerProjectionPosition(), GameplayManager.Instance.GetGravity(this.transform.position) * -1, maxDegreesRotationNormal);
@@ -113,13 +115,17 @@ public class Beetle : EnemyBase, IFireAnimation
 
     protected override void Move()
     {
+        Debug.Log("Beetle " + isDying + " " + isJumping + " " + (distanceToPlayer < data.detectionDistanceLineOfSight) + " " + (distanceToPlayer < data.detectionDistanceClose) + " " + Physics.Linecast(this.transform.position, GameplayManager.Instance.Player.transform.position, GameplayManager.Instance.NotPlayerOrEnemyMask));
         if (!isDying && !isJumping)
         {
             //Debug.Log("Mpve beetle " + (distanceToPlayer < data.detectionDistanceClose));
-            if (distanceToPlayer < data.detectionDistanceLineOfSight && distanceToPlayer < data.detectionDistanceClose || Physics.Linecast(this.transform.position, GameplayManager.Instance.Player.transform.position, GameplayManager.Instance.NotPlayerOrEnemyMask))
+            if (distanceToPlayer < data.detectionDistanceLineOfSight && (distanceToPlayer < data.detectionDistanceClose || Physics.Linecast(this.transform.position, GameplayManager.Instance.Player.transform.position, GameplayManager.Instance.NotPlayerOrEnemyMask)))
             {
                 Vector3 endPosition = getNewPlatformPosition();
-                StartCoroutine(Jump(endPosition, jumpHeight, (Vector3.Distance(this.transform.position, endPosition) * timeDistanceMultiplier) + timeDistanceBase));
+                if (endPosition != this.transform.position)
+                {
+                    StartCoroutine(Jump(endPosition, jumpHeight, (Vector3.Distance(this.transform.position, endPosition) * timeDistanceMultiplier) + timeDistanceBase));
+                }
             }
             else
             {
@@ -144,10 +150,15 @@ public class Beetle : EnemyBase, IFireAnimation
             float yOffset = height * 4.0f * (normalizedTime - normalizedTime * normalizedTime);
             this.transform.position = Vector3.Lerp(startPos, endPos, normalizedTime) + yOffset * gravityDir;
             normalizedTime += Time.deltaTime / duration;
+            if (normalizedTime * duration > duration - landTime)
+            {
+                animator.SetBool("Landing", true);
+            }
             yield return new WaitForFixedUpdate();
         }
         isJumping = false;
         animator.SetBool("Jumping", false);
+        animator.SetBool("Landing", false);
     }
 
     private Vector3 getNewPlatformPosition()

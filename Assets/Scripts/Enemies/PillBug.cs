@@ -13,7 +13,7 @@ public class PillBug : EnemyBase, ICollisionReciever
 
     protected override void NotDyingUpdate()
     {
-        distanceToPlayer = Vector3.Distance(bodyFollower.transform.position, GameplayManager.Instance.Player.transform.position);
+        distanceToPlayer = Vector3.Distance(bodyFollower.transform.position, GameplayManager.Instance.PlayerBody.transform.position);
         base.NotDyingUpdate();
     }
     public override void ReturnSelf()
