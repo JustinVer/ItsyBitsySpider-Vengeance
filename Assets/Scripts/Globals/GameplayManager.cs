@@ -56,6 +56,7 @@ public class GameplayManager : MonoBehaviour
     public LayerMask NotPlayerOrEnemyMask;
 
     [SerializeField] private float countdownTime = 180f;
+    private bool countDownActive = true;
 
     [SerializeField] GameObject water;
     private float waterPosition = 1;
@@ -252,9 +253,26 @@ public class GameplayManager : MonoBehaviour
         }
     }
 
+    private void SetupForStart()
+    {
+        player.transform.position = new Vector3(-3, -23, 3);
+        player.transform.rotation = new Quaternion();
+
+    }
+
+    private void ResetGame()
+    {
+
+    }
+
+    public void PauseTimer()
+    {
+        countDownActive = !countDownActive;
+    }
+
     private void Update()
     {
-        if (!washedOut) countdownTime -= Time.deltaTime;
+        if (!washedOut && countDownActive) countdownTime -= Time.deltaTime;
 
         HUDController.TimeInSeconds = countdownTime;
 

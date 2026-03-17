@@ -16,8 +16,8 @@ public class BirdAttack : MonoBehaviour
     private int attackStage = 0;
     private Vector3 homePos;
 
-    Vector3 upperBeakOpen = new Vector3(-20f, 0f, 0f);
-    Vector3 lowerBeakOpen = new Vector3(20f, 0f, 0f);
+    Vector3 upperBeakOpen = new Vector3(-25f, 0f, 0f);
+    Vector3 lowerBeakOpen = new Vector3(25f, 0f, 0f);
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
