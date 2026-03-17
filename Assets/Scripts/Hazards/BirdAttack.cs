@@ -16,17 +16,20 @@ public class BirdAttack : MonoBehaviour
     private int attackStage = 0;
     private Vector3 homePos;
 
+    Vector3 upperBeakOpen = new Vector3(-20f, 0f, 0f);
+    Vector3 lowerBeakOpen = new Vector3(20f, 0f, 0f);
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         homePos = beak.transform.position;
         body = GameplayManager.Instance.Player.GetComponentInChildren<PlayerBody>();
+
+        StartCoroutine(RandomPeck(UnityEngine.Random.Range(1.0f, 20.0f)));
     }
 
     private void OnTriggerEnter(Collider collision)
     {
-        Vector3 upperBeakOpen = new Vector3(-20f, 0f, 0f);
-        Vector3 lowerBeakOpen = new Vector3(20f, 0f, 0f);
         if (ReferenceEquals(GameplayManager.Instance.Player, collision.gameObject))
         {
             if (attackStage == 0)
@@ -38,6 +41,10 @@ public class BirdAttack : MonoBehaviour
                 upperBeak.transform.Rotate(upperBeakOpen);
                 lowerBeak.transform.Rotate(lowerBeakOpen);
                 StartCoroutine(moveBeak(collision.transform.position, attackDuration, -upperBeakOpen, -lowerBeakOpen));
+            }
+            else if (attackStage == 3)
+            {
+                returnToStart();
             }
         }
     }
@@ -86,10 +93,28 @@ public class BirdAttack : MonoBehaviour
 
             StartCoroutine(moveBeak(homePos, attackDuration * 3, Vector3.zero, Vector3.zero));
         }
+        else if (attackStage == 3)
+        {
+            attackStage = 2;
+
+            StartCoroutine(moveBeak(homePos, attackDuration * 3, Vector3.zero, Vector3.zero));
+        }
         else
         {
             attackStage = 0;
             beak.transform.localRotation = Quaternion.Euler(0, 0, 0);
+
+            StartCoroutine(RandomPeck(UnityEngine.Random.Range(1.0f, 20.0f)));
         }
+    }
+
+    IEnumerator RandomPeck(float waitTime)
+    {
+        yield return new WaitForSeconds(waitTime);
+
+        attackStage = 3;
+        upperBeak.transform.Rotate(upperBeakOpen);
+        lowerBeak.transform.Rotate(lowerBeakOpen);
+        StartCoroutine(moveBeak(homePos + beak.transform.up * 7, attackDuration, -upperBeakOpen, -lowerBeakOpen));
     }
 }
