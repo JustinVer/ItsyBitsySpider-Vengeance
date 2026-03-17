@@ -21,7 +21,7 @@ public class BigT : MonoBehaviour, IFireAnimation, IDamageable
     [SerializeField] private float maxDegreesRotationJump = 90f;
     [SerializeField] private float distancePastBossJumps = 40f;
 
-    private SendFireSignal fireSignal;
+    [SerializeField] private SendFireSignal fireSignal;
     private bool isFiring = false;
     [SerializeField] private GameObject projectilePrefab;
     [SerializeField] private float ProjectileVelocity = 10f;
@@ -61,6 +61,13 @@ public class BigT : MonoBehaviour, IFireAnimation, IDamageable
             damageParticle.transform.parent = null;
             damageParticle.gameObject.SetActive(true);
         }
+    }
+
+    private void Start()
+    {
+        fireSignal = this.gameObject.GetComponentInChildren<SendFireSignal>();
+        fireSignal.body = this;
+        platforms = FindObjectsByType<Platform>(FindObjectsSortMode.None);
     }
 
 
@@ -237,9 +244,10 @@ public class BigT : MonoBehaviour, IFireAnimation, IDamageable
             {
                 nextState();
             }
-            else if (distanceToPlayer < attackRange && Physics.Linecast(this.transform.position, GameplayManager.Instance.Player.transform.position, GameplayManager.Instance.NotPlayerOrEnemyMask))
+            else if (distanceToPlayer < attackRange)
             {
                 animator.SetTrigger("Fire1");
+                Debug.Log("Boss fire start");
                 isFiring = true;
             }
             else if (!isFiring)
