@@ -27,6 +27,7 @@ public class BigT : MonoBehaviour, IFireAnimation, IDamageable
     [SerializeField] private float ProjectileVelocity = 10f;
     [SerializeField] private Transform fireLocation;
     private bool isDying = false;
+    [SerializeField] private float closestDistanceMoveToPlayer = 15f;
     [SerializeField] private float attackRange = 15f;
     [SerializeField] private float chaseRange = 25f;
     [SerializeField] private Animator animator;
@@ -146,6 +147,7 @@ public class BigT : MonoBehaviour, IFireAnimation, IDamageable
             {
                 animator.SetBool("Landing", true);
             }
+            rotateTowards(startPos, endPos, -GameplayManager.Instance.GetGravity(bodyFollower.transform.position), maxRotation);
             yield return new WaitForFixedUpdate();
         }
         animator.SetBool("Jumping", false);
@@ -244,18 +246,25 @@ public class BigT : MonoBehaviour, IFireAnimation, IDamageable
             {
                 nextState();
             }
-            else if (distanceToPlayer < attackRange)
+            if (distanceToPlayer < attackRange)
             {
                 animator.SetTrigger("Fire1");
                 Debug.Log("Boss fire start");
                 isFiring = true;
             }
-            else if (!isFiring)
-            {
-                agentMover.SetDestination(GameplayManager.Instance.Player.transform.position);
-            }
+
         }
-        rotateTowards(bodyFollower.transform.position, GameplayManager.Instance.Player.transform.position, -GameplayManager.Instance.GetGravity(bodyFollower.transform.position), maxRotation);
+        if (distanceToPlayer > closestDistanceMoveToPlayer)
+        {
+            agentMover.SetDestination(GameplayManager.Instance.Player.transform.position);
+        }
+        else
+        {
+            agentMover.agent.velocity = Vector3.zero;
+            bodyFollower.RB.linearVelocity = Vector3.zero;
+            bodyFollower.RB.angularVelocity = Vector3.zero;
+        }
+        rotateTowardsPlayerAndBody(bodyFollower.transform.position, GameplayManager.Instance.Player.transform.position, -GameplayManager.Instance.GetGravity(bodyFollower.transform.position), maxRotation);
     }
 
     public void FireProjectile()
@@ -341,7 +350,7 @@ public class BigT : MonoBehaviour, IFireAnimation, IDamageable
         damageParticle.Play();
     }
 
-    private void rotateTowards(Vector3 startPosition, Vector3 endPosition, Vector3 gravity, float maxRotation)
+    private void rotateTowardsPlayerAndBody(Vector3 startPosition, Vector3 endPosition, Vector3 gravity, float maxRotation)
     {
         bodyFollower.transform.rotation = Quaternion.RotateTowards(bodyFollower.transform.rotation, Quaternion.LookRotation(endPosition - startPosition, gravity), maxRotation * Time.fixedDeltaTime);
         Quaternion rotation2 = Quaternion.RotateTowards(bodyFollower.transform.rotation, agentMover.transform.rotation, maxRotation * Time.fixedDeltaTime);
@@ -349,5 +358,10 @@ public class BigT : MonoBehaviour, IFireAnimation, IDamageable
         rot.x = rotation2.eulerAngles.x;
         rot.z = rotation2.eulerAngles.z;
         bodyFollower.transform.localEulerAngles = rot;
+    }
+
+    private void rotateTowards(Vector3 startPosition, Vector3 endPosition, Vector3 gravity, float maxRotation)
+    {
+        bodyFollower.transform.rotation = Quaternion.RotateTowards(bodyFollower.transform.rotation, Quaternion.LookRotation(endPosition - startPosition, gravity), maxRotation * Time.fixedDeltaTime);
     }
 }

@@ -206,7 +206,7 @@ MonoBehaviour:
   ProjectileVelocity: 100
   fireVelocityDistanceMultiplier: 1.02
   maxFireAngle: 0.09
-  numBulletsPerVolley: 25
+  numBulletsPerVolley: 30
   spreadDistanceDivider: -20
 --- !u!1 &5586147791959786241
 GameObject:
@@ -377,7 +377,7 @@ MonoBehaviour:
   height: 0.7
   maxDegreesRotation: 270
   anim: {fileID: 2140166832346740191}
-  downMultiplier: -0.2
+  downMultiplier: -1
   autoRotate: 0
 --- !u!114 &111932908207374793
 MonoBehaviour:
@@ -431,7 +431,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.9, y: 0.9, z: 0.9}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 4763869716748508995}
@@ -461,14 +461,15 @@ MonoBehaviour:
   detectionWidth: 2
   numDetectionCasts: 11
   jumpHeight: 4
-  timeDistanceMultiplier: 0.05
-  timeDistanceBase: 0.25
+  timeDistanceMultiplier: 0.035
+  timeDistanceBase: 0.2
   maxDegreesRotationJump: 90
   distancePastBossJumps: 40
   fireSignal: {fileID: 6203758562322766912}
   projectilePrefab: {fileID: 3387162059900276505, guid: 44d776ff379b9564ebd876cc41406594, type: 3}
   ProjectileVelocity: 10
   fireLocation: {fileID: 2606265160187364049}
+  closestDistanceMoveToPlayer: 15
   attackRange: 35
   chaseRange: 55
   animator: {fileID: 2140166832346740191}
