@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Pointy leaf 1
-  m_Shader: {fileID: -6465566751694194690, guid: a6cc5f201d4dad942ab5d4c544dadcfc, type: 3}
+  m_Shader: {fileID: -6465566751694194690, guid: 9c223021a2119d14982f36c07ec6658e, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -97,6 +97,8 @@ Material:
     - _Blend: 0
     - _BlendModePreserveSpecular: 1
     - _BumpScale: 1
+    - _Cap_Color_Value: 1
+    - _Cap_Threshold: 2
     - _ClearCoatMask: 0
     - _ClearCoatSmoothness: 0
     - _Cull: 2
@@ -105,11 +107,11 @@ Material:
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
     - _DstBlendAlpha: 0
-    - _EdgeDiffuse: 0.001
-    - _EdgeDistanceAttenuation: 0.001
-    - _EdgeRim: 0.001
-    - _EdgeShadowAttenuation: 1
-    - _EdgeSpecular: 0.001
+    - _EdgeDiffuse: 0
+    - _EdgeDistanceAttenuation: 0
+    - _EdgeRim: 0
+    - _EdgeShadowAttenuation: 0
+    - _EdgeSpecular: 0
     - _EnvironmentReflections: 1
     - _GlossMapScale: 0
     - _Glossiness: 0
