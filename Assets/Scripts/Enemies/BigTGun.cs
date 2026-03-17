@@ -27,7 +27,7 @@ public class BigTGun : MonoBehaviour
     void Update()
     {
         this.transform.position = folloeTransform.position;
-        this.transform.rotation = Quaternion.RotateTowards(this.transform.rotation, Quaternion.LookRotation(getPlayerProjectionPosition() - folloeTransform.position, GameplayManager.Instance.GetGravity(this.transform.position)), rotationSpeed);
+        this.transform.rotation = Quaternion.RotateTowards(this.transform.rotation, Quaternion.LookRotation(getPlayerProjectionPosition() - folloeTransform.position, folloeTransform.up), rotationSpeed * Time.deltaTime);
     }
 
     public void Shoot()

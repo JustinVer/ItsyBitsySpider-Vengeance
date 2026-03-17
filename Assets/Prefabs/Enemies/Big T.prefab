@@ -199,7 +199,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bullet: {fileID: 4705433837832886811, guid: bf805d2d4cf707441bc995700317cd17, type: 3}
   muzzle: {fileID: 8097128361716437672}
-  rotationSpeed: 0.15
+  rotationSpeed: 75
   folloeTransform: {fileID: 2606265160187364049}
   muzzleFlash1: {fileID: 7299061578121652843}
   muzzleFlash2: {fileID: 7336270087408985573}
@@ -207,7 +207,7 @@ MonoBehaviour:
   fireVelocityDistanceMultiplier: 1.02
   maxFireAngle: 0.09
   numBulletsPerVolley: 25
-  spreadDistanceDivider: -6
+  spreadDistanceDivider: -20
 --- !u!1 &5586147791959786241
 GameObject:
   m_ObjectHideFlags: 0
@@ -233,7 +233,7 @@ Transform:
   m_GameObject: {fileID: 5586147791959786241}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 1.681, z: -0.215}
+  m_LocalPosition: {x: 0, y: 1.4, z: -0.215}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -469,8 +469,8 @@ MonoBehaviour:
   projectilePrefab: {fileID: 3387162059900276505, guid: 44d776ff379b9564ebd876cc41406594, type: 3}
   ProjectileVelocity: 10
   fireLocation: {fileID: 2606265160187364049}
-  attackRange: 200
-  chaseRange: 500
+  attackRange: 35
+  chaseRange: 55
   animator: {fileID: 2140166832346740191}
   minTimeBetweenSummons: 30
   timeSinceLastSummon: 0
