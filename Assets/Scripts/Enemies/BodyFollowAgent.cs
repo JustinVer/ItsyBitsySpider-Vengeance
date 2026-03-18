@@ -59,6 +59,11 @@ public class BodyFollowAgent : MonoBehaviour
         this.speed = newSpeed;
     }
 
+    public float getSpeed()
+    {
+        return speed;
+    }
+
     private void Rotate(Vector3 direction)
     {
         this.transform.rotation = Quaternion.RotateTowards(this.transform.rotation, followBody.transform.rotation, maxDegreesRotation * Time.fixedDeltaTime);

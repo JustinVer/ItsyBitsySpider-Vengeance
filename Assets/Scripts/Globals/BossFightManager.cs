@@ -33,14 +33,15 @@ public class BossFightManager : MonoBehaviour
 
     public void SummonRandomEnemies(int numEnemies)
     {
-        float spawnChance = numEnemies / (float)enemySpawnPositions.Length;
-        for (int i = 0; i < enemySpawnPositions.Length; i++)
+        float spawnChance = ((float)numEnemies) / ((float)enemySpawnPositions.Length);
+        Debug.Log("Boss summon spawn chance " + spawnChance);
+        for (int i = 0; i < enemySpawnPositions.Length && numEnemies > 0; i++)
         {
             if (enemySpawnPositions.Length - i >= numEnemies || Random.value < spawnChance)
             {
                 int enemyToSpawn = Random.Range(0, enemyPrefabs.Length);
 
-                Instantiate(enemyPrefabs[enemyToSpawn], enemySpawnPositions[i].position, enemySpawnPositions[i].rotation);
+                Instantiate(enemyPrefabs[enemyToSpawn], enemySpawnPositions[i].position, Quaternion.identity);
                 numEnemies--;
             }
         }

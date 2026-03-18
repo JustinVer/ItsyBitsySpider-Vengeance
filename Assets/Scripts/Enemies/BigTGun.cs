@@ -47,8 +47,6 @@ public class BigTGun : MonoBehaviour
             Vector3 spreadDirection = new Vector3(spreadAmount.x * muzzleInverse.x, spreadAmount.y * muzzleInverse.y, spreadAmount.z * muzzleInverse.z);
             spreadDirection = spreadDirection.normalized * maxFireAngle;
 
-            Debug.Log("Boss " + spreadDirection + " " + muzzle.forward);
-
             GameObject newBullet = Instantiate(bullet, muzzle.position + spreadDirection / 5.0f, Quaternion.identity);
             newBullet.transform.forward = spreadDirection + muzzle.forward;
             newBullet.GetComponent<Rigidbody>().linearVelocity = ProjectileVelocity * newBullet.transform.forward;
