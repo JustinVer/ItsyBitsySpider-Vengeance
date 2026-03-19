@@ -57,6 +57,6 @@ public class BigTGun : MonoBehaviour
 
     private Vector3 getPlayerProjectionPosition()
     {
-        return GameplayManager.Instance.PlayerBody.transform.position + (GameplayManager.Instance.GetGravity(GameplayManager.Instance.PlayerBody.transform.position).normalized * (Mathf.Sqrt(Vector3.Distance(GameplayManager.Instance.Player.transform.position, this.transform.position)) / spreadDistanceDivider)) + ((GameplayManager.Instance.PlayerBody.LinearVelocity() * fireVelocityDistanceMultiplier * Mathf.Abs(Vector3.Distance(GameplayManager.Instance.PlayerBody.transform.position, this.transform.position))) / ProjectileVelocity);
+        return GameplayManager.Instance.PlayerBody.transform.position + (GameplayManager.Instance.GetGravity(GameplayManager.Instance.PlayerBody.transform.position).normalized * spreadDistanceDivider) + ((GameplayManager.Instance.PlayerBody.LinearVelocity() * fireVelocityDistanceMultiplier * Mathf.Abs(Vector3.Distance(GameplayManager.Instance.PlayerBody.transform.position, this.transform.position))) / ProjectileVelocity);
     }
 }

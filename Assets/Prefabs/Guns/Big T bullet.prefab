@@ -47,7 +47,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b23ef1c97a96c484da2bba84481c1a54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 2
+  damage: 1
 --- !u!54 &123656899983459740
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -67,7 +67,7 @@ Rigidbody:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 128
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 0
@@ -94,8 +94,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.27110425, y: 0.2711043, z: 0.5199955}
-  m_Center: {x: 0.0029630214, y: -0.000000014901161, z: 0.26666912}
+  m_Size: {x: 0.24, y: 0.24, z: 0.3}
+  m_Center: {x: 0, y: 0, z: 0.12}
 --- !u!1001 &2478397842773189106
 PrefabInstance:
   m_ObjectHideFlags: 0
