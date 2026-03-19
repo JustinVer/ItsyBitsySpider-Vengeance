@@ -116,11 +116,10 @@ public class Beetle : EnemyBase, IFireAnimation
 
     protected override void Move()
     {
-        Debug.Log("Beetle " + isDying + " " + isJumping + " " + (distanceToPlayer < data.detectionDistanceLineOfSight) + " " + (distanceToPlayer < data.detectionDistanceClose) + " " + Physics.Linecast(this.transform.position, GameplayManager.Instance.Player.transform.position, GameplayManager.Instance.NotPlayerOrEnemyMask));
         if (!isDying && !isJumping)
         {
             //Debug.Log("Mpve beetle " + (distanceToPlayer < data.detectionDistanceClose));
-            if (distanceToPlayer < data.detectionDistanceLineOfSight && (distanceToPlayer < data.detectionDistanceClose || Physics.Linecast(this.transform.position, GameplayManager.Instance.Player.transform.position, GameplayManager.Instance.NotPlayerOrEnemyMask)))
+            if (distanceToPlayer < data.detectionDistanceClose)
             {
                 Vector3 endPosition = getNewPlatformPosition();
                 if (endPosition != this.transform.position)
