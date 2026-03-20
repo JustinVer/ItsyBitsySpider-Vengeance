@@ -8,30 +8,32 @@
 #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl" 
 
 #ifndef SHADERGRAPH_PREVIEW
-struct EdgeConstants {
+struct EdgeConstants
+{
 
-   float diffuse;
-   float specular;
-   float rim;
-   float distanceAttenuation;
-   float shadowAttenuation;
+    float diffuse;
+    float specular;
+    float rim;
+    float distanceAttenuation;
+    float shadowAttenuation;
 
 };
 
-struct SurfaceVariables {
+struct SurfaceVariables
+{
 
-   float smoothness;
-   float shininess;
+    float smoothness;
+    float shininess;
    
-   float rimStrength;
-   float rimAmount;
-   float rimThreshold;
+    float rimStrength;
+    float rimAmount;
+    float rimThreshold;
    
-   float3 normal;
-   float3 view;
-   float3 clipPosition;
+    float3 normal;
+    float3 view;
+    float3 clipPosition;
 
-   EdgeConstants ec;
+    EdgeConstants ec;
 
 };
 
@@ -65,35 +67,36 @@ float3 CalculateCelShading(Light l, SurfaceVariables s, half shadowValue)
 }
 #endif
 
-void LightingCelShaded_float(float Smoothness, 
-      float RimStrength, float RimAmount, float RimThreshold, float3 ClipPos, 
+void LightingCelShaded_float(float Smoothness,
+      float RimStrength, float RimAmount, float RimThreshold, float3 ClipPos,
       float3 Position, float3 Normal, float3 View, float EdgeDiffuse,
       float EdgeSpecular, float EdgeDistanceAttenuation,
-      float EdgeShadowAttenuation, float EdgeRim, bool CapColorValue, float CapThresh, out float3 Color) {
+      float EdgeShadowAttenuation, float EdgeRim, bool CapColorValue, float CapThresh, out float3 Color)
+{
 
 #if defined(SHADERGRAPH_PREVIEW)
    Color = half3(0.5f, 0.5f, 0.5f);
 #else
-   SurfaceVariables s;
-   s.smoothness = Smoothness;
-   s.shininess = exp2(10 * Smoothness + 1);
-   s.rimStrength = RimStrength;
-   s.rimAmount = RimAmount;
-   s.rimThreshold = RimThreshold;
-   s.normal = SafeNormalize(Normal);
-   s.view = SafeNormalize(View);
-   s.clipPosition = ClipPos;
-   s.ec.diffuse = EdgeDiffuse;
-   s.ec.specular = EdgeSpecular;
-   s.ec.distanceAttenuation = EdgeDistanceAttenuation;
-   s.ec.shadowAttenuation = EdgeShadowAttenuation;
-   s.ec.rim = EdgeRim;
+    SurfaceVariables s;
+    s.smoothness = Smoothness;
+    s.shininess = exp2(10 * Smoothness + 1);
+    s.rimStrength = RimStrength;
+    s.rimAmount = RimAmount;
+    s.rimThreshold = RimThreshold;
+    s.normal = SafeNormalize(Normal);
+    s.view = SafeNormalize(View);
+    s.clipPosition = ClipPos;
+    s.ec.diffuse = EdgeDiffuse;
+    s.ec.specular = EdgeSpecular;
+    s.ec.distanceAttenuation = EdgeDistanceAttenuation;
+    s.ec.shadowAttenuation = EdgeShadowAttenuation;
+    s.ec.rim = EdgeRim;
 
 #if SHADOWS_SCREEN
    float4 clipPos = TransformWorldToHClip(Position);
    float4 shadowCoord = ComputeScreenPos(clipPos);
 #else
-   float4 shadowCoord = TransformWorldToShadowCoord(Position);
+    float4 shadowCoord = TransformWorldToShadowCoord(Position);
 #endif
     
     
