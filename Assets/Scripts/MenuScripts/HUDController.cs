@@ -10,6 +10,7 @@ public class HUDController : MonoBehaviour
     [SerializeField] GameObject rainCloud;
     [SerializeField] GameObject[] webIcons;
     [SerializeField] GameObject grappleCurser;
+    private bool timerActive = true;
 
     private float timeInSeconds = 180f;
     public float TimeInSeconds
@@ -36,17 +37,20 @@ public class HUDController : MonoBehaviour
             playerHealth.value = Mathf.Clamp01(GameplayManager.Instance.PlayerBody.getHP() / GameplayManager.Instance.PlayerBody.getMaxHP());
         }
 
-        string displayTime = "3:00";
-        if (timeInSeconds <= 0 && timeInSeconds > -1) timeInSeconds -= 1;
-        int minutes = (int)(timeInSeconds / 60);
-        int seconds = (int)(timeInSeconds % 60);
-        if (timeInSeconds >= 0) displayTime = string.Format("{0:0}:{1:00}", Math.Abs(minutes), Math.Abs(seconds));
-        else displayTime = string.Format("-{0:0}:{1:00}", Math.Abs(minutes), Math.Abs(seconds));
+        if (timerActive)
+        {
+            string displayTime = "3:00";
+            if (timeInSeconds <= 0 && timeInSeconds > -1) timeInSeconds -= 1;
+            int minutes = (int)(timeInSeconds / 60);
+            int seconds = (int)(timeInSeconds % 60);
+            if (timeInSeconds >= 0) displayTime = string.Format("{0:0}:{1:00}", Math.Abs(minutes), Math.Abs(seconds));
+            else displayTime = string.Format("-{0:0}:{1:00}", Math.Abs(minutes), Math.Abs(seconds));
 
-        rainTimer.SetText(displayTime);
+            rainTimer.SetText(displayTime);
 
-        float colorNum = Mathf.Clamp(((timeInSeconds) / 255), 0, 1);
-        rainCloud.GetComponent<Image>().color = new Color(colorNum, colorNum, colorNum, 1);
+            float colorNum = Mathf.Clamp(((timeInSeconds) / 255), 0, 1);
+            rainCloud.GetComponent<Image>().color = new Color(colorNum, colorNum, colorNum, 1);
+        }
         UpdateWebDisplay(GameplayManager.Instance.PlayerBody.CurrentWebs);
 
         Vector2 curserPos = Vector2.zero;

@@ -8,8 +8,8 @@ public class BigT : MonoBehaviour, IFireAnimation, IDamageable
     [SerializeField] private AgentLinkMover agentMover;
     [SerializeField] private BodyFollowAgent bodyFollower;
     private float distanceToPlayer = 999f;
-    [SerializeField] private State currentState = State.Attack;
-    private bool trySummoning = true;
+    private State currentState = State.Attack;
+    private bool trySummoning = false;
     [SerializeField] private Platform[] platforms;
     private Platform currentPlatformScript = null;
     private Transform currentPlatformTransform = null;
@@ -21,13 +21,12 @@ public class BigT : MonoBehaviour, IFireAnimation, IDamageable
     [SerializeField] private float maxDegreesRotationJump = 90f;
     [SerializeField] private float distancePastBossJumps = 40f;
 
-    [SerializeField] private SendFireSignal fireSignal;
+    private SendFireSignal fireSignal;
     private bool isFiring = false;
     [SerializeField] private GameObject projectilePrefab;
     [SerializeField] private float ProjectileVelocity = 10f;
     [SerializeField] private Transform fireLocation;
     private bool isDying = false;
-    [SerializeField] private float closestDistanceMoveToPlayer = 15f;
     [SerializeField] private float attackRange = 15f;
     [SerializeField] private float chaseRange = 25f;
     [SerializeField] private Animator animator;
@@ -43,11 +42,6 @@ public class BigT : MonoBehaviour, IFireAnimation, IDamageable
     private int currentHP = 500;
 
     [SerializeField] private ParticleSystem damageParticle;
-    [SerializeField] private float maxRotation = 90f;
-    [SerializeField] private float landTime = 0.75f;
-    [SerializeField] private BigTGun gun;
-    private float speed;
-    private bool doneSummoning = false;
 
     private enum State
     {
@@ -66,14 +60,6 @@ public class BigT : MonoBehaviour, IFireAnimation, IDamageable
         }
     }
 
-    private void Start()
-    {
-        fireSignal = this.gameObject.GetComponentInChildren<SendFireSignal>();
-        fireSignal.body = this;
-        platforms = FindObjectsByType<Platform>(FindObjectsSortMode.None);
-        speed = bodyFollower.getSpeed();
-    }
-
 
     private void Update()
     {
@@ -89,23 +75,21 @@ public class BigT : MonoBehaviour, IFireAnimation, IDamageable
             case State.Attack:
                 updateAttack();
                 break;
+
         }
     }
 
     private void updateSummon()
     {
-
         if (trySummoning && canSummon())
         {
-            agentMover.SetDestination(agentMover.transform.position);
             bodyFollower.Anim.SetTrigger("Summon");
             BossFightManager.Instance.SummonRandomEnemies(baseNumMinionsPerSummon + (int)((Random.value * randomnessOfMinionsPerSummon) - (int)(randomnessOfMinionsPerSummon * 0.5f)));
             baseNumMinionsPerSummon += numMinionsPerSummonIncrease;
             trySummoning = false;
         }
-        else if (!trySummoning && doneSummoning)
+        else if (!trySummoning && !bodyFollower.Anim.GetCurrentAnimatorStateInfo(0).IsName("Summon"))
         {
-            doneSummoning = false;
             nextState();
         }
     }
@@ -113,7 +97,7 @@ public class BigT : MonoBehaviour, IFireAnimation, IDamageable
     private bool canSummon()
     {
 
-        if (Physics.Raycast(bodyFollower.transform.position, -GameplayManager.Instance.GetGravity(bodyFollower.transform.position), 3, GameplayManager.Instance.NotPlayerOrEnemyMask, QueryTriggerInteraction.Ignore))
+        if (Physics.Raycast(bodyFollower.transform.position, GameplayManager.Instance.GetGravity(bodyFollower.transform.position), 3, GameplayManager.Instance.NotPlayerOrEnemyMask, QueryTriggerInteraction.Ignore))
         {
             return false;
         }
@@ -121,17 +105,12 @@ public class BigT : MonoBehaviour, IFireAnimation, IDamageable
         return true;
     }
 
-    public void SummonComplete()
-    {
-        doneSummoning = true;
-    }
-
     private bool startJump()
     {
         Vector3 endPosition = getNewPlatformPosition();
-        if (endPosition != bodyFollower.transform.position)
+        if (endPosition != this.transform.position)
         {
-            StartCoroutine(Jump(endPosition, jumpHeight, (Vector3.Distance(bodyFollower.transform.position, endPosition) * timeDistanceMultiplier) + timeDistanceBase));
+            StartCoroutine(Jump(endPosition, jumpHeight, (Vector3.Distance(this.transform.position, endPosition) * timeDistanceMultiplier) + timeDistanceBase));
             return true;
         }
         else
@@ -143,29 +122,18 @@ public class BigT : MonoBehaviour, IFireAnimation, IDamageable
     private IEnumerator Jump(Vector3 endPos, float height, float duration)
     {
         currentState = State.Jump;
-        bodyFollower.setSpeed(0);
-        animator.SetBool("Jumping", true);
-        Vector3 startPos = bodyFollower.transform.position;
+        Vector3 startPos = this.transform.position;
         float normalizedTime = 0.0f;
         Vector3 gravityDir = -GameplayManager.Instance.GetGravity(Vector3.Lerp(startPos, endPos, 0.5f)).normalized;
-        agentMover.SetDestination(endPos);
         yield return new WaitForFixedUpdate();
         while (normalizedTime < 1.0f)
         {
             //rotateTowards(endPos, getPlayerProjectionPosition(), -GameplayManager.Instance.GetGravity(endPos), maxDegreesRotationJump);
             float yOffset = height * 4.0f * (normalizedTime - normalizedTime * normalizedTime);
-            bodyFollower.transform.position = Vector3.Lerp(startPos, endPos, normalizedTime) + yOffset * gravityDir;
+            this.transform.position = Vector3.Lerp(startPos, endPos, normalizedTime) + yOffset * gravityDir;
             normalizedTime += Time.deltaTime / duration;
-            if (normalizedTime * duration > duration - landTime)
-            {
-                animator.SetBool("Landing", true);
-            }
-            rotateTowards(startPos, endPos, -GameplayManager.Instance.GetGravity(bodyFollower.transform.position), maxRotation);
             yield return new WaitForFixedUpdate();
         }
-        bodyFollower.setSpeed(speed);
-        agentMover.SetPosition(bodyFollower.transform.position);
-        animator.SetBool("Jumping", false);
         nextState();
     }
 
@@ -184,7 +152,7 @@ public class BigT : MonoBehaviour, IFireAnimation, IDamageable
             currentPlatform = maxHeap.Pull();
             if (platformHeuristic(currentPlatform) < 0)
             {
-                return bodyFollower.transform.position;
+                return this.transform.position;
             }
             List<Transform> platformTransforms = new List<Transform>();
             Transform currentTransform = currentPlatform.getPlatformPoint();
@@ -195,7 +163,7 @@ public class BigT : MonoBehaviour, IFireAnimation, IDamageable
                 if (NavMesh.SamplePosition(currentTransform.position - GameplayManager.Instance.GetGravity(currentTransform.position).normalized * 2, out hit, 5.0f, NavMesh.AllAreas))
                 {
                     Vector3 platformPosition = hit.position;
-                    if (!obstaclesInJump(bodyFollower.transform.position, platformPosition, 3f, 2f, currentPlatform.PlatformObject))
+                    if (!obstaclesInJump(this.transform.position, platformPosition, 3f, 2f, currentPlatform.PlatformObject))
                     {
                         foreach (Transform t in platformTransforms)
                         {
@@ -215,14 +183,15 @@ public class BigT : MonoBehaviour, IFireAnimation, IDamageable
             }
 
         }
-        return bodyFollower.transform.position;
+        return this.transform.position;
     }
 
     private float platformHeuristic(Platform platform)
     {
         float heuristic = 0;
 
-        heuristic += 100 - Mathf.Abs(((attackRange + chaseRange) / 2.0f) - (Vector3.Distance(GameplayManager.Instance.Player.transform.position, platform.PlatformObject.transform.position)));
+        heuristic += (Vector3.Distance(this.transform.position, platform.PlatformObject.transform.position) - 5f);
+        heuristic += UnityEngine.Random.Range(-10, 10);
 
         return heuristic;
     }
@@ -260,31 +229,22 @@ public class BigT : MonoBehaviour, IFireAnimation, IDamageable
             {
                 nextState();
             }
-            if (distanceToPlayer < attackRange)
+            else if (distanceToPlayer < attackRange && Physics.Linecast(this.transform.position, GameplayManager.Instance.Player.transform.position, GameplayManager.Instance.NotPlayerOrEnemyMask))
             {
                 animator.SetTrigger("Fire1");
-                Debug.Log("Boss fire start");
                 isFiring = true;
             }
-
         }
-        if (distanceToPlayer > closestDistanceMoveToPlayer)
-        {
-            agentMover.SetDestination(GameplayManager.Instance.Player.transform.position);
-        }
-        else
-        {
-            agentMover.agent.velocity = Vector3.zero;
-            bodyFollower.RB.linearVelocity = Vector3.zero;
-            bodyFollower.RB.angularVelocity = Vector3.zero;
-        }
-        rotateTowardsPlayerAndBody(bodyFollower.transform.position, GameplayManager.Instance.Player.transform.position, -GameplayManager.Instance.GetGravity(bodyFollower.transform.position), maxRotation);
     }
 
     public void FireProjectile()
     {
         if (isDying || currentState == State.Jump) return;
-        gun.Shoot();
+        GameObject bullet = GameObject.Instantiate(projectilePrefab);
+        bullet.transform.forward = fireLocation.forward;
+        bullet.transform.position = fireLocation.position;
+        Rigidbody rb = bullet.GetComponent<Rigidbody>();
+        rb.linearVelocity = fireLocation.forward * ProjectileVelocity;
     }
 
     public void FireComplete()
@@ -296,9 +256,8 @@ public class BigT : MonoBehaviour, IFireAnimation, IDamageable
     {
         if (currentState == State.Jump)
         {
-            if (timeSinceLastSummon >= minTimeBetweenSummons && distanceToPlayer >= distancePastBossJumps)
+            if (distanceToPlayer >= distancePastBossJumps)
             {
-                trySummoning = true;
                 currentState = State.Summon;
             }
             else
@@ -321,7 +280,6 @@ public class BigT : MonoBehaviour, IFireAnimation, IDamageable
         {
             if (timeSinceLastSummon >= minTimeBetweenSummons)
             {
-                trySummoning = true;
                 currentState = State.Summon;
             }
             else if (distanceToPlayer >= distancePastBossJumps && startJump())
@@ -364,20 +322,5 @@ public class BigT : MonoBehaviour, IFireAnimation, IDamageable
         damageParticle.transform.position = position;
         damageParticle.transform.forward = forwardDirection;
         damageParticle.Play();
-    }
-
-    private void rotateTowardsPlayerAndBody(Vector3 startPosition, Vector3 endPosition, Vector3 gravity, float maxRotation)
-    {
-        bodyFollower.transform.rotation = Quaternion.RotateTowards(bodyFollower.transform.rotation, Quaternion.LookRotation(endPosition - startPosition, gravity), maxRotation * Time.fixedDeltaTime);
-        Quaternion rotation2 = Quaternion.RotateTowards(bodyFollower.transform.rotation, agentMover.transform.rotation, maxRotation * Time.fixedDeltaTime);
-        Vector3 rot = bodyFollower.transform.localEulerAngles;
-        rot.x = rotation2.eulerAngles.x;
-        rot.z = rotation2.eulerAngles.z;
-        bodyFollower.transform.localEulerAngles = rot;
-    }
-
-    private void rotateTowards(Vector3 startPosition, Vector3 endPosition, Vector3 gravity, float maxRotation)
-    {
-        bodyFollower.transform.rotation = Quaternion.RotateTowards(bodyFollower.transform.rotation, Quaternion.LookRotation(endPosition - startPosition, gravity), maxRotation * Time.fixedDeltaTime);
     }
 }
