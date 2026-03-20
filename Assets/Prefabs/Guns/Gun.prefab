@@ -96,7 +96,6 @@ MeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: 901ebf45adae9d741adc079b663fac4c, type: 2}
-  - {fileID: 2100000, guid: c2a6e2848cd32bd4f9a48b71417df5ea, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -176,8 +175,12 @@ MonoBehaviour:
   fireMask:
     serializedVersion: 2
     m_Bits: 191
+  screenRaycastMask:
+    serializedVersion: 2
+    m_Bits: 0
   muzzleFlash1: {fileID: 6215205145016594167}
   muzzleFlash2: {fileID: 9046362362747070863}
+  castWidth: 0.1
 --- !u!1001 &6318219532065338928
 PrefabInstance:
   m_ObjectHideFlags: 0
