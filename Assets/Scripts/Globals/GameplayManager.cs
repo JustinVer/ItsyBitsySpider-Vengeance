@@ -56,6 +56,7 @@ public class GameplayManager : MonoBehaviour
     public LayerMask NotPlayerOrEnemyMask;
 
     [SerializeField] private float countdownTime = 180f;
+    public double score = 0;
 
     [SerializeField] GameObject water;
     private float waterPosition = 1;
