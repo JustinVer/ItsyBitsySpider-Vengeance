@@ -56,6 +56,7 @@ public class GameplayManager : MonoBehaviour
     public LayerMask NotPlayerOrEnemyMask;
 
     [SerializeField] private float countdownTime = 180f;
+    private bool countDownActive = true;
     public double score = 0;
 
     [SerializeField] GameObject water;
@@ -211,6 +212,11 @@ public class GameplayManager : MonoBehaviour
             gravitySpline.Add(knot);
         }
     }
+    public void ClearGravitySpline()
+    {
+        if (gravitySpline != null)
+            gravitySpline.Clear();
+    }
     public Vector3 GetForward(Vector3 position) //TODO fix bugs with this
     {
         float3 nearestPoint;
@@ -252,10 +258,26 @@ public class GameplayManager : MonoBehaviour
             playerBody.transform.position = targetPoint;
         }
     }
+    private void SetupForStart()
+    {
+        player.transform.position = new Vector3(-3, -23, 3);
+        player.transform.rotation = new Quaternion();
+
+    }
+
+    private void ResetGame()
+    {
+
+    }
+
+    public void PauseTimer()
+    {
+        countDownActive = !countDownActive;
+    }
 
     private void Update()
     {
-        if (!washedOut) countdownTime -= Time.deltaTime;
+        if (!washedOut && countDownActive) countdownTime -= Time.deltaTime;
 
         HUDController.TimeInSeconds = countdownTime;
 
