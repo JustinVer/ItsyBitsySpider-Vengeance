@@ -454,7 +454,7 @@ public class PlayerBody : MonoBehaviour, IDamageable
         rb.AddForce(knockBackForce, ForceMode.VelocityChange);
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnCollisionStay(Collision collision)
     {
         if (crash)
         {

@@ -37,7 +37,6 @@ public class Gun : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit, 200f, screenRaycastMask))
         {
-            Debug.Log("Player gun hit " + hit.collider.gameObject.name);
             hitPosition = hit.point;
         }
         else

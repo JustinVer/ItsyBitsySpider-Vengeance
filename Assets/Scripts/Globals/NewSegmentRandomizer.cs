@@ -17,9 +17,9 @@ public class NewSegmentRandomizer : MonoBehaviour
     [SerializeField] private bool debugMode = true;
     [SerializeField] private int areaLength = 3;
     [SerializeField] private int numLevels = 5;
+    private int numNests = 2;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public void PrepareLevel()
     {
         int cornerNum = 0;
 
@@ -40,23 +40,22 @@ public class NewSegmentRandomizer : MonoBehaviour
 
             for (int i = 1; i < segmentOrder.Length; i++)
             {
-                if (segmentOrder[i] >= 0)
+                if (segmentOrder[i] >= 0 + numNests)
                 {
-                    //TODO:generate random level index
                     switch (area)
                     {
                         case 0:
-                            segmentOrder[i] = UnityEngine.Random.Range(0, numLevels);
+                            segmentOrder[i] = UnityEngine.Random.Range(numNests, numLevels + numNests);
                             areaProgress++;
 
                             break;
                         case 1:
-                            segmentOrder[i] = UnityEngine.Random.Range(0, numLevels) + numLevels;
+                            segmentOrder[i] = UnityEngine.Random.Range(numNests, numLevels + numNests) + numLevels;
                             areaProgress++;
 
                             break;
                         default:
-                            segmentOrder[i] = UnityEngine.Random.Range(0, numLevels) + (2 * numLevels);
+                            segmentOrder[i] = UnityEngine.Random.Range(numNests, numLevels + numNests) + (2 * numLevels);
                             areaProgress++;
 
                             break;
@@ -67,7 +66,7 @@ public class NewSegmentRandomizer : MonoBehaviour
                         area++;
                     }
                 }
-                else
+                else if (segmentOrder[i] < 0)
                 {
                     switch (area)
                     {
@@ -125,9 +124,6 @@ public class NewSegmentRandomizer : MonoBehaviour
         corners[corners.Length - 1] = new NewCornerNode(null, segments[segments.Length - 1], cornerPrefabs[(-3 * -1) - 1], corners.Length - 1, this);
 
         StartLoad();
-
-        segmentPool = null;
-        cornerPrefabs = null;
     }
 
     private void StartLoad()
