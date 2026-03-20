@@ -11,6 +11,7 @@ public class PillBug : EnemyBase, ICollisionReciever
     private Vector3 awayFromPlayerTarget = Vector3.zero;
     Coroutine hitCoroutine;
     [SerializeField] private float rotationSpeed = 60f;
+    private float rotationAmount = 0f;
 
     protected override void NotDyingUpdate()
     {
@@ -82,16 +83,24 @@ public class PillBug : EnemyBase, ICollisionReciever
 
     protected override void Move()
     {
+
+
         if (rollingPastPlayer)
         {
             agentMover.SetDestination(awayFromPlayerTarget);
-            bodyFollower.transform.localRotation = Quaternion.Euler(rotationSpeed * Time.time, bodyFollower.transform.localRotation.y, bodyFollower.transform.localRotation.z);
+            bodyFollower.transform.localRotation *= Quaternion.Euler(new Vector3(-rotationAmount, 0, 0));
+            rotationAmount += Time.deltaTime * rotationSpeed;
+            bodyFollower.transform.rotation = Quaternion.RotateTowards(bodyFollower.transform.rotation, agentMover.transform.rotation, bodyFollower.getRotationSpeed() * Time.fixedDeltaTime);
+            bodyFollower.transform.localRotation *= Quaternion.Euler(new Vector3(rotationAmount, 0, 0));
             animator.SetBool("Moving", true);
         }
         else if (distanceToPlayer < data.detectionDistanceClose)
         {
             agentMover.SetDestination(GameplayManager.Instance.Player.transform.position);
-            bodyFollower.transform.localRotation = Quaternion.Euler(rotationSpeed * Time.time, bodyFollower.transform.localRotation.y, bodyFollower.transform.localRotation.z);
+            bodyFollower.transform.localRotation *= Quaternion.Euler(new Vector3(-rotationAmount, 0, 0));
+            rotationAmount += Time.deltaTime * rotationSpeed;
+            bodyFollower.transform.rotation = Quaternion.RotateTowards(bodyFollower.transform.rotation, agentMover.transform.rotation, bodyFollower.getRotationSpeed() * Time.fixedDeltaTime);
+            bodyFollower.transform.localRotation *= Quaternion.Euler(new Vector3(rotationAmount, 0, 0));
             animator.SetBool("Moving", true);
         }
         else

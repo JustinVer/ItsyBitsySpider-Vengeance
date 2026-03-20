@@ -64,6 +64,11 @@ public class BodyFollowAgent : MonoBehaviour
         return speed;
     }
 
+    public float getRotationSpeed()
+    {
+        return maxDegreesRotation;
+    }
+
     private void Rotate(Vector3 direction)
     {
         this.transform.rotation = Quaternion.RotateTowards(this.transform.rotation, followBody.transform.rotation, maxDegreesRotation * Time.fixedDeltaTime);
