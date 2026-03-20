@@ -196,11 +196,13 @@ public class AgentLinkMover : MonoBehaviour
 
     public void SetPosition(Vector3 position)
     {
+        agent.Warp(position);
         NavMeshHit hit;
-        NavMesh.SamplePosition(position, out hit, 10f, NavMesh.AllAreas);
+        NavMesh.SamplePosition(position, out hit, 2f, NavMesh.AllAreas);
         if (hit.position != null)
         {
             agent.transform.position = hit.position;
+
         }
     }
 }

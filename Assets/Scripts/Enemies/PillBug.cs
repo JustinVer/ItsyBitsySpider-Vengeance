@@ -10,6 +10,7 @@ public class PillBug : EnemyBase, ICollisionReciever
     private bool canAttack = true;
     private Vector3 awayFromPlayerTarget = Vector3.zero;
     Coroutine hitCoroutine;
+    [SerializeField] private float rotationSpeed = 60f;
 
     protected override void NotDyingUpdate()
     {
@@ -83,13 +84,14 @@ public class PillBug : EnemyBase, ICollisionReciever
     {
         if (rollingPastPlayer)
         {
-            //TODO Should be a run away thing once fully implemented
             agentMover.SetDestination(awayFromPlayerTarget);
+            bodyFollower.transform.localRotation = Quaternion.Euler(rotationSpeed * Time.time, bodyFollower.transform.localRotation.y, bodyFollower.transform.localRotation.z);
             animator.SetBool("Moving", true);
         }
-        else if (distanceToPlayer < data.detectionDistanceLineOfSight && distanceToPlayer < data.detectionDistanceClose || Physics.Linecast(bodyFollower.transform.position, GameplayManager.Instance.Player.transform.position, GameplayManager.Instance.NotPlayerOrEnemyMask))
+        else if (distanceToPlayer < data.detectionDistanceClose)
         {
             agentMover.SetDestination(GameplayManager.Instance.Player.transform.position);
+            bodyFollower.transform.localRotation = Quaternion.Euler(rotationSpeed * Time.time, bodyFollower.transform.localRotation.y, bodyFollower.transform.localRotation.z);
             animator.SetBool("Moving", true);
         }
         else
@@ -97,8 +99,10 @@ public class PillBug : EnemyBase, ICollisionReciever
             agentMover.agent.velocity = Vector3.zero;
             bodyFollower.RB.linearVelocity = Vector3.zero;
             bodyFollower.RB.angularVelocity = Vector3.zero;
+            //bodyFollower.transform.localRotation = Quaternion.Euler(0, 0, 0);
             animator.SetBool("Moving", false);
         }
+        Debug.Log("Pill bug local rotation " + bodyFollower.transform.localRotation.eulerAngles + " " + rotationSpeed + " " + Time.deltaTime);
     }
 
     public override void EndDeath()

@@ -68,7 +68,7 @@ public class Beetle : EnemyBase, IFireAnimation
         bullet.transform.position = fireLocation.position;
         Rigidbody rb = bullet.GetComponent<Rigidbody>();
         rb.linearVelocity = fireLocation.forward * ProjectileVelocity;
-        //Debug.Log("fire projectile");
+        Debug.Log("fire projectile");
     }
 
     public void FireComplete()
@@ -91,9 +91,10 @@ public class Beetle : EnemyBase, IFireAnimation
 
     protected override void Attack()
     {
-        if (!isFiring && !isJumping && distanceToPlayer < data.attackRange && Physics.Linecast(this.transform.position, GameplayManager.Instance.Player.transform.position, GameplayManager.Instance.NotPlayerOrEnemyMask))
+        Debug.Log("Beetle fire " + isFiring + " " + isJumping);
+        if (!isFiring && !isJumping && distanceToPlayer < data.attackRange)
         {
-            //Debug.Log("start fire projectile");
+            Debug.Log("start fire projectile");
             animator.SetTrigger("Fire1");
             isFiring = true;
         }
@@ -115,11 +116,10 @@ public class Beetle : EnemyBase, IFireAnimation
 
     protected override void Move()
     {
-        Debug.Log("Beetle " + isDying + " " + isJumping + " " + (distanceToPlayer < data.detectionDistanceLineOfSight) + " " + (distanceToPlayer < data.detectionDistanceClose) + " " + Physics.Linecast(this.transform.position, GameplayManager.Instance.Player.transform.position, GameplayManager.Instance.NotPlayerOrEnemyMask));
         if (!isDying && !isJumping)
         {
             //Debug.Log("Mpve beetle " + (distanceToPlayer < data.detectionDistanceClose));
-            if (distanceToPlayer < data.detectionDistanceLineOfSight && (distanceToPlayer < data.detectionDistanceClose || Physics.Linecast(this.transform.position, GameplayManager.Instance.Player.transform.position, GameplayManager.Instance.NotPlayerOrEnemyMask)))
+            if (distanceToPlayer < data.detectionDistanceClose)
             {
                 Vector3 endPosition = getNewPlatformPosition();
                 if (endPosition != this.transform.position)
