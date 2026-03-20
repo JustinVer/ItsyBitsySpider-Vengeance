@@ -211,6 +211,11 @@ public class GameplayManager : MonoBehaviour
             gravitySpline.Add(knot);
         }
     }
+    public void ClearGravitySpline()
+    {
+        if (gravitySpline != null)
+            gravitySpline.Clear();
+    }
     public Vector3 GetForward(Vector3 position) //TODO fix bugs with this
     {
         float3 nearestPoint;

@@ -19,7 +19,8 @@ public class NewSegmentRandomizer : MonoBehaviour
     [SerializeField] private int numLevels = 5;
     private int numNests = 2;
 
-    public void PrepareLevel()
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    public void StartRun()
     {
         int cornerNum = 0;
 
@@ -124,6 +125,19 @@ public class NewSegmentRandomizer : MonoBehaviour
         corners[corners.Length - 1] = new NewCornerNode(null, segments[segments.Length - 1], cornerPrefabs[(-3 * -1) - 1], corners.Length - 1, this);
 
         StartLoad();
+    }
+
+    public void KillRun()
+    {
+        for (int i = 0; i < corners.Length; i++)
+        {
+            corners[i].UnloadCorner();
+            if (i < (corners.Length - 1))
+                corners[i].UnloadAhead();
+        }
+
+        corners = null;
+        segments = null;
     }
 
     private void StartLoad()
