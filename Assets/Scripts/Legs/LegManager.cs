@@ -17,8 +17,8 @@ public class LegManager : MonoBehaviour
     private float stepOffsetTimer = 0;
     private bool rightStep = true;
 
-    [SerializeField] private Leg[] rightLegs;
-    [SerializeField] private Leg[] leftLegs;
+    private Leg[] rightLegs;
+    private Leg[] leftLegs;
 
     private int rStepIdx = 0;
     private int lStepIdx = 0;
@@ -34,14 +34,14 @@ public class LegManager : MonoBehaviour
 
         lastPosition = transform.position;
 
-        //rightLegs = new Leg[rightLegPositions.Length];
-        //leftLegs = new Leg[leftLegPositions.Length];
+        rightLegs = new Leg[rightLegPositions.Length];
+        leftLegs = new Leg[leftLegPositions.Length];
 
         for (int i = 0; i < Mathf.Max(rightLegPositions.Length, leftLegPositions.Length); i++)
         {
             if (i < rightLegPositions.Length)
             {
-                //rightLegs[i] = Instantiate(leg, transform).GetComponent<Leg>();
+                rightLegs[i] = Instantiate(leg, transform).GetComponent<Leg>();
                 rightLegs[i].transform.localPosition = rightLegPositions[i].transform.localPosition;
                 rightLegs[i].transform.localRotation = rightLegPositions[i].transform.localRotation;
                 rightLegs[i].stepDistance = stepDistance;
@@ -50,7 +50,7 @@ public class LegManager : MonoBehaviour
             }
             if (i < leftLegPositions.Length)
             {
-                //leftLegs[i] = Instantiate(leg, transform).GetComponent<Leg>();
+                leftLegs[i] = Instantiate(leg, transform).GetComponent<Leg>();
                 leftLegs[i].transform.localPosition = leftLegPositions[i].transform.localPosition;
                 leftLegs[i].transform.localRotation = leftLegPositions[i].transform.localRotation;
                 leftLegs[i].stepDistance = stepDistance;
