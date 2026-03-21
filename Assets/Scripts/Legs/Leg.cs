@@ -42,10 +42,29 @@ public class Leg : MonoBehaviour
         get { return bodyVelocity; }
         set { bodyVelocity = value; }
     }
-   
+
+    private Transform animFoot;
+    public Transform AnimFoot
+    {
+        set { animFoot = value; }
+    }
+
+    private LegManager legManager;
+
+    private void Start()
+    {
+        legManager = GetComponentInParent<LegManager>();
+    }
+
 
     private void FixedUpdate()
     {
+        if (legManager.Animating)
+        {
+            foot.transform.position = animFoot.position;
+            return;
+        }
+
         Vector3 down = GameplayManager.Instance.GetGravity(knee.position).normalized;
 
         Debug.DrawRay(knee.position, down * legLength, Color.red);

@@ -6,6 +6,11 @@ public class LegManager : MonoBehaviour
     [SerializeField] private Transform[] leftLegPositions;
     [SerializeField] private Transform[] rightLegPositions;
 
+    [SerializeField] private Transform[] leftFeet;
+    [SerializeField] private Transform[] rightFeet;
+
+    public bool Animating = false;
+
     [SerializeField] private float rideheight = 1.75f;
 
 
@@ -47,6 +52,7 @@ public class LegManager : MonoBehaviour
                 rightLegs[i].stepDistance = stepDistance;
                 rightLegs[i].stepHeight = stepHeight;
                 rightLegs[i].stepDuraion = stepDuraion;
+                rightLegs[i].AnimFoot = rightFeet[i];
             }
             if (i < leftLegPositions.Length)
             {
@@ -56,12 +62,15 @@ public class LegManager : MonoBehaviour
                 leftLegs[i].stepDistance = stepDistance;
                 leftLegs[i].stepHeight = stepHeight;
                 leftLegs[i].stepDuraion = stepDuraion;
+                leftLegs[i].AnimFoot = leftFeet[i];
             }
         }
     }
 
     private void FixedUpdate()
     {
+
+        
 
         linearVelocity = (transform.position - lastPosition) / Time.fixedDeltaTime;
 
