@@ -3969,14 +3969,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2657798687942422277, guid: 42951a18a743be949b5c300046f91157, type: 3}
-      propertyPath: chaseRange
-      value: 60
-      objectReference: {fileID: 0}
-    - target: {fileID: 2657798687942422277, guid: 42951a18a743be949b5c300046f91157, type: 3}
-      propertyPath: attackRange
-      value: 25
-      objectReference: {fileID: 0}
     - target: {fileID: 4025982305742810253, guid: 42951a18a743be949b5c300046f91157, type: 3}
       propertyPath: m_LocalPosition.x
       value: -2.6
@@ -4460,6 +4452,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 59
   countdownTime: 180
+  score: 0
   water: {fileID: 0}
   waterSpeed: 50
   washOutRange: 50

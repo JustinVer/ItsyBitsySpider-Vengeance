@@ -39,18 +39,26 @@ public class BigTGun : MonoBehaviour
         for (int i = 0; i < numBulletsPerVolley; i++)
         {
             Vector3 muzzleInverse = new Vector3();
-            muzzleInverse.x = 1 - muzzle.forward.x;
-            muzzleInverse.y = 1 - muzzle.forward.y;
-            muzzleInverse.z = 1 - muzzle.forward.z;
+            muzzleInverse.x = 0.9f - muzzle.forward.x;
+            muzzleInverse.y = 0.9f - muzzle.forward.y;
+            muzzleInverse.z = 0.9f - muzzle.forward.z;
 
             Vector3 spreadAmount = Random.insideUnitSphere;
-            Vector3 spreadDirection = new Vector3(spreadAmount.x * muzzleInverse.x, spreadAmount.y * muzzleInverse.y, spreadAmount.z * muzzleInverse.z);
-            spreadDirection = spreadDirection.normalized * maxFireAngle;
+            spreadAmount.x = spreadAmount.x * Mathf.Abs(spreadAmount.x);
+            spreadAmount.y = spreadAmount.y * Mathf.Abs(spreadAmount.y);
+            spreadAmount.z = spreadAmount.z * Mathf.Abs(spreadAmount.z);
 
-            GameObject newBullet = Instantiate(bullet, muzzle.position + spreadDirection / 5.0f, Quaternion.identity);
+
+            Vector3 spreadDirection = new Vector3(spreadAmount.x * muzzleInverse.x, spreadAmount.y * muzzleInverse.y, spreadAmount.z * muzzleInverse.z);
+
+            GameObject newBullet = Instantiate(bullet, muzzle.position + (spreadDirection / 2.5f), Quaternion.identity);
+
+            spreadDirection *= maxFireAngle;
+
             newBullet.transform.forward = spreadDirection + muzzle.forward;
             newBullet.GetComponent<Rigidbody>().linearVelocity = ProjectileVelocity * newBullet.transform.forward;
 
+            Debug.Log("Gun spread amount " + spreadAmount + " " + spreadDirection + " " + (spreadDirection + muzzle.forward) + " " + (ProjectileVelocity * newBullet.transform.forward));
         }
 
     }

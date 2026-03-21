@@ -51,7 +51,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4975532466478798762}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -204,10 +204,10 @@ MonoBehaviour:
   muzzleFlash1: {fileID: 7299061578121652843}
   muzzleFlash2: {fileID: 7336270087408985573}
   ProjectileVelocity: 100
-  fireVelocityDistanceMultiplier: 1
+  fireVelocityDistanceMultiplier: 1.02
   maxFireAngle: 0.08
-  numBulletsPerVolley: 60
-  spreadDistanceDivider: -0.1
+  numBulletsPerVolley: 70
+  spreadDistanceDivider: -0.2
 --- !u!1 &5586147791959786241
 GameObject:
   m_ObjectHideFlags: 0
@@ -485,8 +485,8 @@ MonoBehaviour:
   ProjectileVelocity: 10
   fireLocation: {fileID: 2606265160187364049}
   closestDistanceMoveToPlayer: 15
-  attackRange: 35
-  chaseRange: 55
+  attackRange: 30
+  chaseRange: 60
   animator: {fileID: 2140166832346740191}
   minTimeBetweenSummons: 30
   timeSinceLastSummon: 0
@@ -622,15 +622,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5436370420631152423, guid: 87b1d0290ac551a4b9912112f6e287ca, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -11.823683
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5436370420631152423, guid: 87b1d0290ac551a4b9912112f6e287ca, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -20.996351
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5436370420631152423, guid: 87b1d0290ac551a4b9912112f6e287ca, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 8.994368
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5436370420631152423, guid: 87b1d0290ac551a4b9912112f6e287ca, type: 3}
       propertyPath: m_LocalRotation.w
