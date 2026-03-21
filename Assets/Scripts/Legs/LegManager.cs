@@ -70,7 +70,7 @@ public class LegManager : MonoBehaviour
     private void FixedUpdate()
     {
 
-        
+
 
         linearVelocity = (transform.position - lastPosition) / Time.fixedDeltaTime;
 
@@ -158,6 +158,6 @@ public class LegManager : MonoBehaviour
 
     public void pauseLegs(bool enabled)
     {
-
+        Animating = enabled;
     }
 }
