@@ -256,7 +256,7 @@ public class BigT : MonoBehaviour, IFireAnimation, IDamageable
     {
         if (!isFiring)
         {
-            if (distanceToPlayer >= chaseRange)
+            if (distanceToPlayer >= chaseRange || timeSinceLastSummon >= minTimeBetweenSummons * 3)
             {
                 nextState();
             }
