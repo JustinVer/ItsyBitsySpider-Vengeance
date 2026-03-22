@@ -12,6 +12,7 @@ public class PillBug : EnemyBase, ICollisionReciever
     Coroutine hitCoroutine;
     [SerializeField] private float rotationSpeed = 60f;
     private float rotationAmount = 0f;
+    [SerializeField] private Transform pillBugRotationTransform;
 
     protected override void NotDyingUpdate()
     {
@@ -88,19 +89,19 @@ public class PillBug : EnemyBase, ICollisionReciever
         if (rollingPastPlayer)
         {
             agentMover.SetDestination(awayFromPlayerTarget);
-            bodyFollower.transform.localRotation *= Quaternion.Euler(new Vector3(-rotationAmount, 0, 0));
+            pillBugRotationTransform.transform.localRotation *= Quaternion.Euler(new Vector3(-rotationAmount, 0, 0));
             rotationAmount += Time.deltaTime * rotationSpeed;
             bodyFollower.transform.rotation = Quaternion.RotateTowards(bodyFollower.transform.rotation, agentMover.transform.rotation, bodyFollower.getRotationSpeed() * Time.fixedDeltaTime);
-            bodyFollower.transform.localRotation *= Quaternion.Euler(new Vector3(rotationAmount, 0, 0));
+            pillBugRotationTransform.transform.localRotation *= Quaternion.Euler(new Vector3(rotationAmount, 0, 0));
             animator.SetBool("Moving", true);
         }
         else if (distanceToPlayer < data.detectionDistanceClose)
         {
             agentMover.SetDestination(GameplayManager.Instance.Player.transform.position);
-            bodyFollower.transform.localRotation *= Quaternion.Euler(new Vector3(-rotationAmount, 0, 0));
+            pillBugRotationTransform.transform.localRotation *= Quaternion.Euler(new Vector3(-rotationAmount, 0, 0));
             rotationAmount += Time.deltaTime * rotationSpeed;
             bodyFollower.transform.rotation = Quaternion.RotateTowards(bodyFollower.transform.rotation, agentMover.transform.rotation, bodyFollower.getRotationSpeed() * Time.fixedDeltaTime);
-            bodyFollower.transform.localRotation *= Quaternion.Euler(new Vector3(rotationAmount, 0, 0));
+            pillBugRotationTransform.transform.localRotation *= Quaternion.Euler(new Vector3(rotationAmount, 0, 0));
             animator.SetBool("Moving", true);
         }
         else

@@ -1,13 +1,11 @@
-using System.Runtime.CompilerServices;
 using UnityEngine;
-using UnityEngine.InputSystem.Controls;
 
 public class Leg : MonoBehaviour
 {
     [SerializeField] private GameObject root;
     [SerializeField] private Transform knee;
     [SerializeField] private GameObject foot;
-    
+
     [SerializeField] private float legLength;
     [HideInInspector] public float stepDistance;
     [HideInInspector] public float stepHeight;
@@ -61,7 +59,10 @@ public class Leg : MonoBehaviour
     {
         if (legManager.Animating)
         {
-            foot.transform.position = animFoot.position;
+            if (foot && animFoot)
+            {
+                foot.transform.position = animFoot.position;
+            }
             return;
         }
 
@@ -111,7 +112,7 @@ public class Leg : MonoBehaviour
                 plantPosition = stepEnd;
             }
 
-            
+
         }
         else if (footPlanted)
         {
@@ -122,14 +123,14 @@ public class Leg : MonoBehaviour
             foot.transform.position = targetPosition;
         }
 
-        
 
-        
+
+
 
         footPosition = foot.transform.position;
     }
-        
-    
+
+
 
     public void Step()
     {
