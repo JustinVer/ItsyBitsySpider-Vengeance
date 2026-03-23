@@ -51,6 +51,7 @@ public class Ant : EnemyBase, IFireAnimation, ICollisionReciever
         if (!isDying)
         {
             GameplayManager.Instance.PlayerBody.CurrentWebs++;
+            GameplayManager.Instance.score++;
             animator.SetTrigger("Died");
             isDying = true;
         }

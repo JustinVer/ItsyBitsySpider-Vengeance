@@ -56,6 +56,8 @@ public class Beetle : EnemyBase, IFireAnimation
     }
     public override void EndDeath()
     {
+
+
         this.gameObject.SetActive(false);
         ReturnSelf();
     }
@@ -109,6 +111,7 @@ public class Beetle : EnemyBase, IFireAnimation
                 currentPlatformScript.returnPlatformPoint(currentPlatformTransform);
             }
             GameplayManager.Instance.PlayerBody.CurrentWebs++;
+            GameplayManager.Instance.score++;
             animator.SetTrigger("Died");
             isDying = true;
         }
