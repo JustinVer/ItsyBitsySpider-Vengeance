@@ -193,8 +193,8 @@ public class NewSegmentRandomizer : MonoBehaviour
     {
         KillRun();
         GameplayManager.Instance.LoadBoss();
-        tutorial.LoadSection(Vector3.zero, Vector3.zero);
-        GameplayManager.Instance.UpdateGravitySpline(tutorial.FindSpline());
+        boss.LoadSection(Vector3.zero, Vector3.zero);
+        GameplayManager.Instance.UpdateGravitySpline(boss.FindSpline());
     }
 
     public void LoadCorners(int index)
