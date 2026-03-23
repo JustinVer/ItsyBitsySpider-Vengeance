@@ -986,6 +986,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerHealth: {fileID: 1657520031}
   rainTimer: {fileID: 0}
+  scoreUI: {fileID: 0}
   rainCloud: {fileID: 0}
   webIcons: []
   grappleCurser: {fileID: 0}
@@ -1118,6 +1119,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 63
   countdownTime: 180
+  countIncreasing: 0
+  score: 0
   water: {fileID: 0}
   waterSpeed: 0
   washOutRange: 0

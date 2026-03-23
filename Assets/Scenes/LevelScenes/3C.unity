@@ -929,7 +929,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerHealth: {fileID: 1657520031}
   rainTimer: {fileID: 0}
+  scoreUI: {fileID: 0}
+  rainCloud: {fileID: 0}
   webIcons: []
+  grappleCurser: {fileID: 0}
 --- !u!1001 &1735520302
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1039,6 +1042,19 @@ MonoBehaviour:
   playerInputName: Player
   UIInputName: UI
   gravitySplineContainer: {fileID: 0}
+  gravitySpline:
+    m_EditModeType: 1
+    m_Knots: []
+    m_MetaData: []
+    m_Closed: 0
+    m_IntData:
+      m_Data: []
+    m_FloatData:
+      m_Data: []
+    m_Float4Data:
+      m_Data: []
+    m_ObjectData:
+      m_Data: []
   player: {fileID: 1262036163}
   playerBody: {fileID: 222048797}
   playerManager: {fileID: 0}
@@ -1046,6 +1062,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 63
   countdownTime: 180
+  countIncreasing: 0
+  score: 0
   water: {fileID: 0}
   waterSpeed: 0
   washOutRange: 0
@@ -1103,6 +1121,26 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2171148131667890867, guid: 0928a94aa338e3045b7dd56bdd6ddc49, type: 3}
+      propertyPath: m_NavMeshData
+      value: 
+      objectReference: {fileID: 23800000, guid: dbb8c32e92f7c5f47b58600d5cb39e2e, type: 2}
+    - target: {fileID: 5288724865873113824, guid: 0928a94aa338e3045b7dd56bdd6ddc49, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7555207049417949404, guid: 0928a94aa338e3045b7dd56bdd6ddc49, type: 3}
+      propertyPath: m_NavMeshData
+      value: 
+      objectReference: {fileID: 23800000, guid: b00780b3a2ba7ef488b9f6e0fc950f3e, type: 2}
+    - target: {fileID: 8002613091613454121, guid: 0928a94aa338e3045b7dd56bdd6ddc49, type: 3}
+      propertyPath: m_NavMeshData
+      value: 
+      objectReference: {fileID: 23800000, guid: f13fa599a8e211f4392b925f81ed1e6d, type: 2}
+    - target: {fileID: 8131747663358888302, guid: 0928a94aa338e3045b7dd56bdd6ddc49, type: 3}
+      propertyPath: m_NavMeshData
+      value: 
+      objectReference: {fileID: 23800000, guid: 621d82ada7880394f8e1723c3eb74a2c, type: 2}
     - target: {fileID: 8214024268593217650, guid: 0928a94aa338e3045b7dd56bdd6ddc49, type: 3}
       propertyPath: m_Name
       value: 3C

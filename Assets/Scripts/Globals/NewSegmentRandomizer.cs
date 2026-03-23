@@ -195,6 +195,7 @@ public class NewSegmentRandomizer : MonoBehaviour
         GameplayManager.Instance.LoadBoss();
         boss.LoadSection(Vector3.zero, Vector3.zero);
         GameplayManager.Instance.UpdateGravitySpline(boss.FindSpline());
+        GameplayManager.Instance.Player.transform.position = Vector3.zero;
     }
 
     public void LoadCorners(int index)
