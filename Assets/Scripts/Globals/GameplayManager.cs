@@ -278,13 +278,20 @@ public class GameplayManager : MonoBehaviour
         setInputActionToPlayer();
     }
 
+    public void LoadBoss()
+    {
+        ClearGravitySpline();
+        player.transform.position = new Vector3(-3, -23, 3);
+        player.transform.rotation = new Quaternion();
+    }
+
     public void ResetGame()
     {
         ClearGravitySpline();
         UpgradeMenu.Instance.activateMenu();
         countDownActive = false;
         countdownTime = 180;
-        
+
         washedOut = false;
         HUD.SetActive(false);
 

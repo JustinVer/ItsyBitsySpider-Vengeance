@@ -32,6 +32,8 @@ public class NewSegmentRandomizer : MonoBehaviour
     [SerializeField] GameObject[] segmentPool;
     [SerializeField] GameObject tutorialLevel;
     NewSegmentNode tutorial;
+    [SerializeField] GameObject bossLevel;
+    NewSegmentNode boss;
 
     // in the segment order -1 coresponds to corners other wise they corespond to the segmentPool index
     // the first and last values must be corners
@@ -48,6 +50,7 @@ public class NewSegmentRandomizer : MonoBehaviour
     public void Start()
     {
         tutorial = new NewSegmentNode(tutorialLevel);
+        boss = new NewSegmentNode(bossLevel);
     }
     public void StartRun()
     {
@@ -158,16 +161,20 @@ public class NewSegmentRandomizer : MonoBehaviour
 
     public void KillRun()
     {
-        for (int i = 0; i < corners.Length; i++)
+        if (corners != null)
         {
-            corners[i].UnloadCorner();
-            if (i < (corners.Length - 1))
-                corners[i].UnloadAhead();
+            for (int i = 0; i < corners.Length; i++)
+            {
+                corners[i].UnloadCorner();
+                if (i < (corners.Length - 1))
+                    corners[i].UnloadAhead();
+            }
         }
 
         corners = null;
         segments = null;
         tutorial.UnloadSection();
+        boss.UnloadSection();
     }
 
     private void StartLoad()
@@ -178,6 +185,14 @@ public class NewSegmentRandomizer : MonoBehaviour
 
     public void LoadTutorial()
     {
+        tutorial.LoadSection(Vector3.zero, Vector3.zero);
+        GameplayManager.Instance.UpdateGravitySpline(tutorial.FindSpline());
+    }
+
+    private void LoadBoss()
+    {
+        KillRun();
+        GameplayManager.Instance.LoadBoss();
         tutorial.LoadSection(Vector3.zero, Vector3.zero);
         GameplayManager.Instance.UpdateGravitySpline(tutorial.FindSpline());
     }
@@ -211,7 +226,7 @@ public class NewSegmentRandomizer : MonoBehaviour
         }
         else
         {
-            //TODO: Load Boss Fight
+            LoadBoss();
         }
     }
 }
