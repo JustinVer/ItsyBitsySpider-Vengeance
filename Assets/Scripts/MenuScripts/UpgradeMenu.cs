@@ -31,10 +31,12 @@ public class UpgradeMenu : MonoBehaviour
     [SerializeField] GameObject upgradePanel;
 
     [SerializeField] GameObject levelLoader;
+    public bool betweenRuns = true;
 
     public void activateMenu()
     {
         upgradeMenu.SetActive(true);
+        betweenRuns = true;
         ActiveCameraManager.Instance.SwitchCameras();
     }
 
@@ -43,6 +45,7 @@ public class UpgradeMenu : MonoBehaviour
         NewSegmentRandomizer.Instance.StartRun();
         ActiveCameraManager.Instance.SwitchCameras();
         GameplayManager.Instance.SetupForStart();
+        betweenRuns = false;
         upgradeMenu.SetActive(false);
     }
 
@@ -79,6 +82,7 @@ public class UpgradeMenu : MonoBehaviour
         NewSegmentRandomizer.Instance.LoadTutorial();
         ActiveCameraManager.Instance.SwitchCameras();
         GameplayManager.Instance.SetupForStart();
+        betweenRuns = false;
         upgradeMenu.SetActive(false);
     }
 

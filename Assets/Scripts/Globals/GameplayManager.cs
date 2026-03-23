@@ -57,6 +57,8 @@ public class GameplayManager : MonoBehaviour
 
     [SerializeField] private float countdownTime = 180f;
     private bool countDownActive = false;
+    public bool countIncreasing = false;
+    private float timeIncreaseScale = 3;
     public double score = 0;
 
     [SerializeField] GameObject water;
@@ -88,6 +90,9 @@ public class GameplayManager : MonoBehaviour
 
         Cursor.lockState = CursorLockMode.Confined;
         Cursor.visible = true;
+        playerManager.InputEnabled = false;
+
+        setInputActionToUI();
     }
 
     private IEnumerator LoadLevel(string levelName)
@@ -137,7 +142,7 @@ public class GameplayManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         // Hide the cursor
         Cursor.visible = false;
-        pauseMenu.CanPause = true;
+        pauseMenu.CanPause = false;
     }
 
     public void ResetScene()
@@ -274,6 +279,7 @@ public class GameplayManager : MonoBehaviour
         // Hide the cursor
         Cursor.visible = false;
 
+        playerManager.InputEnabled = true;
         pauseMenu.CanPause = true;
         setInputActionToPlayer();
     }
@@ -298,6 +304,7 @@ public class GameplayManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.Confined;
         Cursor.visible = true;
         pauseMenu.CanPause = false;
+        playerManager.InputEnabled = false;
         NewSegmentRandomizer.Instance.KillRun();
 
         setInputActionToUI();
@@ -308,9 +315,15 @@ public class GameplayManager : MonoBehaviour
         countDownActive = !countDownActive;
     }
 
+    public void IncreaseTimer()
+    {
+        countIncreasing = !countIncreasing;
+    }
+
     private void Update()
     {
-        if (!washedOut && countDownActive) countdownTime -= Time.deltaTime;
+        if (countIncreasing) countdownTime += Time.deltaTime * timeIncreaseScale;
+        else if (countDownActive) countdownTime -= Time.deltaTime;
 
         if (HUD.activeSelf)
             HUDController.TimeInSeconds = countdownTime;

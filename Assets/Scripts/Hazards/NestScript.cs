@@ -13,7 +13,7 @@ public class NestScript : MonoBehaviour
     {
         if (ReferenceEquals(GameplayManager.Instance.Player, other.gameObject) && !hasTriggered)
         {
-            GameplayManager.Instance.PauseTimer();
+            GameplayManager.Instance.IncreaseTimer();
             StartCoroutine(MoveDoor(door1, new Vector3(0, 90, 90), 0.5f));
         }
     }
@@ -45,7 +45,7 @@ public class NestScript : MonoBehaviour
         }
         else if (ReferenceEquals(door, door2))
         {
-            // GameplayManager.Instance.PauseTimer();
+            GameplayManager.Instance.IncreaseTimer();
         }
     }
 

@@ -524,6 +524,8 @@ MonoBehaviour:
   - {fileID: 6457505982948392551, guid: 0cebb2ee9596eb54ca6a5c67c1950562, type: 3}
   - {fileID: 6457505982948392551, guid: 5cf1a2515245cd347850c82404f279d5, type: 3}
   segmentPool:
+  - {fileID: 896810193161682687, guid: 71b263ef3f4b880449ca88a5de733788, type: 3}
+  - {fileID: 896810193161682687, guid: 71b263ef3f4b880449ca88a5de733788, type: 3}
   - {fileID: 5282411458239331342, guid: f1eb02b7b6368704ca45fd8ef6399d71, type: 3}
   - {fileID: 7321657257124285391, guid: ca19e159bcb3c344a89fcd0dd032732b, type: 3}
   - {fileID: 3741587726524578614, guid: 65b0eda35cdbde44dac2c2aaf7a1482d, type: 3}
@@ -541,7 +543,7 @@ MonoBehaviour:
   - {fileID: 9031887594224738800, guid: b62710118edf380409fc387d72b7fc21, type: 3}
   tutorialLevel: {fileID: 4775841311995228443, guid: 3457bda6b048a1747a7b859b16bfd6e5, type: 3}
   bossLevel: {fileID: 8038954486450138385, guid: 16d8aa1d798a2a64f9152df7e78fe135, type: 3}
-  segmentOrder: ffffffff00000000ffffffff00000000feffffff05000000feffffff05000000fdffffff0a000000fdffffff0a000000fdffffff
+  segmentOrder: ffffffff02000000ffffffff0200000000000000feffffff07000000feffffff0700000001000000fdffffff0c000000fdffffff0c000000fdffffff
   currentPoint: {x: 0, y: 0, z: 0}
   debugMode: 0
   areaLength: 2
@@ -1635,6 +1637,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 59
   countdownTime: 180
+  countIncreasing: 0
   score: 0
   water: {fileID: 510970074}
   waterSpeed: 50
