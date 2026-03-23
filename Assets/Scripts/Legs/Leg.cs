@@ -3,8 +3,9 @@ using UnityEngine;
 public class Leg : MonoBehaviour
 {
     [SerializeField] private GameObject root;
-    [SerializeField] private Transform knee;
+    [SerializeField] private GameObject hint;
     [SerializeField] private GameObject foot;
+    [SerializeField] private GameObject raycastObject;
 
     [SerializeField] private float legLength;
     [HideInInspector] public float stepDistance;
@@ -66,12 +67,14 @@ public class Leg : MonoBehaviour
             return;
         }
 
-        Vector3 down = GameplayManager.Instance.GetGravity(knee.position).normalized;
+        Vector3 raycastPoint = raycastObject.transform.position;
 
-        Debug.DrawRay(knee.position, down * legLength, Color.red);
+        Vector3 down = GameplayManager.Instance.GetGravity(raycastPoint).normalized;
+
+        Debug.DrawRay(raycastPoint, down * legLength, Color.red);
 
         RaycastHit hit;
-        if (Physics.Raycast(knee.position, down, out hit, legLength))
+        if (Physics.Raycast(raycastPoint, down, out hit, legLength))
         {
             targetPosition = hit.point;
 
@@ -83,7 +86,7 @@ public class Leg : MonoBehaviour
         }
         else
         {
-            targetPosition = knee.position + down * legLength;
+            targetPosition = raycastPoint + down * legLength;
             footPlanted = false;
         }
 
@@ -124,7 +127,11 @@ public class Leg : MonoBehaviour
         }
 
 
+        Vector3 rootToFoot = foot.transform.position - root.transform.position;
+        Vector3 horizontal = Vector3.ProjectOnPlane(rootToFoot, down);
 
+
+        hint.transform.position = root.transform.position + horizontal;//
 
 
         footPosition = foot.transform.position;
