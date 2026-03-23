@@ -24,7 +24,7 @@ public class PlayerCamera : MonoBehaviour
 
     private void Start()
     {
-        cam = GetComponentInChildren<Camera>();
+        
     }
 
     private void Update()
@@ -66,7 +66,14 @@ public class PlayerCamera : MonoBehaviour
         Vector3 moveStep = (targetPosition - transform.position) * Mathf.Min(camMove, camDist);
 
         transform.position = (cameraFollow) ? transform.position + moveStep : targetPosition;
-        cam.transform.rotation = camRotation;
+        if (!cam)
+        {
+            cam = GetComponentInChildren<Camera>();
+        }
+        else
+        {
+            cam.transform.rotation = camRotation;
+        }
 
     }
 

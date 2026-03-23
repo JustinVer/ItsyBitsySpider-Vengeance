@@ -2,6 +2,30 @@ using UnityEngine;
 
 public class NewSegmentRandomizer : MonoBehaviour
 {
+    #region Singleton instance
+    private static NewSegmentRandomizer instance;
+
+    public static NewSegmentRandomizer Instance
+    {
+        get
+        {
+            if (instance == null)
+            {
+                instance = FindFirstObjectByType<NewSegmentRandomizer>();
+            }
+            if (instance == null)
+            {
+                Debug.LogWarning("NO SEGMENT RANDOMIZER FOUND");
+            }
+            return instance;
+        }
+        private set
+        {
+            instance = value;
+        }
+    }
+    #endregion
+
     NewCornerNode[] corners;
     NewSegmentNode[][] segments;
     [SerializeField] GameObject[] cornerPrefabs;

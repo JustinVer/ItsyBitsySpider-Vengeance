@@ -14,7 +14,7 @@ public class PauseMenu : MonoBehaviour
     [SerializeField] Slider soundEffectsVolume;
     [SerializeField] Slider backgroundMusicVolume;
 
-    public bool CanPause = true;
+    public bool CanPause = false;
     private bool hasChanged = false;
     private bool isPaused = false;
 
@@ -87,7 +87,8 @@ public class PauseMenu : MonoBehaviour
     public void QuitGame()
     {
         Time.timeScale = 1f;
-        GameplayManager.Instance.MainMenu();
+        GameplayManager.Instance.ResetGame();
+        pauseCanvas.SetActive(false);
     }
     public void masterVolumeSlider()
     {

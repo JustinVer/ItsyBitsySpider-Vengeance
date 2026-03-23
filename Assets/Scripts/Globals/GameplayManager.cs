@@ -56,7 +56,7 @@ public class GameplayManager : MonoBehaviour
     public LayerMask NotPlayerOrEnemyMask;
 
     [SerializeField] private float countdownTime = 180f;
-    private bool countDownActive = true;
+    private bool countDownActive = false;
     public double score = 0;
 
     [SerializeField] GameObject water;
@@ -85,13 +85,9 @@ public class GameplayManager : MonoBehaviour
     private void Start()
     {
         saveData = FileHandler.LoadGame();
-        HUD.SetActive(true);
-        HUDController = HUD.GetComponent<HUDController>();
 
-        // Lock the cursor to the center of the screen
-        Cursor.lockState = CursorLockMode.Locked;
-        // Hide the cursor
-        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Confined;
+        Cursor.visible = true;
     }
 
     private IEnumerator LoadLevel(string levelName)
@@ -257,17 +253,47 @@ public class GameplayManager : MonoBehaviour
 
             playerBody.transform.position = targetPoint;
         }
+
+        if (countdownTime < - 15)
+        {
+            ResetGame();
+        }
     }
-    private void SetupForStart()
+    public void SetupForStart()
     {
         player.transform.position = new Vector3(-3, -23, 3);
         player.transform.rotation = new Quaternion();
+        countDownActive = true;
+        countdownTime = 180;
 
+        HUD.SetActive(true);
+        HUDController = HUD.GetComponent<HUDController>();
+
+        // Lock the cursor to the center of the screen
+        Cursor.lockState = CursorLockMode.Locked;
+        // Hide the cursor
+        Cursor.visible = false;
+
+        pauseMenu.CanPause = true;
+        setInputActionToPlayer();
     }
 
-    private void ResetGame()
+    public void ResetGame()
     {
+        ClearGravitySpline();
+        UpgradeMenu.Instance.activateMenu();
+        countDownActive = false;
+        countdownTime = 180;
+        
+        washedOut = false;
+        HUD.SetActive(false);
 
+        Cursor.lockState = CursorLockMode.Confined;
+        Cursor.visible = true;
+        pauseMenu.CanPause = false;
+        NewSegmentRandomizer.Instance.KillRun();
+
+        setInputActionToUI();
     }
 
     public void PauseTimer()
@@ -279,7 +305,8 @@ public class GameplayManager : MonoBehaviour
     {
         if (!washedOut && countDownActive) countdownTime -= Time.deltaTime;
 
-        HUDController.TimeInSeconds = countdownTime;
+        if (HUD.activeSelf)
+            HUDController.TimeInSeconds = countdownTime;
 
         if (countdownTime < 1)
         {
