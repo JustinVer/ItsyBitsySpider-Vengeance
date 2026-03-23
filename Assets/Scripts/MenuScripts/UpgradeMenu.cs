@@ -76,8 +76,10 @@ public class UpgradeMenu : MonoBehaviour
     public void GoToTestRange()
     {
         //TODO: open the testRange
-
+        NewSegmentRandomizer.Instance.LoadTutorial();
         ActiveCameraManager.Instance.SwitchCameras();
+        GameplayManager.Instance.SetupForStart();
+        upgradeMenu.SetActive(false);
     }
 
     public void QuitGame()

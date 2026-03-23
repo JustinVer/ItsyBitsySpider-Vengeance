@@ -30,6 +30,8 @@ public class NewSegmentRandomizer : MonoBehaviour
     NewSegmentNode[][] segments;
     [SerializeField] GameObject[] cornerPrefabs;
     [SerializeField] GameObject[] segmentPool;
+    [SerializeField] GameObject tutorialLevel;
+    NewSegmentNode tutorial;
 
     // in the segment order -1 coresponds to corners other wise they corespond to the segmentPool index
     // the first and last values must be corners
@@ -42,8 +44,11 @@ public class NewSegmentRandomizer : MonoBehaviour
     [SerializeField] private int areaLength = 3;
     [SerializeField] private int numLevels = 5;
     private int numNests = 2;
-
     // Start is called once before the first execution of Update after the MonoBehaviour is created
+    public void Start()
+    {
+        tutorial = new NewSegmentNode(tutorialLevel);
+    }
     public void StartRun()
     {
         int cornerNum = 0;
@@ -162,12 +167,19 @@ public class NewSegmentRandomizer : MonoBehaviour
 
         corners = null;
         segments = null;
+        tutorial.UnloadSection();
     }
 
     private void StartLoad()
     {
         corners[0].SetInitialPos(Vector3.zero);
         LoadCorners(0);
+    }
+
+    public void LoadTutorial()
+    {
+        tutorial.LoadSection(Vector3.zero, Vector3.zero);
+        GameplayManager.Instance.UpdateGravitySpline(tutorial.FindSpline());
     }
 
     public void LoadCorners(int index)

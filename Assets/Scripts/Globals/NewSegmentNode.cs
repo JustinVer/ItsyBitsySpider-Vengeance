@@ -33,4 +33,9 @@ public class NewSegmentNode : MonoBehaviour
         if (thisSegment)
             Destroy(thisSegment);
     }
+
+    public SplineContainer FindSpline()
+    {
+        return thisSegment.GetComponentInChildren<SplineContainer>();
+    }
 }
