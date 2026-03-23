@@ -1,4 +1,7 @@
 using UnityEngine;
+using UnityEngine.Rendering;
+
+using System.Collections.Generic;
 
 public class LegManager : MonoBehaviour
 {
@@ -18,15 +21,17 @@ public class LegManager : MonoBehaviour
     [SerializeField] private float stepHeight = 0.25f;
     [SerializeField] private float stepDuraion = 0.15f;
 
-    [SerializeField] private float stepOffsetDuration = 0.05f;
-    private float stepOffsetTimer = 0;
+    [SerializeField] private float gaitTime = 0.05f;
+
+    private int currentGroup = 0;
+
+    private float gaitTimer = 0;
     private bool rightStep = true;
 
     private Leg[] rightLegs;
     private Leg[] leftLegs;
 
-    private int rStepIdx = 0;
-    private int lStepIdx = 0;
+    private List<Leg> allLegs = new List<Leg>();
 
     private bool wasMoving = false;
 
@@ -36,24 +41,17 @@ public class LegManager : MonoBehaviour
 
     private void Awake()
     {
-
         lastPosition = transform.position;
 
         rightLegs = new Leg[rightLegPositions.Length];
         leftLegs = new Leg[leftLegPositions.Length];
 
+        int step = 1;
+        int assingmentGroup = 0;
+
+
         for (int i = 0; i < Mathf.Max(rightLegPositions.Length, leftLegPositions.Length); i++)
         {
-            if (i < rightLegPositions.Length)
-            {
-                rightLegs[i] = Instantiate(leg, transform).GetComponent<Leg>();
-                rightLegs[i].transform.localPosition = rightLegPositions[i].transform.localPosition;
-                rightLegs[i].transform.localRotation = rightLegPositions[i].transform.localRotation;
-                rightLegs[i].stepDistance = stepDistance;
-                rightLegs[i].stepHeight = stepHeight;
-                rightLegs[i].stepDuraion = stepDuraion;
-                rightLegs[i].AnimFoot = rightFeet[i];
-            }
             if (i < leftLegPositions.Length)
             {
                 leftLegs[i] = Instantiate(leg, transform).GetComponent<Leg>();
@@ -63,15 +61,32 @@ public class LegManager : MonoBehaviour
                 leftLegs[i].stepHeight = stepHeight;
                 leftLegs[i].stepDuraion = stepDuraion;
                 leftLegs[i].AnimFoot = leftFeet[i];
+                leftLegs[i].stepGroup = assingmentGroup;
+                allLegs.Add(leftLegs[i]);
             }
+
+            assingmentGroup += step;
+            
+            if (i < rightLegPositions.Length)
+            {
+                rightLegs[i] = Instantiate(leg, transform).GetComponent<Leg>();
+                rightLegs[i].transform.localPosition = rightLegPositions[i].transform.localPosition;
+                rightLegs[i].transform.localRotation = rightLegPositions[i].transform.localRotation;
+                rightLegs[i].stepDistance = stepDistance;
+                rightLegs[i].stepHeight = stepHeight;
+                rightLegs[i].stepDuraion = stepDuraion;
+                rightLegs[i].AnimFoot = rightFeet[i];
+                rightLegs[i].stepGroup = assingmentGroup;
+                allLegs.Add(rightLegs[i]);
+            }
+
+            step *= -1;
+
         }
     }
 
     private void FixedUpdate()
     {
-
-
-
         linearVelocity = (transform.position - lastPosition) / Time.fixedDeltaTime;
 
         Vector3 down = GameplayManager.Instance.GetGravity(transform.position);
@@ -108,48 +123,15 @@ public class LegManager : MonoBehaviour
 
         wasMoving = moving;
 
-        stepOffsetTimer += Time.fixedDeltaTime;
-
-        if (stepOffsetTimer >= stepOffsetDuration && grounded)
+        gaitTimer += Time.deltaTime;
+        if (gaitTimer >= gaitTime)
         {
-            Vector3 footPosition;
-            Vector3 targetPosition;
-            if (rightStep)
+            gaitTimer = 0;
+            if (readyToStep(currentGroup))
             {
-                footPosition = rightLegs[rStepIdx].FootPosition;
-                targetPosition = rightLegs[rStepIdx].TargetPosition;
-
-                Vector3 predictedTarget = targetPosition + linearVelocity * stepDuraion;
-
-                if (Vector3.Distance(footPosition, predictedTarget) > stepDistance)
-                {
-                    rightLegs[rStepIdx].Step();
-                    rStepIdx = (rStepIdx + 1) % rightLegs.Length;
-                    stepOffsetTimer = 0;
-                    rightStep = false;
-                }
-
-
-
-
+                triggerStepGroup(currentGroup);
             }
-            else
-            {
-                footPosition = leftLegs[lStepIdx].FootPosition;
-                targetPosition = leftLegs[lStepIdx].TargetPosition;
-
-                Vector3 predictedTarget = targetPosition + linearVelocity * stepDuraion;
-
-                if (Vector3.Distance(footPosition, predictedTarget) > stepDistance)
-                {
-                    leftLegs[lStepIdx].Step();
-                    lStepIdx = (lStepIdx + 1) % leftLegs.Length;
-                    stepOffsetTimer = 0;
-                    rightStep = true;
-
-                }
-
-            }
+            currentGroup = 1 - currentGroup;
         }
 
         lastPosition = transform.position;
@@ -159,5 +141,29 @@ public class LegManager : MonoBehaviour
     public void pauseLegs(bool enabled)
     {
         Animating = enabled;
+    }
+
+    private void triggerStepGroup(int group)
+    {
+        foreach(Leg l in allLegs)
+        {
+            if (l.stepGroup == group) l.Step();
+        }
+    }
+
+    private bool readyToStep(int group)
+    {
+        if (!grounded) return false;
+
+        foreach(Leg l in allLegs)
+        {
+            if (l.stepGroup != group) continue;
+
+            float dist = Vector3.Distance(l.FootPosition, l.TargetPosition);
+
+            if (dist > stepDistance) return true;
+        }
+
+       return false;
     }
 }

@@ -8,11 +8,13 @@ public class Leg : MonoBehaviour
     [SerializeField] private GameObject raycastObject;
 
     [SerializeField] private float legLength;
+
     [HideInInspector] public float stepDistance;
     [HideInInspector] public float stepHeight;
     [HideInInspector] public float stepDuraion;
+    [HideInInspector] public int stepGroup = -1;
 
-    private bool stepping = false;
+    public bool stepping = false;
     private float stepTimer = 0f;
 
     private Vector3 stepStart = Vector3.zero;
@@ -127,11 +129,15 @@ public class Leg : MonoBehaviour
         }
 
 
-        Vector3 rootToFoot = foot.transform.position - root.transform.position;
-        Vector3 horizontal = Vector3.ProjectOnPlane(rootToFoot, down);
+        Vector3 footPos = foot.transform.position;
+
+        float rootHeight = Vector3.Dot(root.transform.position, down);
+        float footHeight = Vector3.Dot(footPos, down);
+
+        Vector3 hintPos = footPos + down * (rootHeight - footHeight);
 
 
-        hint.transform.position = root.transform.position + horizontal;//
+        hint.transform.position = hintPos;//
 
 
         footPosition = foot.transform.position;
