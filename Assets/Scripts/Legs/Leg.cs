@@ -53,7 +53,6 @@ public class Leg : MonoBehaviour
     private void Start()
     {
         legManager = GetComponentInParent<LegManager>();
-        hintOffset = hint.transform.position - root.transform.position;
     }
 
 
