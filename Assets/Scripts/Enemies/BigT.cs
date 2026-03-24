@@ -223,9 +223,10 @@ public class BigT : MonoBehaviour, IFireAnimation, IDamageable, IDeathAnimation
     private float platformHeuristic(Platform platform)
     {
         float heuristic = 0;
-
-        heuristic += 100 - Mathf.Abs(((attackRange + chaseRange) / 2.0f) - (Vector3.Distance(GameplayManager.Instance.Player.transform.position, platform.PlatformObject.transform.position)));
-
+        if (platform)
+        {
+            heuristic += 100 - Mathf.Abs(((attackRange + chaseRange) / 2.0f) - (Vector3.Distance(GameplayManager.Instance.Player.transform.position, platform.PlatformObject.transform.position)));
+        }
         return heuristic;
     }
 
