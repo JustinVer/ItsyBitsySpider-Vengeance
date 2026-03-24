@@ -23,6 +23,9 @@ public class BigTGun : MonoBehaviour
     [SerializeField] private int numBulletsPerVolley = 10;
     [SerializeField] private float spreadDistanceDivider = 1.0f;
 
+    [SerializeField] private AudioClip shoot;
+    [SerializeField, Range(0, 1)] private float shootVolume = 0.5f;
+
     // Update is called once per frame
     void Update()
     {
@@ -35,6 +38,7 @@ public class BigTGun : MonoBehaviour
 
         muzzleFlash1.Play();
         muzzleFlash2.Play();
+        AudioManager.Instance.PlaySound(shoot, shootVolume, muzzle.transform.position);
 
         for (int i = 0; i < numBulletsPerVolley; i++)
         {

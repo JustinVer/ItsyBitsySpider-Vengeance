@@ -15,6 +15,11 @@ public class Ant : EnemyBase, IFireAnimation, ICollisionReciever
     [SerializeField] private float slowPercentage = 0.5f;
     [SerializeField] private LegManager LegManager;
 
+    [SerializeField] private AudioClip charge;
+    [SerializeField, Range(0, 1)] private float chargeVolume = 0.5f;
+    [SerializeField] private AudioClip pinch;
+    [SerializeField, Range(0, 1)] private float pinchVolume = 0.5f;
+
     private void OnEnable()
     {
         this.startPosition = this.transform.position;
@@ -50,6 +55,7 @@ public class Ant : EnemyBase, IFireAnimation, ICollisionReciever
     {
         if (!isDying)
         {
+            AudioManager.Instance.PlaySound(death, deathVolume, transform.position);
             GameplayManager.Instance.PlayerBody.CurrentWebs++;
             GameplayManager.Instance.score++;
             animator.SetTrigger("Died");
@@ -89,6 +95,7 @@ public class Ant : EnemyBase, IFireAnimation, ICollisionReciever
     {
         animator.SetTrigger("Fire1");
         LegManager.pauseLegs(true);
+        AudioManager.Instance.PlaySound(pinch, pinchVolume, transform.position);
         isGrapplingPlayer = true;
         waitingForGrapple = true;
         canGrapplePlayer = false;

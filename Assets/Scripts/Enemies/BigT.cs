@@ -268,6 +268,7 @@ public class BigT : MonoBehaviour, IFireAnimation, IDamageable, IDeathAnimation
                 animator.SetTrigger("Fire1");
                 Debug.Log("Boss fire start");
                 isFiring = true;
+                
             }
 
         }

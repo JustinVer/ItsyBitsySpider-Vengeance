@@ -82,6 +82,8 @@ MonoBehaviour:
   animator: {fileID: 8871247599177792827}
   data: {fileID: 11400000, guid: 8b709225556c7f348a54fe728bc3f62b, type: 2}
   damageParticle: {fileID: 4432713129779911263}
+  death: {fileID: 8300000, guid: c598c735add87114490b26f7014d746a, type: 3}
+  deathVolume: 0.5
   projectilePrefab: {fileID: 3387162059900276505, guid: 44d776ff379b9564ebd876cc41406594, type: 3}
   ProjectileVelocity: 60
   fireLocation: {fileID: 4770606503080447757}
@@ -97,6 +99,10 @@ MonoBehaviour:
   detectionWidth: 2
   numDetectionCasts: 11
   fireVelocityDistanceMultiplier: 1.02
+  jump: {fileID: 8300000, guid: 0b415fa29a3a11a4d89d8f3746286bd0, type: 3}
+  jumpVolume: 0.5
+  shoot: {fileID: 8300000, guid: c3ef996b9cb2a8e41b084acc68cdf56f, type: 3}
+  shootVolume: 0.5
 --- !u!54 &3862894227492758106
 Rigidbody:
   m_ObjectHideFlags: 0

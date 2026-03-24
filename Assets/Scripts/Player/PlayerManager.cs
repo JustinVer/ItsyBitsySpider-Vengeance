@@ -9,6 +9,13 @@ public class PlayerManager : MonoBehaviour
 
     [SerializeField] public Camera Playercam;
 
+    [SerializeField] private AudioClip dash;
+    [SerializeField, Range(0, 1)] private float dashVolume = 0.5f;
+    [SerializeField] private AudioClip grapple;
+    [SerializeField, Range(0, 1)] private float grappleVolume = 0.5f;
+    [SerializeField] private AudioClip glide;
+    [SerializeField, Range(0, 1)] private float glideVolume = 0.5f;
+
     private void Start()
     {
         body = GetComponentInChildren<PlayerBody>();
@@ -28,6 +35,10 @@ public class PlayerManager : MonoBehaviour
         }
         if (GameplayManager.Instance.Glide && body.CurrentWebs > 0)
         {
+            if (!body.Glide)
+            {
+                AudioManager.Instance.PlaySound(glide, glideVolume, body.transform.position);
+            }
             body.Glide = true;
             body.CurrentWebs -= Time.deltaTime;
         }
@@ -37,6 +48,10 @@ public class PlayerManager : MonoBehaviour
         }
         if (GameplayManager.Instance.Grapple && canGrapple && body.CurrentWebs >= 1)
         {
+            if (!body.Grapple)
+            {
+                AudioManager.Instance.PlaySound(grapple, grappleVolume, body.transform.position);
+            }
             body.Grapple = !body.Grapple;
             if (body.ValidGrapplePoint && !body.Grapple)
             {
@@ -46,6 +61,11 @@ public class PlayerManager : MonoBehaviour
         }
         if (GameplayManager.Instance.Dash && canDash && body.CurrentWebs >= 1)
         {
+            if (!body.Crash)
+            {
+                AudioManager.Instance.PlaySound(dash, dashVolume, body.transform.position);
+            }
+
             body.Crash = !body.Crash;
 
             body.CurrentWebs -= 1;

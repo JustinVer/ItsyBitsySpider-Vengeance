@@ -9,6 +9,9 @@ public abstract class EnemyBase : MonoBehaviour, IDamageable, IReturnSelfObject<
     protected ObjectPool<EnemyBase> parentPool;
     [SerializeField] private ParticleSystem damageParticle;
 
+    [SerializeField] protected AudioClip death;
+    [SerializeField, Range(0, 1)] protected float deathVolume = 0.5f;
+
     protected virtual void Awake()
     {
         setHP(data.maxHP);

@@ -24,6 +24,9 @@ public class Gun : MonoBehaviour
 
     [SerializeField] private float castWidth = 0.1f;
 
+    [SerializeField] private AudioClip gunshot;
+    [SerializeField, Range(0, 1)] private float gunshotVolume = 0.5f;
+
     Vector3 hitPosition;
 
     bool canFire = true;
@@ -68,7 +71,7 @@ public class Gun : MonoBehaviour
         newBullet.transform.forward = muzzle.forward;
         muzzleFlash1.Play();
         muzzleFlash2.Play();
-
+        AudioManager.Instance.PlaySound(gunshot, gunshotVolume, muzzle.position);
 
         //hitcast
         RaycastHit hit;

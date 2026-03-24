@@ -14,6 +14,9 @@ public class Leg : MonoBehaviour
     [HideInInspector] public float stepDuraion;
     [HideInInspector] public int stepGroup = -1;
 
+    [SerializeField] private AudioClip step;
+    [SerializeField, Range(0, 1)] private float stepVolume = 0.25f;
+
     public bool stepping = false;
     private float stepTimer = 0f;
 
@@ -112,6 +115,7 @@ public class Leg : MonoBehaviour
 
             if (t >= 1)
             {
+                AudioManager.Instance.PlaySound(step, stepVolume, stepEnd);
                 stepping = false;
                 footPlanted = true;
                 plantPosition = stepEnd;

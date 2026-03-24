@@ -57,6 +57,28 @@ public class AudioManager : MonoBehaviour
         }
     }
 
+    public void PlaySound(AudioClip clip, float volume, Vector3 position)
+    {
+       StartCoroutine(playSoundCoroutine(clip, volume, position));
+    }
+
+    private IEnumerator playSoundCoroutine(AudioClip clip, float volume, Vector3 position)
+    {
+        AudioSource source = getSource();
+
+        source.clip = clip;
+        source.transform.position = position;
+        source.volume = volume;
+        source.Play();
+
+        while (source.isPlaying)
+        {
+            yield return null;
+        }
+
+        returnSource(source);
+    }
+
     public AudioSource getSource()
     {
         if (sources.Count == 0)

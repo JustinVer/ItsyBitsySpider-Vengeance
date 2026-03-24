@@ -338,6 +338,10 @@ MonoBehaviour:
   crashDuration: 0.35
   knockBackHeight: 5
   knockBackStrength: 65
+  damage: {fileID: 8300000, guid: 2bc24d975c17126409372f1def9f48ec, type: 3}
+  damageVolume: 0.5
+  jump: {fileID: 8300000, guid: 53373d734283c0342a4099a7c55cb42a, type: 3}
+  jumpVolume: 0.5
 --- !u!33 &731748397136411037
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -552,6 +556,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   InputEnabled: 1
   Playercam: {fileID: 4560535321691413841}
+  dash: {fileID: 8300000, guid: 4efd1905530ea254aafe64ff8d809d0a, type: 3}
+  dashVolume: 0.5
+  grapple: {fileID: 8300000, guid: 786a4eb2f3dc10a41bf6611dd1db4b37, type: 3}
+  grappleVolume: 0.5
+  glide: {fileID: 8300000, guid: 9b86ae9504081f24eadf5dbec5e873a4, type: 3}
+  glideVolume: 0.5
 --- !u!1 &4329921341087044253
 GameObject:
   m_ObjectHideFlags: 0
@@ -1151,6 +1161,10 @@ PrefabInstance:
       value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 8105757214071372947, guid: 46f0c531a703ae0458a47054a4b45332, type: 3}
+      propertyPath: gunshot
+      value: 
+      objectReference: {fileID: 8300000, guid: 5894d53c0f8d4ba45a7e953ed4ab80f1, type: 3}
+    - target: {fileID: 8105757214071372947, guid: 46f0c531a703ae0458a47054a4b45332, type: 3}
       propertyPath: castWidth
       value: 0.12
       objectReference: {fileID: 0}
@@ -1162,6 +1176,10 @@ PrefabInstance:
       propertyPath: playerCamera
       value: 
       objectReference: {fileID: 4560535321691413841}
+    - target: {fileID: 8105757214071372947, guid: 46f0c531a703ae0458a47054a4b45332, type: 3}
+      propertyPath: gunshotVolume
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 8105757214071372947, guid: 46f0c531a703ae0458a47054a4b45332, type: 3}
       propertyPath: fireMask.m_Bits
       value: 128

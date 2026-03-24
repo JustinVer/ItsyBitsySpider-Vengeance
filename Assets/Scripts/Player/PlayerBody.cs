@@ -99,6 +99,12 @@ public class PlayerBody : MonoBehaviour, IDamageable
     [SerializeField] private float knockBackStrength = 50f;
     private float currentCrashDuration = 2;
 
+    [SerializeField] private AudioClip damage;
+    [SerializeField, Range(0, 1)] private float damageVolume = 0.5f;
+    [SerializeField] private AudioClip jump;
+    [SerializeField, Range(0, 1)] private float jumpVolume = 0.5f;
+    
+
     private bool crash = false;
     public bool Crash
     {
@@ -255,6 +261,7 @@ public class PlayerBody : MonoBehaviour, IDamageable
     {
         if (canJump())
         {
+            AudioManager.Instance.PlaySound(jump, jumpVolume, transform.position);
             doJump = true;
         }
     }
@@ -430,6 +437,10 @@ public class PlayerBody : MonoBehaviour, IDamageable
     public void modifyHP(int hpChange)
     {
         currentHP = Mathf.Clamp(currentHP + hpChange, 0f, maxHP);
+        if (hpChange < 0f)
+        {
+            AudioManager.Instance.PlaySound(damage, damageVolume, transform.position);
+        }
     }
 
     public void setHP(int hp)

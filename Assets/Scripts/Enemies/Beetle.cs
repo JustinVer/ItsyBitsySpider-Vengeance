@@ -27,6 +27,11 @@ public class Beetle : EnemyBase, IFireAnimation
     [SerializeField] private float fireVelocityDistanceMultiplier = 0.5f;
     private float landTime = 0.95f;
 
+    [SerializeField] private AudioClip jump;
+    [SerializeField, Range(0, 1)] private float jumpVolume = 0.5f;
+    [SerializeField] private AudioClip shoot;
+    [SerializeField, Range(0, 1)] private float shootVolume = 0.5f;
+
     protected override void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -100,12 +105,14 @@ public class Beetle : EnemyBase, IFireAnimation
             animator.SetTrigger("Fire1");
             isFiring = true;
         }
+        AudioManager.Instance.PlaySound(shoot, shootVolume, transform.position);
     }
 
     protected override void Die()
     {
         if (!isDying)
         {
+            AudioManager.Instance.PlaySound(death, deathVolume, transform.position);
             if (currentPlatformScript != null && currentPlatformTransform != null)
             {
                 currentPlatformScript.returnPlatformPoint(currentPlatformTransform);
@@ -146,6 +153,7 @@ public class Beetle : EnemyBase, IFireAnimation
         Vector3 gravityDir = -GameplayManager.Instance.GetGravity(Vector3.Lerp(startPos, endPos, 0.5f)).normalized;
         yield return new WaitForFixedUpdate();
         animator.SetBool("Jumping", true);
+        AudioManager.Instance.PlaySound(jump, jumpVolume, transform.position);
         while (normalizedTime < 1.0f)
         {
             animator.SetFloat("JumpT", normalizedTime);
