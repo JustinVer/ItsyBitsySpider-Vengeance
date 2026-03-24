@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class BigT : MonoBehaviour, IFireAnimation, IDamageable
+public class BigT : MonoBehaviour, IFireAnimation, IDamageable, IDeathAnimation
 {
     [SerializeField] private AgentLinkMover agentMover;
     [SerializeField] private BodyFollowAgent bodyFollower;
@@ -97,6 +97,7 @@ public class BigT : MonoBehaviour, IFireAnimation, IDamageable
 
         if (trySummoning && canSummon())
         {
+            timeSinceLastSummon = 0;
             agentMover.SetDestination(agentMover.transform.position);
             bodyFollower.Anim.SetTrigger("Summon");
             BossFightManager.Instance.SummonRandomEnemies(baseNumMinionsPerSummon + (int)((Random.value * randomnessOfMinionsPerSummon) - (int)(randomnessOfMinionsPerSummon * 0.5f)));
@@ -105,6 +106,7 @@ public class BigT : MonoBehaviour, IFireAnimation, IDamageable
         }
         else if (!trySummoning && doneSummoning)
         {
+            timeSinceLastSummon = 0;
             doneSummoning = false;
             nextState();
         }
@@ -356,7 +358,7 @@ public class BigT : MonoBehaviour, IFireAnimation, IDamageable
 
     private void Die()
     {
-
+        animator.SetTrigger("Died");
     }
 
     public void hitEffect(Vector3 position, Vector3 forwardDirection)
@@ -379,5 +381,10 @@ public class BigT : MonoBehaviour, IFireAnimation, IDamageable
     private void rotateTowards(Vector3 startPosition, Vector3 endPosition, Vector3 gravity, float maxRotation)
     {
         bodyFollower.transform.rotation = Quaternion.RotateTowards(bodyFollower.transform.rotation, Quaternion.LookRotation(endPosition - startPosition, gravity), maxRotation * Time.fixedDeltaTime);
+    }
+
+    public void EndDeath()
+    {
+        this.gameObject.SetActive(false);
     }
 }
