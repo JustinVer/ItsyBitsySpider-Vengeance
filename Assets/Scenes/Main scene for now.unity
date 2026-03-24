@@ -2265,11 +2265,16 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 59
   countdownTime: 180
+  countIncreasing: 0
   score: 0
   water: {fileID: 510970074}
   waterSpeed: 50
   washOutRange: 50
   washOutStrength: 2
+  washOutSound: {fileID: 8300000, guid: eac5a2c7ba34f7143a57447dd7672303, type: 3}
+  washOutVolume: 0.5
+  music: {fileID: 8300000, guid: 34a8d70cbe9699141a45a3c4ca2defe4, type: 3}
+  music2: {fileID: 8300000, guid: 3a5ab1a5a5b46d24b9a7397d2df466ab, type: 3}
   loadScreen: {fileID: 1548044106}
   gameOver: {fileID: 685914489}
   victoryScreen: {fileID: 689900614}
@@ -2790,6 +2795,10 @@ PrefabInstance:
     - target: {fileID: 2712269529553429557, guid: a6cd955541e50514c8c843eb5a46d7a2, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3926992700954711557, guid: a6cd955541e50514c8c843eb5a46d7a2, type: 3}
+      propertyPath: numSources
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 7192315754733246524, guid: a6cd955541e50514c8c843eb5a46d7a2, type: 3}
       propertyPath: m_Name

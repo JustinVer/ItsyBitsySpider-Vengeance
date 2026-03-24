@@ -70,6 +70,12 @@ public class GameplayManager : MonoBehaviour
     [SerializeField] private float washOutRange;
     [SerializeField] private float washOutStrength;
 
+    [SerializeField] private AudioClip washOutSound;
+    [SerializeField, Range(0, 1)] private float washOutVolume = 0.5f;
+
+    [SerializeField] private AudioClip music;
+    [SerializeField] private AudioClip music2;
+
     #region sceneManagement
     [SerializeField] private LoadScreen loadScreen;
     [SerializeField] private GameOver gameOver;
@@ -169,6 +175,7 @@ public class GameplayManager : MonoBehaviour
     private void Awake()
     {
         gravitySpline = gravitySplineContainer.Spline;
+        AudioManager.Instance.setBackgroundMusic(music);
     }
     public Vector3 GetGravity(Vector3 position)
     {
@@ -233,6 +240,7 @@ public class GameplayManager : MonoBehaviour
 
         if (!washedOut)
         {
+            AudioManager.Instance.PlaySound(washOutSound, washOutVolume, playerBody.transform.position);
             washedOut = true;
             water.SetActive(true);
             float length = gravitySpline.GetLength();
@@ -256,7 +264,7 @@ public class GameplayManager : MonoBehaviour
                 targetPoint = waterPoint;
             }
 
-            playerBody.transform.position = targetPoint;
+            playerBody.transform.position = waterPoint;
         }
 
         if (countdownTime < - 15)
@@ -331,6 +339,11 @@ public class GameplayManager : MonoBehaviour
         if (countdownTime < 1)
         {
             washOut();
+        }
+
+        if (countdownTime < 90)
+        {
+            AudioManager.Instance.setBackgroundMusic(music2);
         }
     }
 
