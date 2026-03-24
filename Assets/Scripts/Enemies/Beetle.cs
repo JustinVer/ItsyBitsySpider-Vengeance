@@ -69,6 +69,7 @@ public class Beetle : EnemyBase, IFireAnimation
 
     public void FireProjectile()
     {
+        AudioManager.Instance.PlaySound(shoot, shootVolume, transform.position);
         if (isDying || isJumping) return;
         GameObject bullet = GameObject.Instantiate(projectilePrefab);
         bullet.transform.forward = fireLocation.forward;
@@ -105,7 +106,7 @@ public class Beetle : EnemyBase, IFireAnimation
             animator.SetTrigger("Fire1");
             isFiring = true;
         }
-        AudioManager.Instance.PlaySound(shoot, shootVolume, transform.position);
+        
     }
 
     protected override void Die()
