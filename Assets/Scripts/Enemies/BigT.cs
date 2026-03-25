@@ -412,10 +412,10 @@ public class BigT : MonoBehaviour, IFireAnimation, IDamageable, IDeathAnimation
     {
         bodyFollower.transform.rotation = Quaternion.RotateTowards(bodyFollower.transform.rotation, Quaternion.LookRotation(endPosition - startPosition, gravity), maxRotation * Time.fixedDeltaTime);
         Quaternion rotation2 = Quaternion.RotateTowards(bodyFollower.transform.rotation, agentMover.transform.rotation, maxRotation * Time.fixedDeltaTime);
-        Vector3 rot = bodyFollower.transform.localEulerAngles;
+        /*Vector3 rot = bodyFollower.transform.localEulerAngles;
         rot.x = rotation2.eulerAngles.x;
-        rot.z = rotation2.eulerAngles.z;
-        bodyFollower.transform.localEulerAngles = rot;
+        rot.z = rotation2.eulerAngles.z;*/
+        bodyFollower.transform.rotation = rotation2;
     }
 
     private void rotateTowards(Vector3 startPosition, Vector3 endPosition, Vector3 gravity, float maxRotation)
