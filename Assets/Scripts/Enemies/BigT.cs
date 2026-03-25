@@ -39,6 +39,10 @@ public class BigT : MonoBehaviour, IFireAnimation, IDamageable, IDeathAnimation
     [SerializeField] private int numMinionsPerSummonIncrease = 1;
     [SerializeField] private int randomnessOfMinionsPerSummon = 2;
 
+    [SerializeField] private float preferedDistanceToJumpForSummon = 65;
+    [SerializeField] private float timeFiringBeforeCheckSummon = 12f;
+    private float timeFiring = 0.0f;
+
     [SerializeField] private int maxHitPoint = 500;
     private int currentHP = 500;
 
@@ -128,9 +132,9 @@ public class BigT : MonoBehaviour, IFireAnimation, IDamageable, IDeathAnimation
         doneSummoning = true;
     }
 
-    private bool startJump()
+    private bool startJump(bool towardsPlayer)
     {
-        Vector3 endPosition = getNewPlatformPosition();
+        Vector3 endPosition = getNewPlatformPosition(towardsPlayer);
         if (endPosition != bodyFollower.transform.position)
         {
             StartCoroutine(Jump(endPosition, jumpHeight, (Vector3.Distance(bodyFollower.transform.position, endPosition) * timeDistanceMultiplier) + timeDistanceBase));
@@ -171,20 +175,29 @@ public class BigT : MonoBehaviour, IFireAnimation, IDamageable, IDeathAnimation
         nextState();
     }
 
-    private Vector3 getNewPlatformPosition()
+    private Vector3 getNewPlatformPosition(bool towardsPlayer)
     {
         if (currentPlatformScript != null && currentPlatformTransform != null)
         {
             currentPlatformScript.returnPlatformPoint(currentPlatformTransform);
         }
 
-        MaxHeap<Platform> maxHeap = new MaxHeap<Platform>(platforms, x => platformHeuristic(x));
+        MaxHeap<Platform> maxHeap;
+        if (towardsPlayer)
+        {
+            maxHeap = new MaxHeap<Platform>(platforms, x => platformHeuristicTowardsPlayer(x));
+        }
+        else
+        {
+            maxHeap = new MaxHeap<Platform>(platforms, x => platformHeuristicAwayPlayer(x));
+        }
+
 
         Platform currentPlatform = null;
         while (maxHeap.Count > 0)
         {
             currentPlatform = maxHeap.Pull();
-            if (platformHeuristic(currentPlatform) < 0)
+            if ((towardsPlayer && platformHeuristicTowardsPlayer(currentPlatform) < 0) || (!towardsPlayer && platformHeuristicTowardsPlayer(currentPlatform) < 0))
             {
                 return bodyFollower.transform.position;
             }
@@ -220,12 +233,22 @@ public class BigT : MonoBehaviour, IFireAnimation, IDamageable, IDeathAnimation
         return bodyFollower.transform.position;
     }
 
-    private float platformHeuristic(Platform platform)
+    private float platformHeuristicTowardsPlayer(Platform platform)
     {
         float heuristic = 0;
         if (platform)
         {
             heuristic += 100 - Mathf.Abs(((attackRange + chaseRange) / 2.0f) - (Vector3.Distance(GameplayManager.Instance.Player.transform.position, platform.PlatformObject.transform.position)));
+        }
+        return heuristic;
+    }
+
+    private float platformHeuristicAwayPlayer(Platform platform)
+    {
+        float heuristic = 0;
+        if (platform)
+        {
+            heuristic += 100 - Mathf.Abs(preferedDistanceToJumpForSummon - (Vector3.Distance(GameplayManager.Instance.Player.transform.position, platform.PlatformObject.transform.position)));
         }
         return heuristic;
     }
@@ -257,18 +280,33 @@ public class BigT : MonoBehaviour, IFireAnimation, IDamageable, IDeathAnimation
 
     private void updateAttack()
     {
+        if (distanceToPlayer < attackRange)
+        {
+            timeFiring += Time.deltaTime;
+        }
+        else
+        {
+            timeFiring = 0;
+        }
+
         if (!isFiring)
         {
-            if (distanceToPlayer >= chaseRange || timeSinceLastSummon >= minTimeBetweenSummons * 3)
+            if (distanceToPlayer >= chaseRange)
             {
                 nextState();
             }
-            if (distanceToPlayer < attackRange)
+            else if (timeFiring > timeFiringBeforeCheckSummon)
+            {
+                timeSinceLastSummon += minTimeBetweenSummons;
+                startJump(false);
+                currentState = State.Jump;
+            }
+            else if (distanceToPlayer < attackRange)
             {
                 animator.SetTrigger("Fire1");
                 Debug.Log("Boss fire start");
                 isFiring = true;
-                
+
             }
 
         }
@@ -312,7 +350,7 @@ public class BigT : MonoBehaviour, IFireAnimation, IDamageable, IDeathAnimation
         }
         else if (currentState == State.Summon)
         {
-            if (distanceToPlayer >= distancePastBossJumps && startJump())
+            if (distanceToPlayer >= distancePastBossJumps && startJump(true))
             {
                 currentState = State.Jump;
             }
@@ -328,7 +366,7 @@ public class BigT : MonoBehaviour, IFireAnimation, IDamageable, IDeathAnimation
                 trySummoning = true;
                 currentState = State.Summon;
             }
-            else if (distanceToPlayer >= distancePastBossJumps && startJump())
+            else if (distanceToPlayer >= distancePastBossJumps && startJump(true))
             {
                 currentState = State.Jump;
             }
