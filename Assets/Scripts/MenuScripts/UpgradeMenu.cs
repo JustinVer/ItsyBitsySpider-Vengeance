@@ -42,9 +42,9 @@ public class UpgradeMenu : MonoBehaviour
 
     public void StartRun()
     {
+        GameplayManager.Instance.SetupForStart();
         NewSegmentRandomizer.Instance.StartRun();
         ActiveCameraManager.Instance.SwitchCameras();
-        GameplayManager.Instance.SetupForStart();
         betweenRuns = false;
         upgradeMenu.SetActive(false);
     }
@@ -79,9 +79,9 @@ public class UpgradeMenu : MonoBehaviour
     public void GoToTestRange()
     {
         //TODO: open the testRange
+        GameplayManager.Instance.SetupForStart();
         NewSegmentRandomizer.Instance.LoadTutorial();
         ActiveCameraManager.Instance.SwitchCameras();
-        GameplayManager.Instance.SetupForStart();
         betweenRuns = false;
         upgradeMenu.SetActive(false);
     }

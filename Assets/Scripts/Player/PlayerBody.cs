@@ -71,6 +71,7 @@ public class PlayerBody : MonoBehaviour, IDamageable
     [SerializeField] private Camera cam;
 
     [SerializeField] private float maxWebs = 10;
+    [SerializeField] private float startWebs = 5;
 
     private float currentWebs;
     public float CurrentWebs
@@ -103,7 +104,7 @@ public class PlayerBody : MonoBehaviour, IDamageable
     [SerializeField, Range(0, 1)] private float damageVolume = 0.5f;
     [SerializeField] private AudioClip jump;
     [SerializeField, Range(0, 1)] private float jumpVolume = 0.5f;
-    
+
 
     private bool crash = false;
     public bool Crash
@@ -125,9 +126,19 @@ public class PlayerBody : MonoBehaviour, IDamageable
 
     void Start()
     {
+
         rb = GetComponent<Rigidbody>();
     }
 
+    private void OnEnable()
+    {
+        GameplayManager.Instance.resetEvent += ResetPlayer;
+    }
+
+    private void OnDisable()
+    {
+        GameplayManager.Instance.resetEvent -= ResetPlayer;
+    }
 
     private void FixedUpdate()
     {
@@ -460,9 +471,17 @@ public class PlayerBody : MonoBehaviour, IDamageable
 
     private void onDeath()
     {
-        currentHP = maxHP;
-        Vector3 knockBackForce = -GameplayManager.Instance.GetForward(transform.position).normalized * knockBackStrength + -gravity * knockBackHeight;
-        rb.AddForce(knockBackForce, ForceMode.VelocityChange);
+        if (GameplayManager.Instance.InBossStage)
+        {
+            GameplayManager.Instance.ResetGame();
+        }
+        else
+        {
+            currentHP = maxHP;
+            Vector3 knockBackForce = -GameplayManager.Instance.GetForward(transform.position).normalized * knockBackStrength + -gravity * knockBackHeight;
+            rb.AddForce(knockBackForce, ForceMode.VelocityChange);
+        }
+
     }
 
     private void OnCollisionStay(Collision collision)
@@ -484,5 +503,18 @@ public class PlayerBody : MonoBehaviour, IDamageable
         damageParticle.transform.position = position;
         damageParticle.transform.forward = forwardDirection;
         damageParticle.Play();
+    }
+
+    public void ResetPlayer()
+    {
+        this.transform.position = new Vector3(-3, -23, 3);
+        this.transform.rotation = Quaternion.identity;
+        currentWebs = startWebs;
+        currentHP = maxHP;
+        movementDir = Vector3.zero;
+        doJump = false;
+        TargetGrapplePoint = Vector3.zero;
+        modGrapplePoint = Vector3.zero;
+        ValidGrapplePoint = false;
     }
 }
