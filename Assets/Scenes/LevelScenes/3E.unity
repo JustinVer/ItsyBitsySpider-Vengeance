@@ -342,6 +342,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1384517687}
     m_Modifications:
+    - target: {fileID: 5400877718945416394, guid: 8ea23ff2656df754486b851e2faaad22, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5386223879776424620, guid: 55fc34430e09e554596bf506bf53dce1, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -389,10 +393,6 @@ PrefabInstance:
     - target: {fileID: 5914594686980264347, guid: 55fc34430e09e554596bf506bf53dce1, type: 3}
       propertyPath: m_IsActive
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5400877718945416394, guid: 8ea23ff2656df754486b851e2faaad22, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1068,6 +1068,10 @@ MonoBehaviour:
   waterSpeed: 0
   washOutRange: 0
   washOutStrength: 0
+  washOutSound: {fileID: 0}
+  washOutVolume: 0.5
+  music: {fileID: 0}
+  music2: {fileID: 0}
   loadScreen: {fileID: 1548044106}
   gameOver: {fileID: 685914489}
   victoryScreen: {fileID: 689900614}
