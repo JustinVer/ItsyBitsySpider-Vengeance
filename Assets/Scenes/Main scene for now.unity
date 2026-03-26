@@ -1189,63 +1189,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1268825071497904933, guid: bb80d1dfda28d79428a7b688aeeec2d4, type: 3}
   m_PrefabInstance: {fileID: 1245046837}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &917859900
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 5968814520085728214, guid: 309839e297b0ac345b4c32570650f4a0, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5968814520085728214, guid: 309839e297b0ac345b4c32570650f4a0, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5968814520085728214, guid: 309839e297b0ac345b4c32570650f4a0, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 15.46
-      objectReference: {fileID: 0}
-    - target: {fileID: 5968814520085728214, guid: 309839e297b0ac345b4c32570650f4a0, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5968814520085728214, guid: 309839e297b0ac345b4c32570650f4a0, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5968814520085728214, guid: 309839e297b0ac345b4c32570650f4a0, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5968814520085728214, guid: 309839e297b0ac345b4c32570650f4a0, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5968814520085728214, guid: 309839e297b0ac345b4c32570650f4a0, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5968814520085728214, guid: 309839e297b0ac345b4c32570650f4a0, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5968814520085728214, guid: 309839e297b0ac345b4c32570650f4a0, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6457789689911251308, guid: 309839e297b0ac345b4c32570650f4a0, type: 3}
-      propertyPath: m_Name
-      value: BigT_Leg_2BONES
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 309839e297b0ac345b4c32570650f4a0, type: 3}
 --- !u!1 &930057076
 GameObject:
   m_ObjectHideFlags: 0
@@ -2433,7 +2376,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 59
   countdownTime: 180
-  countIncreasing: 0
   score: 0
   water: {fileID: 510970074}
   waterSpeed: 50
@@ -2992,4 +2934,3 @@ SceneRoots:
   - {fileID: 1851973680}
   - {fileID: 930057080}
   - {fileID: 354548443}
-  - {fileID: 917859900}
