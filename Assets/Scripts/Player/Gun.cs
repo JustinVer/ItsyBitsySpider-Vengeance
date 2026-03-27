@@ -15,8 +15,9 @@ public class Gun : MonoBehaviour
     [SerializeField] Transform folloeTransform;
 
     [SerializeField] int damage = 10;
+	[SerializeField] float fireRate = 0.25f;
 
-    [SerializeField] LayerMask fireMask;
+	[SerializeField] LayerMask fireMask;
     [SerializeField] LayerMask screenRaycastMask;
 
     [SerializeField] private ParticleSystem muzzleFlash1;
@@ -58,10 +59,10 @@ public class Gun : MonoBehaviour
             canFire = false;
         }
 
-        if (!GameplayManager.Instance.Fire)
-        {
-            canFire = true;
-        }
+        //if (!GameplayManager.Instance.Fire)
+        //{
+        //    canFire = true;
+        //}
     }
 
     void Shoot()
@@ -91,5 +92,12 @@ public class Gun : MonoBehaviour
         {
             Debug.Log("GUN: " + hit + " " + false + " " + hitPosition);
         }
-    }
+
+		Invoke("ResetFire", fireRate);
+	}
+
+	void ResetFire()
+	{
+		canFire = true;
+	}
 }
