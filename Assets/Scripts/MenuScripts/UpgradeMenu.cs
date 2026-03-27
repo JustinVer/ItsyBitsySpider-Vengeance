@@ -1,3 +1,4 @@
+using UnityEditor;
 using UnityEngine;
 
 public class UpgradeMenu : MonoBehaviour
@@ -83,11 +84,16 @@ public class UpgradeMenu : MonoBehaviour
         NewSegmentRandomizer.Instance.LoadTutorial();
         ActiveCameraManager.Instance.SwitchCameras();
         betweenRuns = false;
+        GameplayManager.Instance.PauseTimer();
         upgradeMenu.SetActive(false);
     }
 
     public void QuitGame()
     {
-
+#if UNITY_EDITOR
+        EditorApplication.isPlaying = false;
+#else
+        Application.Quit();
+#endif
     }
 }
