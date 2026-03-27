@@ -280,6 +280,7 @@ public class GameplayManager : MonoBehaviour
     {
         ResetStuff();
 
+        countDownActive = true;
         HUD.SetActive(true);
         HUDController = HUD.GetComponent<HUDController>();
 
