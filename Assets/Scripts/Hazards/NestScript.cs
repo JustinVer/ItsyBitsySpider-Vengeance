@@ -9,6 +9,7 @@ public class NestScript : MonoBehaviour
 
     [SerializeField] int timeIncreaseAmount = 30;
     [SerializeField] float waitTime = 5.0f;
+    [SerializeField] private ParticleSystem healParticle1;
 
     private bool hasTriggered = false;
 
@@ -67,6 +68,7 @@ public class NestScript : MonoBehaviour
 
         int playerStartHP = (int)GameplayManager.Instance.PlayerBody.getHP();
         int playerHealAmount = (int)GameplayManager.Instance.PlayerBody.getMaxHP() - playerStartHP;
+        healParticle1.Play();
 
         while (elapsedTime < duration)
         {
