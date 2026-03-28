@@ -78,7 +78,7 @@ public class PillBug : EnemyBase, ICollisionReciever
         {
             pillBugRotationTransform.transform.localRotation *= Quaternion.Euler(new Vector3(-rotationAmount, 0, 0));
             bodyFollower.transform.rotation = Quaternion.RotateTowards(bodyFollower.transform.rotation, agentMover.transform.rotation, bodyFollower.getRotationSpeed() * 5f);
-            GameplayManager.Instance.PlayerBody.CurrentWebs++;
+            GameplayManager.Instance.gainWeb(bodyFollower.transform.position);
             GameplayManager.Instance.score++;
             animator.SetTrigger("Died");
             isDying = true;

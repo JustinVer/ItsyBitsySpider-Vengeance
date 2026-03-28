@@ -370,6 +370,11 @@ public class GameplayManager : MonoBehaviour
         playerInput.SwitchCurrentActionMap(UIInputName);
     }
 
+    public void gainWeb(Vector3 worldPosition)
+    {
+        StartCoroutine(HUDController.gainWeb(worldPosition));
+    }
+
     #region inputGathering
 
     private Vector2 moveVector = Vector2.zero;
