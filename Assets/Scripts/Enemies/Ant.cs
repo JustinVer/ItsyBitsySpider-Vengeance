@@ -56,7 +56,7 @@ public class Ant : EnemyBase, IFireAnimation, ICollisionReciever
         if (!isDying)
         {
             AudioManager.Instance.PlaySound(death, deathVolume, transform.position);
-            GameplayManager.Instance.PlayerBody.CurrentWebs++;
+            GameplayManager.Instance.gainWeb(bodyFollower.transform.position);
             GameplayManager.Instance.score++;
             animator.SetTrigger("Died");
             isDying = true;

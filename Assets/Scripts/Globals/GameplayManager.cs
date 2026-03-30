@@ -57,8 +57,6 @@ public class GameplayManager : MonoBehaviour
 
     [SerializeField] private float countdownTime = 180f;
     private bool countDownActive = false;
-    public bool countIncreasing = false;
-    private float timeIncreaseScale = 3;
     public double score = 0;
 
     [SerializeField] GameObject water;
@@ -66,6 +64,7 @@ public class GameplayManager : MonoBehaviour
     [SerializeField] private float waterSpeed;
     private float waterPercentSpeed;
     private bool washedOut = false;
+    public bool WashedOut { get { return washedOut; } private set { washedOut = value; } }
 
     [SerializeField] private float washOutRange;
     [SerializeField] private float washOutStrength;
@@ -75,6 +74,8 @@ public class GameplayManager : MonoBehaviour
 
     [SerializeField] private AudioClip music;
     [SerializeField] private AudioClip music2;
+
+    public Action resetEvent;
 
     #region sceneManagement
     [SerializeField] private LoadScreen loadScreen;
@@ -89,6 +90,9 @@ public class GameplayManager : MonoBehaviour
     private string mainMenuLevelName = "StartGameScene";
 
     private SaveData saveData = new SaveData();
+
+    private bool inBossStage = false;
+    public bool InBossStage { get { return inBossStage; } private set { inBossStage = value; } }
 
     private void Start()
     {
@@ -267,18 +271,16 @@ public class GameplayManager : MonoBehaviour
             playerBody.transform.position = waterPoint;
         }
 
-        if (countdownTime < - 15)
+        if (countdownTime < -15)
         {
             ResetGame();
         }
     }
     public void SetupForStart()
     {
-        player.transform.position = new Vector3(-3, -23, 3);
-        player.transform.rotation = new Quaternion();
-        countDownActive = true;
-        countdownTime = 180;
+        ResetStuff();
 
+        countDownActive = true;
         HUD.SetActive(true);
         HUDController = HUD.GetComponent<HUDController>();
 
@@ -297,23 +299,35 @@ public class GameplayManager : MonoBehaviour
         ClearGravitySpline();
         player.transform.position = new Vector3(-3, -23, 3);
         player.transform.rotation = new Quaternion();
+        countDownActive = false;
+        water.SetActive(false);
+        inBossStage = true;
+    }
+
+    public void ResetStuff()
+    {
+        NewSegmentRandomizer.Instance.KillRun();
+        countDownActive = false;
+        countdownTime = 180;
+        ClearGravitySpline();
+        washedOut = false;
+        water.SetActive(false);
+        waterPosition = 1;
+        inBossStage = false;
+        resetEvent?.Invoke();
     }
 
     public void ResetGame()
     {
-        ClearGravitySpline();
         UpgradeMenu.Instance.activateMenu();
-        countDownActive = false;
-        countdownTime = 180;
-
-        washedOut = false;
         HUD.SetActive(false);
 
         Cursor.lockState = CursorLockMode.Confined;
         Cursor.visible = true;
         pauseMenu.CanPause = false;
         playerManager.InputEnabled = false;
-        NewSegmentRandomizer.Instance.KillRun();
+
+        ResetStuff();
 
         setInputActionToUI();
     }
@@ -323,15 +337,14 @@ public class GameplayManager : MonoBehaviour
         countDownActive = !countDownActive;
     }
 
-    public void IncreaseTimer()
+    public void IncreaseTimer(float amount)
     {
-        countIncreasing = !countIncreasing;
+        countdownTime += amount;
     }
 
     private void Update()
     {
-        if (countIncreasing) countdownTime += Time.deltaTime * timeIncreaseScale;
-        else if (countDownActive) countdownTime -= Time.deltaTime;
+        if (countDownActive) countdownTime -= Time.deltaTime;
 
         if (HUD.activeSelf)
             HUDController.TimeInSeconds = countdownTime;
@@ -355,6 +368,11 @@ public class GameplayManager : MonoBehaviour
     public void setInputActionToUI()
     {
         playerInput.SwitchCurrentActionMap(UIInputName);
+    }
+
+    public void gainWeb(Vector3 worldPosition)
+    {
+        StartCoroutine(HUDController.gainWeb(worldPosition));
     }
 
     #region inputGathering

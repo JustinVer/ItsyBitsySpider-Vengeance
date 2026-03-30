@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,6 +12,11 @@ public class HUDController : MonoBehaviour
     [SerializeField] GameObject rainCloud;
     [SerializeField] GameObject[] webIcons;
     [SerializeField] GameObject grappleCurser;
+    [SerializeField] RectTransform[] movingWebIcons;
+    private bool[] movingWebIconMoving;
+    private Vector2 webIconEndPosition;
+    [SerializeField] private float webIconMoveTime = 3.0f;
+    [SerializeField] private RectTransform canvasTransform;
 
     private float timeInSeconds = 180f;
     public float TimeInSeconds
@@ -23,6 +29,16 @@ public class HUDController : MonoBehaviour
     }
 
     private int web;
+
+    private void Awake()
+    {
+        if (movingWebIconMoving == null)
+        {
+            movingWebIconMoving = new bool[movingWebIcons.Length];
+            RectTransform parentTransform = webIcons[0].transform.parent.GetComponent<RectTransform>();
+            webIconEndPosition = parentTransform.anchoredPosition - (parentTransform.sizeDelta * 0.5f);
+        }
+    }
 
     private void OnEnable()
     {
@@ -57,12 +73,12 @@ public class HUDController : MonoBehaviour
         if (GameplayManager.Instance.PlayerBody.ValidGrapplePoint)
         {
             grappleCurser.SetActive(true);
-            RectTransform canvasRect = GetComponentInChildren<RectTransform>();
             Vector3 grapplePos = GameplayManager.Instance.PlayerBody.TargetGrapplePoint;
             Vector2 viewportPos = GameplayManager.Instance.PlayerManager.Playercam.WorldToViewportPoint(grapplePos);
+
             Vector2 screenPos = new Vector2(
-                ((viewportPos.x * canvasRect.sizeDelta.x) - (canvasRect.sizeDelta.x * 0.5f)),
-                ((viewportPos.y * canvasRect.sizeDelta.y) - (canvasRect.sizeDelta.y * 0.5f)));
+                ((viewportPos.x * canvasTransform.sizeDelta.x) - (canvasTransform.sizeDelta.x * 0.5f)),
+                ((viewportPos.y * canvasTransform.sizeDelta.y) - (canvasTransform.sizeDelta.y * 0.5f)));
             grappleCurser.GetComponent<RectTransform>().anchoredPosition = screenPos;
         }
         else
@@ -78,6 +94,49 @@ public class HUDController : MonoBehaviour
             if (i < webNum) webIcons[i].SetActive(true);
             else webIcons[i].SetActive(false);
         }
+    }
+
+    public IEnumerator gainWeb(Vector3 worldPosition)
+    {
+        int i = 0;
+        for (; i < movingWebIconMoving.Length; i++)
+        {
+            if (!movingWebIconMoving[i])
+            {
+                movingWebIconMoving[i] = true;
+                break;
+            }
+            if (i == movingWebIconMoving.Length - 1)
+            {
+                yield break;
+            }
+        }
+        movingWebIcons[i].gameObject.SetActive(true);
+        Vector2 viewportPos = GameplayManager.Instance.PlayerManager.Playercam.WorldToViewportPoint(worldPosition);
+        Vector2 screenStartPos = new Vector2(
+                ((viewportPos.x * canvasTransform.sizeDelta.x) - (canvasTransform.sizeDelta.x * 0.5f)),
+                ((viewportPos.y * canvasTransform.sizeDelta.y) - (canvasTransform.sizeDelta.y * 0.5f)));
+        movingWebIcons[i].anchoredPosition = screenStartPos;
+
+        float t = 0.0f;
+
+        while (true)
+        {
+            t += Time.deltaTime / webIconMoveTime;
+            if (t < 1)
+            {
+                movingWebIcons[i].anchoredPosition = Vector2.Lerp(screenStartPos, webIconEndPosition, t);
+                yield return null;
+            }
+            else
+            {
+                break;
+            }
+        }
+        movingWebIconMoving[i] = false;
+        GameplayManager.Instance.PlayerBody.CurrentWebs++;
+        UpdateWebDisplay(GameplayManager.Instance.PlayerBody.CurrentWebs);
+        movingWebIcons[i].gameObject.SetActive(false);
     }
 
 

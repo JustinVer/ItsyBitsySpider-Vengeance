@@ -7,15 +7,36 @@ public class NestScript : MonoBehaviour
     [SerializeField] GameObject door2;
     [SerializeField] GameObject nestTrigger;
 
+    [SerializeField] int timeIncreaseAmount = 30;
+    [SerializeField] float waitTime = 5.0f;
+    [SerializeField] private ParticleSystem healParticle1;
+
     private bool hasTriggered = false;
+
+    private void OnEnable()
+    {
+        GameplayManager.Instance.resetEvent += resetNest;
+    }
+
+    private void OnDisable()
+    {
+        GameplayManager.Instance.resetEvent -= resetNest;
+    }
 
     private void OnTriggerEnter(Collider other)
     {
         if (ReferenceEquals(GameplayManager.Instance.Player, other.gameObject) && !hasTriggered)
         {
-            GameplayManager.Instance.IncreaseTimer();
-            StartCoroutine(MoveDoor(door1, new Vector3(0, 90, 90), 0.5f));
+            hasTriggered = true;
+            StartCoroutine(NestStuff());
         }
+    }
+
+    IEnumerator NestStuff()
+    {
+        yield return StartCoroutine(MoveDoor(door1, new Vector3(0, 90, 90), 0.5f));
+        yield return StartCoroutine(HealingWait(waitTime));
+        yield return StartCoroutine(MoveDoor(door2, new Vector3(0, 90, 0), 0.5f));
     }
 
     IEnumerator MoveDoor(GameObject door, Vector3 newRot, float moveTime)
@@ -38,21 +59,34 @@ public class NestScript : MonoBehaviour
         }
 
         door.transform.localRotation = targetRotation;
-
-        if (ReferenceEquals(door, door1))
-        {
-            StartCoroutine(HealingWait(10));
-        }
-        else if (ReferenceEquals(door, door2))
-        {
-            GameplayManager.Instance.IncreaseTimer();
-        }
     }
 
     IEnumerator HealingWait(float duration)
     {
-        yield return new WaitForSeconds(duration);
 
-        StartCoroutine(MoveDoor(door2, new Vector3(0, 90, 0), 0.5f));
+        float elapsedTime = 0f;
+
+        int playerStartHP = (int)GameplayManager.Instance.PlayerBody.getHP();
+        int playerHealAmount = (int)GameplayManager.Instance.PlayerBody.getMaxHP() - playerStartHP;
+        healParticle1.Play();
+
+        while (elapsedTime < duration)
+        {
+            float t = elapsedTime / duration;
+
+            GameplayManager.Instance.IncreaseTimer(Time.deltaTime * timeIncreaseAmount / duration);
+            GameplayManager.Instance.PlayerBody.setHP((int)(playerStartHP + (playerHealAmount * t)));
+
+            elapsedTime += Time.deltaTime;
+
+            yield return null;
+        }
+        GameplayManager.Instance.PlayerBody.setHP((int)GameplayManager.Instance.PlayerBody.getMaxHP());
+    }
+
+    private void resetNest()
+    {
+        StopAllCoroutines();
+        hasTriggered = false;
     }
 }

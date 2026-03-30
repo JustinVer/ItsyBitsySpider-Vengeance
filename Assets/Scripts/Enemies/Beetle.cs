@@ -106,7 +106,7 @@ public class Beetle : EnemyBase, IFireAnimation
             animator.SetTrigger("Fire1");
             isFiring = true;
         }
-        
+
     }
 
     protected override void Die()
@@ -118,7 +118,7 @@ public class Beetle : EnemyBase, IFireAnimation
             {
                 currentPlatformScript.returnPlatformPoint(currentPlatformTransform);
             }
-            GameplayManager.Instance.PlayerBody.CurrentWebs++;
+            GameplayManager.Instance.gainWeb(this.transform.position);
             GameplayManager.Instance.score++;
             animator.SetTrigger("Died");
             isDying = true;

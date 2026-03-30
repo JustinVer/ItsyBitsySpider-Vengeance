@@ -1,3 +1,4 @@
+using UnityEditor;
 using UnityEngine;
 
 public class UpgradeMenu : MonoBehaviour
@@ -42,9 +43,9 @@ public class UpgradeMenu : MonoBehaviour
 
     public void StartRun()
     {
+        GameplayManager.Instance.SetupForStart();
         NewSegmentRandomizer.Instance.StartRun();
         ActiveCameraManager.Instance.SwitchCameras();
-        GameplayManager.Instance.SetupForStart();
         betweenRuns = false;
         upgradeMenu.SetActive(false);
     }
@@ -79,15 +80,20 @@ public class UpgradeMenu : MonoBehaviour
     public void GoToTestRange()
     {
         //TODO: open the testRange
+        GameplayManager.Instance.SetupForStart();
         NewSegmentRandomizer.Instance.LoadTutorial();
         ActiveCameraManager.Instance.SwitchCameras();
-        GameplayManager.Instance.SetupForStart();
         betweenRuns = false;
+        GameplayManager.Instance.PauseTimer();
         upgradeMenu.SetActive(false);
     }
 
     public void QuitGame()
     {
-
+#if UNITY_EDITOR
+        EditorApplication.isPlaying = false;
+#else
+        Application.Quit();
+#endif
     }
 }

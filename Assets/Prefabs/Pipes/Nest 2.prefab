@@ -51,10 +51,10 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: 79d8a50996fd4364ba3463ee5218e933, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 76154eac48d965e488279bb2a7e479ed, type: 2}
+      objectReference: {fileID: 2100000, guid: e373578f05b218f489313cfef9e21354, type: 2}
     - target: {fileID: 919132149155446097, guid: 79d8a50996fd4364ba3463ee5218e933, type: 3}
       propertyPath: m_Name
-      value: Nest
+      value: Nest 2
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 79d8a50996fd4364ba3463ee5218e933, type: 3}
       propertyPath: m_Layer
@@ -66,6 +66,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 79d8a50996fd4364ba3463ee5218e933, type: 3}
       insertIndex: -1
       addedObject: {fileID: 9048096082657153264}
+    - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 79d8a50996fd4364ba3463ee5218e933, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5551532303493367357}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 79d8a50996fd4364ba3463ee5218e933, type: 3}
       insertIndex: -1
@@ -207,6 +210,9 @@ MonoBehaviour:
   door1: {fileID: 3392066831360218586}
   door2: {fileID: 2002020656915841327}
   nestTrigger: {fileID: 0}
+  timeIncreaseAmount: 30
+  waitTime: 5
+  healParticle1: {fileID: 1803516788384668196}
 --- !u!54 &7535490465277475976
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -234,6 +240,73 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!1001 &6108705729224421145
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 520672297232213061}
+    m_Modifications:
+    - target: {fileID: 1859276678061402404, guid: 16617df5bcf520a4eb3612d8cd40803e, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 3.64
+      objectReference: {fileID: 0}
+    - target: {fileID: 1859276678061402404, guid: 16617df5bcf520a4eb3612d8cd40803e, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -8.6626
+      objectReference: {fileID: 0}
+    - target: {fileID: 1859276678061402404, guid: 16617df5bcf520a4eb3612d8cd40803e, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 26.951
+      objectReference: {fileID: 0}
+    - target: {fileID: 1859276678061402404, guid: 16617df5bcf520a4eb3612d8cd40803e, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.68985593
+      objectReference: {fileID: 0}
+    - target: {fileID: 1859276678061402404, guid: 16617df5bcf520a4eb3612d8cd40803e, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.155238
+      objectReference: {fileID: 0}
+    - target: {fileID: 1859276678061402404, guid: 16617df5bcf520a4eb3612d8cd40803e, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.68985593
+      objectReference: {fileID: 0}
+    - target: {fileID: 1859276678061402404, guid: 16617df5bcf520a4eb3612d8cd40803e, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.155238
+      objectReference: {fileID: 0}
+    - target: {fileID: 1859276678061402404, guid: 16617df5bcf520a4eb3612d8cd40803e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 25.364
+      objectReference: {fileID: 0}
+    - target: {fileID: 1859276678061402404, guid: 16617df5bcf520a4eb3612d8cd40803e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 1859276678061402404, guid: 16617df5bcf520a4eb3612d8cd40803e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7744757359193901473, guid: 16617df5bcf520a4eb3612d8cd40803e, type: 3}
+      propertyPath: m_Name
+      value: Lady Bug Red
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 16617df5bcf520a4eb3612d8cd40803e, type: 3}
+--- !u!198 &1803516788384668196 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 5602789684465874237, guid: 16617df5bcf520a4eb3612d8cd40803e, type: 3}
+  m_PrefabInstance: {fileID: 6108705729224421145}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &5551532303493367357 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1859276678061402404, guid: 16617df5bcf520a4eb3612d8cd40803e, type: 3}
+  m_PrefabInstance: {fileID: 6108705729224421145}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8798892446372034331
 PrefabInstance:
   m_ObjectHideFlags: 0
