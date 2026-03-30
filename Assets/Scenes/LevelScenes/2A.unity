@@ -928,11 +928,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerHealth: {fileID: 1657520031}
+  bossSlider: {fileID: 0}
   rainTimer: {fileID: 0}
   scoreUI: {fileID: 0}
   rainCloud: {fileID: 0}
   webIcons: []
   grappleCurser: {fileID: 0}
+  movingWebIcons: []
+  webIconMoveTime: 3
+  canvasTransform: {fileID: 0}
 --- !u!1001 &1735520302
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1062,17 +1066,21 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 63
   countdownTime: 180
-  countIncreasing: 0
   score: 0
   water: {fileID: 0}
   waterSpeed: 0
   washOutRange: 0
   washOutStrength: 0
+  washOutSound: {fileID: 0}
+  washOutVolume: 0.5
+  music: {fileID: 0}
+  music2: {fileID: 0}
   loadScreen: {fileID: 1548044106}
   gameOver: {fileID: 685914489}
   victoryScreen: {fileID: 689900614}
   pauseMenu: {fileID: 1384517688}
   HUD: {fileID: 1657520032}
+  HUDController: {fileID: 0}
 --- !u!1001 &2652299636210604838
 PrefabInstance:
   m_ObjectHideFlags: 0
