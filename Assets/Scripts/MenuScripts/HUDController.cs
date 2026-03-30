@@ -7,6 +7,8 @@ using UnityEngine.UI;
 public class HUDController : MonoBehaviour
 {
     [SerializeField] Slider playerHealth;
+    [SerializeField] GameObject bossSlider;
+    Slider bossHealth;
     [SerializeField] TMP_Text rainTimer;
     [SerializeField] TMP_Text scoreUI;
     [SerializeField] GameObject rainCloud;
@@ -51,6 +53,11 @@ public class HUDController : MonoBehaviour
         if (GameplayManager.Instance.Player && GameplayManager.Instance.Player.gameObject.activeInHierarchy)
         {
             playerHealth.value = Mathf.Clamp01(GameplayManager.Instance.PlayerBody.getHP() / GameplayManager.Instance.PlayerBody.getMaxHP());
+        }
+
+        if (GameplayManager.Instance.InBossStage)
+        {
+            bossHealth.value = Mathf.Clamp01(GameplayManager.Instance.BigTRef.getHP() / GameplayManager.Instance.BigTRef.getMaxHP());
         }
 
         string displayTime = "3:00";
@@ -139,5 +146,10 @@ public class HUDController : MonoBehaviour
         movingWebIcons[i].gameObject.SetActive(false);
     }
 
-
+    public void ActiveBossHealth(bool active)
+    {
+        bossSlider.SetActive(active);
+        if(active)
+            bossHealth = bossSlider.GetComponent<Slider>();
+    }
 }

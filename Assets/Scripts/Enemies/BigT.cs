@@ -382,6 +382,11 @@ public class BigT : MonoBehaviour, IFireAnimation, IDamageable, IDeathAnimation
         return currentHP;
     }
 
+    public float getMaxHP()
+    {
+        return maxHitPoint;
+    }
+
     public void modifyHP(int hpChange)
     {
         currentHP = (int)Mathf.Clamp(currentHP + hpChange, 0f, maxHitPoint);

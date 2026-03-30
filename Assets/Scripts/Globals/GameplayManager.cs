@@ -51,6 +51,10 @@ public class GameplayManager : MonoBehaviour
     [SerializeField] private PlayerBody playerBody;
     [SerializeField] private PlayerManager playerManager;
 
+    private BigT bigTRef;
+
+    public BigT BigTRef => bigTRef;
+
     public event Action onLevelReset;
 
     public LayerMask NotPlayerOrEnemyMask;
@@ -83,7 +87,7 @@ public class GameplayManager : MonoBehaviour
     [SerializeField] private GameObject victoryScreen;
     [SerializeField] private PauseMenu pauseMenu;
     [SerializeField] private GameObject HUD;
-    private HUDController HUDController;
+    public HUDController HUDController;
 
     private bool isLoading = false;
     private string currentLevelName;
@@ -304,6 +308,11 @@ public class GameplayManager : MonoBehaviour
         inBossStage = true;
     }
 
+    public void FindBoss()
+    {
+        bigTRef = FindFirstObjectByType<BigT>();
+    }
+
     public void ResetStuff()
     {
         NewSegmentRandomizer.Instance.KillRun();
@@ -320,6 +329,7 @@ public class GameplayManager : MonoBehaviour
     public void ResetGame()
     {
         UpgradeMenu.Instance.activateMenu();
+        HUDController.ActiveBossHealth(false);
         HUD.SetActive(false);
 
         Cursor.lockState = CursorLockMode.Confined;
