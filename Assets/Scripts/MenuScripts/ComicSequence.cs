@@ -1,11 +1,14 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class ComicSequence : MonoBehaviour
 {
     [SerializeField] Image targetImage;
+    [SerializeField] Image backImage;
     [SerializeField] Sprite[] comicImages;
     [SerializeField] GameObject Screen;
+    [SerializeField] Button progress;
     private int currentPanel = 0;
     private int endComicIndex;
 
@@ -25,10 +28,29 @@ public class ComicSequence : MonoBehaviour
         if (currentPanel >= comicImages.Length)
         {
             EndComic();
-        } else
-        {
-            targetImage.sprite = comicImages[currentPanel];
         }
+        else
+        {
+            backImage.sprite = comicImages[currentPanel - 1];
+            targetImage.color = new UnityEngine.Color(1, 1, 1, 0);
+            targetImage.sprite = comicImages[currentPanel];
+            StartCoroutine(FadeIn(targetImage, 0.5f));
+        }
+    }
+
+    IEnumerator FadeIn(Image img, float duration)
+    {
+        progress.interactable = false;
+        float elapsed = 0f;
+        UnityEngine.Color startColor = img.color;
+        while (elapsed < duration)
+        {
+            elapsed += Time.unscaledDeltaTime;
+            startColor.a = Mathf.Clamp01(elapsed / duration);
+            img.color = startColor;
+            yield return null;
+        }
+        progress.interactable = true;
     }
 
     public void EndComic()
