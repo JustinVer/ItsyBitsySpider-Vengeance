@@ -101,20 +101,27 @@ public class NewSegmentRandomizer : MonoBehaviour
                 }
                 else if (segmentOrder[i] < 0)
                 {
-                    switch (area)
+                    if (i == segmentOrder.Length - 1)
                     {
-                        case 0:
-                            segmentOrder[i] = -1;
+                        segmentOrder[i] = -4;
+                    }
+                    else
+                    {
+                        switch (area)
+                        {
+                            case 0:
+                                segmentOrder[i] = -1;
 
-                            break;
-                        case 1:
-                            segmentOrder[i] = -2;
+                                break;
+                            case 1:
+                                segmentOrder[i] = -2;
 
-                            break;
-                        default:
-                            segmentOrder[i] = -3;
+                                break;
+                            default:
+                                segmentOrder[i] = -3;
 
-                            break;
+                                break;
+                        }
                     }
                 }
             }
@@ -154,7 +161,7 @@ public class NewSegmentRandomizer : MonoBehaviour
             }
         }
 
-        corners[corners.Length - 1] = new NewCornerNode(null, segments[segments.Length - 1], cornerPrefabs[(-3 * -1) - 1], corners.Length - 1, this);
+        corners[corners.Length - 1] = new NewCornerNode(null, segments[segments.Length - 1], cornerPrefabs[(-4 * -1) - 1], corners.Length - 1, this);
 
         StartLoad();
     }
