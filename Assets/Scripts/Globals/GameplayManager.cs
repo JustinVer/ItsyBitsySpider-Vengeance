@@ -83,7 +83,7 @@ public class GameplayManager : MonoBehaviour
 
     #region sceneManagement
     [SerializeField] private LoadScreen loadScreen;
-    [SerializeField] private GameOver gameOver;
+    [SerializeField] private GameObject gameOver;
     [SerializeField] private GameObject victoryScreen;
     [SerializeField] private GameObject startComic;
     [SerializeField] private GameObject bossComic;
@@ -279,9 +279,9 @@ public class GameplayManager : MonoBehaviour
             playerBody.transform.position = waterPoint;
         }
 
-        if (countdownTime < -15)
+        if (countdownTime < -10)
         {
-            ResetGame();
+            DeathScreen();
         }
     }
     public void SetupForStart()
@@ -305,6 +305,11 @@ public class GameplayManager : MonoBehaviour
     public void LoadBossComic()
     {
         bossComic.GetComponent<ComicSequence>().StartComic(2);
+    }
+
+    public void DeathScreen()
+    {
+        gameOver.GetComponent<ComicSequence>().StartComic(0);
     }
 
     public void LoadBoss()
@@ -380,7 +385,7 @@ public class GameplayManager : MonoBehaviour
 
         if (InBossStage)
         {
-            if(bigTRef.getHP() <= 0)
+            if (bigTRef.getHP() <= 0)
             {
                 victoryScreen.GetComponent<ComicSequence>().StartComic(0);
             }

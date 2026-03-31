@@ -96,9 +96,10 @@ public class HUDController : MonoBehaviour
 
     public void UpdateWebDisplay(float webNum)
     {
+        int numWebs = Mathf.FloorToInt(webNum);
         for (int i = 0; i < webIcons.Length; i++)
         {
-            if (i < webNum) webIcons[i].SetActive(true);
+            if (i < numWebs) webIcons[i].SetActive(true);
             else webIcons[i].SetActive(false);
         }
     }
@@ -149,7 +150,7 @@ public class HUDController : MonoBehaviour
     public void ActiveBossHealth(bool active)
     {
         bossSlider.SetActive(active);
-        if(active)
+        if (active)
             bossHealth = bossSlider.GetComponent<Slider>();
     }
 }
