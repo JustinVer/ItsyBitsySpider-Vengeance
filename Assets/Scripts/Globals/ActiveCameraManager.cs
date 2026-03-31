@@ -34,6 +34,19 @@ public class ActiveCameraManager : MonoBehaviour
         menuCamera.SetActive(true);
         playerCamera.SetActive(false);
     }
+
+    public void GoToCamera1()
+    {
+        menuCamera.SetActive(true);
+        playerCamera.SetActive(false);
+    }
+
+    public void GoToCamera2()
+    {
+        menuCamera.SetActive(false);
+        playerCamera.SetActive(true);
+    }
+
     public void SwitchCameras()
     {
         menuCamera.SetActive(!menuCamera.activeSelf);

@@ -85,6 +85,8 @@ public class GameplayManager : MonoBehaviour
     [SerializeField] private LoadScreen loadScreen;
     [SerializeField] private GameOver gameOver;
     [SerializeField] private GameObject victoryScreen;
+    [SerializeField] private GameObject startComic;
+    [SerializeField] private GameObject bossComic;
     [SerializeField] private PauseMenu pauseMenu;
     [SerializeField] private GameObject HUD;
     public HUDController HUDController;
@@ -107,6 +109,8 @@ public class GameplayManager : MonoBehaviour
         playerManager.InputEnabled = false;
 
         setInputActionToUI();
+
+        startComic.GetComponent<ComicSequence>().StartComic(1);
     }
 
     private IEnumerator LoadLevel(string levelName)
@@ -298,6 +302,11 @@ public class GameplayManager : MonoBehaviour
         setInputActionToPlayer();
     }
 
+    public void LoadBossComic()
+    {
+        bossComic.GetComponent<ComicSequence>().StartComic(2);
+    }
+
     public void LoadBoss()
     {
         ClearGravitySpline();
@@ -367,6 +376,14 @@ public class GameplayManager : MonoBehaviour
         if (countdownTime < 90)
         {
             AudioManager.Instance.setBackgroundMusic(music2);
+        }
+
+        if (InBossStage)
+        {
+            if(bigTRef.getHP() <= 0)
+            {
+                victoryScreen.GetComponent<ComicSequence>().StartComic(0);
+            }
         }
     }
 

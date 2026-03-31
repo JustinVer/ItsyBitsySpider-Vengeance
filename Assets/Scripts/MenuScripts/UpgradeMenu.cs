@@ -38,14 +38,14 @@ public class UpgradeMenu : MonoBehaviour
     {
         upgradeMenu.SetActive(true);
         betweenRuns = true;
-        ActiveCameraManager.Instance.SwitchCameras();
+        ActiveCameraManager.Instance.GoToCamera1();
     }
 
     public void StartRun()
     {
         GameplayManager.Instance.SetupForStart();
         NewSegmentRandomizer.Instance.StartRun();
-        ActiveCameraManager.Instance.SwitchCameras();
+        ActiveCameraManager.Instance.GoToCamera2();
         betweenRuns = false;
         upgradeMenu.SetActive(false);
     }

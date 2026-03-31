@@ -156,9 +156,7 @@ public class NewSegmentRandomizer : MonoBehaviour
 
         corners[corners.Length - 1] = new NewCornerNode(null, segments[segments.Length - 1], cornerPrefabs[(-3 * -1) - 1], corners.Length - 1, this);
 
-        //StartLoad();
-
-        LoadBoss();
+        StartLoad();
     }
 
     public void KillRun()
@@ -194,7 +192,7 @@ public class NewSegmentRandomizer : MonoBehaviour
     private void LoadBoss()
     {
         KillRun();
-        GameplayManager.Instance.LoadBoss();
+        GameplayManager.Instance.LoadBossComic();
         boss.LoadSection(Vector3.zero, Vector3.zero);
         GameplayManager.Instance.UpdateGravitySpline(boss.FindSpline());
         GameplayManager.Instance.FindBoss();
