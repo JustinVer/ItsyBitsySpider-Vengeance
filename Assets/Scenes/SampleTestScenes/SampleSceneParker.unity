@@ -331,8 +331,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 48.89, y: 48.89, z: 48.89}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -764,11 +764,18 @@ MonoBehaviour:
   waterSpeed: 50
   washOutRange: 50
   washOutStrength: 2
+  washOutSound: {fileID: 0}
+  washOutVolume: 0.5
+  music: {fileID: 0}
+  music2: {fileID: 0}
   loadScreen: {fileID: 0}
   gameOver: {fileID: 0}
   victoryScreen: {fileID: 0}
+  startComic: {fileID: 0}
+  bossComic: {fileID: 0}
   pauseMenu: {fileID: 0}
   HUD: {fileID: 0}
+  HUDController: {fileID: 0}
 --- !u!1 &1904716144
 GameObject:
   m_ObjectHideFlags: 0
@@ -834,6 +841,7 @@ MonoBehaviour:
   - {fileID: 5653114915699040921, guid: bd18d7a4b39b16345b2cdb9505dbd2ce, type: 3}
   - {fileID: 9031887594224738800, guid: b62710118edf380409fc387d72b7fc21, type: 3}
   tutorialLevel: {fileID: 4775841311995228443, guid: 3457bda6b048a1747a7b859b16bfd6e5, type: 3}
+  bossLevel: {fileID: 0}
   segmentOrder: ffffffff00000000ffffffff00000000feffffff05000000feffffff05000000fdffffff0a000000fdffffff0a000000fdffffff
   currentPoint: {x: 0, y: 0, z: 0}
   debugMode: 0

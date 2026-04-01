@@ -1,6 +1,17 @@
 using System;
 using UnityEngine;
 
+public enum PlayerState
+{
+    IDLE = 0,
+    MOVING = 1,
+    JUMPING = 2,
+    GLIDE = 3,
+    GRAPPLE = 4,
+    DASH = 5
+}
+
+
 public class PlayerBody : MonoBehaviour, IDamageable
 {
     private Rigidbody rb;
@@ -23,6 +34,8 @@ public class PlayerBody : MonoBehaviour, IDamageable
     private const float ROTATION_THRESHOLD = 0.5f;
 
     [SerializeField] private ParticleSystem damageParticle;
+    [SerializeField] Animator animator;
+    [SerializeField] LegManager legManager;
     public Vector3 MovementDir
     {
         get { return movementDir; }
@@ -188,6 +201,51 @@ public class PlayerBody : MonoBehaviour, IDamageable
             crash = false;
         }
         if (currentHP <= 0) onDeath();
+        animator.SetInteger("State", (int) evaluateState());
+    }
+
+    private PlayerState evaluateState()
+    {
+        PlayerState state;
+        
+        //evaluate booleans
+        Vector3 planarVel = Vector3.ProjectOnPlane(rb.linearVelocity, gravity);
+        bool moving = planarVel.sqrMagnitude > 0.25;
+        state = PlayerState.IDLE;
+        legManager.Animating = false;
+
+        if (moving)
+        {
+            state = PlayerState.MOVING;
+        }
+
+        if (!IsGrounded())
+        {
+            state = PlayerState.JUMPING;
+            if (glide)
+            {
+                state = PlayerState.GLIDE;
+                legManager.Animating = true;
+            }
+        }
+        
+        if (crash)
+        {
+            state = PlayerState.DASH;
+            legManager.Animating = true;
+        }
+
+        if (grapple)
+        {
+            state = PlayerState.GRAPPLE;
+            legManager.Animating = true;
+        }
+
+        animator.SetBool("Grapple", grapple);
+        animator.SetBool("Glide", glide);
+        animator.SetBool("Dash", crash);
+
+        return state;
     }
 
     private Vector3 getTargetGrapplePoint()
