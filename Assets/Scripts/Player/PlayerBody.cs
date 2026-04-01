@@ -118,6 +118,9 @@ public class PlayerBody : MonoBehaviour, IDamageable
     [SerializeField] private AudioClip jump;
     [SerializeField, Range(0, 1)] private float jumpVolume = 0.5f;
 
+    private float timeNoWebs = 0;
+    [SerializeField] private float maxTimeNoWebs = 15f;
+
 
     private bool crash = false;
     public bool Crash
@@ -202,6 +205,16 @@ public class PlayerBody : MonoBehaviour, IDamageable
         }
         if (currentHP <= 0) onDeath();
         animator.SetInteger("State", (int)evaluateState());
+
+        if(currentWebs < 1)
+        {
+            timeNoWebs += Time.fixedDeltaTime;
+            if(timeNoWebs > maxTimeNoWebs)
+            {
+                currentWebs++;
+                timeNoWebs = 0;
+            }
+        }
     }
 
     private PlayerState evaluateState()
