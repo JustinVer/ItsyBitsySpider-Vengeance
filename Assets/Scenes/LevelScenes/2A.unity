@@ -475,17 +475,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3177323472549320791, guid: cb381335ae66d5f47bbd89b82b9715e8, type: 3}
   m_PrefabInstance: {fileID: 685914487}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &685914489 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1988552241140471702, guid: cb381335ae66d5f47bbd89b82b9715e8, type: 3}
-  m_PrefabInstance: {fileID: 685914487}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a76d8d6035842bf44a5f41b8d3d12269, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &689900612
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1076,8 +1065,10 @@ MonoBehaviour:
   music: {fileID: 0}
   music2: {fileID: 0}
   loadScreen: {fileID: 1548044106}
-  gameOver: {fileID: 685914489}
+  gameOver: {fileID: 0}
   victoryScreen: {fileID: 689900614}
+  startComic: {fileID: 0}
+  bossComic: {fileID: 0}
   pauseMenu: {fileID: 1384517688}
   HUD: {fileID: 1657520032}
   HUDController: {fileID: 0}
