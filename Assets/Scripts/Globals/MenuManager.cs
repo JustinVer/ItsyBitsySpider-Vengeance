@@ -91,14 +91,17 @@ public class MenuManager : MonoBehaviour
         Debug.Log("LOADED: " + levelName);
 
         //Wait one frame before saying loaded is done just to make sure everything is done loading in the scene
-        yield return null;
-        yield return null;
-        Debug.Log("SETS NEW ACTIVE SCENE");
-        SceneManager.SetActiveScene(SceneManager.GetSceneByName(levelName));
-        isLoading = false;
+        yield return new WaitForSecondsRealtime(0.2f);
+        if (levelName != gameplayScene)
+        {
 
-        loadScreen.gameObject.SetActive(false);
-        Debug.Log("FINISHES LOAD");
+            Debug.Log("SETS NEW ACTIVE SCENE");
+            SceneManager.SetActiveScene(SceneManager.GetSceneByName(levelName));
+            isLoading = false;
+
+            loadScreen.gameObject.SetActive(false);
+            Debug.Log("FINISHES LOAD");
+        }
     }
 
     public void StartNewGame()

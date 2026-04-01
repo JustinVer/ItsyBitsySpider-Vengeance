@@ -46,14 +46,14 @@ public class PlayerManager : MonoBehaviour
         {
             body.Glide = false;
         }
-        if (GameplayManager.Instance.Grapple && canGrapple && body.CurrentWebs >= 1)
+        if (GameplayManager.Instance.Grapple && canGrapple && (body.CurrentWebs >= 1 || body.Grapple))
         {
             if (!body.Grapple)
             {
                 AudioManager.Instance.PlaySound(grapple, grappleVolume, body.transform.position);
             }
             body.Grapple = !body.Grapple;
-            if (body.ValidGrapplePoint && !body.Grapple)
+            if (body.ValidGrapplePoint && body.Grapple)
             {
                 body.CurrentWebs -= 1;
             }

@@ -31,7 +31,7 @@ public class BossFightManager : MonoBehaviour
     [SerializeField] private GameObject[] enemyPrefabs;
 
 
-    public void SummonRandomEnemies(int numEnemies)
+    public void SummonRandomEnemies(int numEnemies, Transform parentObject)
     {
         float spawnChance = ((float)numEnemies) / ((float)enemySpawnPositions.Length);
         Debug.Log("Boss summon spawn chance " + spawnChance);

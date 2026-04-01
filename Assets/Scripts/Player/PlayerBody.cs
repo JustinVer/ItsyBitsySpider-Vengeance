@@ -531,7 +531,7 @@ public class PlayerBody : MonoBehaviour, IDamageable
     {
         if (GameplayManager.Instance.InBossStage)
         {
-            GameplayManager.Instance.ResetGame();
+            GameplayManager.Instance.DeathScreen();
         }
         else
         {
@@ -574,5 +574,7 @@ public class PlayerBody : MonoBehaviour, IDamageable
         TargetGrapplePoint = Vector3.zero;
         modGrapplePoint = Vector3.zero;
         ValidGrapplePoint = false;
+        currentJumpDelay = 0;
+
     }
 }

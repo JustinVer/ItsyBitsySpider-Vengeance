@@ -1,4 +1,3 @@
-using UnityEditor;
 using UnityEngine;
 
 public class UpgradeMenu : MonoBehaviour
@@ -90,10 +89,12 @@ public class UpgradeMenu : MonoBehaviour
 
     public void QuitGame()
     {
-#if UNITY_EDITOR
-        EditorApplication.isPlaying = false;
-#else
-        Application.Quit();
-#endif
+        StartCoroutine(GameplayManager.Instance.LoadLevel("StartGameScene"));
+
+        //#if UNITY_EDITOR
+        //        EditorApplication.isPlaying = false;
+        //#else
+        //        Application.Quit();
+        //#endif
     }
 }

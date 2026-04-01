@@ -16,8 +16,11 @@ public class LoadScreen : MonoBehaviour
 
     private void UpdateSlider(float value)
     {
-        value = Mathf.Clamp01(value);
-        slider.value = value;
+        if (slider != null)
+        {
+            value = Mathf.Clamp01(value);
+            slider.value = value;
+        }
     }
 
     public void StartLoading(float timeToLoad = 2f)

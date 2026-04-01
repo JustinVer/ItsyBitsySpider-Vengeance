@@ -113,7 +113,7 @@ public class GameplayManager : MonoBehaviour
         startComic.GetComponent<ComicSequence>().StartComic(1);
     }
 
-    private IEnumerator LoadLevel(string levelName)
+    public IEnumerator LoadLevel(string levelName)
     {
         if (isLoading)
         {
@@ -317,6 +317,7 @@ public class GameplayManager : MonoBehaviour
         ClearGravitySpline();
         player.transform.position = new Vector3(-3, -23, 3);
         player.transform.rotation = new Quaternion();
+        playerBody.setHP((int)playerBody.getMaxHP());
         countDownActive = false;
         water.SetActive(false);
         inBossStage = true;
@@ -337,6 +338,17 @@ public class GameplayManager : MonoBehaviour
         water.SetActive(false);
         waterPosition = 1;
         inBossStage = false;
+
+        moveVector = Vector2.zero;
+
+        fire = false;
+        grapple = false;
+        dash = false;
+        plug = false;
+        glide = false;
+        jump = false;
+        escape = false;
+
         resetEvent?.Invoke();
     }
 

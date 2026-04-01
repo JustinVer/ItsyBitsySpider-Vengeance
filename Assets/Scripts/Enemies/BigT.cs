@@ -53,6 +53,8 @@ public class BigT : MonoBehaviour, IFireAnimation, IDamageable, IDeathAnimation
     private float speed;
     private bool doneSummoning = false;
 
+    [SerializeField] private Transform transformEnemyParent;
+
     private enum State
     {
         Summon,
@@ -104,7 +106,7 @@ public class BigT : MonoBehaviour, IFireAnimation, IDamageable, IDeathAnimation
             timeSinceLastSummon = 0;
             agentMover.SetDestination(agentMover.transform.position);
             bodyFollower.Anim.SetTrigger("Summon");
-            BossFightManager.Instance.SummonRandomEnemies(baseNumMinionsPerSummon + (int)((Random.value * randomnessOfMinionsPerSummon) - (int)(randomnessOfMinionsPerSummon * 0.5f)));
+            BossFightManager.Instance.SummonRandomEnemies(baseNumMinionsPerSummon + (int)((Random.value * randomnessOfMinionsPerSummon) - (int)(randomnessOfMinionsPerSummon * 0.5f)), transformEnemyParent);
             baseNumMinionsPerSummon += numMinionsPerSummonIncrease;
             trySummoning = false;
         }
