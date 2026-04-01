@@ -201,13 +201,13 @@ public class PlayerBody : MonoBehaviour, IDamageable
             crash = false;
         }
         if (currentHP <= 0) onDeath();
-        animator.SetInteger("State", (int) evaluateState());
+        animator.SetInteger("State", (int)evaluateState());
     }
 
     private PlayerState evaluateState()
     {
         PlayerState state;
-        
+
         //evaluate booleans
         Vector3 planarVel = Vector3.ProjectOnPlane(rb.linearVelocity, gravity);
         bool moving = planarVel.sqrMagnitude > 0.25;
@@ -228,7 +228,7 @@ public class PlayerBody : MonoBehaviour, IDamageable
                 legManager.Animating = true;
             }
         }
-        
+
         if (crash)
         {
             state = PlayerState.DASH;
@@ -241,9 +241,9 @@ public class PlayerBody : MonoBehaviour, IDamageable
             legManager.Animating = true;
         }
 
-        animator.SetBool("Grapple", grapple);
-        animator.SetBool("Glide", glide);
-        animator.SetBool("Dash", crash);
+        //animator.SetBool("Grapple", grapple);
+        //animator.SetBool("Glide", glide);
+        //animator.SetBool("Dash", crash);
 
         return state;
     }
