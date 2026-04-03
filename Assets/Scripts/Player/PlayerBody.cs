@@ -123,6 +123,10 @@ public class PlayerBody : MonoBehaviour, IDamageable
 
     public Transform startParent;
 
+    [SerializeField] private SphereCollider playerCollider;
+    [SerializeField] private float colliderEndRadius;
+    private float colliderStartRadius = 0.2f;
+
 
     private bool crash = false;
     public bool Crash
@@ -145,7 +149,7 @@ public class PlayerBody : MonoBehaviour, IDamageable
 
     void Start()
     {
-
+        colliderStartRadius = playerCollider.radius;
         rb = GetComponent<Rigidbody>();
     }
 
@@ -185,7 +189,12 @@ public class PlayerBody : MonoBehaviour, IDamageable
         }
         if (grapple)
         {
+            playerCollider.radius = colliderEndRadius;
             updateGrappleDirection();
+        }
+        else
+        {
+            playerCollider.radius = colliderStartRadius;
         }
         movePlayer();
         rotateBody();
@@ -195,7 +204,6 @@ public class PlayerBody : MonoBehaviour, IDamageable
         if (grapple && (Vector3.Distance(transform.position, TargetGrapplePoint) < minGrappleDist))
         {
             grapple = false;
-
         }
         if (crash)
         {
