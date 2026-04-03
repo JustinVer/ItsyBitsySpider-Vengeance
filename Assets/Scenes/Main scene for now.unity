@@ -870,6 +870,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1939203068}
+  - {fileID: 1979380320}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &618554105
@@ -2285,11 +2286,13 @@ MonoBehaviour:
   NotPlayerOrEnemyMask:
     serializedVersion: 2
     m_Bits: 59
-  countdownTime: 180
+  countdownTime: 10
   score: 0
   water: {fileID: 510970074}
+  waterPlayerTargetPosition: {fileID: 1979380320}
   waterSpeed: 50
-  washOutRange: 50
+  waterTimeMovePlayer: 1
+  washOutRange: 15
   washOutStrength: 2
   washOutSound: {fileID: 8300000, guid: eac5a2c7ba34f7143a57447dd7672303, type: 3}
   washOutVolume: 0.5
@@ -2451,6 +2454,37 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7708445253016019367, guid: 37d84ca7535aa5d469a4c6ffade026b0, type: 3}
   m_PrefabInstance: {fileID: 3546653686771776846}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1979380319
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1979380320}
+  m_Layer: 0
+  m_Name: WaterPlayerPosition
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1979380320
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1979380319}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 31.36}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 510970075}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &2077211289
 PrefabInstance:
   m_ObjectHideFlags: 0

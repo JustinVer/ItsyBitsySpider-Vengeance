@@ -121,6 +121,8 @@ public class PlayerBody : MonoBehaviour, IDamageable
     private float timeNoWebs = 0;
     [SerializeField] private float maxTimeNoWebs = 15f;
 
+    public Transform startParent;
+
 
     private bool crash = false;
     public bool Crash
@@ -138,6 +140,7 @@ public class PlayerBody : MonoBehaviour, IDamageable
             damageParticle.transform.parent = null;
             damageParticle.gameObject.SetActive(true);
         }
+        startParent = this.transform.parent;
     }
 
     void Start()
@@ -153,7 +156,10 @@ public class PlayerBody : MonoBehaviour, IDamageable
 
     private void OnDisable()
     {
-        GameplayManager.Instance.resetEvent -= ResetPlayer;
+        if (GameplayManager.Instance != null)
+        {
+            GameplayManager.Instance.resetEvent -= ResetPlayer;
+        }
     }
 
     private void FixedUpdate()
@@ -206,10 +212,10 @@ public class PlayerBody : MonoBehaviour, IDamageable
         if (currentHP <= 0) onDeath();
         animator.SetInteger("State", (int)evaluateState());
 
-        if(currentWebs < 1)
+        if (currentWebs < 1)
         {
             timeNoWebs += Time.fixedDeltaTime;
-            if(timeNoWebs > maxTimeNoWebs)
+            if (timeNoWebs > maxTimeNoWebs)
             {
                 currentWebs++;
                 timeNoWebs = 0;

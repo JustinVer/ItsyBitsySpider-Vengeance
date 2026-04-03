@@ -64,10 +64,14 @@ public class GameplayManager : MonoBehaviour
     public double score = 0;
 
     [SerializeField] GameObject water;
+    [SerializeField] Transform waterPlayerTargetPosition;
     private float waterPosition = 1;
     [SerializeField] private float waterSpeed;
     private float waterPercentSpeed;
     private bool washedOut = false;
+    private float playerMoveToWaterPointT = 0;
+    private bool playerInWater = false;
+    [SerializeField] private float waterTimeMovePlayer = 1f;
     public bool WashedOut { get { return washedOut; } private set { washedOut = value; } }
 
     [SerializeField] private float washOutRange;
@@ -257,30 +261,39 @@ public class GameplayManager : MonoBehaviour
             water.SetActive(true);
             float length = gravitySpline.GetLength();
             waterPercentSpeed = waterSpeed / length;
+            playerMoveToWaterPointT = 0;
         }
         water.transform.position = SplineUtility.EvaluatePosition<Spline>(gravitySpline, waterPosition);
         waterPosition -= waterPercentSpeed * Time.deltaTime;
 
-        Vector3 waterPoint = water.transform.position - water.transform.forward * -30;
-
         water.transform.forward = GetForward(water.transform.position);
-
-        if (Vector3.Distance(water.transform.position, playerBody.transform.position) <= washOutRange)
+        Debug.Log("W=player water distance " + Vector3.Dot(playerBody.transform.position - water.transform.position, water.transform.forward));
+        if (!playerInWater && Mathf.Abs(Vector3.Dot(playerBody.transform.position - water.transform.position, water.transform.forward)) <= washOutRange)
         {
+            playerInWater = true;
             playerManager.InputEnabled = false;
+            playerBody.enabled = false;
+            player.transform.parent = waterPlayerTargetPosition;
+        }
 
-            Vector3 targetPoint = playerBody.transform.position + (waterPoint - playerBody.transform.position) * 10f * Time.deltaTime;
+        if (playerInWater)
+        {
+            playerMoveToWaterPointT += Time.deltaTime / waterTimeMovePlayer;
 
-            if (Vector3.Distance(targetPoint, playerBody.transform.position) > Vector3.Distance(waterPoint, playerBody.transform.position))
+            if (playerMoveToWaterPointT < 1)
             {
-                targetPoint = waterPoint;
+                player.transform.position = Vector3.Lerp(player.transform.position, waterPlayerTargetPosition.position, playerMoveToWaterPointT);
             }
-
-            playerBody.transform.position = waterPoint;
+            else
+            {
+                player.transform.localPosition = Vector3.zero;
+            }
         }
 
         if (countdownTime < -10)
         {
+            playerBody.enabled = true;
+            player.transform.parent = playerBody.startParent;
             DeathScreen();
         }
     }

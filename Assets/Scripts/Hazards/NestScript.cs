@@ -20,7 +20,10 @@ public class NestScript : MonoBehaviour
 
     private void OnDisable()
     {
-        GameplayManager.Instance.resetEvent -= resetNest;
+        if (GameplayManager.Instance != null)
+        {
+            GameplayManager.Instance.resetEvent -= resetNest;
+        }
     }
 
     private void OnTriggerEnter(Collider other)
