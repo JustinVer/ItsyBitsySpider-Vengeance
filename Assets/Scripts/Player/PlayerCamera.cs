@@ -24,7 +24,7 @@ public class PlayerCamera : MonoBehaviour
 
     private void Start()
     {
-        
+        GameplayManager.Instance.resetEvent += resetCamera;
     }
 
     private void Update()
@@ -78,5 +78,11 @@ public class PlayerCamera : MonoBehaviour
     }
 
 
+    public void resetCamera()
+    {
+        yaw = 0;
+        pitch = 0;
+        targetPosition = Vector3.zero;
+    }
 
 }
