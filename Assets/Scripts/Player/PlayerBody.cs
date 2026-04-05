@@ -127,6 +127,9 @@ public class PlayerBody : MonoBehaviour, IDamageable
     [SerializeField] private float colliderEndRadius;
     private float colliderStartRadius = 0.2f;
 
+    [SerializeField] private GameObject webGrappleObject;
+    [SerializeField] private Vector3 webGrappleOffset;
+
 
     private bool crash = false;
     public bool Crash
@@ -190,6 +193,18 @@ public class PlayerBody : MonoBehaviour, IDamageable
         if (grapple)
         {
             playerCollider.radius = colliderEndRadius;
+
+            //Update web object location, rotation, and scale
+            webGrappleObject.SetActive(true);
+            Vector3 offsetForward = this.transform.forward * webGrappleOffset.z;
+            Vector3 offsetUp = this.transform.up * webGrappleOffset.y;
+            Vector3 offsetRight = this.transform.right * webGrappleOffset.x;
+
+            Vector3 offset = offsetForward + offsetUp + offsetRight;
+
+            webGrappleObject.transform.SetPositionAndRotation((TargetGrapplePoint + this.transform.position + offset) / 2.0f, Quaternion.LookRotation(this.transform.position + offset - TargetGrapplePoint));
+            webGrappleObject.transform.localScale = new Vector3(webGrappleObject.transform.localScale.x, webGrappleObject.transform.localScale.y, Mathf.Abs(Vector3.Distance(TargetGrapplePoint, this.transform.position + offset) / 2.0f));
+
             updateGrappleDirection();
         }
         else
@@ -203,6 +218,7 @@ public class PlayerBody : MonoBehaviour, IDamageable
 
         if (grapple && (Vector3.Distance(transform.position, TargetGrapplePoint) < minGrappleDist))
         {
+            webGrappleObject.SetActive(false);
             grapple = false;
         }
         if (crash)
@@ -602,6 +618,6 @@ public class PlayerBody : MonoBehaviour, IDamageable
         modGrapplePoint = Vector3.zero;
         ValidGrapplePoint = false;
         currentJumpDelay = 0;
-
+        webGrappleObject.SetActive(false);
     }
 }
