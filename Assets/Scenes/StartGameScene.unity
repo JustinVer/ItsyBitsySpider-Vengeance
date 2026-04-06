@@ -510,6 +510,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4116109441638287197, guid: 2cafcdf97c77b0d41ba3648127db6fa2, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4116109441638287197, guid: 2cafcdf97c77b0d41ba3648127db6fa2, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4116109441638287197, guid: 2cafcdf97c77b0d41ba3648127db6fa2, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4662175846800897453, guid: 2cafcdf97c77b0d41ba3648127db6fa2, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -553,6 +565,10 @@ PrefabInstance:
     - target: {fileID: 6071510025611086553, guid: 2cafcdf97c77b0d41ba3648127db6fa2, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7387872992546230983, guid: 2cafcdf97c77b0d41ba3648127db6fa2, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -50.000507
       objectReference: {fileID: 0}
     - target: {fileID: 8672542001828939349, guid: 2cafcdf97c77b0d41ba3648127db6fa2, type: 3}
       propertyPath: m_fontAsset
@@ -666,7 +682,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7821066852669224757, guid: 8f8f43634260b4e428e0be94268a7edb, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
@@ -797,8 +813,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: f235b4a66bb5cbf47813aca43ef374d7, type: 3}
-  m_Type: 0
+  m_Sprite: {fileID: 21300000, guid: 74e0e49b48aa9664891d44fd6b7699da, type: 3}
+  m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
