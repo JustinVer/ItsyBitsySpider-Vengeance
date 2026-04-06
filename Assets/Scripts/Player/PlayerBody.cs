@@ -128,6 +128,7 @@ public class PlayerBody : MonoBehaviour, IDamageable
     private float colliderStartRadius = 0.2f;
 
     [SerializeField] private GameObject webGrappleObject;
+    [SerializeField] private Transform grappleShotPoint;
     [SerializeField] private Vector3 webGrappleOffset;
 
 
@@ -196,14 +197,14 @@ public class PlayerBody : MonoBehaviour, IDamageable
 
             //Update web object location, rotation, and scale
             webGrappleObject.SetActive(true);
-            Vector3 offsetForward = this.transform.forward * webGrappleOffset.z;
-            Vector3 offsetUp = this.transform.up * webGrappleOffset.y;
-            Vector3 offsetRight = this.transform.right * webGrappleOffset.x;
+            Vector3 offsetForward = grappleShotPoint.forward * webGrappleOffset.z;
+            Vector3 offsetUp = grappleShotPoint.up * webGrappleOffset.y;
+            Vector3 offsetRight = grappleShotPoint.right * webGrappleOffset.x;
 
             Vector3 offset = offsetForward + offsetUp + offsetRight;
 
-            webGrappleObject.transform.SetPositionAndRotation((TargetGrapplePoint + this.transform.position + offset) / 2.0f, Quaternion.LookRotation(this.transform.position + offset - TargetGrapplePoint));
-            webGrappleObject.transform.localScale = new Vector3(webGrappleObject.transform.localScale.x, webGrappleObject.transform.localScale.y, Mathf.Abs(Vector3.Distance(TargetGrapplePoint, this.transform.position + offset) / 2.0f));
+            webGrappleObject.transform.SetPositionAndRotation((TargetGrapplePoint + grappleShotPoint.position + offset) / 2.0f, Quaternion.LookRotation(grappleShotPoint.position + offset - TargetGrapplePoint));
+            webGrappleObject.transform.localScale = new Vector3(webGrappleObject.transform.localScale.x, webGrappleObject.transform.localScale.y, Mathf.Abs(Vector3.Distance(TargetGrapplePoint, grappleShotPoint.position + offset) / 2.0f));
 
             updateGrappleDirection();
         }
