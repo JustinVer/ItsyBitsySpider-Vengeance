@@ -210,6 +210,7 @@ public class PlayerBody : MonoBehaviour, IDamageable
         }
         else
         {
+            webGrappleObject.SetActive(false);
             playerCollider.radius = colliderStartRadius;
         }
         movePlayer();
