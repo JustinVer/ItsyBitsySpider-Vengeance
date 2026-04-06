@@ -44,6 +44,7 @@ public class UpgradeMenu : MonoBehaviour
     {
         GameplayManager.Instance.SetupForStart();
         NewSegmentRandomizer.Instance.StartRun();
+        //NewSegmentRandomizer.Instance.LoadBoss();
         ActiveCameraManager.Instance.GoToCamera2();
         betweenRuns = false;
         upgradeMenu.SetActive(false);

@@ -36,6 +36,8 @@ public class NewSegmentNode : MonoBehaviour
 
     public SplineContainer FindSpline()
     {
-        return thisSegment.GetComponentInChildren<SplineContainer>();
+        segmentSplineContainer = thisSegment.GetComponentInChildren<SplineContainer>();
+
+        return segmentSplineContainer;
     }
 }

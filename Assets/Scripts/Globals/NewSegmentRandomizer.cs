@@ -26,6 +26,8 @@ public class NewSegmentRandomizer : MonoBehaviour
     }
     #endregion
 
+    [SerializeField] GameObject pipeStartPrefab;
+    private NewSegmentNode pipeStart;
     NewCornerNode[] corners;
     NewSegmentNode[][] segments;
     [SerializeField] GameObject[] cornerPrefabs;
@@ -51,6 +53,7 @@ public class NewSegmentRandomizer : MonoBehaviour
     {
         tutorial = new NewSegmentNode(tutorialLevel);
         boss = new NewSegmentNode(bossLevel);
+        pipeStart = new NewSegmentNode(pipeStartPrefab);
     }
     public void StartRun()
     {
@@ -162,12 +165,12 @@ public class NewSegmentRandomizer : MonoBehaviour
         }
 
         corners[corners.Length - 1] = new NewCornerNode(null, segments[segments.Length - 1], cornerPrefabs[(-4 * -1) - 1], corners.Length - 1, this);
-
         StartLoad();
     }
 
     public void KillRun()
     {
+        pipeStart.UnloadSection();
         if (corners != null)
         {
             for (int i = 0; i < corners.Length; i++)
@@ -188,6 +191,7 @@ public class NewSegmentRandomizer : MonoBehaviour
     {
         corners[0].SetInitialPos(Vector3.zero);
         LoadCorners(0);
+        pipeStart.LoadSection(Vector3.zero, new Vector3(0, 180, 0));
     }
 
     public void LoadTutorial()
@@ -196,7 +200,7 @@ public class NewSegmentRandomizer : MonoBehaviour
         GameplayManager.Instance.UpdateGravitySpline(tutorial.FindSpline());
     }
 
-    private void LoadBoss()
+    public void LoadBoss()
     {
         KillRun();
         GameplayManager.Instance.LoadBossComic();

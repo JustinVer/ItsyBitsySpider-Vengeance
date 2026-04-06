@@ -327,7 +327,6 @@ public class GameplayManager : MonoBehaviour
 
     public void LoadBoss()
     {
-        ClearGravitySpline();
         player.transform.position = new Vector3(-3, -23, 3);
         player.transform.rotation = new Quaternion();
         playerBody.setHP((int)playerBody.getMaxHP());
