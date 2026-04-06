@@ -31,7 +31,7 @@ public class UpgradeMenu : MonoBehaviour
     [SerializeField] GameObject upgradePanel;
 
     [SerializeField] GameObject levelLoader;
-    public bool betweenRuns = true;
+    public bool betweenRuns = false;
 
     public void activateMenu()
     {
@@ -79,7 +79,6 @@ public class UpgradeMenu : MonoBehaviour
 
     public void GoToTestRange()
     {
-        //TODO: open the testRange
         GameplayManager.Instance.SetupForStart();
         NewSegmentRandomizer.Instance.LoadTutorial();
         ActiveCameraManager.Instance.SwitchCameras();

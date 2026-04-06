@@ -63,7 +63,10 @@ public class ComicSequence : MonoBehaviour
         }
         else if (endComicIndex == 1)
         {
-            UpgradeMenu.Instance.activateMenu();
+            //UpgradeMenu.Instance.activateMenu();
+            GameplayManager.Instance.SetupForStart();
+            NewSegmentRandomizer.Instance.StartRun();
+            ActiveCameraManager.Instance.GoToCamera2();
         }
         else if (endComicIndex == 2)
         {

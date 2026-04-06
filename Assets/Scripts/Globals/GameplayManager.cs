@@ -366,7 +366,7 @@ public class GameplayManager : MonoBehaviour
 
     public void ResetGame()
     {
-        UpgradeMenu.Instance.activateMenu();
+        //UpgradeMenu.Instance.activateMenu();
         HUDController.ActiveBossHealth(false);
         HUD.SetActive(false);
 
@@ -378,6 +378,8 @@ public class GameplayManager : MonoBehaviour
         ResetStuff();
 
         setInputActionToUI();
+
+        StartCoroutine(GameplayManager.Instance.LoadLevel("StartGameScene"));
     }
 
     public void PauseTimer()
