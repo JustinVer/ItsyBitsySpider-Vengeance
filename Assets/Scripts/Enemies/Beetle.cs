@@ -99,10 +99,8 @@ public class Beetle : EnemyBase, IFireAnimation
 
     protected override void Attack()
     {
-        Debug.Log("Beetle fire " + isFiring + " " + isJumping);
         if (!isFiring && !isJumping && distanceToPlayer < data.attackRange)
         {
-            Debug.Log("start fire projectile");
             animator.SetTrigger("Fire1");
             isFiring = true;
         }
