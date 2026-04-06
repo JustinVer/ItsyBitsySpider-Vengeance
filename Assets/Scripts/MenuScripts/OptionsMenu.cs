@@ -10,6 +10,9 @@ public class OptionsMenu : MonoBehaviour
     [SerializeField] Slider soundEffectsVolume;
     [SerializeField] Slider backgroundMusicVolume;
 
+    [SerializeField] GameObject creditsPanel;
+    [SerializeField] GameObject optionsPanel;
+
     public void LoadSettings()
     {
         if (PlayerPrefs.HasKey("MasterVolume"))
@@ -54,5 +57,11 @@ public class OptionsMenu : MonoBehaviour
         PlayerPrefs.SetFloat("BackgroundMusicVolume", backgroundMusicVolume.value);
         audioMixer.SetFloat("BackgroundMusicVolume", backgroundMusicVolume.value);
         PlayerPrefs.Save();
+    }
+
+    public void ToggleCredits(bool toggle)
+    {
+        creditsPanel.SetActive(toggle);
+        optionsPanel.SetActive(!toggle);
     }
 }

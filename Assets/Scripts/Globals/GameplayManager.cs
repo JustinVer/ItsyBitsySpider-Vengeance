@@ -327,7 +327,6 @@ public class GameplayManager : MonoBehaviour
 
     public void LoadBoss()
     {
-        ClearGravitySpline();
         player.transform.position = new Vector3(-3, -23, 3);
         player.transform.rotation = new Quaternion();
         playerBody.setHP((int)playerBody.getMaxHP());
@@ -367,7 +366,7 @@ public class GameplayManager : MonoBehaviour
 
     public void ResetGame()
     {
-        UpgradeMenu.Instance.activateMenu();
+        //UpgradeMenu.Instance.activateMenu();
         HUDController.ActiveBossHealth(false);
         HUD.SetActive(false);
 
@@ -379,6 +378,8 @@ public class GameplayManager : MonoBehaviour
         ResetStuff();
 
         setInputActionToUI();
+
+        StartCoroutine(GameplayManager.Instance.LoadLevel("StartGameScene"));
     }
 
     public void PauseTimer()
