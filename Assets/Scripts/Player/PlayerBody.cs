@@ -421,21 +421,13 @@ public class PlayerBody : MonoBehaviour, IDamageable
             }
             //else if (rb.linvel < maxSpeed) calc what force would get it to max and apply that 
             else {
-                // Clamp acceleration so we don't exceed max speed
                 Vector3 currentVel = rb.linearVelocity;
-
-                // Direction we want to accelerate in
                 Vector3 accelDir = rotatedMoveDir.normalized;
-
-                // Velocity in that direction
                 float velInDir = Vector3.Dot(currentVel, accelDir);
-
-                // How much speed we can still gain in that direction
                 float remainingSpeed = currentMaxSpeed - velInDir;
 
                 if (remainingSpeed > 0)
                 {
-                    // Convert desired velocity change into force
                     float maxDeltaV = (acceleration / rb.mass) * Time.fixedDeltaTime;
 
                     float clampedDeltaV = Mathf.Min(maxDeltaV, remainingSpeed);
