@@ -174,6 +174,8 @@ public class PlayerBody : MonoBehaviour, IDamageable
     {
         //Debug.Log("Current Webs: " + currentWebs);
 
+       
+
         gravity = GameplayManager.Instance.GetGravity(transform.position);
         up = -gravity.normalized;
 
@@ -382,10 +384,15 @@ public class PlayerBody : MonoBehaviour, IDamageable
 
     private void movePlayer()
     {
-        Vector3 camRight = Vector3.Cross(cam.transform.forward, up);
-        Vector3 trueForward = Vector3.Cross(up, camRight);
+        
+        
 
-        Vector3 rotatedMoveDir = Quaternion.LookRotation(trueForward, up) * movementDir;
+        Vector3 camForward = Vector3.ProjectOnPlane(cam.transform.forward, up).normalized;
+        Vector3 camRight = Vector3.Cross(up, camForward).normalized;
+
+        Vector3 rotatedMoveDir = camForward * movementDir.z + camRight * movementDir.x;
+        Debug.DrawLine(transform.position, transform.position + rotatedMoveDir, Color.green);
+        Debug.DrawLine(transform.position, transform.position + rb.linearVelocity, Color.red);
 
         //Debug.DrawLine(transform.position, transform.position + this.rotatedMoveDir * 2, Color.green);
         //Debug.DrawLine(transform.position, transform.position + rotatedMoveDir * 2, Color.red);
@@ -395,7 +402,7 @@ public class PlayerBody : MonoBehaviour, IDamageable
             //would new speed go above max speed
             Vector3 targetVel = rb.linearVelocity + (rotatedMoveDir * acceleration) / rb.mass * Time.fixedDeltaTime;
 
-            if (targetVel.magnitude <= currentMaxSpeed)
+            if (true)//targetVel.magnitude <= currentMaxSpeed)
             {
                 rb.AddForce(rotatedMoveDir * acceleration, ForceMode.Force);
 
