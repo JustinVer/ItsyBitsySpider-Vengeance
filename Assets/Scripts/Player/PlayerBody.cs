@@ -384,15 +384,11 @@ public class PlayerBody : MonoBehaviour, IDamageable
 
     private void movePlayer()
     {
-        
-        
+        Vector3 camRight = Vector3.Cross(cam.transform.forward, up);
+        Vector3 trueForward = Vector3.Cross(up, camRight);
 
-        Vector3 camForward = Vector3.ProjectOnPlane(cam.transform.forward, up).normalized;
-        Vector3 camRight = Vector3.Cross(up, camForward).normalized;
+        Vector3 rotatedMoveDir = Quaternion.LookRotation(trueForward, up) * movementDir;
 
-        Vector3 rotatedMoveDir = camForward * movementDir.z + camRight * movementDir.x;
-        Debug.DrawLine(transform.position, transform.position + rotatedMoveDir, Color.green);
-        Debug.DrawLine(transform.position, transform.position + rb.linearVelocity, Color.red);
 
         //Debug.DrawLine(transform.position, transform.position + this.rotatedMoveDir * 2, Color.green);
         //Debug.DrawLine(transform.position, transform.position + rotatedMoveDir * 2, Color.red);
@@ -402,7 +398,7 @@ public class PlayerBody : MonoBehaviour, IDamageable
             //would new speed go above max speed
             Vector3 targetVel = rb.linearVelocity + (rotatedMoveDir * acceleration) / rb.mass * Time.fixedDeltaTime;
 
-            if (true)//targetVel.magnitude <= currentMaxSpeed)
+            if (targetVel.magnitude <= currentMaxSpeed)
             {
                 rb.AddForce(rotatedMoveDir * acceleration, ForceMode.Force);
 
@@ -424,6 +420,31 @@ public class PlayerBody : MonoBehaviour, IDamageable
 
             }
             //else if (rb.linvel < maxSpeed) calc what force would get it to max and apply that 
+            else {
+                // Clamp acceleration so we don't exceed max speed
+                Vector3 currentVel = rb.linearVelocity;
+
+                // Direction we want to accelerate in
+                Vector3 accelDir = rotatedMoveDir.normalized;
+
+                // Velocity in that direction
+                float velInDir = Vector3.Dot(currentVel, accelDir);
+
+                // How much speed we can still gain in that direction
+                float remainingSpeed = currentMaxSpeed - velInDir;
+
+                if (remainingSpeed > 0)
+                {
+                    // Convert desired velocity change into force
+                    float maxDeltaV = (acceleration / rb.mass) * Time.fixedDeltaTime;
+
+                    float clampedDeltaV = Mathf.Min(maxDeltaV, remainingSpeed);
+
+                    Vector3 force = accelDir * clampedDeltaV * rb.mass / Time.fixedDeltaTime;
+
+                    rb.AddForce(force, ForceMode.Force);
+                }
+            }
         }
         else
         {
