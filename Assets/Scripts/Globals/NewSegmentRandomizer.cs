@@ -204,6 +204,7 @@ public class NewSegmentRandomizer : MonoBehaviour
     {
         KillRun();
         GameplayManager.Instance.LoadBossComic();
+        GameplayManager.Instance.ClearGravitySpline();
         boss.LoadSection(Vector3.zero, Vector3.zero);
         GameplayManager.Instance.UpdateGravitySpline(boss.FindSpline());
         GameplayManager.Instance.FindBoss();
