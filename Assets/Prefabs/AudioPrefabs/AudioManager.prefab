@@ -45,7 +45,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 0.159
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -178,6 +178,12 @@ MonoBehaviour:
   numSources: 100
   backgroundAudioSource1: {fileID: 6950309131349992271}
   backgroundAudioSource2: {fileID: 4617993382885541649}
+  tracks:
+  - {fileID: 8300000, guid: 31bf63477b1cb0a4da454abf28519890, type: 3}
+  - {fileID: 8300000, guid: 127aea7f44d666e429484c56c8a4f598, type: 3}
+  - {fileID: 8300000, guid: 393db640f35892d45966d65fda778b32, type: 3}
+  - {fileID: 8300000, guid: ae8e9aa56474e5148bc2cd5c6a313174, type: 3}
+  - {fileID: 8300000, guid: 92528d5a80b696146b333df2425a00f8, type: 3}
   audioSourcePrefab: {fileID: 685700888634548675, guid: 181fde72819f7ac43bd9bd2fe0431333, type: 3}
 --- !u!1 &8685421637193506615
 GameObject:
@@ -224,7 +230,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 0.159
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 1
   Mute: 0

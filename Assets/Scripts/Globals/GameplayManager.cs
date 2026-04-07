@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Linq;
 using Unity.Mathematics;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
@@ -80,9 +81,6 @@ public class GameplayManager : MonoBehaviour
     [SerializeField] private AudioClip washOutSound;
     [SerializeField, Range(0, 1)] private float washOutVolume = 0.5f;
 
-    [SerializeField] private AudioClip music;
-    [SerializeField] private AudioClip music2;
-
     public Action resetEvent;
 
     #region sceneManagement
@@ -115,6 +113,8 @@ public class GameplayManager : MonoBehaviour
         setInputActionToUI();
 
         startComic.GetComponent<ComicSequence>().StartComic(1);
+        AudioManager.Instance.playTrack(0, 0);
+
     }
 
     public IEnumerator LoadLevel(string levelName)
@@ -191,8 +191,11 @@ public class GameplayManager : MonoBehaviour
     private void Awake()
     {
         gravitySpline = gravitySplineContainer.Spline;
-        AudioManager.Instance.setBackgroundMusic(music);
+        
     }
+
+ 
+
     public Vector3 GetGravity(Vector3 position)
     {
         if (gravitySpline.Knots.Count() == 0)
@@ -318,6 +321,7 @@ public class GameplayManager : MonoBehaviour
     public void LoadBossComic()
     {
         bossComic.GetComponent<ComicSequence>().StartComic(2);
+        AudioManager.Instance.playTrack(4, 0);
     }
 
     public void DeathScreen()
@@ -404,10 +408,6 @@ public class GameplayManager : MonoBehaviour
             washOut();
         }
 
-        if (countdownTime < 90)
-        {
-            AudioManager.Instance.setBackgroundMusic(music2);
-        }
 
         if (InBossStage)
         {

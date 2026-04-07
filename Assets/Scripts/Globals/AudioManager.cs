@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class AudioManager : MonoBehaviour
 {
@@ -35,10 +36,14 @@ public class AudioManager : MonoBehaviour
     Coroutine backgroundTransitionCoroutine;
     private float backgroundAudioVolume;
 
+    [SerializeField] private AudioClip[] tracks;
+
     [SerializeField] private GameObject audioSourcePrefab;
 
     private Queue<AudioSource> sources = new Queue<AudioSource>();
     private List<AudioSource> usedsources = new List<AudioSource>();
+
+    private int currentTrack = -1;
 
     private void Awake()
     {
@@ -107,6 +112,15 @@ public class AudioManager : MonoBehaviour
         GameObject Source = Instantiate(audioSourcePrefab, this.transform);
         Source.SetActive(false);
         sources.Enqueue(Source.GetComponent<AudioSource>());
+    }
+
+    public void playTrack(int trackIndex, float transitionTime)
+    {
+        if (trackIndex < 0 || trackIndex >= tracks.Length) return;
+        if (trackIndex == currentTrack) return;
+        currentTrack = trackIndex;
+
+        transitionBackgroundMusic(tracks[trackIndex], transitionTime);
     }
 
     public void setBackgroundMusic(AudioClip audioClip)
