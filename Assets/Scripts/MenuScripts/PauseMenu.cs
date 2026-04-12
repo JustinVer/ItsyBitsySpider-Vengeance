@@ -20,7 +20,7 @@ public class PauseMenu : MonoBehaviour
 
     private void Update()
     {
-        if (GameplayManager.Instance.Escape && !hasChanged && CanPause && !UpgradeMenu.Instance.betweenRuns)
+        if (GameplayManager.Instance.Escape && !hasChanged && CanPause)
         {
             hasChanged = true;
             isPaused = !isPaused;
