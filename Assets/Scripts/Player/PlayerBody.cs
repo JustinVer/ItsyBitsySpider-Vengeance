@@ -174,6 +174,8 @@ public class PlayerBody : MonoBehaviour, IDamageable
     {
         //Debug.Log("Current Webs: " + currentWebs);
 
+       
+
         gravity = GameplayManager.Instance.GetGravity(transform.position);
         up = -gravity.normalized;
 
@@ -210,6 +212,7 @@ public class PlayerBody : MonoBehaviour, IDamageable
         }
         else
         {
+            webGrappleObject.SetActive(false);
             playerCollider.radius = colliderStartRadius;
         }
         movePlayer();
@@ -386,6 +389,7 @@ public class PlayerBody : MonoBehaviour, IDamageable
 
         Vector3 rotatedMoveDir = Quaternion.LookRotation(trueForward, up) * movementDir;
 
+
         //Debug.DrawLine(transform.position, transform.position + this.rotatedMoveDir * 2, Color.green);
         //Debug.DrawLine(transform.position, transform.position + rotatedMoveDir * 2, Color.red);
 
@@ -416,6 +420,23 @@ public class PlayerBody : MonoBehaviour, IDamageable
 
             }
             //else if (rb.linvel < maxSpeed) calc what force would get it to max and apply that 
+            else {
+                Vector3 currentVel = rb.linearVelocity;
+                Vector3 accelDir = rotatedMoveDir.normalized;
+                float velInDir = Vector3.Dot(currentVel, accelDir);
+                float remainingSpeed = currentMaxSpeed - velInDir;
+
+                if (remainingSpeed > 0)
+                {
+                    float maxDeltaV = (acceleration / rb.mass) * Time.fixedDeltaTime;
+
+                    float clampedDeltaV = Mathf.Min(maxDeltaV, remainingSpeed);
+
+                    Vector3 force = accelDir * clampedDeltaV * rb.mass / Time.fixedDeltaTime;
+
+                    rb.AddForce(force, ForceMode.Force);
+                }
+            }
         }
         else
         {

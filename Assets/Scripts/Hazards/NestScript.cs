@@ -11,6 +11,8 @@ public class NestScript : MonoBehaviour
     [SerializeField] float waitTime = 5.0f;
     [SerializeField] private ParticleSystem healParticle1;
 
+    private static bool nest1 = true;
+
     private bool hasTriggered = false;
 
     private void OnEnable()
@@ -31,6 +33,15 @@ public class NestScript : MonoBehaviour
         if (ReferenceEquals(GameplayManager.Instance.Player, other.gameObject) && !hasTriggered)
         {
             hasTriggered = true;
+            if (nest1)
+            {
+                AudioManager.Instance.playTrack(2, 0);
+                nest1 = false;
+            }
+            else
+            {
+                AudioManager.Instance.playTrack(3, 0);
+            }
             StartCoroutine(NestStuff());
         }
     }

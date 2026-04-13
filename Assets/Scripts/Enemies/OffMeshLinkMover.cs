@@ -70,8 +70,10 @@ public class AgentLinkMover : MonoBehaviour
         rotateAroundCylinder();
         if (agent.isOnOffMeshLink && !inLink)
         {
+            Debug.Log("Enemy in off mesh link " + agent.currentOffMeshLinkData.startPos);
             if (agent.currentOffMeshLinkData.owner.GameObject().tag == "JumpLink")
             {
+                Debug.Log("Enemy in off mesh link in jump link if statement");
                 if (Jump_Method == OffMeshLinkMoveMethod.NormalSpeed)
                     StartCoroutine(NormalSpeed(agent));
                 else if (Jump_Method == OffMeshLinkMoveMethod.Parabola)
@@ -82,6 +84,7 @@ public class AgentLinkMover : MonoBehaviour
             }
             else
             {
+                Debug.Log("Enemy in off mesh link in non jump link if statement");
                 if (Connection_Method == OffMeshLinkMoveMethod.NormalSpeed)
                     StartCoroutine(NormalSpeed(agent));
                 else if (Connection_Method == OffMeshLinkMoveMethod.Parabola)
@@ -130,10 +133,12 @@ public class AgentLinkMover : MonoBehaviour
 
     IEnumerator Parabola(NavMeshAgent agent, float height, float duration)
     {
+        Debug.Log("Enemy in off in parabola");
         inLink = true;
         waitingForFollowBody = true;
         body.StartJump();
         yield return new WaitUntil(() => !waitingForFollowBody);
+        Debug.Log("Enemy in off mesh link no longer waiting for followBody");
         OffMeshLinkData data = agent.currentOffMeshLinkData;
         Vector3 startPos = agent.transform.position;
         Vector3 endPos = data.endPos + (-1 * GameplayManager.Instance.GetGravity(data.endPos).normalized) * (agent.baseOffset / 2);

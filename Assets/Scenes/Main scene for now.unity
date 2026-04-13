@@ -150,8 +150,8 @@ Transform:
   m_Children:
   - {fileID: 1548044105}
   - {fileID: 1657520029}
-  - {fileID: 689900613}
   - {fileID: 618554107}
+  - {fileID: 689900613}
   - {fileID: 307714590}
   - {fileID: 180778528}
   - {fileID: 1384517687}
@@ -925,6 +925,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4968524410343370896, guid: bcd42a66e7911ee4792c78569f3c892a, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1010,9 +1014,9 @@ MonoBehaviour:
   - {fileID: 9031887594224738800, guid: b62710118edf380409fc387d72b7fc21, type: 3}
   tutorialLevel: {fileID: 4775841311995228443, guid: 3457bda6b048a1747a7b859b16bfd6e5, type: 3}
   bossLevel: {fileID: 8038954486450138385, guid: 16d8aa1d798a2a64f9152df7e78fe135, type: 3}
-  segmentOrder: ffffffff0500000000000000feffffff0700000001000000fdffffff0c000000fcffffff
+  segmentOrder: ffffffff05000000ffffffff0500000000000000feffffff07000000feffffff0700000001000000fdffffff0c000000fdffffff0c000000fcffffff
   currentPoint: {x: 0, y: 0, z: 0}
-  debugMode: 1
+  debugMode: 0
   areaLength: 2
   numLevels: 5
 --- !u!1001 &689900612
@@ -2240,8 +2244,6 @@ MonoBehaviour:
   washOutStrength: 2
   washOutSound: {fileID: 8300000, guid: eac5a2c7ba34f7143a57447dd7672303, type: 3}
   washOutVolume: 0.5
-  music: {fileID: 8300000, guid: 34a8d70cbe9699141a45a3c4ca2defe4, type: 3}
-  music2: {fileID: 8300000, guid: 3a5ab1a5a5b46d24b9a7397d2df466ab, type: 3}
   loadScreen: {fileID: 1548044106}
   gameOver: {fileID: 618554106}
   victoryScreen: {fileID: 689900614}

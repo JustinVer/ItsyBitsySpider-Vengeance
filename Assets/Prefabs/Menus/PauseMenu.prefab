@@ -33,7 +33,7 @@ RectTransform:
   m_Father: {fileID: 1622917084744240819}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0.8, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -353,8 +353,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Exit
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 40186c6e9d353ae4f827f95471e423e9, type: 2}
+  m_sharedMaterial: {fileID: 1897495312694010014, guid: 40186c6e9d353ae4f827f95471e423e9, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -438,7 +438,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &3477679081505875152
 RectTransform:
   m_ObjectHideFlags: 0
@@ -497,7 +497,7 @@ RectTransform:
   m_GameObject: {fileID: 1364882929758926982}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.83651996, y: 0.83651996, z: 0.83651996}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5779392097939015867}
@@ -505,8 +505,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 63.871735, y: -85.24872}
-  m_SizeDelta: {x: 117.74701, y: 54.830017}
+  m_AnchoredPosition: {x: 57, y: -55}
+  m_SizeDelta: {x: 267.6, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4194746587882944068
 CanvasRenderer:
@@ -538,8 +538,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Master Volume
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: d93f8da33c9a767499b8b80dc9800c53, type: 2}
-  m_sharedMaterial: {fileID: -6553216713619879147, guid: d93f8da33c9a767499b8b80dc9800c53, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 40186c6e9d353ae4f827f95471e423e9, type: 2}
+  m_sharedMaterial: {fileID: 1897495312694010014, guid: 40186c6e9d353ae4f827f95471e423e9, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -563,8 +563,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 40
-  m_fontSizeBase: 40
+  m_fontSize: 35
+  m_fontSizeBase: 35
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -810,7 +810,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -200, y: 175}
+  m_AnchoredPosition: {x: -200, y: 194.5}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2674170425552760661
@@ -843,8 +843,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: PAUSED
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: d93f8da33c9a767499b8b80dc9800c53, type: 2}
-  m_sharedMaterial: {fileID: -6553216713619879147, guid: d93f8da33c9a767499b8b80dc9800c53, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 40186c6e9d353ae4f827f95471e423e9, type: 2}
+  m_sharedMaterial: {fileID: 1897495312694010014, guid: 40186c6e9d353ae4f827f95471e423e9, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -868,8 +868,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 80
-  m_fontSizeBase: 80
+  m_fontSize: 69.5
+  m_fontSizeBase: 69.5
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -984,7 +984,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 319.5, y: 4.5}
+  m_AnchoredPosition: {x: 288.4, y: 0}
   m_SizeDelta: {x: 160, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &4631109441673509682
@@ -1117,8 +1117,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Continue
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 40186c6e9d353ae4f827f95471e423e9, type: 2}
+  m_sharedMaterial: {fileID: 1897495312694010014, guid: 40186c6e9d353ae4f827f95471e423e9, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1253,8 +1253,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Settings
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 40186c6e9d353ae4f827f95471e423e9, type: 2}
+  m_sharedMaterial: {fileID: 1897495312694010014, guid: 40186c6e9d353ae4f827f95471e423e9, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1488,7 +1488,7 @@ RectTransform:
   m_Father: {fileID: 5216680375462934017}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0.8, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -1546,7 +1546,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &53436129467681896
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1721,8 +1721,8 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 8521695980326929252}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.8, y: 0}
-  m_AnchorMax: {x: 0.8, y: 1}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: -0.19999981}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -1832,8 +1832,8 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 6506353170039066769}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.8, y: 0}
-  m_AnchorMax: {x: 0.8, y: 1}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -2041,7 +2041,7 @@ RectTransform:
   m_Father: {fileID: 4989204981260673777}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0.8, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -2150,8 +2150,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Save Game
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 40186c6e9d353ae4f827f95471e423e9, type: 2}
+  m_sharedMaterial: {fileID: 1897495312694010014, guid: 40186c6e9d353ae4f827f95471e423e9, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2437,8 +2437,8 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 5165981016008257736}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.8, y: 0}
-  m_AnchorMax: {x: 0.8, y: 1}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -2507,7 +2507,7 @@ RectTransform:
   m_GameObject: {fileID: 6245367464575345648}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.6674, y: 0.6674, z: 0.6674}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2849699921299919988}
@@ -2515,8 +2515,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 99.00925, y: -190.66125}
-  m_SizeDelta: {x: 257.8, y: 54.830017}
+  m_AnchoredPosition: {x: 84.5, y: -128.8}
+  m_SizeDelta: {x: 482.8, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4480112062948994617
 CanvasRenderer:
@@ -2546,10 +2546,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Background music volume
+  m_text: Background music
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: d93f8da33c9a767499b8b80dc9800c53, type: 2}
-  m_sharedMaterial: {fileID: -6553216713619879147, guid: d93f8da33c9a767499b8b80dc9800c53, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 40186c6e9d353ae4f827f95471e423e9, type: 2}
+  m_sharedMaterial: {fileID: 1897495312694010014, guid: 40186c6e9d353ae4f827f95471e423e9, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2573,8 +2573,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 40
-  m_fontSizeBase: 40
+  m_fontSize: 35
+  m_fontSizeBase: 35
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -2653,7 +2653,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 296.40002, y: 4.5}
+  m_AnchoredPosition: {x: 323.7, y: 0}
   m_SizeDelta: {x: 160, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &7454646020403971515
@@ -2786,8 +2786,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Main Menu
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 40186c6e9d353ae4f827f95471e423e9, type: 2}
+  m_sharedMaterial: {fileID: 1897495312694010014, guid: 40186c6e9d353ae4f827f95471e423e9, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -3002,7 +3002,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 246.5, y: 4.5}
+  m_AnchoredPosition: {x: 315.4, y: 0}
   m_SizeDelta: {x: 160, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &7357282257033782231
@@ -3207,7 +3207,7 @@ RectTransform:
   m_GameObject: {fileID: 8856272192249656570}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.73451, y: 0.73451, z: 0.73451}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5119355073550855367}
@@ -3215,8 +3215,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 91.98175, y: -141.46875}
-  m_SizeDelta: {x: 212.16, y: 54.830017}
+  m_AnchoredPosition: {x: 48.8, y: -91.6}
+  m_SizeDelta: {x: 572.9, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3144251168540732525
 CanvasRenderer:
@@ -3246,10 +3246,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Sound effects Volume
+  m_text: Sound effects
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: d93f8da33c9a767499b8b80dc9800c53, type: 2}
-  m_sharedMaterial: {fileID: -6553216713619879147, guid: d93f8da33c9a767499b8b80dc9800c53, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 40186c6e9d353ae4f827f95471e423e9, type: 2}
+  m_sharedMaterial: {fileID: 1897495312694010014, guid: 40186c6e9d353ae4f827f95471e423e9, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -3273,8 +3273,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 40
-  m_fontSizeBase: 40
+  m_fontSize: 35
+  m_fontSizeBase: 35
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18

@@ -28,11 +28,16 @@ public class BodyFollowAgent : MonoBehaviour
             rb.MovePosition(followBody.transform.position);
 
         }
-        else if (waitingForJump && Vector3.Distance(this.transform.position, followBody.transform.position) < distanceToAgentBeforeJump)
+        else if (waitingForJump)
         {
-            jumping = true;
-            waitingForJump = false;
-            followBody.StartJump();
+            Debug.Log("Enemy in off mesh link body " + Vector3.Distance(this.transform.position, followBody.transform.position) + " " + distanceToAgentBeforeJump + " " + (Vector3.Distance(this.transform.position, followBody.transform.position) < distanceToAgentBeforeJump));
+            if (Vector3.Distance(this.transform.position, followBody.transform.position) < distanceToAgentBeforeJump)
+            {
+                jumping = true;
+                waitingForJump = false;
+                followBody.StartJump();
+
+            }
         }
         else if (autoRotate && Vector3.Distance(this.transform.position, followBody.transform.position) > 0.5f)
         {
@@ -44,6 +49,7 @@ public class BodyFollowAgent : MonoBehaviour
 
     public void StartJump()
     {
+        Debug.Log("Enemy in off mesh link body start jump");
         waitingForJump = true;
     }
 

@@ -115,7 +115,6 @@ public class PillBug : EnemyBase, ICollisionReciever
             //bodyFollower.transform.localRotation = Quaternion.Euler(0, 0, 0);
             animator.SetBool("Moving", false);
         }
-        Debug.Log("Pill bug local rotation " + bodyFollower.transform.localRotation.eulerAngles + " " + rotationSpeed + " " + Time.deltaTime);
     }
 
     public override void EndDeath()

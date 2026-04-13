@@ -114,20 +114,21 @@ public class NewSegmentRandomizer : MonoBehaviour
                         {
                             case 0:
                                 segmentOrder[i] = -1;
-
+                                //AudioManager.Instance.playTrack(1, 0);
                                 break;
                             case 1:
                                 segmentOrder[i] = -2;
-
+                                //AudioManager.Instance.playTrack(2, 0);
                                 break;
                             default:
                                 segmentOrder[i] = -3;
-
+                                //AudioManager.Instance.playTrack(3, 0);
                                 break;
                         }
                     }
                 }
             }
+            
         }
 
         for (int i = 1; i < segmentOrder.Length; i++)
@@ -192,6 +193,7 @@ public class NewSegmentRandomizer : MonoBehaviour
         corners[0].SetInitialPos(Vector3.zero);
         LoadCorners(0);
         pipeStart.LoadSection(Vector3.zero, new Vector3(0, 180, 0));
+        AudioManager.Instance.playTrack(1, 0);
     }
 
     public void LoadTutorial()
@@ -204,10 +206,12 @@ public class NewSegmentRandomizer : MonoBehaviour
     {
         KillRun();
         GameplayManager.Instance.LoadBossComic();
+        GameplayManager.Instance.ClearGravitySpline();
         boss.LoadSection(Vector3.zero, Vector3.zero);
         GameplayManager.Instance.UpdateGravitySpline(boss.FindSpline());
         GameplayManager.Instance.FindBoss();
         GameplayManager.Instance.HUDController.ActiveBossHealth(true);
+        
     }
 
     public void LoadCorners(int index)
