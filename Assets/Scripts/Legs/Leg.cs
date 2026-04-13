@@ -6,6 +6,7 @@ public class Leg : MonoBehaviour
     [SerializeField] private GameObject hint;
     [SerializeField] private GameObject foot;
     [SerializeField] private GameObject raycastObject;
+    [SerializeField] AudioSource audioSource;
 
     [SerializeField] private float legLength;
 
@@ -16,6 +17,7 @@ public class Leg : MonoBehaviour
 
     [SerializeField] private AudioClip step;
     [SerializeField, Range(0, 1)] private float stepVolume = 0.25f;
+    [SerializeField] float pitchRange = 0.5f;
 
     public bool stepping = false;
     private float stepTimer = 0f;
@@ -58,6 +60,10 @@ public class Leg : MonoBehaviour
     private void Start()
     {
         legManager = GetComponentInParent<LegManager>();
+        if (audioSource != null) { 
+        audioSource.clip = step;
+        audioSource.volume = stepVolume;
+        }
     }
 
 
@@ -115,7 +121,12 @@ public class Leg : MonoBehaviour
 
             if (t >= 1)
             {
-                AudioManager.Instance.PlaySound(step, stepVolume, stepEnd);
+                if (audioSource != null)
+                {
+                    audioSource.pitch = 1 + Random.Range(-1f, 1f) * pitchRange;
+                    audioSource.Play();
+                }
+                
                 stepping = false;
                 footPlanted = true;
                 plantPosition = stepEnd;
